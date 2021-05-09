@@ -33,6 +33,7 @@ export class SuperuserComponent implements OnInit {
         tfd: 0,
         model_code: '',
         size: '',
+        image: '',
         implant_position: '',
         procedure_id: 0,
         implanted: 0,

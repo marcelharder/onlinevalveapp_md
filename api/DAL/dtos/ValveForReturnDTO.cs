@@ -16,6 +16,7 @@ namespace api.DAL.dtos
         public DateTime Manufac_date { get; set; }
         public DateTime Expiry_date { get; set; }
         public string Serial_no { get; set; }
+        public string Image { get; set; }
         public string Model_code { get; set; }
         public string Size { get; set; }
         public double TFD { get; set; }

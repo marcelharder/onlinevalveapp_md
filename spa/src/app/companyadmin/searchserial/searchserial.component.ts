@@ -36,6 +36,7 @@ export class SearchserialComponent implements OnInit {
     serial_no: '',
     model_code: '',
     size: '',
+    image:'',
     ppm: '',
     tfd:0,
     implant_position: '',

@@ -69,7 +69,7 @@ export class SelectValveComponent implements OnInit {
 
   ngOnInit() {
     this.auth.currentHospital.subscribe((next) => { this.HospitalName = next; });
-    this.ImagePath = '/assets/images/valves02.jpg';
+    this.ImagePath = 'https://res.cloudinary.com/marcelcloud/image/upload/v1620571880/valves/valves02.jpg';
 
     this.loadDrops();
 

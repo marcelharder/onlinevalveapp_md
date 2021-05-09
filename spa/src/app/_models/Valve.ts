@@ -16,6 +16,7 @@ export interface Valve {
     'serial_no': string;
     'model_code': string;
     'size': string;
+    'image': string;
     'implant_position': string;
     'procedure_id': number;
     'implanted': number;

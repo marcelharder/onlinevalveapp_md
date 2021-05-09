@@ -286,6 +286,7 @@ namespace api.DAL.Code
             help.Serial_no = valve.Serial_no;
             help.Model_code = valve.Model_code;
             help.Size = valve.Size;
+            help.Image = valve.Image;
             help.TFD = valve.TFD;
             help.Implant_position = valve.Implant_position;
             help.Procedure_id = valve.Procedure_id;

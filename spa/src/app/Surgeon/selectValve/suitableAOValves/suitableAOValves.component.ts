@@ -38,6 +38,7 @@ export class SuitableAOValvesComponent implements OnInit {
     tfd: 0,
     model_code: '',
     size: '',
+    image:'',
     implant_position: '',
     procedure_id: 0,
     implanted: 0,
@@ -52,8 +53,7 @@ export class SuitableAOValvesComponent implements OnInit {
 
   ngOnInit() {
     this.auth.currentHospital.subscribe((next) => { this.hospitalName = next; });
-    this.ImagePath = '/assets/images/valves02.jpg';
-  
+   
 
 
   }
@@ -70,7 +70,10 @@ export class SuitableAOValvesComponent implements OnInit {
    
     this.valveService.getValve(id).subscribe((next)=>{
       this.pd = next;
+      debugger;
       this.title = "Details of the " + this.pd.description + " valve";
+      this.ImagePath = this.pd.image;
+
      }, (error)=>{this.alertify.error(error)})
   
    

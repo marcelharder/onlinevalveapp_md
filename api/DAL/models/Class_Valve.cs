@@ -19,6 +19,7 @@ namespace api.DAL.models
         public string Serial_no { get; set; }
         public string Model_code { get; set; }
         public string Size { get; set; }
+        public string Image { get; set; }
         public double TFD { get; set; }
         public string Implant_position { get; set; }
         public int Procedure_id { get; set; }

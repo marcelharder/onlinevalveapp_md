@@ -18,6 +18,7 @@ export class SuitableAOValvesComponent implements OnInit {
   list = 1;
   details = 0;
   hospitalName = "";
+  ImagePath = "";
 
   pd: Valve = {
     valveId: 0,
@@ -51,6 +52,7 @@ export class SuitableAOValvesComponent implements OnInit {
 
   ngOnInit() {
     this.auth.currentHospital.subscribe((next) => { this.hospitalName = next; });
+    this.ImagePath = '/assets/images/valves02.jpg';
   
 
 
@@ -69,8 +71,7 @@ export class SuitableAOValvesComponent implements OnInit {
     this.valveService.getValve(id).subscribe((next)=>{
       this.pd = next;
       this.title = "Details of the " + this.pd.description + " valve";
-      this.alertify.message("getting details of " + this.pd.description);
-    }, (error)=>{this.alertify.error(error)})
+     }, (error)=>{this.alertify.error(error)})
   
    
   }

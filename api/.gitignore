@@ -1,0 +1,9 @@
+.vscode
+bin
+obj
+*.db
+wwwroot
+api/obj/Debug/netcoreapp3.1/api.csprojAssemblyReference.cache
+api/obj/Debug/netcoreapp3.1/api.dll
+api/obj/Debug/netcoreapp3.1/api.pdb
+api/appsettings.json

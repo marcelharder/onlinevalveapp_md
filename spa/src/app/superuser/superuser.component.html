@@ -1,0 +1,90 @@
+<div *ngIf="showMainContent()">
+  <div class="row">
+    <div class="col-sm-12">
+      <h3><span class="badge badge-default">Inventory for {{hos.naam}}</span></h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="d-flex flex-row ">
+        <div><h4><span class="badge badge-default ml-8">Serial number:</span></h4></div>
+        <div><input type="text" class="form-control" [(ngModel)]="searchString" name="mrn" /></div>
+        <div><button type="button" class="badge badge-info ml-2" (click)="findSerial()">Search</button></div>
+
+        <div *ngIf="notFound()"><h5><span class="badge badge-danger ml-2 mr-2">Not found:</span></h5></div>
+        <div *ngIf="notFound()"><button type="button" class="badge badge-warning  ml-2 mr-2" (click)="displayAddPage()">Add</button></div>
+        <div *ngIf="notFound()"><button type="button" class="badge badge-info" (click)="cancel()">Cancel</button></div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4 mt-2"  *ngIf="showNavBar()">>
+    <ul class="navbar-nav flex-grow">
+      <li class="mr-2">
+        <div class="dropdown" dropdown>
+          <a class="dropdown-toggle text-light" dropdownToggle>
+            Mechanical valves
+          </a>
+          <div class="dropdown-menu " *dropdownMenu>
+            <a class="dropdown-item" (click)="getValves(1,1)">Aortic valves</a>
+            <a class="dropdown-item" (click)="getValves(1,2)">Mitral valves</a>
+          </div>
+        </div>
+      </li>
+      <li class="mr-2">
+        <div class="dropdown" dropdown>
+          <a class="dropdown-toggle text-light" dropdownToggle>
+            Biological valves
+          </a>
+          <div class="dropdown-menu " *dropdownMenu>
+            <a class="dropdown-item" (click)="getValves(2,1)">Aortic valves</a>
+            <a class="dropdown-item" (click)="getValves(2,2)">Mitral valves</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="mr-2">
+        <div class="dropdown" dropdown>
+          <a class="dropdown-toggle text-light" dropdownToggle>
+            Conduits/Rings
+          </a>
+          <div class="dropdown-menu " *dropdownMenu>
+            <a class="dropdown-item" (click)="getValves(3,1)">Valved Conduit</a>
+            <a class="dropdown-item" (click)="getValves(4,2)">Annuloplasty Ring</a>
+          </div>
+
+        </div>
+      </li>
+      <li class="mr-2">
+        <div class="dropdown" dropdown>
+          <a class="dropdown-toggle text-light" dropdownToggle (click)="getValves(5,3)"> Pericardial Patches </a>
+        </div>
+      </li>
+
+    </ul>
+  </nav>
+
+
+
+  <div  *ngIf="showProductList()">
+    <app-list-valve [valves]="valves" [productRequested]="productRequested" (requestDetails)="rqDt($event)"></app-list-valve>
+  </div>
+
+</div>
+
+  <!--show if you want to add a product initiated by add button-->
+  <div *ngIf="showAddPage()">
+    <app-add-valve (valveBack)="handleValveBack($event)"></app-add-valve>
+  </div>
+
+  <!--show if you want to edit a product, initiated by details button on the list-->
+  <div *ngIf="showEditPage()">
+    <app-edit-valve-in-hospital [valve]="valveInParent" (valveBack)="handleValveBack($event)"></app-edit-valve-in-hospital>
+  </div>
+
+  <div *ngIf="displayEmailAndSMS()">
+    <app-communication [valve]="valveInParent" (valveBack)= returnFromAnnouncingUsedValve($event)></app-communication>
+  </div>
+

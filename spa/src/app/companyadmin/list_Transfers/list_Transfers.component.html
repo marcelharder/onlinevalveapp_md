@@ -1,0 +1,96 @@
+<div class="card">
+  <div class="card-header">
+    <h5><span class="badge badge-default">Transfers:</span></h5>
+  </div>
+  <div class="card-body" style="background-color: beige;">
+    <div *ngIf="!showDetails()">
+      <!--here is the table-->
+      <table class="table table-striped">
+        <tr>
+          <th>Id</th>
+          <th>Reason for transfer</th>
+          <th>Departure date</th>
+          <th>Arrival date</th>
+          <th>Departure from</th>
+          <th>Arrival in</th>
+          <th></th>
+
+        </tr>
+        <tr *ngFor="let p of transfers">
+          <th>{{p.id}}</th>
+          <th>{{p.reason}}</th>
+          <th>{{p.depTime| date}}</th>
+          <th>{{p.arrTime| date}}</th>
+          <th>{{p.departureCode}}</th>
+          <th>{{p.arrivalCode}}</th>
+          <td><a (click)="updateTransfer(p.id)" style="color: crimson">Details</a></td>
+
+        </tr>
+      </table>
+    </div>
+    <div *ngIf="showDetails()">
+      <div class="card">
+        <div class="card-header"></div>
+        <div class="card-body" style="background-color: lightgreen;">
+          <div class="row">
+            <div class="col-sm-6">
+              <h5><span class="badge badge-secondary">Reason</span></h5>
+            </div>
+            <div class="col-sm-6"><input type=text class="form-control" [(ngModel)]="currentTransfer.reason" /></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <h5><span class="badge badge-secondary">Departure date</span></h5>
+            </div>
+            <div class="col-sm-6"><input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker
+                [(ngModel)]="currentTransfer.depTime" [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }" name="datum" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <h5><span class="badge badge-secondary">Arrival date</span></h5>
+            </div>
+            <div class="col-sm-6"><input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker
+                [(ngModel)]="currentTransfer.arrTime" [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }" name="datum" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <h5><span class="badge badge-secondary">Departure</span></h5>
+            </div>
+            <div class="col-sm-6">
+              <select [(ngModel)]="currentTransfer.departureCode" name="test111" class="form-control">
+                <option *ngFor="let an of optionsDepartureHospital" [value]="an.description">{{ an.description }}</option>
+              </select>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <h5><span class="badge badge-secondary">Arrival</span></h5>
+            </div>
+            <div class="col-sm-6"> <select [(ngModel)]="currentTransfer.arrivalCode" name="test112" class="form-control">
+              <option *ngFor="let an of optionsDestinationHospital" [value]="an.description">{{ an.description }}</option>
+            </select>
+            </div>
+          </div>
+
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-primary" (click)="saveValveTransferDetails()">Save</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="row">
+      <div class="btn-group">
+        <button class="btn btn-primary" (click)="cancel()"><i class="fa fa-window-close" aria-hidden="true"></i>
+          Cancel</button>
+        <button class="btn btn-primary" (click)="addTransfer()"><i class="fa fa-window-open" aria-hidden="true"></i>
+          Add</button>
+      </div>
+    </div>
+  </div>
+</div>

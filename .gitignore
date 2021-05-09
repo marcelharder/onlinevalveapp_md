@@ -1,0 +1,8 @@
+api/bin/Debug/netcoreapp3.1/api.dll
+api/bin/Debug/netcoreapp3.1/api.exe
+api/bin/Debug/netcoreapp3.1/api.pdb
+api/bin/Debug/netcoreapp3.1/api.dll
+api/obj/Debug/netcoreapp3.1/api.csproj.FileListAbsolute.txt
+api/api.csproj
+api/appsettings.json
+spa/node_modules/*.*

@@ -1,0 +1,75 @@
+<div class="card mt-2">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-sm-12 ml">
+        <button class="badge badge-default float-right" *ngIf="!showDetails() && !showSelectPage()" type="button"
+          (click)="DisplayHospitalsInTheCurrentCountry()">
+          Add a hospital to this list
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body" *ngIf="!showDetails() && !showSelectPage()">
+    <div class="row">
+      <div class="col-sm-12">
+        <h2><span class="badge badge-default">List of hospitals in {{currentCountry}} using {{currentVendor}}
+            products</span></h2>
+      </div>
+    </div>
+    <!--here is the table-->
+    <table class="table table-striped">
+      <tr>
+        <th>ID</th>
+        <th>Contact</th>
+        <th>Name</th>
+        <th>telephone</th>
+        <th>email</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let p of hos">
+        <th>{{p.id}}</th>
+        <th>{{p.contact}}</th>
+        <th>{{p.naam}}</th>
+        <th>{{p.telephone}}</th>
+        <th>{{p.email}}</th>
+        <td><a (click)="selectDetails(p.hospitalNo)">Details</a></td>
+      </tr>
+    </table>
+  </div>
+  <div class="card-body" *ngIf="showDetails()">
+
+    <app-editHospital 
+    [selectedHospital]="selectedHospital" 
+    [country]="currentCountry" 
+    [contactName]="contactName"
+    [contactNumber]="hospitalContactNumber"
+    (hospitalOut)="updateHospitalDetails($event)"></app-editHospital>
+
+  </div>
+  <div class="card-body" *ngIf="showSelectPage()">
+    <div class="row">
+      <div class="col-sm-12">
+        <h2><span class="badge badge-default">Select a hospital from this list</span></h2>
+      </div>
+    </div>
+    <div>
+      <!--here is the table-->
+      <table class="table table-striped">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>telephone</th>
+          <th>email</th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let p of FullHospitals">
+          <th>{{p.id}}</th>
+          <th>{{p.naam}}</th>
+          <th>{{p.telephone}}</th>
+          <th>{{p.email}}</th>
+          <td><a (click)="selectThisHospital(p.id)">Select</a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

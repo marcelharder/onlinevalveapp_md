@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root>
+<Country>
+		<ID>1</ID>
+		<ISO>US</ISO>
+		<Description>USA</Description>
+</Country>
+<Country>
+		<ID>39</ID>
+		<ISO>IT</ISO>
+		<Description>Italy</Description>
+        
+</Country>
+<Country>
+		<ID>37</ID>
+		<ISO>DE</ISO>
+		<Description>Germany</Description>
+        
+</Country>
+<Country>
+		<ID>32</ID>
+		<ISO>BE</ISO>
+		<Description>Belgie</Description>
+        
+</Country>
+<Country>
+		<ID>966</ID>
+		<ISO>SA</ISO>
+		<Description>KSA</Description>
+        
+</Country>
+<Country>
+		<ID>63</ID>
+		<ISO>FR</ISO>
+		<Description>France</Description>
+        
+</Country>
+<Country>
+		<ID>49</ID>
+		<ISO>GB</ISO>
+		<Description>United Kingdom</Description>
+        
+</Country>
+<Country>
+		<ID>31</ID>
+		<ISO>NL</ISO>
+		<Description>Holland</Description>
+        
+</Country>
+</root>

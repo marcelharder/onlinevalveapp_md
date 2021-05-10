@@ -54,11 +54,13 @@ namespace api.Controllers
             return Ok(result);
         }
         [AllowAnonymous]
-        [Route("api/tfd/{model}/{size}")]
+        [Route("api/tfd/{pc}/{size}")]
         public async Task<IActionResult> getTFD(string pc, string size)
         {
             var result = await _valve.getTFD(pc, size);
-            return Ok(result);
+            if(result != ""){return Ok(result);}
+            return BadRequest("This size is not found ...");
+            
         }
 
 

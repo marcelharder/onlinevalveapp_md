@@ -376,44 +376,45 @@ namespace api.DAL.Implementations
 
         public async Task<List<Class_Valve>> getValvesForSOAAsync(ValveParams v)
         {
-           // v.HospitalNo = await _special.getCurrentUserHospitalId();
+            // v.HospitalNo = await _special.getCurrentUserHospitalId();
             return await methodXAsync(v);
         }
 
         private async Task<List<Class_Valve>> methodXAsync(ValveParams v)
         {
             var result = new List<Class_Valve>();
-            await Task.Run(()=>{
-            var soort = v.Soort;
-            var position = v.Position;
-            var size = v.Size;
-            var _position = "";
-            var _currentHospital = v.HospitalNo;
-            var help = "";
+            await Task.Run(() =>
+            {
+                var soort = v.Soort;
+                var position = v.Position;
+                var size = v.Size;
+                var _position = "";
+                var _currentHospital = v.HospitalNo;
+                var help = "";
 
-             switch (soort)
-            {
-                case 1: help = "Mechanical"; break;
-                case 2: help = "Biological"; break;
-                case 3: help = "Valved_Conduit"; break;
-                case 4: help = "Annuloplasty_Ring"; break;
-                case 5: help = "Pericardial Patch"; break;
-            }
-            switch (position)
-            {
-                case 1: _position = "Aortic"; break;
-                case 2: _position = "Mitral"; break;
-                case 3: _position = "Other"; break;
-            }
-            var resultx = _context.Valves.Where(x => x.Type == help).AsQueryable();
-            resultx = resultx.Where(s => s.Hospital_code == _currentHospital);
-            resultx = resultx.Where(s => s.Implant_position == _position);
-            resultx = resultx.Where(s => s.implanted == 0);
-            if (size != 0) { resultx = resultx.Where(s => s.Size == size.ToString()); }
-            resultx = resultx.Where(s => s.Expiry_date > DateTime.UtcNow);
-            resultx.OrderBy(c => c.Expiry_date);
-            result = resultx.ToList();
-            
+                switch (soort)
+                {
+                    case 1: help = "Mechanical"; break;
+                    case 2: help = "Biological"; break;
+                    case 3: help = "Valved_Conduit"; break;
+                    case 4: help = "Annuloplasty_Ring"; break;
+                    case 5: help = "Pericardial Patch"; break;
+                }
+                switch (position)
+                {
+                    case 1: _position = "Aortic"; break;
+                    case 2: _position = "Mitral"; break;
+                    case 3: _position = "Other"; break;
+                }
+                var resultx = _context.Valves.Where(x => x.Type == help).AsQueryable();
+                resultx = resultx.Where(s => s.Hospital_code == _currentHospital);
+                resultx = resultx.Where(s => s.Implant_position == _position);
+                resultx = resultx.Where(s => s.implanted == 0);
+                if (size != 0) { resultx = resultx.Where(s => s.Size == size.ToString()); }
+                resultx = resultx.Where(s => s.Expiry_date > DateTime.UtcNow);
+                resultx.OrderBy(c => c.Expiry_date);
+                result = resultx.ToList();
+
             });
             return result;
         }
@@ -432,7 +433,7 @@ namespace api.DAL.Implementations
         // depending on the patient data this method returns the suggested valves
         public async Task<PagedList<Class_Valve>> getSuggestedValves(SelectParams sp)
         {
-           if (sp.BioPref == "1")
+            if (sp.BioPref == "1")
             {
                 var result = await _context.Valves
                 .Where(x => x.Hospital_code == sp.HospitalNo)
@@ -442,7 +443,7 @@ namespace api.DAL.Implementations
                 .Where(s => s.Type == "Biological")
                 .Where(s => s.Expiry_date > DateTime.UtcNow)
                 .OrderBy(c => c.Expiry_date).ToListAsync();
-                foreach(Class_Valve cv in result){cv.TFD = calculateIndexedFTD(sp.Height, sp.Weight,cv.TFD);}
+                foreach (Class_Valve cv in result) { cv.TFD = calculateIndexedFTD(sp.Height, sp.Weight, cv.TFD); }
                 return PagedList<Class_Valve>.Create(result, sp.PageNumber, sp.PageSize);
             }
             else
@@ -454,7 +455,7 @@ namespace api.DAL.Implementations
                 .Where(s => s.Size == sp.Size)
                 .Where(s => s.Expiry_date > DateTime.UtcNow)
                 .OrderBy(c => c.Expiry_date).ToListAsync();
-                foreach(Class_Valve cv in result){cv.TFD = calculateIndexedFTD(sp.Height, sp.Weight,cv.TFD);}
+                foreach (Class_Valve cv in result) { cv.TFD = calculateIndexedFTD(sp.Height, sp.Weight, cv.TFD); }
                 return PagedList<Class_Valve>.Create(result, sp.PageNumber, sp.PageSize);
             }
         }
@@ -463,7 +464,7 @@ namespace api.DAL.Implementations
         {
             var help = 0.0;
             var bsa = 0.007184 * (Math.Pow(height, 0.725) * Math.Pow(weight, 0.425));
-            help = TFD/bsa;
+            help = TFD / bsa;
             return help;
         }
 
@@ -494,7 +495,8 @@ namespace api.DAL.Implementations
             .Where(s => s.Size == size)
             .FirstOrDefaultAsync();
 
-            return result.TFD.ToString();
+            if (result != null) { return result.TFD.ToString(); }
+            else { return ""; }
         }
     }
 }

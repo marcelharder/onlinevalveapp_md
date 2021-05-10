@@ -74,6 +74,6 @@ export class ValveService {
     // tslint:disable-next-line:max-line-length
     updateValveTransferDetails(userId: number, ct: ValveTransfer) { return this.http.put<number>(this.baseUrl + 'updateValveTransfer/' + userId, ct) }
 
-
+    updateValveTypePhoto(photoUrl:string){return this.http.post<string>(this.baseUrl + 'updatePhoto', photoUrl) }
 
 }

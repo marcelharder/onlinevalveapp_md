@@ -33,6 +33,7 @@ export class AddValveComponent implements OnInit {
         description: '',
         valve_size: '',
         type: '',
+        image: '',
         vendor_description: '',
         vendor_code: '',
         model_code: '',

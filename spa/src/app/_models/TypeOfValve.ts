@@ -9,6 +9,7 @@ export interface TypeOfValve {
     'vendor_description': string;
     'vendor_code': string;
     'model_code': string;
+    'image': string;
     'implant_position': string;
     'countries': string;
 }

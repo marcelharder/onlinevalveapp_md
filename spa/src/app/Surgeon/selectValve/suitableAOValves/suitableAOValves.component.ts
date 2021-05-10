@@ -64,6 +64,19 @@ export class SuitableAOValvesComponent implements OnInit {
   nonePPM(inp: string) { if (inp === 'none') { return true } }
   moderatePPM(inp: string) { if (inp === 'moderate') { return true } }
 
+  calculate_eoai(): string{
+    var help = 0.0;
+    help = this.pd.tfd/this.bsa;
+    return help.toFixed(2);
+  }
+  calculate_ed(): string{
+    var help = 0.0;
+    var help_1 = this.pd.tfd / Math.PI;
+    help = 20 * Math.sqrt(help_1);
+    // 20 * V (eoa/pi)
+    return help.toFixed(2);
+  }
+
   selectDetails(id: number) {
     this.list = 0;
     this.details = 1;
@@ -73,6 +86,7 @@ export class SuitableAOValvesComponent implements OnInit {
       debugger;
       this.title = "Details of the " + this.pd.description + " valve";
       this.ImagePath = this.pd.image;
+
 
      }, (error)=>{this.alertify.error(error)})
   

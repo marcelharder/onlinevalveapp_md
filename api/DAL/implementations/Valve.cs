@@ -486,5 +486,15 @@ namespace api.DAL.Implementations
            .OrderBy(c => c.Expiry_date).ToListAsync();
             return result;
         }
+
+        public async Task<string> getTFD(string pc, string size)
+        {
+            var result = await _context.Valves
+            .Where(s => s.Product_code == pc)
+            .Where(s => s.Size == size)
+            .FirstOrDefaultAsync();
+
+            return result.TFD.ToString();
+        }
     }
 }

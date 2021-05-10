@@ -53,6 +53,16 @@ namespace api.Controllers
             var result = await _valve.getValveById(id);
             return Ok(result);
         }
+        [AllowAnonymous]
+        [Route("api/tfd/{model}/{size}")]
+        public async Task<IActionResult> getTFD(string pc, string size)
+        {
+            var result = await _valve.getTFD(pc, size);
+            return Ok(result);
+        }
+
+
+
         #endregion
 
         [Route("api/valvesBySoort/{soort}/{position}")]
@@ -183,6 +193,7 @@ namespace api.Controllers
         #endregion
 
         #region <!-- valve selection for fitting-->
+
         [HttpGet("api/isMeasuredSizeEnough/{size}")]
         public async Task<IActionResult> isMSEnough(int size, [FromQuery] SelectParams sv)
         {
@@ -210,6 +221,7 @@ namespace api.Controllers
 
             return Ok(result);
         }
+
         [HttpGet("api/getAllAorticValves/{id}")]
         public async Task<IActionResult> getAOValves(int id)
         {

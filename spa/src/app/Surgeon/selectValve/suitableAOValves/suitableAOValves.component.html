@@ -48,7 +48,20 @@
     <div *ngIf="showDetails()">
       <div class="card-body"  style="background-color: lightgrey;">
        <div class="row">
-           <div class="col-sm-6"></div>
+           <div class="col-sm-6">
+               <div class="row">
+                   <div class="col-sm-8"><h6><span class="badge badge-secondary">Effective Orfice Area(EOA)</span></h6></div>
+                   <div class="col-sm-4">{{pd.tfd}} cm<sup>2</sup></div>
+               </div>
+               <div class="row">
+                <div class="col-sm-8"><h6><span class="badge badge-secondary">Effective Orfice Area(EOA)-indexed</span></h6></div>
+                <div class="col-sm-4">{{calculate_eoai()}}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8"><h6><span class="badge badge-secondary">Effective Diameter</span></h6></div>
+                <div class="col-sm-4">{{calculate_ed()}} mm.</div>
+            </div>
+           </div>
            <div class="col-sm-6"><img [src]="ImagePath"></div>
         </div>
 

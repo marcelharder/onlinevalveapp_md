@@ -208,6 +208,7 @@ export class SelectValveComponent implements OnInit {
     //Dubois formula: 0.007184 × H0.725 × W0.425
     var help = 0.0;
     help = 0.007184 * (Math.pow(height, 0.725) * Math.pow(weight, 0.425));
+    this.bsa = help;
     return help;
   }
 

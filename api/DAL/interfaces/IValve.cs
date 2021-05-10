@@ -16,6 +16,8 @@ namespace api.DAL.Interfaces
         Task<ValveForReturnDTO> getValveBySerial(string serial, string whoWantsToKnow);
         Task<ValveForReturnDTO> getValveById(int id);
 
+        Task<string> getTFD(string model, string size);
+
         Task<string> markValveAsImplantedAsync(int id, int procedureId);
         void updateValve(ValveForReturnDTO p);
         void Add(Class_Valve v);

@@ -92,17 +92,13 @@
     <div class="card">
       <div class="card-header"></div>
       <div class="card-body">
-          <img src="ImagePath">
+          <img src={{vc?.image}}>
       </div>
       <div class="card-footer">
 
         <input type="file" ng2FileSelect [uploader]="uploader" />
-
-        <button type="button" class="btn btn-success btn-s"
-                  (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-              <span class="fa fa-upload"></span> Upload 
-          </button>
-
+        <button (click)="seturl()">select</button>
+       
          
       </div>
     </div>

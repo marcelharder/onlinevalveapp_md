@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { ValveService } from 'src/app/_services/valve.service';
 import { FileUploader } from 'ng2-file-upload';
 import { environment } from 'src/environments/environment';
-import { Photo } from 'src/app/_models/Photo';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -27,41 +26,13 @@ export class EditProductComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.initializeUploader();
 
-  }
-
-  initializeUploader() {
     this.uploader = new FileUploader({
-      url: this.baseUrl + 'valves/' + this.vc.no + '/photos/',
-      authToken: 'Bearer ' + localStorage.getItem('token'),
-      isHTML5: true,
-      allowedFileType: ['image'],
-      removeAfterUpload: true,
-      autoUpload: false,
-      maxFileSize: 10 * 1024 * 1024
-    });
-    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
-    this.uploader.onSuccessItem = (item, response, status, headers) => {
-      debugger;
-      if (response) {
-        const res: Photo = JSON.parse(response);
-        const photo = {
-          id: res.id,
-          url: res.url,
-          dateAdded: res.dateAdded,
-          description: res.description,
-          isMain: res.isMain
-        };
-        /* this.photos.push(photo);
-        if (photo.isMain) {
-         /*  this.authService.changeMemberPhoto(photo.url);
-          this.authService.currentUser.photoUrl = photo.url;
-          localStorage.setItem('user', JSON.stringify(this.authService.currentUser) ); */
 
-      }
-    };
+    });
+
   }
+
 
 
 

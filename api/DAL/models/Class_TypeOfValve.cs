@@ -13,6 +13,7 @@ namespace api.DAL.models
         public string Implant_position { get; set; }
         public string uk_code { get; set; }
         public string us_code { get; set; }
+        public string image { get; set; } 
         public string Description { get; set; }
         [Required]
         public string Type { get; set; }

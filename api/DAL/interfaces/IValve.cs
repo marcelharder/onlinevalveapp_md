@@ -17,6 +17,7 @@ namespace api.DAL.Interfaces
         Task<ValveForReturnDTO> getValveById(int id);
 
         Task<string> getTFD(string model, string size);
+        Task<double> calculateIndexedFTD(int weight, int height, double tfd);
 
         Task<string> markValveAsImplantedAsync(int id, int procedureId);
         void updateValve(ValveForReturnDTO p);

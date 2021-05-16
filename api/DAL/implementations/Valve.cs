@@ -443,7 +443,7 @@ namespace api.DAL.Implementations
                 .Where(s => s.Type == "Biological")
                 .Where(s => s.Expiry_date > DateTime.UtcNow)
                 .OrderBy(c => c.Expiry_date).ToListAsync();
-                foreach (Class_Valve cv in result) { cv.TFD = calculateIndexedFTD(sp.Height, sp.Weight, cv.TFD); }
+                foreach (Class_Valve cv in result) { cv.TFD = await calculateIndexedFTD(sp.Height, sp.Weight, cv.TFD); }
                 return PagedList<Class_Valve>.Create(result, sp.PageNumber, sp.PageSize);
             }
             else
@@ -455,18 +455,12 @@ namespace api.DAL.Implementations
                 .Where(s => s.Size == sp.Size)
                 .Where(s => s.Expiry_date > DateTime.UtcNow)
                 .OrderBy(c => c.Expiry_date).ToListAsync();
-                foreach (Class_Valve cv in result) { cv.TFD = calculateIndexedFTD(sp.Height, sp.Weight, cv.TFD); }
+                foreach (Class_Valve cv in result) { cv.TFD = await calculateIndexedFTD(sp.Height, sp.Weight, cv.TFD); }
                 return PagedList<Class_Valve>.Create(result, sp.PageNumber, sp.PageSize);
             }
         }
 
-        private double calculateIndexedFTD(int height, int weight, double TFD)
-        {
-            var help = 0.0;
-            var bsa = 0.007184 * (Math.Pow(height, 0.725) * Math.Pow(weight, 0.425));
-            help = TFD / bsa;
-            return help;
-        }
+        
 
         public async Task<List<Class_Valve>> getAllAorticValves(int hospitalId)
         {
@@ -497,6 +491,17 @@ namespace api.DAL.Implementations
 
             if (result != null) { return result.TFD.ToString(); }
             else { return ""; }
+        }
+
+        public async Task<double> calculateIndexedFTD(int height, int weight, double TFD)
+        {
+            var help = 0.0;
+            await Task.Run(() =>
+            {
+                var bsa = 0.007184 * (Math.Pow(height, 0.725) * Math.Pow(weight, 0.425));
+                help = TFD / bsa;
+            });
+            return help;
         }
     }
 }

@@ -196,6 +196,30 @@ namespace api.Controllers
 
         #region <!-- valve selection for fitting-->
 
+        [HttpGet("api/ppm")]
+        public async Task<IActionResult> getPPM([FromQuery] PPMParams pp)
+        {
+            var tfd = await _valve.getTFD(pp.productCode, pp.size);
+            if (tfd != "")
+            {
+                var tfdDouble = Convert.ToDouble(tfd);
+                var result = await _valve.calculateIndexedFTD(pp.height, pp.weight, tfdDouble);
+                var advice = "";
+                if (result < .85)
+                {
+                    if (result < .65) { advice = "severe"; }
+                    else { advice = "moderate"; }
+                }
+                else { advice = "no"; }
+                return Ok(advice);
+            }
+            else
+            {
+                return BadRequest("Something went wrong ...");
+            }
+
+        }
+
         [HttpGet("api/isMeasuredSizeEnough/{size}")]
         public async Task<IActionResult> isMSEnough(int size, [FromQuery] SelectParams sv)
         {

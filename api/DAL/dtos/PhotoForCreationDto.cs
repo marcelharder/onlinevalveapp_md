@@ -11,6 +11,7 @@ namespace api.DAL.dtos
        public DateTime DateAdded { get; set; }
 
        public string PublicId { get; set; }
+       public int ValveId { get; set; }
 
        public PhotoForCreationDto()
        {

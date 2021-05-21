@@ -9,6 +9,9 @@ using api.DAL.models;
 using System;
 using api.Helpers;
 using System.Collections.Generic;
+using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
+using Microsoft.Extensions.Options;
 
 namespace api.Controllers
 {
@@ -18,6 +21,7 @@ namespace api.Controllers
     public class ValveController : ControllerBase
     {
         private IValve _valve;
+        
         private IValveCode _code;
         private SpecialMaps _special;
         public ValveController(IValve valve, SpecialMaps special, IValveCode code)
@@ -58,9 +62,9 @@ namespace api.Controllers
         public async Task<IActionResult> getTFD(string pc, string size)
         {
             var result = await _valve.getTFD(pc, size);
-            if(result != ""){return Ok(result);}
+            if (result != "") { return Ok(result); }
             return BadRequest("This size is not found ...");
-            
+
         }
 
 
@@ -92,6 +96,7 @@ namespace api.Controllers
                 return Ok(result);
             }
         }
+
         [Route("api/updatevalve")]
         [HttpPost]
         public async Task<IActionResult> postValve(ValveForReturnDTO cv)
@@ -106,6 +111,8 @@ namespace api.Controllers
                 help = cv.TFD;
             }
             cv.TFD = help;
+            
+
 
 
             _valve.updateValve(cv);
@@ -113,6 +120,7 @@ namespace api.Controllers
             return BadRequest("Can't save this valve");
 
         }
+
         [Route("api/valveBySerial/{serial}/requester/{whoWantsToKnow}")]
         public async Task<IActionResult> getValve01(string serial, string whoWantsToKnow)
         {
@@ -120,10 +128,12 @@ namespace api.Controllers
             var result = await _valve.getValveBySerial(serial, whoWantsToKnow);
             return Ok(result);
         }
+
         [Route("api/valveBasedOnTypeOfValve/{id}")]
-        public async Task<IActionResult> getValve02(int id)
+        public async Task<IActionResult> getValve02(int id) // a valve is added here
         {
             var v = await _valve.valveBasedOnTypeOfValve(id);
+            
             _valve.Add(v);
             if (await _valve.SaveAll())
             {
@@ -136,12 +146,14 @@ namespace api.Controllers
             }
 
         }
+
         [Route("api/valveExpiry/{months}")]
         public async Task<IActionResult> getValveExpiry(int months)
         {
             var result = await _valve.getValveExpiry(months);
             return Ok(result);
         }
+
         #region <--! transfer stuff-->
 
         [Route("api/valveTransfers/{UserId}/{ValveId}")]

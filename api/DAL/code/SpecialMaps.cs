@@ -247,6 +247,7 @@ namespace api.DAL.Code
         #region <!-- valve mappings -->
         public async Task<Class_Valve> getValveFromValveCodeAsync(Class_TypeOfValve selectedValveCode)
         {
+            // a new valve is created here with a valvetype as basis
             var help = new Class_Valve();
             help.No = await getNewValveNumberAsync();// dit is een uniek identifying number
             help.Description = selectedValveCode.Description;
@@ -260,6 +261,7 @@ namespace api.DAL.Code
             help.Model_code = selectedValveCode.Model_code;
             help.Size = "";
             help.TFD = 0.0;
+            help.Image = selectedValveCode.image;
             help.Implant_position = selectedValveCode.Implant_position;
             help.Procedure_id = 0;
             help.implanted = 0;
@@ -312,6 +314,7 @@ namespace api.DAL.Code
             help.Model_code = p.Model_code;
             help.Size = p.Size;
             help.TFD = p.TFD;
+            help.Image = p.Image;
             help.Implant_position = p.Implant_position;
             help.Procedure_id = p.Procedure_id;
             help.implanted = p.implanted;

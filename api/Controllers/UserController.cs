@@ -99,7 +99,6 @@ namespace api.Controllers
             res.Photos.Add(photo);
             _user.Update(res);
             await _user.SaveAll();
- 
           
                 
                 var resu = await _special.getUserforReturnDTOAsync(res);

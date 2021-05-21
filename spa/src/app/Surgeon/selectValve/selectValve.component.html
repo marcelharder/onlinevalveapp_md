@@ -2,10 +2,7 @@
   <div class="card-header" style="background-color: silver;">
     <div class="d-flex flex-row">
       <div class="p-2">Fit a valve for your patient</div>
-      <div class="p-2" *ngIf="showAdvice()">
-        <h3 *ngIf="showModeratePPM()"><span class="badge badge-warning">{{messagePPM}}</span></h3>
-        <h3 *ngIf="showSeverePPM()"><span class="badge badge-danger">{{messagePPM}}</span></h3>
-      </div>
+     
     </div>
   </div>
   <div class="card-body" style="background-color: beige;">
@@ -37,7 +34,7 @@
             </div>
           </div> -->
 
-          <div class="col-sm-12 mb-1">
+          <div class="col-sm-12 mb-1" *ngIf="showAoValves()">
             <div class="row">
               <div class="col-sm-6">
                 <h5><span class="badge badge-default">Weight (kg)</span></h5>
@@ -47,7 +44,7 @@
                 </select></div>
             </div>
           </div>
-          <div class="col-sm-12 mb-1">
+          <div class="col-sm-12 mb-1" *ngIf="showAoValves()">
             <div class="row">
               <div class="col-sm-6">
                 <h5><span class="badge badge-default">Height (cm)</span></h5>
@@ -70,14 +67,13 @@
               <div class="col-sm-6">
                 <h5><span class="badge badge-default">Size</span></h5>
               </div>
-              <div class="col-sm-6"><select [(ngModel)]="selectedSize" name="sos" class="form-control"
-                  (change)="reportAnnularDiameter()">
+              <div class="col-sm-6"><select [(ngModel)]="selectedSize" name="sos" class="form-control" >
                   <option *ngFor="let an of sizesOptions" [value]=an.value>{{ an.description }}</option>
                 </select></div>
             </div>
           </div>
 
-          <div class="col-sm-12 mb-1">
+          <!-- <div class="col-sm-12 mb-1">
             <div class="row">
               <div class="col-sm-6"></div>
               <div class="col-sm-6">
@@ -91,7 +87,7 @@
 
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="col-sm-12 mb-1">
             <div class="row">
               <div class="col-sm-6"></div>
@@ -100,7 +96,7 @@
                   <input type="checkbox" class="custom-control-input" id="customSwitch2" [(ngModel)]="preference"
                     name="ps">
                   <label class="custom-control-label" for="customSwitch2">
-                    <h6><span class="badge badge-secondary">Tissue valve preferred</span></h6>
+                    <h6><span class="badge badge-secondary">Tissue valve only</span></h6>
                   </label>
                 </div>
 

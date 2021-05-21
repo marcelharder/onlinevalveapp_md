@@ -54,8 +54,6 @@ export class SuitableAOValvesComponent implements OnInit {
   ngOnInit() {
     this.auth.currentHospital.subscribe((next) => { this.hospitalName = next; });
    
-
-
   }
 
   showDetails() { if (this.details === 1) { return true; } }

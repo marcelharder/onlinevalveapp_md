@@ -8,9 +8,14 @@
     </div>
   </div>
   <div class="card-body">
-    <div class="row">
+    <div class="row" *ngIf="!displayDetails()">
       <div *ngFor="let product of listOfProducts" class="col-sm-4">
-        <app-productDetailsCard [cd]="product"></app-productDetailsCard>
+        <app-productDetailsCard [cd]="product" (details)="showDetails($event)"></app-productDetailsCard>
+      </div>
+    </div>
+    <div class="row" *ngIf="displayDetails()"> hallo
+      <div class="col-sm-12">
+        <app-productEditDetails [prod]="productDetails"></app-productEditDetails>
       </div>
     </div>
   </div>

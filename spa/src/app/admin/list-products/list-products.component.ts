@@ -5,6 +5,7 @@ import { TypeOfValve } from 'src/app/_models/TypeOfValve';
 import { Vendor } from 'src/app/_models/Vendor';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { AuthService } from 'src/app/_services/auth.service';
+import { ProductService } from 'src/app/_services/product.service';
 import { VendorService } from 'src/app/_services/vendor.service';
 
 @Component({
@@ -17,9 +18,12 @@ export class ListProductsComponent implements OnInit {
   listOfProducts:Array<TypeOfValve> = [];
   listOfVendors:Array<DropItem> =[];
   selectedVendor = 0;
+  details = 0;
+  productDetails: TypeOfValve;
 
   constructor(private route: ActivatedRoute,
     private vendorService: VendorService,
+    private prod: ProductService,
     private alertify: AlertifyService,
     private authService: AuthService) { }
 
@@ -35,7 +39,16 @@ export class ListProductsComponent implements OnInit {
     this.vendorService.getAllFullProducts(this.selectedVendor).subscribe((next)=>{
       this.listOfProducts = next;
     })
-    this.alertify.message("blah");
+    
   }
+
+  showDetails(id: string){
+    // get details of this valve type
+    this.prod.getProductById(+id).subscribe((next)=>{
+      this.productDetails = next});
+      this.details = 1;
+   }
+
+  displayDetails(){if(this.details === 1){return true;}}
 
 }

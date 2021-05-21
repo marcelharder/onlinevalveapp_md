@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TypeOfValve } from 'src/app/_models/TypeOfValve';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 
 @Component({
   selector: 'app-productDetailsCard',
@@ -8,10 +9,14 @@ import { TypeOfValve } from 'src/app/_models/TypeOfValve';
 })
 export class ProductDetailsCardComponent implements OnInit {
   @Input() cd: TypeOfValve;
+  @Output() details = new EventEmitter<String>();
 
-  constructor() { }
+  constructor(private alertify:AlertifyService) { }
 
   ngOnInit() {
+    
   }
+
+  showDetails(){this.details.emit(this.cd.valveTypeId.toString());}
 
 }

@@ -9,6 +9,7 @@ import { ValveService } from '../_services/valve.service';
 import { HospitalService } from '../_services/hospital.service';
 import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
+import { valveSize } from "../_models/valveSize";
 
 @Component({
     selector: 'app-add-valve',
@@ -26,12 +27,12 @@ export class AddValveComponent implements OnInit {
     details = 0;
     allValves = 0;
     product: TypeOfValve = {
-        id: 0,
+        valveTypeId: 0,
         no: 0,
         uk_code: '',
         us_code: '',
         description: '',
-        valve_size: '',
+        valve_size: [],
         type: '',
         image: '',
         vendor_description: '',

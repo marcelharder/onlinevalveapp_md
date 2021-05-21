@@ -276,7 +276,6 @@ namespace api.DAL.Code
             var help = new ValveForReturnDTO();
             help.valveId = valve.ValveId;
             help.No = valve.No;
-            help.ValveSizes = await getValveSizesAsync(valve.Product_code);
             help.Vendor_name = await getVendorNameFromVendorCodeAsync(valve.Vendor_code);
             help.Description = valve.Description;
             help.Vendor_code = valve.Vendor_code;
@@ -534,11 +533,17 @@ namespace api.DAL.Code
             result = Convert.ToInt32(vendor.database_no);
             return result;
         }
-        public async Task<string[]> getValveSizesAsync(string Product_code)
+        /* public async Task<string[]> getValveSizesAsync(string Product_code)
         {
             var selectedValveCode = await _context.ValveCodes.FirstOrDefaultAsync(x => x.uk_code == Product_code);
+            
+            
+            
+            
+            
+            
             return selectedValveCode.Valve_size.Split(',');
-        }
+        } */
         public async Task<int> getVendorIdFromName(string name)
         {
             var selectedVendor = await _context.Vendors.FirstOrDefaultAsync(x => x.description == name);

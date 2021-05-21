@@ -52,9 +52,9 @@ namespace api.Controllers
             if (await _vc.SaveAll())
             {
                 //var valveToReturn = await _special.mapToValveForReturnAsync(v);
-                help.No = help.Id;
+                help.No = help.ValveTypeId;
                 await _vc.saveDetails(help);
-                return CreatedAtRoute("getProduct", new { id = help.Id }, help);
+                return CreatedAtRoute("getProduct", new { id = help.ValveTypeId }, help);
             }
             return BadRequest("add product failed");
         }
@@ -86,8 +86,7 @@ namespace api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPhotoForProduct(int id, [FromQuery] PhotoForCreationDto photoDto)
         {
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)) return Unauthorized();
-            var product = await _vc.getDetails(photoDto.ValveId);
+            var product = await _vc.getDetails(id);
 
             var file = photoDto.File;
             var uploadresult = new ImageUploadResult();
@@ -104,10 +103,10 @@ namespace api.Controllers
                     uploadresult = _cloudinary.Upload(uploadParams);
                 }
                 product.image = uploadresult.Uri.ToString();
-
+                
                 if (await _vc.SaveAll())
                 {
-                    return CreatedAtRoute("getProduct", new { id = product.Id }, product);
+                    return CreatedAtRoute("getProduct", new { id = product.ValveTypeId }, product);
                 }
             }
             return BadRequest();

@@ -89,7 +89,7 @@ namespace api.DAL.Implementations
         }
 
         public async Task<Class_TypeOfValve> getDetails(int code) {
-            var result = await _context.ValveCodes.FirstOrDefaultAsync(a => a.No == code);
+            var result = await _context.ValveCodes.Include(a => a.Valve_size).FirstOrDefaultAsync(a => a.No == code);
             return result;
         }
 
@@ -107,6 +107,9 @@ namespace api.DAL.Implementations
             _context.Remove(entity);
         }
 
-        
+        public async Task<List<Class_TypeOfValve>> getAllProducts()
+        {
+            return await _context.ValveCodes.Include(a => a.Valve_size).ToListAsync();
+        }
     }
 }

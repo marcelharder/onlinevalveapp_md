@@ -9,8 +9,7 @@ export class ProductService {
 
     constructor(private http: HttpClient) {  }
 
-    // getProducts(soort: number) { return this.http.get<TypeOfValve[]>(this.baseUrl + 'products/' + soort); }
-
+    getAllTypeOfValve(nameid?: any, pageNumber?: number, pageSize?: number) { return this.http.get<TypeOfValve[]>(this.baseUrl + 'products');}
     addProduct() { return this.http.get<TypeOfValve>(this.baseUrl + 'addProduct'); }
     getProductById(id: number) { return this.http.get<TypeOfValve>(this.baseUrl + 'productByNo/' + id); }
     // tslint:disable-next-line: max-line-length

@@ -15,5 +15,6 @@ namespace api.DAL.Interfaces
         void Add(Class_TypeOfValve v);
         Task<bool> SaveAll();
         void Delete<T>(T entity) where T : class;
+        Task<List<Class_TypeOfValve>>  getAllProducts();
     }
 }

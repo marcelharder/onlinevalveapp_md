@@ -7,9 +7,12 @@ import { Observable } from 'rxjs';
 import { PaginatedResult } from '../_models/pagination';
 import { map } from 'rxjs/operators';
 import { DropItem } from '../_models/dropItem';
+import { TypeOfValve } from '../_models/TypeOfValve';
 
 @Injectable()
 export class UserService {
+
+    
 
     baseUrl = environment.apiUrl;
     constructor(private http: HttpClient) { }
@@ -33,6 +36,7 @@ export class UserService {
                 return paginatedResult;
             }));
     }
+   
     saveUser(userId: number, item: User) { return this.http.post(this.baseUrl + 'updateuser/' + userId, item); }
     deleteUser(id: number){return this.http.delete(this.baseUrl + 'deleteuser/' + id, {responseType: 'text' as 'json'})}
     

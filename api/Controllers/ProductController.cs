@@ -112,6 +112,11 @@ namespace api.Controllers
             return BadRequest();
         }
 
-       
+        [Route("api/products")]
+        [HttpGet]
+        public async Task<IActionResult> getAllProducts(){
+            var result = await _vc.getAllProducts();
+            return Ok(result);
+        }
     }
 }

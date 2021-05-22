@@ -17,6 +17,8 @@ export class ProductDetailsCardComponent implements OnInit {
     
   }
 
-  showDetails(){this.details.emit(this.cd.valveTypeId.toString());}
+  showDetails(){
+    debugger;
+    this.details.emit(this.cd.no.toString());}
 
 }

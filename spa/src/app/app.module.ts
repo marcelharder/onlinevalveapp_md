@@ -72,7 +72,7 @@ import { SuitableMValvesComponent } from './Surgeon/selectValve/suitableMValves/
 import { ListProductsComponent } from './admin/list-products/list-products.component';
 import { ListProductsResolver } from './_resolvers/ListProductsResolver';
 import { ProductDetailsCardComponent } from './admin/productDetailsCard/productDetailsCard.component';
-import { ProductEditDetailsComponent } from './admin/productEditDetails/productEditDetails.component';
+import { productEditDetailsComponent } from './admin/productEditDetails/productEditDetails.component';
 
 
 export function tokenGet() { return localStorage.getItem('token'); }
@@ -117,7 +117,7 @@ export function tokenGet() { return localStorage.getItem('token'); }
       SuitableMValvesComponent,
       ListProductsComponent,
       ProductDetailsCardComponent,
-      ProductEditDetailsComponent
+      productEditDetailsComponent
 
    ],
    imports: [

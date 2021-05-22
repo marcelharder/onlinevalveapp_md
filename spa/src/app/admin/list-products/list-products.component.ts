@@ -51,4 +51,6 @@ export class ListProductsComponent implements OnInit {
 
   displayDetails(){if(this.details === 1){return true;}}
 
+  returnFromEditDetails(test: string){if(test === "1"){this.details = 0;}}
+
 }

@@ -13,9 +13,9 @@
         <app-productDetailsCard [cd]="product" (details)="showDetails($event)"></app-productDetailsCard>
       </div>
     </div>
-    <div class="row" *ngIf="displayDetails()"> hallo
+    <div class="row" *ngIf="displayDetails()">
       <div class="col-sm-12">
-        <app-productEditDetails [prod]="productDetails"></app-productEditDetails>
+        <app-productEditDetails [prod]="productDetails" (backTo)="returnFromEditDetails($event)"></app-productEditDetails>
       </div>
     </div>
   </div>

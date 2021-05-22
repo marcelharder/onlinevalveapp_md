@@ -47,7 +47,6 @@ namespace api.Controllers
             help.Type = "";
             help.image = "https://res.cloudinary.com/marcelcloud/image/upload/v1620571880/valves/valves02.jpg";
 
-
             _vc.Add(help);
             if (await _vc.SaveAll())
             {
@@ -116,6 +115,19 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IActionResult> getAllProducts(){
             var result = await _vc.getAllProducts();
+            return Ok(result);
+        }
+   
+        [Route("api/addSize/{id}")]
+        [HttpPost]
+        public async Task<IActionResult> addSize(int id, [FromBody] Class_Valve_Size vs){
+            var result = await _vc.addSize(id, vs);
+            return Ok(result);
+        }
+        [Route("api/deleteSize/{id}/{sizeId}")]
+        [HttpDelete]
+        public async Task<IActionResult> deleteSize(int id,int sizeId){
+            var result = await _vc.deleteSize(id, sizeId);
             return Ok(result);
         }
     }

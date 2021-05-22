@@ -21,8 +21,7 @@ namespace api.DAL.Implementations
             _user = user;
             _context = context;
         }
-
-        
+       
 
         public async Task<string> getModelCode(int code)
         {
@@ -110,6 +109,26 @@ namespace api.DAL.Implementations
         public async Task<List<Class_TypeOfValve>> getAllProducts()
         {
             return await _context.ValveCodes.Include(a => a.Valve_size).ToListAsync();
+        }
+
+        public async Task<string> addSize(int id, Class_Valve_Size vs)
+        {
+            var selectedType = await _context.ValveCodes.Include(a => a.Valve_size).FirstOrDefaultAsync(x => x.No == id);
+            selectedType.Valve_size.Add(vs);
+            this.Update(vs);
+            if(await this.SaveAll()){ return "1"; } else return "0";
+        }
+
+        public async Task<string> deleteSize(int id, int sizeId)
+        {
+            var selectedValveSize = await _context.Valve_sizes.FirstOrDefaultAsync(x => x.SizeId == sizeId);
+            this.Delete(selectedValveSize);
+            if(await this.SaveAll()){ return "1"; } else return "0";
+        }
+
+        public void Update<T>(T entity) where T : class
+        {
+             _context.Update(entity);
         }
     }
 }

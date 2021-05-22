@@ -26,6 +26,12 @@
             <td>{{s.eoa}}</td>
             <td><button class="btn btn-warning" (click)="deleteSize(s.sizeId)">delete</button></td>
           </tr>
+          <tr>
+            <td><input [(ngModel)]="valvesize.sizeId" name="test1" class="form-model"></td>
+            <td><input [(ngModel)]="valvesize.size" name="test2" class="form-model"></td>
+            <td><input [(ngModel)]="valvesize.eoa" name="test3" class="form-model"></td>
+            <td><button class="btn btn-warning" (click)="addNewSizeNow()">Add</button></td>
+          </tr>
         </table>
       </div>
     </div>

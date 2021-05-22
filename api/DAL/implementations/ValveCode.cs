@@ -93,7 +93,7 @@ namespace api.DAL.Implementations
         }
 
         public async Task<string> saveDetails(Class_TypeOfValve tov){
-             var result = _context.ValveCodes.Update(tov);
+            var result = _context.ValveCodes.Update(tov);
             if(await _context.SaveChangesAsync() > 0){return "product details updated";}
             return "failed";
         }

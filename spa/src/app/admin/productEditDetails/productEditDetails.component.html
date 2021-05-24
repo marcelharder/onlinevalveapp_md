@@ -17,7 +17,7 @@
           <tr>
             <th>Id</th>
             <th>Size</th>
-            <th>EOA</th>
+            <th>Effective Orfice Area</th>
             <th></th>
           </tr>
           <tr *ngFor="let s of prod.valve_size">
@@ -26,13 +26,17 @@
             <td>{{s.eoa}}</td>
             <td><button class="btn btn-warning" (click)="deleteSize(s.sizeId)">delete</button></td>
           </tr>
-          <tr>
-            <td><input [(ngModel)]="valvesize.sizeId" name="test1" class="form-model"></td>
+         
+        </table>
+        <table>
+          <tr *ngIf="displayNewSize()">
+            <td><input [(ngModel)]="valvesize.sizeId" name="test2" class="form-model" readonly></td>
             <td><input [(ngModel)]="valvesize.size" name="test2" class="form-model"></td>
             <td><input [(ngModel)]="valvesize.eoa" name="test3" class="form-model"></td>
             <td><button class="btn btn-warning" (click)="addNewSizeNow()">Add</button></td>
           </tr>
         </table>
+
       </div>
     </div>
 

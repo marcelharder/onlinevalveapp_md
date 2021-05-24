@@ -15,8 +15,10 @@ namespace api.DAL.Interfaces
         void Add(Class_TypeOfValve v);
         Task<bool> SaveAll();
         void Delete<T>(T entity) where T : class;
+        void Add<T>(T entity) where T : class;
         Task<List<Class_TypeOfValve>>  getAllProducts();
-        Task<string> addSize(int id, Class_Valve_Size vs);
         Task<string> deleteSize(int id, int vs);
+
+        Task<Class_Valve_Size> GetSize(int id);
     }
 }

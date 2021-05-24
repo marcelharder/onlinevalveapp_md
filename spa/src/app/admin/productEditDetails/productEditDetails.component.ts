@@ -13,17 +13,17 @@ export class productEditDetailsComponent implements OnInit {
   @Input() prod: TypeOfValve;
   @Output() backTo = new EventEmitter<String>();
   listOfSizes: Array<valveSize> = [];
-  valvesize: valveSize = { sizeId: 0, size: 0,eoa: 0.0};
+  valvesize: valveSize = { sizeId: 0, size: 0, eoa: 0.0 };
+  newSizeToken = 0;
 
   constructor(private alertify: AlertifyService, private pro: ProductService) { }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() { }
 
   deleteSize(SizeId: number) {
     this.pro.deleteValveSize(this.prod.no, SizeId).subscribe((next) => {
-      if (next === '1') {
+      debugger;
+      if (next === 1) {
         this.alertify.message("deleted");
         // remove it from the local array
         let index = this.prod.valve_size.findIndex(d => d.sizeId === SizeId); //find index in your array
@@ -34,26 +34,37 @@ export class productEditDetailsComponent implements OnInit {
   }
 
   addNewSize() {
-    // open input form
+    // get the latest prod details
+    this.pro.getProductById(this.prod.no).subscribe((next) => {
+      this.prod = next;
+      // zero everything
+      this.valvesize.sizeId = 0;
+      this.valvesize.size = 0;
+      this.valvesize.eoa = 0;
 
-    this.alertify.message("add new size");
+      this.newSizeToken = 1;
+
+    });
+
+
+
+
   }
 
-  addNewSizeNow(){
-     this.prod.valve_size.push(this.valvesize);
+  displayNewSize() { if (this.newSizeToken === 1) { return true; } }
 
+  addNewSizeNow() {
+    // add this size to the backend first  
+    this.pro.addValveSize(this.prod.no, this.valvesize).subscribe((next) => {
+      this.valvesize = next; // get the new valve size from the backend
+      this.prod.valve_size.push(this.valvesize);
 
-   /*  this.pro.addValveSize(this.prod.no, this.valvesize).subscribe((next)=>{
-      if (next === '1') {
+      this.newSizeToken = 0;
 
-      }
-    }) */
+    })
   }
 
   backToList() {
-    // save the displayed valveType
-
-
     // go back to list
     this.backTo.emit("1");
   }

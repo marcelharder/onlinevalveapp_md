@@ -111,14 +111,6 @@ namespace api.DAL.Implementations
             return await _context.ValveCodes.Include(a => a.Valve_size).ToListAsync();
         }
 
-        public async Task<string> addSize(int id, Class_Valve_Size vs)
-        {
-            var selectedType = await _context.ValveCodes.Include(a => a.Valve_size).FirstOrDefaultAsync(x => x.No == id);
-            selectedType.Valve_size.Add(vs);
-            this.Update(vs);
-            if(await this.SaveAll()){ return "1"; } else return "0";
-        }
-
         public async Task<string> deleteSize(int id, int sizeId)
         {
             var selectedValveSize = await _context.Valve_sizes.FirstOrDefaultAsync(x => x.SizeId == sizeId);
@@ -129,6 +121,15 @@ namespace api.DAL.Implementations
         public void Update<T>(T entity) where T : class
         {
              _context.Update(entity);
+        }
+        public void Add<T>(T entity) where T : class
+        {
+             _context.Update(entity);
+        }
+
+        public async Task<Class_Valve_Size> GetSize(int id)
+        {
+            return await _context.Valve_sizes.FirstOrDefaultAsync(a => a.SizeId == id);
         }
     }
 }

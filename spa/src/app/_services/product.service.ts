@@ -17,10 +17,10 @@ export class ProductService {
     saveDetails(p: TypeOfValve) { return this.http.post<string>(this.baseUrl + 'saveProductDetails', p, { responseType: 'text' as 'json' }); }
     deleteProduct(id: number) { return this.http.delete(this.baseUrl + 'deleteProduct/' + id); }
     deleteValveSize(id:number, vs: number){
-        return this.http.delete<string>(this.baseUrl + 'deleteSize/' + id + '/' + vs)}
+        return this.http.delete<number>(this.baseUrl + 'deleteSize/' + id + '/' + vs)}
     addValveSize   (id:number, vs: valveSize)
     {
-        return this.http.post<string>(this.baseUrl + 'addSize/' + id, vs)
+        return this.http.post<valveSize>(this.baseUrl + 'addSize/' + id, vs)
     }
 
 }

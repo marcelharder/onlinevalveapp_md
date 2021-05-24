@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using api.DAL.Code;
@@ -121,9 +122,31 @@ namespace api.Controllers
         [Route("api/addSize/{id}")]
         [HttpPost]
         public async Task<IActionResult> addSize(int id, [FromBody] Class_Valve_Size vs){
-            var result = await _vc.addSize(id, vs);
-            return Ok(result);
+            Class_Valve_Size result = new Class_Valve_Size();
+            result.Size = vs.Size;
+            result.EOA = vs.EOA;
+
+            var selectedValve = await _vc.getDetails(id);
+            selectedValve.Valve_size.Add(result);
+
+            _vc.Update(selectedValve);
+
+            if (await _vc.SaveAll())
+            {
+            var test = selectedValve.Valve_size.Last();
+            return CreatedAtRoute("getSize",new { id = test.SizeId }, test);
+            }
+            return null;
+           
+            
         }
+
+        [Route("api/getSize/{id}", Name = "getSize")]
+        [HttpGet]
+        public async Task<Class_Valve_Size> getSize(int id){
+          return await _vc.GetSize(id);
+        }
+
         [Route("api/deleteSize/{id}/{sizeId}")]
         [HttpDelete]
         public async Task<IActionResult> deleteSize(int id,int sizeId){

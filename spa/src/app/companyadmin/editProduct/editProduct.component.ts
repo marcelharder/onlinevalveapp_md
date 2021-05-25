@@ -32,7 +32,9 @@ export class EditProductComponent implements OnInit {
     });
 
   }
-
+  updatePhoto(photoUrl: string){
+    this.vc.image = photoUrl;
+  }
 
 
 

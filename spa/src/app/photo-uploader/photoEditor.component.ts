@@ -14,6 +14,9 @@ import { Photo } from '../_models/Photo';
   styleUrls: ['./photoEditor.component.css']
 })
 export class PhotoEditorComponent implements OnInit {
+  @Input() userId: number; 
+  @Input() valvecode: number; 
+  @Input() hospitalId: number;
   @Input() photos: Photo[];
   @Output() getMemberPhotoChange: EventEmitter<string> = new EventEmitter();
   uploader: FileUploader;
@@ -31,8 +34,26 @@ export class PhotoEditorComponent implements OnInit {
 public fileOverBase(e: any): void {this.hasBaseDropZoneOver = e;}
 
 initializeUploader() {
+  let test = '';
+
+  if (this.userId !== 0) {
+      test = this.baseUrl + 'users/addUserPhoto/' + this.userId
+  }
+  else {
+      if (this.hospitalId !== 0) {
+          test = this.baseUrl + 'hospital/addHospitalPhoto/' + this.hospitalId
+      }
+      else {
+          if (this.valvecode !== 0) {
+              test = this.baseUrl + 'product/addProductPhoto/' + this.valvecode
+          }
+      }
+
+  }
+
+
 this.uploader = new FileUploader({
-url: this.baseUrl + 'users/' + this.authService.decodedToken.nameid + '/photos/',
+url: test,
 authToken: 'Bearer ' + localStorage.getItem('token'),
 isHTML5 : true,
 allowedFileType: ['image'],
@@ -43,20 +64,10 @@ maxFileSize: 10 * 1024 * 1024
 this.uploader.onAfterAddingFile = (file) => {file.withCredentials = false; };
 this.uploader.onSuccessItem = (item, response, status, headers) => {
   if (response) {
-    const res: Photo = JSON.parse(response);
-    const photo = {
-      id: res.id,
-      url: res.url,
-      dateAdded: res.dateAdded,
-      description: res.description,
-      isMain: res.isMain
-     };
-    this.photos.push(photo);
-    if (photo.isMain) {
-     /*  this.authService.changeMemberPhoto(photo.url);
-      this.authService.currentUser.photoUrl = photo.url;
-      localStorage.setItem('user', JSON.stringify(this.authService.currentUser) ); */
-     }
+    const res: any = JSON.parse(response);
+    if (this.hospitalId !== 0) { this.getMemberPhotoChange.emit(res.ImageUrl); }
+    if (this.userId !== 0) { this.getMemberPhotoChange.emit(res.photoUrl); }
+    if (this.valvecode !== 0) { this.getMemberPhotoChange.emit(res.image); }
   }
 };
 }

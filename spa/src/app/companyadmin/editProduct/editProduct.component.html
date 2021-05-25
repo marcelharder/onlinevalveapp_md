@@ -95,12 +95,8 @@
           <img src={{vc?.image}}>
       </div>
       <div class="card-footer">
-
-        <input type="file" ng2FileSelect [uploader]="uploader" />
-        <button (click)="seturl()">select</button>
-       
-         
-      </div>
+        <app-photo-editor [userId]="0" [valvecode]="vc.no" [hospitalId]="0" (getMemberPhotoChange)="updatePhoto($event)"></app-photo-editor>
+     </div>
     </div>
     
     

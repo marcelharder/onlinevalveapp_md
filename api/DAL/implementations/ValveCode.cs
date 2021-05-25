@@ -22,6 +22,8 @@ namespace api.DAL.Implementations
             _context = context;
         }
 
+        
+
         public async Task<string> getModelCode(int code)
         {
             var result = await _context.ValveCodes.FirstOrDefaultAsync(a => a.No == code);
@@ -104,5 +106,7 @@ namespace api.DAL.Implementations
         {
             _context.Remove(entity);
         }
+
+        
     }
 }

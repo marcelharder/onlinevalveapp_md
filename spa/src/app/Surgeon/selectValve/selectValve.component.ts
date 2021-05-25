@@ -76,10 +76,35 @@ export class SelectValveComponent implements OnInit {
   }
 
   findPossibleValves() {
-    if (this.selectedPosition.toString() === "1") { this.loadAoValves(); };
-    if (this.selectedPosition.toString() === "2") { this.loadMValves(); };
-    if (this.selectedPosition.toString() === "3") { this.loadAoValves(); this.loadMValves(); };
-    this.alertify.message("searching the correct valve")
+    if (this.selectedPosition.toString() === "1") {
+      // make sure that the height and weight are filled
+      if (this.selectedHeight != 0 && this.selectedWeight != 0) {
+        if (this.selectedSize != 0) { this.loadAoValves(); }
+        // make sure that the size filled
+        else { this.alertify.error("Please enter valve size ..."); }
+      } else {
+        this.alertify.error("Please enter height and weight first ...");
+      }
+    };
+    if (this.selectedPosition.toString() === "2") {
+      if (this.selectedSize != 0) { this.loadMValves(); }
+      // make sure that the size filled
+      else { this.alertify.error("Please enter valve size ..."); }
+    };
+    if (this.selectedPosition.toString() === "3") {
+      if (this.selectedHeight != 0 && this.selectedWeight != 0) {
+        if (this.selectedSize != 0) { this.loadAoValves(); }
+        // make sure that the size filled
+        else { this.alertify.error("Please enter valve size ..."); }
+      } else {
+        this.alertify.error("Please enter height and weight first ...");
+      }
+
+      if (this.selectedSize != 0) { this.loadMValves(); }
+      // make sure that the size filled
+      else { this.alertify.error("Please enter valve size ..."); }
+    };
+
   }
 
   onPositionChange() {
@@ -95,6 +120,7 @@ export class SelectValveComponent implements OnInit {
   showPlaatje() { if (this.showAo !== 1 && this.showM !== 1) { return true; } }
   showSeverePPM() { if (this.severePPM === 1) { return true; } }
   showModeratePPM() { if (this.moderatePPM === 1) { return true; } }
+  showAdvice() { if (this.showA === '1') { return true; } }
 
   loadAoValves() {
 
@@ -107,26 +133,27 @@ export class SelectValveComponent implements OnInit {
 
     this.vs.getSuggestedValves(this.auth.decodedToken.nameid, this.valveParams, 1, 10).subscribe((next: PaginatedResult<Valve[]>) => {
       this.aorticvalves = next.result;
-  
-     //this.aorticvalves =  this.aorticvalves.filter(valve => {valve.tfd < .65}); // filter the severe ppm's
-
-      this.aorticvalves.forEach(element => {
-        if (element.tfd > .85) { element.ppm = 'none' } else {
-          if (element.tfd < .85) { element.ppm = "moderate" }
-           else {
-            if (element.tfd < .65) { element.ppm = "severe" }
-          } 
-        }
-      });
+      this.pagination = next.pagination;
 
       if (this.aorticvalves.length === 0) {
         this.AproductRequested = "No aortic valves are available for implant in " + this.HospitalName;
       } else {
+        //this.aorticvalves =  this.aorticvalves.filter(valve => {valve.tfd < .65}); // filter the severe ppm's
+        var bsa = this.calculateBSA(this.selectedHeight, this.selectedWeight);
+        this.aorticvalves.forEach(element => {
+          if (element.tfd > .85) { element.ppm = 'none' } else {
+            if (element.tfd <= .85 && element.tfd >= .65) { element.ppm = "moderate" }
+            else {
+              if (element.tfd < .65) { element.ppm = "severe" }
+            }
+          }
+        });
         this.AproductRequested = "These aortic valves are available for implant in " + this.HospitalName;
       }
-      this.pagination = next.pagination;
     }, (error) => { this.alertify.error(error); })
   }
+
+
   loadMValves() {
     if (this.preference) { this.valveParams.BioPref = 1; } else { this.valveParams.BioPref = 0; }
     if (this.lifeStyle) { this.valveParams.LifeStyle = 1; } else { this.valveParams.LifeStyle = 0; }
@@ -174,36 +201,6 @@ export class SelectValveComponent implements OnInit {
 
   }
 
-  reportAnnularDiameter() {
-    this.messagePPM = "";
-    var indexedEOA = this.calculateRequiredDiameter();
-    if (indexedEOA > .85) { this.showA = '0'; } else {
-      this.showA = '1';
-      if (indexedEOA < .85) {
-        this.moderatePPM = 1; this.severePPM = 0;
-        this.messagePPM = "Implanting this valve will result in a moderate patient-prosthesis mismatch"
-      };
-      if (indexedEOA < .65) {
-        this.moderatePPM = 0; this.severePPM = 1;
-        this.messagePPM = "Implanting this valve will result in a severe patient-prosthesis mismatch"
-      };
-    }
-  }
-  showAdvice() { if (this.showA === '1') { return true; } }
-
-  calculateRequiredDiameter(): number { // returns indexed eoa
-    var eoa = 0; //average orfice diameter for valve prosthesis
-    switch (+this.selectedSize) {
-      case 19: eoa = 1.1; break;
-      case 21: eoa = 1.3; break;
-      case 23: eoa = 1.5; break;
-      case 25: eoa = 1.8; break;
-      case 27: eoa = 2.3; break;
-      case 29: eoa = 2.7; break;
-    }
-    var bsa = this.calculateBSA(this.selectedHeight, this.selectedWeight);
-    return eoa / bsa;
-  }
   calculateBSA(height: number, weight: number): number {
     //Dubois formula: 0.007184 × H0.725 × W0.425
     var help = 0.0;

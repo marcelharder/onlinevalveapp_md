@@ -9,6 +9,7 @@ namespace api.DAL.Interfaces
         Task<List<Class_Item>> getValveCodesPerCountry(int companyId);
         Task<string> getModelCode(int code);
         Task<List<Class_TypeOfValve>> getTypeOfValvesPerCountry(int id);
+      
         Task<Class_TypeOfValve> getDetails(int code);
         Task<string> saveDetails(Class_TypeOfValve tpv);
         void Add(Class_TypeOfValve v);

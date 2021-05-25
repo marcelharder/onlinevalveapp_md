@@ -45,7 +45,7 @@ initializeUploader() {
       }
       else {
           if (this.valvecode !== 0) {
-              test = this.baseUrl + 'product/addProductPhoto/' + this.valvecode
+              test = this.baseUrl + 'addProductPhoto/' + this.valvecode
           }
       }
 

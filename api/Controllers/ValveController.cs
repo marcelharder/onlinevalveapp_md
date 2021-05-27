@@ -217,7 +217,7 @@ namespace api.Controllers
 
         #region <!-- valve selection for fitting-->
 
-
+        [AllowAnonymous]
         [HttpGet("api/ppm")]
         public async Task<IActionResult> getPPM([FromQuery] PPMParams pp)
         {

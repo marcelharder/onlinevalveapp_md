@@ -69,6 +69,10 @@ import { Expiry3monthsComponent } from './companyadmin/expiry3months/expiry3mont
 import { SelectValveComponent } from './Surgeon/selectValve/selectValve.component';
 import { SuitableAOValvesComponent } from './Surgeon/selectValve/suitableAOValves/suitableAOValves.component';
 import { SuitableMValvesComponent } from './Surgeon/selectValve/suitableMValves/suitableMValves.component';
+import { ListProductsComponent } from './admin/list-products/list-products.component';
+import { ListProductsResolver } from './_resolvers/ListProductsResolver';
+import { ProductDetailsCardComponent } from './admin/productDetailsCard/productDetailsCard.component';
+import { productEditDetailsComponent } from './admin/productEditDetails/productEditDetails.component';
 
 
 export function tokenGet() { return localStorage.getItem('token'); }
@@ -110,7 +114,10 @@ export function tokenGet() { return localStorage.getItem('token'); }
       ListUserComponent,
       SelectValveComponent,
       SuitableAOValvesComponent,
-      SuitableMValvesComponent
+      SuitableMValvesComponent,
+      ListProductsComponent,
+      ProductDetailsCardComponent,
+      productEditDetailsComponent
 
    ],
    imports: [
@@ -150,6 +157,7 @@ export function tokenGet() { return localStorage.getItem('token'); }
         ValveResolver,
         MessagesResolver,
         ExpiringProductsResolver,
+        ListProductsResolver,
         PreventUnsavedChanges,
         ProfileResolver,
         ListUserResolver,

@@ -6,7 +6,6 @@ namespace api.DAL.dtos
     {
         public virtual int valveId { get; set; }
         public int No { get; set; }
-        public string[] ValveSizes { get; set; }
         public string Description { get; set; }
         public string Vendor_code { get; set; }
         public string Vendor_name { get; set; }

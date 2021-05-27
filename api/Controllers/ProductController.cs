@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using api.DAL.Code;
@@ -47,14 +48,13 @@ namespace api.Controllers
             help.Type = "";
             help.image = "https://res.cloudinary.com/marcelcloud/image/upload/v1620571880/valves/valves02.jpg";
 
-
             _vc.Add(help);
             if (await _vc.SaveAll())
             {
                 //var valveToReturn = await _special.mapToValveForReturnAsync(v);
-                help.No = help.Id;
+                help.No = help.ValveTypeId;
                 await _vc.saveDetails(help);
-                return CreatedAtRoute("getProduct", new { id = help.Id }, help);
+                return CreatedAtRoute("getProduct", new { id = help.ValveTypeId }, help);
             }
             return BadRequest("add product failed");
         }
@@ -106,12 +106,52 @@ namespace api.Controllers
                 
                 if (await _vc.SaveAll())
                 {
-                    return CreatedAtRoute("getProduct", new { id = product.Id }, product);
+                    return CreatedAtRoute("getProduct", new { id = product.ValveTypeId }, product);
                 }
             }
             return BadRequest();
         }
 
-       
+        [Route("api/products")]
+        [HttpGet]
+        public async Task<IActionResult> getAllProducts(){
+            var result = await _vc.getAllProducts();
+            return Ok(result);
+        }
+   
+        [Route("api/addSize/{id}")]
+        [HttpPost]
+        public async Task<IActionResult> addSize(int id, [FromBody] Class_Valve_Size vs){
+            Class_Valve_Size result = new Class_Valve_Size();
+            result.Size = vs.Size;
+            result.EOA = vs.EOA;
+
+            var selectedValve = await _vc.getDetails(id);
+            selectedValve.Valve_size.Add(result);
+
+            _vc.Update(selectedValve);
+
+            if (await _vc.SaveAll())
+            {
+            var test = selectedValve.Valve_size.Last();
+            return CreatedAtRoute("getSize",new { id = test.SizeId }, test);
+            }
+            return null;
+           
+            
+        }
+
+        [Route("api/getSize/{id}", Name = "getSize")]
+        [HttpGet]
+        public async Task<Class_Valve_Size> getSize(int id){
+          return await _vc.GetSize(id);
+        }
+
+        [Route("api/deleteSize/{id}/{sizeId}")]
+        [HttpDelete]
+        public async Task<IActionResult> deleteSize(int id,int sizeId){
+            var result = await _vc.deleteSize(id, sizeId);
+            return Ok(result);
+        }
     }
 }

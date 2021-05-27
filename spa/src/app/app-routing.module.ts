@@ -21,6 +21,8 @@ import { ListUserResolver } from './_resolvers/ListUserResolver';
 import { ListUserComponent } from './admin/list-user/list-user-component';
 import { Expiry3monthsComponent } from './companyadmin/expiry3months/expiry3months.component';
 import { SelectValveComponent } from './Surgeon/selectValve/selectValve.component';
+import { ListProductsComponent } from './admin/list-products/list-products.component';
+import { ListProductsResolver } from './_resolvers/ListProductsResolver';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -36,6 +38,7 @@ const routes: Routes = [
       //    { path: 'admin', component: AdminComponent },
 
       { path: 'userlist', component: ListUserComponent, resolve: {users: ListUserResolver} },
+      { path: 'productlist', component: ListProductsComponent, resolve: {products: ListProductsResolver} },
       { path: 'companyadmin', component: CompanyadminComponent },
       { path: 'addCompanyValve/:id', component: AddCompanyValveComponent, resolve: {valve: ValveResolver} },
       { path: 'superuser', component: SuperuserComponent },

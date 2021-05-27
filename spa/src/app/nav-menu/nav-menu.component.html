@@ -35,11 +35,11 @@
           </div>
         </div>
         <div *ngIf="adminLogged && loggedIn()" class="dropdown ml-2 mr-2" dropdown>
-          <a class="dropdown-toggle"  dropdownToggle>| User Management </a>
+          <a class="dropdown-toggle"  dropdownToggle>| Management </a>
           <div class="dropdown-menu mt-3" *dropdownMenu>
             <a class="dropdown-item" href="#" [routerLink]="['/userlist']" >List Users</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" [routerLink]="['/']" >Vacant</a>
+            <a class="dropdown-item" href="#" [routerLink]="['/productlist']" >List Products</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#" [routerLink]="['/']" >Vacant</a>
           </div>

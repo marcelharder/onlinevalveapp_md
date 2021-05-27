@@ -10,7 +10,7 @@ export class VendorService {
     baseUrl = environment.apiUrl;
     constructor(private http: HttpClient) { }
 
-    getVendors() { return this.http.get<Vendor[]>(this.baseUrl + 'vendors'); }
+    getVendors() { return this.http.get<DropItem[]>(this.baseUrl + 'vendors'); }
 
     getVendor(id: number) { return this.http.get<Vendor>(this.baseUrl + 'vendor/' + id); }
 

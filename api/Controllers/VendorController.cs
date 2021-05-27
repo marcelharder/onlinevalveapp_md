@@ -25,8 +25,7 @@ namespace api.Controllers
             var help = await _vendor.getVendor(id);
             return help;
         }
-    
-       
+          
         [Route("api/vendor/valvecodes/{id}")]
         public async Task<List<Class_Item>> getVendor02(int id)
         {
@@ -50,5 +49,15 @@ namespace api.Controllers
             return BadRequest("Can't save this vendor");
 
         }
+   
+         [Route("api/vendors")]
+         [HttpGet]
+         public async Task<IActionResult> allVendors(){
+             var result = await _vendor.getVendors();
+             return Ok(result);
+         }
+   
+   
+   
     }
 }

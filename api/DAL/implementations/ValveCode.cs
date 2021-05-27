@@ -21,6 +21,7 @@ namespace api.DAL.Implementations
             _user = user;
             _context = context;
         }
+       
 
         
 
@@ -89,12 +90,12 @@ namespace api.DAL.Implementations
         }
 
         public async Task<Class_TypeOfValve> getDetails(int code) {
-            var result = await _context.ValveCodes.FirstOrDefaultAsync(a => a.No == code);
+            var result = await _context.ValveCodes.Include(a => a.Valve_size).FirstOrDefaultAsync(a => a.No == code);
             return result;
         }
 
         public async Task<string> saveDetails(Class_TypeOfValve tov){
-             var result = _context.ValveCodes.Update(tov);
+            var result = _context.ValveCodes.Update(tov);
             if(await _context.SaveChangesAsync() > 0){return "product details updated";}
             return "failed";
         }
@@ -107,6 +108,30 @@ namespace api.DAL.Implementations
             _context.Remove(entity);
         }
 
-        
+        public async Task<List<Class_TypeOfValve>> getAllProducts()
+        {
+            return await _context.ValveCodes.Include(a => a.Valve_size).ToListAsync();
+        }
+
+        public async Task<string> deleteSize(int id, int sizeId)
+        {
+            var selectedValveSize = await _context.Valve_sizes.FirstOrDefaultAsync(x => x.SizeId == sizeId);
+            this.Delete(selectedValveSize);
+            if(await this.SaveAll()){ return "1"; } else return "0";
+        }
+
+        public void Update<T>(T entity) where T : class
+        {
+             _context.Update(entity);
+        }
+        public void Add<T>(T entity) where T : class
+        {
+             _context.Update(entity);
+        }
+
+        public async Task<Class_Valve_Size> GetSize(int id)
+        {
+            return await _context.Valve_sizes.FirstOrDefaultAsync(a => a.SizeId == id);
+        }
     }
 }

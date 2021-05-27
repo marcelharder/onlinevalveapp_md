@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using CloudinaryDotNet.Actions;
 using CloudinaryDotNet;
 using Microsoft.Extensions.Options;
+using System.Linq;
 
 namespace api.Controllers
 {
@@ -104,21 +105,29 @@ namespace api.Controllers
             var help = 0.0;
             if (cv.TFD == 0)
             {
-                help = _special.getTFD(cv.Description, cv.Size);
+            //get the valvecode from the description and stuff it in the newly added valve
+            var sel = await _code.getDetailsByProductCode(cv.Product_code);
+            var selSizes =  sel.Valve_size.ToList();
+            var selectedSize = selSizes.FirstOrDefault(a => a.Size == Convert.ToInt32(cv.Size));
+            help = selectedSize.EOA;
             }
             else
             {
                 help = cv.TFD;
             }
-            cv.TFD = help;
-            
-
-
-
+            cv.TFD = help; 
+         
             _valve.updateValve(cv);
             if (await _valve.SaveAll()) { return Ok("Valve saved"); }
             return BadRequest("Can't save this valve");
 
+        }
+
+        [Route("api/deleteValve/{id}")]
+        [HttpDelete]
+        public async Task<IActionResult> removeValve(int id){
+            var result = await _valve.removeValve(id);
+             return Ok(result);
         }
 
         [Route("api/valveBySerial/{serial}/requester/{whoWantsToKnow}")]
@@ -208,10 +217,13 @@ namespace api.Controllers
 
         #region <!-- valve selection for fitting-->
 
+
         [HttpGet("api/ppm")]
         public async Task<IActionResult> getPPM([FromQuery] PPMParams pp)
         {
-            var tfd = await _valve.getTFD(pp.productCode, pp.size);
+           var tfd = await _valve.getTFD(pp.productCode, pp.size);
+            
+            
             if (tfd != "")
             {
                 var tfdDouble = Convert.ToDouble(tfd);

@@ -51,6 +51,7 @@ namespace api.DAL.Interfaces
         #endregion
         #region // determines the selection process
         Task<PagedList<Class_Valve>> getSuggestedValves(SelectParams sp);
+        Task<int> removeValve(int id);
         #endregion
 
 

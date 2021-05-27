@@ -363,6 +363,19 @@ namespace api.DAL.Implementations
             }
             return help;
         }
+         public async Task<int> removeValve(int Id)
+        {
+            var help = 0;
+            var result = await _context.Valves.FirstOrDefaultAsync(x => x.ValveId == Id);
+            _context.Valves.Remove(result);
+
+            if (await SaveAll())
+            {
+                help = 1;
+                return help;
+            }
+            return help;
+        }
         public void addValveTransfer(Class_Transfer v) { _context.Transfers.Add(v); }
         public async Task<int> updateValveTransferAsync(Class_Transfer_forUpload p)
         {

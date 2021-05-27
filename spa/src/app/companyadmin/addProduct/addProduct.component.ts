@@ -4,6 +4,7 @@ import { TypeOfValve } from 'src/app/_models/TypeOfValve';
 import { DropService } from 'src/app/_services/drop.service';
 import { ProductService } from 'src/app/_services/product.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
+import { valveSize } from 'src/app/_models/valveSize';
 
 @Component({
   selector: 'app-addProduct',
@@ -15,11 +16,20 @@ export class AddProductComponent implements OnInit {
   @Output() povOut: EventEmitter<number> = new EventEmitter();
   typeOfValve: Array<DropItem> = [];
   implantLocation: Array<DropItem> = [];
+  ValveCodeSizes:Array<valveSize>=[];
+  newsize = 0; neweoa = 0.0; showAdd = 0;
+  valvesize: valveSize = {sizeId:0, size:0, eoa: 0.0};
 
 
   constructor(private drop: DropService, private prodService: ProductService, private alertify: AlertifyService) { }
 
-  ngOnInit() { this.loadDrops(); }
+  ngOnInit() { 
+    
+    this.prodService.getValveSizes(this.vc.valveTypeId).subscribe((next)=>{
+      this.ValveCodeSizes = next;
+    });
+    
+   this.loadDrops(); }
 
   updateProductDetails() {
     this.prodService.saveDetails(this.vc).subscribe((next) => {
@@ -28,7 +38,34 @@ export class AddProductComponent implements OnInit {
     });
   }
   cancel() { this.povOut.emit(1); }
-
+  addSize(){
+    // open the add window
+    this.showAdd = 1;
+    this.alertify.message("opening window");
+  }
+  saveSize(){
+     // close the add window
+     this.showAdd = 0;
+     this.valvesize.size = this.newsize;
+     this.valvesize.eoa = this.neweoa;
+     this.prodService.addValveSize(this.vc.valveTypeId, this.valvesize).subscribe((next)=>{
+       this.ValveCodeSizes.push(next);
+       this.newsize = 0; 
+       this.neweoa = 0.0;
+       this.alertify.message("uploading size");
+     })
+     
+  }
+  deleteSize(id:number){
+    this.prodService.deleteValveSize(this.vc.valveTypeId, id).subscribe((next)=>{
+      this.alertify.message("size removed ...");
+      var index = this.ValveCodeSizes.findIndex(a => a.sizeId === id);
+      debugger;
+      this.ValveCodeSizes.splice[index];
+    })
+   
+  }
+  displayAdd(){if(this.showAdd === 1){return true;}}
 
   loadDrops() {
     if (localStorage.options_valve_type === undefined) {

@@ -12,6 +12,7 @@ using api.DAL.dtos;
 using api.Helpers;
 using System.Xml.Linq;
 using System.IO;
+using api.DAL.Interfaces;
 
 namespace api.DAL.Code
 {
@@ -21,11 +22,11 @@ namespace api.DAL.Code
 
 
         XElement _testje;
-        XElement _valveTest;
         private dataContext _context;
         private IWebHostEnvironment _env;
         private IHttpContextAccessor _http;
 
+       
 
         public SpecialMaps(dataContext context, IWebHostEnvironment env,
             IHttpContextAccessor http)
@@ -38,15 +39,6 @@ namespace api.DAL.Code
             var test = Path.Combine(content, filename);
             XElement testje = XElement.Load($"{test}");
             _testje = testje;
-
-            var valveStuff = "DAL/data/TFD.xml";
-            var valveTest = Path.Combine(content, valveStuff);
-            XElement valveXml = XElement.Load($"{valveTest}");
-            _valveTest = valveXml;
-
-
-
-
 
         }
         public async Task<Class_Hospital> getHospital(int id)
@@ -323,7 +315,7 @@ namespace api.DAL.Code
             return help;
         }
 
-        #endregion
+      
         public async Task<ExpiringProduct> mapValveToExpiringProduct(Class_Valve cv, int months)
         {
             var help = new ExpiringProduct();
@@ -341,7 +333,8 @@ namespace api.DAL.Code
 
             return help;
         }
-
+        #endregion
+      
         #region <!-- user mappings -->
         public async Task<UserForReturnDTO> getUserforReturnDTOAsync(User u)
         {
@@ -454,31 +447,7 @@ namespace api.DAL.Code
 
             return help;
         }
-
-        public double getTFD(string description, string size)
-        {
-            var help = 0.0;
-            // look the TFD up in the xml file by description and size
-            // this is done when a new valve gets added
-            IEnumerable<XElement> op = _valveTest.Descendants("Valve")
-            .Where(a => a.Element("Description").Value == description)
-            .ToList();
-
-            foreach (XElement s in op)
-            {
-                IEnumerable<XElement> ops = op.Elements("Size");
-                foreach (XElement q in ops)
-                {
-
-                    if (q.Attribute("no").Value == size)
-                    {
-                        help = Convert.ToDouble(q.Element("TFD").Value);
-                    }
-                }
-            }
-            return help;
-
-        }
+       
         #endregion
         #region <!-- helper functions -->
         private Boolean IsLoggedInUserARep(User u)

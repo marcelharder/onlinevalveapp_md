@@ -10,6 +10,8 @@ import { HospitalService } from '../_services/hospital.service';
 import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
 import { valveSize } from "../_models/valveSize";
+import { ProductService } from '../_services/product.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
     selector: 'app-add-valve',
@@ -26,6 +28,7 @@ export class AddValveComponent implements OnInit {
     optionsHospitalProducts: Array<DropItem> = [];
     details = 0;
     allValves = 0;
+    valveSizes:Array<number> = [];
     product: TypeOfValve = {
         valveTypeId: 0,
         no: 0,
@@ -46,6 +49,7 @@ export class AddValveComponent implements OnInit {
     constructor(private gen: GeneralService,
                 private alertify: AlertifyService,
                 private auth: AuthService,
+                private prod:ProductService,
                 private ven: VendorService,
                 private router: Router,
                 private vs: ValveService,
@@ -62,16 +66,22 @@ export class AddValveComponent implements OnInit {
         this.ven.getProductByVendor(s).subscribe((next) => { this.optionsHospitalProducts = next; });
     }
 
-
-
     getPresets(p: number) {
         if (p !== 0) {
+            // get the valveSizes that belog to this valve
+            this.valveSizes = [];
+            this.prod.getValveSizes(p).subscribe((next)=>{
+                next.forEach((el)=>{this.valveSizes.push(el.size);});
+               this.valveSizes = this.valveSizes.sort((n1, n2)=> n1 - n2);
+            })
             // get the selected product, this selectedProduct
+       
             this.vs.getValveBasedOnValveCode(p).subscribe((next) => {
                 this.valveInParent = next;
                 this.details = 1;
                 // get the serial number from the auth service
                 this.auth.currentSerial.subscribe((n) => {this.valveInParent.serial_no = n; });
+
             });
         } else { this.alertify.error('You have to select a type of valve, or use the \'custom valve\' button'); }
     }

@@ -92,11 +92,11 @@
     <h5><span class="badge badge-info">Size</span></h5>
   </div>
   <div class="col-sm-3">
-    <select [(ngModel)]="valve.size"
+     <select [(ngModel)]="valve.size"
             name="test10"
             class="form-control">
-      <option *ngFor="let an of valve.valveSizes">{{ an }}</option>
-    </select>
+      <option *ngFor="let an of optionsSizes">{{ an }}</option>
+    </select> 
   </div>
   <div class="col-sm-3">
     <h5><span class="badge badge-info">Implant position</span></h5>

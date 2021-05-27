@@ -19,9 +19,10 @@ import { ValveService } from '../_services/valve.service';
 export class EditValveInHospitalComponent implements OnInit {
 
     @Input() valve: Valve;
+    @Input() sizes: number[];
     @Output() valveBack = new EventEmitter<Valve>();
     optionsImplant: Array<DropItem> = [];
-    optionsSizes: Array<string> = [];
+    optionsSizes: Array<number> = [];
     HospitalName = '';
     VendorName = '';
   
@@ -37,17 +38,26 @@ export class EditValveInHospitalComponent implements OnInit {
 
     }
     ngOnInit(): void {
+        debugger;
+        this.optionsSizes = this.sizes;
       // get the hospitalName from the auth service, because the valve is not here yet
       this.auth.currentHospital.subscribe((next) => {this.HospitalName = next; });
-      
+      // get ValveSizes based onserialNumber
 
-       this.loadDrops();
+      this.loadDrops();
     }
 
     superUserLoggedin() { if (this.auth.decodedToken.role === 'superuser') { return true; } else { return false; } }
 
     Cancel() {
-        this.alertify.message('Cancelling ...');
+        //remove the just added valve
+        debugger;
+        this.valveService.deleteValve(this.valve.valveId).subscribe(
+            (next)=>{
+                debugger;
+                if(next === "1"){this.alertify.message('Cancelling ...');} else {this.alertify.message('Could not delete this valve');}
+                }, (error)=>{this.alertify.error(error)});
+        
         this.router.navigate(['/home']);
     }
 
@@ -64,7 +74,7 @@ export class EditValveInHospitalComponent implements OnInit {
 
 
     loadDrops() {
-        for (let x = 16; x < 35; x++) { this.optionsSizes.push(x.toString()); }
+      
 
         const d = JSON.parse(localStorage.getItem('implant_options'));
         if (d == null || d.length === 0) {

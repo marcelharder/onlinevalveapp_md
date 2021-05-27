@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using api.DAL.dtos;
 using api.DAL.models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace api.DAL.Interfaces
 {
@@ -21,5 +23,7 @@ namespace api.DAL.Interfaces
         Task<string> deleteSize(int id, int vs);
 
         Task<Class_Valve_Size> GetSize(int id);
+        Task<Class_TypeOfValve> getDetailsByProductCode(string product_code);
+        Task<List<ValveCodeSizesDTO>> GetValveCodeSizes(int id);
     }
 }

@@ -60,6 +60,8 @@ export class ValveService {
     }
 
     saveValve(item: Valve) { return this.http.post(this.baseUrl + 'updatevalve', item, { responseType: 'text' as 'json' }); }
+    deleteValve(id: number){ return this.http.delete<string>(this.baseUrl + 'deleteValve/' + id, { responseType: 'text' as 'json' })}
+    
     // tslint:disable-next-line:max-line-length
     getValvesByHospitalAndValveCodeId(hospital: number, code: number) { return this.http.get<Valve[]>(this.baseUrl + 'valvesByHospitalAndValveId/' + hospital + '/' + code); }
     getNewValveBasedOnValveType(id: number) { return this.http.get<Valve>(this.baseUrl + 'valveBasedOnTypeOfValve/' + id); }

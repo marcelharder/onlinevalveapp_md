@@ -5,6 +5,7 @@ using api.DAL.Interfaces;
 using api.DAL.models;
 using Microsoft.EntityFrameworkCore;
 using api.DAL.Code;
+using api.DAL.dtos;
 
 namespace api.DAL.Implementations
 {
@@ -132,6 +133,25 @@ namespace api.DAL.Implementations
         public async Task<Class_Valve_Size> GetSize(int id)
         {
             return await _context.Valve_sizes.FirstOrDefaultAsync(a => a.SizeId == id);
+        }
+        public async Task<Class_TypeOfValve> getDetailsByProductCode(string product_code)
+        {
+              var result = await _context.ValveCodes.Include(a => a.Valve_size).FirstOrDefaultAsync(a => a.uk_code == product_code);
+            return result;
+        }
+        public async Task<List<ValveCodeSizesDTO>> GetValveCodeSizes(int id)
+        {
+            var result = await getDetails(id);
+            var h = new List<ValveCodeSizesDTO>();
+            var l = new List<Class_Valve_Size>();
+            l = result.Valve_size.ToList();
+            foreach(Class_Valve_Size cv in l){
+               var dto = new ValveCodeSizesDTO();
+               dto.size = cv.Size;
+               dto.eoa = cv.EOA;
+               h.Add(dto);
+            }
+            return h;
         }
     }
 }

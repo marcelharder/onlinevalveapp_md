@@ -141,6 +141,16 @@ namespace api.Controllers
             
         }
 
+        [Route("api/getValveCodeSizes/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> getSizes(int id){
+            
+            
+            return Ok(await _vc.GetValveCodeSizes(id));
+        }
+
+
+
         [Route("api/getSize/{id}", Name = "getSize")]
         [HttpGet]
         public async Task<Class_Valve_Size> getSize(int id){

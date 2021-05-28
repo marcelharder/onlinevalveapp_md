@@ -498,7 +498,7 @@ namespace api.DAL.Implementations
         public async Task<string> getTFD(string pc, string size)
         {
             // get the TFD from the valvecode
-            var f = await _context.ValveCodes.Include(a => a.Valve_size).FirstOrDefaultAsync(x => x.Model_code == pc);
+            var f = await _context.ValveCodes.Include(a => a.Valve_size).FirstOrDefaultAsync(x => x.uk_code == pc);
             var a = f.Valve_size.ToList();
             var b = a.Find(a => a.Size == Convert.ToInt32(size));
             return b.EOA.ToString();

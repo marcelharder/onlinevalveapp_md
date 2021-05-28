@@ -151,13 +151,22 @@ namespace api.DAL.Implementations
             return h;
         }
 
-        public async Task<List<Class_TypeOfValve>> getAllTPProducts(string type, string position)
+        public async Task<List<Class_Item>> getAllTPProducts(string type, string position)
         {
+            var l = new List<Class_Item>();
+            Class_Item c;
            var result = await _context.ValveCodes
            .Where(a => a.Type == type)
            .Where(b => b.Implant_position == position)
            .ToListAsync();
-           return result;
+
+           foreach(Class_TypeOfValve ci in result){
+               c = new Class_Item();
+               c.Value = ci.ValveTypeId;
+               c.Description = ci.Description;
+               l.Add(c);
+           }
+           return l;
         }
     }
 }

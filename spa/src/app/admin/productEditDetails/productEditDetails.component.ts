@@ -22,7 +22,6 @@ export class productEditDetailsComponent implements OnInit {
 
   deleteSize(SizeId: number) {
     this.pro.deleteValveSize(this.prod.no, SizeId).subscribe((next) => {
-      debugger;
       if (next === 1) {
         this.alertify.message("deleted");
         // remove it from the local array

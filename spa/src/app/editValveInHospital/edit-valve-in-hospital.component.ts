@@ -95,8 +95,7 @@ export class EditValveInHospitalComponent implements OnInit {
         this.prod.getProductByProduct_code(this.valve.product_code).subscribe((next) => {
             this.prod.getValveSizes(next.valveTypeId).subscribe((next)=>{
                 this.valveSizes = next;
-                debugger;
-            })
+             })
             
             this.alertify.message(this.product.description);
         }, error => {

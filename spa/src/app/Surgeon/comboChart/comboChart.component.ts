@@ -33,7 +33,5 @@ export class ComboChartComponent implements OnInit {
 
   ngOnInit() {  }
 
-  onSelect(test: any){
-    debugger;
-  }
+  onSelect(test: any){  }
 }

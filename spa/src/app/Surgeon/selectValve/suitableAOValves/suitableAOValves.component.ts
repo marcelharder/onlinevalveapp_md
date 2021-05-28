@@ -81,7 +81,6 @@ export class SuitableAOValvesComponent implements OnInit {
    
     this.valveService.getValve(id).subscribe((next)=>{
       this.pd = next;
-      debugger;
       this.title = "Details of the " + this.pd.description + " valve";
       this.ImagePath = this.pd.image;
 

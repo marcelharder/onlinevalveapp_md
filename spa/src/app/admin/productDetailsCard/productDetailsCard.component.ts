@@ -18,7 +18,6 @@ export class ProductDetailsCardComponent implements OnInit {
   }
 
   showDetails(){
-    debugger;
     this.details.emit(this.cd.no.toString());}
 
 }

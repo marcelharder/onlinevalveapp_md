@@ -86,8 +86,7 @@ export class ListUserComponent implements OnInit {
     }
     if (localStorage.options_companies === undefined) {
       this.drop.getCompanyOptions().subscribe((next) => {
-        debugger;
-        this.companies = next;
+         this.companies = next;
         localStorage.setItem('options_companies', JSON.stringify(next));
       });
     } else {
@@ -166,8 +165,7 @@ export class ListUserComponent implements OnInit {
     });
   }
   hideDetails() {
-    debugger;
-    this.ch = 0;
+   this.ch = 0;
 
     if (!this.userIsVendor()) {
       if (this.currentHospital === undefined || this.currentHospital === "") {
@@ -175,7 +173,6 @@ export class ListUserComponent implements OnInit {
         this.showChangeHospital();
       }
       else {
-        debugger;
         const selectedDropItem = this.optionHospitals.find(f => f.description === this.currentHospital);
         this.selectedUser.hospitalCode = selectedDropItem.value;
         this.userService.saveUser(this.authService.decodedToken.nameid, this.selectedUser).subscribe(next => {

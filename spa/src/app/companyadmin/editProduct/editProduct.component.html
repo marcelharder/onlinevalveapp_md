@@ -67,8 +67,33 @@
           <h5><span class="badge badge-info">Sizes</span></h5>
       </div>
       <div class="col-sm-9">
-          <input type="text" class="form-control" [(ngModel)]="vc.valve_size" name="test58" />
-        </div>
+        <table class="table table-striped">
+          <tr>
+            <th>Size</th>
+            <th>EOA</th>
+            <th><button class="btn btn-warning btn-sm" (click)="addSize()" *ngIf="!displayAdd()">Add size</button></th>
+            <th><button class="btn btn-warning btn-sm" (click)="saveSize()" *ngIf="displayAdd()">Save</button></th>
+          </tr>
+          <tr *ngFor="let pro of vc.valve_size">
+            <td>{{pro.size}}</td>
+            <td>{{pro.eoa}}</td>
+            <td><button class="btn btn-warning btn-sm" (click)="deleteSize(pro.sizeId)">Delete</button></td>
+            <td></td>
+           </tr>
+          <tr *ngIf="displayAdd()">
+            <td><input [(ngModel)]="newsize" name="size" class="form-control"></td>
+            <td><input [(ngModel)]="neweoa" name="eoa" class="form-control" ></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+
+
+
+
+
+
+         </div>
     </div>
     <div class="row">
       <div class="col-sm-3">

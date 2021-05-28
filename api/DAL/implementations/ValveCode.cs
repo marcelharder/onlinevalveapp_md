@@ -108,19 +108,16 @@ namespace api.DAL.Implementations
         {
             _context.Remove(entity);
         }
-
         public async Task<List<Class_TypeOfValve>> getAllProducts()
         {
             return await _context.ValveCodes.Include(a => a.Valve_size).ToListAsync();
         }
-
         public async Task<string> deleteSize(int id, int sizeId)
         {
             var selectedValveSize = await _context.Valve_sizes.FirstOrDefaultAsync(x => x.SizeId == sizeId);
             this.Delete(selectedValveSize);
             if(await this.SaveAll()){ return "1"; } else return "0";
         }
-
         public void Update<T>(T entity) where T : class
         {
              _context.Update(entity);
@@ -129,7 +126,6 @@ namespace api.DAL.Implementations
         {
              _context.Update(entity);
         }
-
         public async Task<Class_Valve_Size> GetSize(int id)
         {
             return await _context.Valve_sizes.FirstOrDefaultAsync(a => a.SizeId == id);
@@ -152,6 +148,15 @@ namespace api.DAL.Implementations
                h.Add(dto);
             }
             return h;
+        }
+
+        public async Task<List<Class_TypeOfValve>> getAllTPProducts(string type, string position)
+        {
+           var result = await _context.ValveCodes
+           .Where(a => a.Type == type)
+           .Where(b => b.Implant_position == position)
+           .ToListAsync();
+           return result;
         }
     }
 }

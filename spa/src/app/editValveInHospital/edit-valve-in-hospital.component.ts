@@ -9,6 +9,9 @@ import { AuthService } from '../_services/auth.service';
 import * as moment from 'moment';
 import { ValveTransfer } from '../_models/ValveTransfer';
 import { ValveService } from '../_services/valve.service';
+import { valveSize } from '../_models/valveSize';
+import { ProductService } from '../_services/product.service';
+import { TypeOfValve } from '../_models/TypeOfValve';
 
 
 @Component({
@@ -22,10 +25,27 @@ export class EditValveInHospitalComponent implements OnInit {
     @Input() sizes: number[];
     @Output() valveBack = new EventEmitter<Valve>();
     optionsImplant: Array<DropItem> = [];
-    optionsSizes: Array<number> = [];
+    valveSizes: Array<valveSize> = [];
+    ch = 0;
+    product: TypeOfValve =  {
+        valveTypeId: 0,
+        no: 0,
+        uk_code: '',
+        us_code: '',
+        description: '',
+        valve_size: [],
+        type: '',
+        image: '',
+        vendor_description: '',
+        vendor_code: '',
+        model_code: '',
+        implant_position: '',
+        countries: ''
+   };
+
     HospitalName = '';
     VendorName = '';
-  
+
     // sendPanel = 0;
 
     constructor(
@@ -33,49 +53,59 @@ export class EditValveInHospitalComponent implements OnInit {
         private auth: AuthService,
         private alertify: AlertifyService,
         private router: Router,
+        private prod: ProductService,
         private valveService: ValveService,
         private drops: DropService) {
 
     }
     ngOnInit(): void {
-        debugger;
-        this.optionsSizes = this.sizes;
-      // get the hospitalName from the auth service, because the valve is not here yet
-      this.auth.currentHospital.subscribe((next) => {this.HospitalName = next; });
-      // get ValveSizes based onserialNumber
 
-      this.loadDrops();
+
+        // get the hospitalName from the auth service, because the valve is not here yet
+        this.auth.currentHospital.subscribe((next) => { this.HospitalName = next; });
+
+
+        this.loadDrops();
     }
+
+    displayChangeSize() { if (this.ch === 1) { return true; } }
 
     superUserLoggedin() { if (this.auth.decodedToken.role === 'superuser') { return true; } else { return false; } }
 
-    Cancel() {
-        //remove the just added valve
-        debugger;
-        this.valveService.deleteValve(this.valve.valveId).subscribe(
-            (next)=>{
-                debugger;
-                if(next === "1"){this.alertify.message('Cancelling ...');} else {this.alertify.message('Could not delete this valve');}
-                }, (error)=>{this.alertify.error(error)});
-        
-        this.router.navigate(['/home']);
-    }
+    Cancel() { this.router.navigate(['/home']); }
 
     Save() {
-       if (this.canIGo()) {
+        if (this.canIGo()) {
             this.valveBack.emit(this.valve);
-         } else {
-             // log the error;
+        } else {
+            // log the error;
 
-            }
+        }
 
 
+    }
+
+    selectThisValve(id: number) {
+        this.ch = 0;
+        this.valve.size = id.toString();
+    }
+    changeSize() {
+        this.ch = 1;
+        // find the valvetype through the modelNo, get the valve sizes
+        this.prod.getProductByProduct_code(this.valve.product_code).subscribe((next) => {
+            this.prod.getValveSizes(next.valveTypeId).subscribe((next)=>{
+                this.valveSizes = next;
+                debugger;
+            })
+            
+            this.alertify.message(this.product.description);
+        }, error => {
+            this.alertify.error(error);
+        })
     }
 
 
     loadDrops() {
-      
-
         const d = JSON.parse(localStorage.getItem('implant_options'));
         if (d == null || d.length === 0) {
             this.drops.getImplantedOptions().subscribe((response) => {
@@ -92,8 +122,10 @@ export class EditValveInHospitalComponent implements OnInit {
         if (this.valve.manufac_date.toString() === '0001-01-01T00:00:00') { this.alertify.error('Please enter manufac date ...'); } else {
             if (this.valve.expiry_date.toString() === '0001-01-01T00:00:00') { this.alertify.error('Please enter expiry date ...'); } else {
                 if (this.valve.serial_no === '') { this.alertify.error('Please enter valve serial number ...'); } else {
-                     if (this.valve.size === '') { this.alertify.error('Please enter valve size ...'); } else {
-                          help = true; } }
+                    if (this.valve.size === '') { this.alertify.error('Please enter valve size ...'); } else {
+                        help = true;
+                    }
+                }
             }
         }
 

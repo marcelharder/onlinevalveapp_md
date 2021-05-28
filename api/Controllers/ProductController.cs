@@ -81,6 +81,13 @@ namespace api.Controllers
             var result = await _vc.getDetails(id);
             return Ok(result);
         }
+        [HttpGet("api/productByCode/{code}")]
+        public async Task<IActionResult> get041(string code)
+        {
+            var result = await _vc.getDetailsByProductCode(code);
+            return Ok(result);
+        }
+
 
         [Route("api/addProductPhoto/{id}")]
         [HttpPost]
@@ -158,8 +165,6 @@ namespace api.Controllers
         [Route("api/getValveCodeSizes/{id}")]
         [HttpGet]
         public async Task<IActionResult> getSizes(int id){
-            
-            
             return Ok(await _vc.GetValveCodeSizes(id));
         }
 

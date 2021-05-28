@@ -92,11 +92,26 @@
     <h5><span class="badge badge-info">Size</span></h5>
   </div>
   <div class="col-sm-3">
-     <select [(ngModel)]="valve.size"
-            name="test10"
-            class="form-control">
-      <option *ngFor="let an of optionsSizes">{{ an }}</option>
-    </select> 
+    <div class="row" *ngIf="!displayChangeSize()">
+      <div class="col-sm-6"><span><input class="form-control" [(ngModel)]="valve.size" name="1" readonly></span></div>
+      <div class="col-sm-6"><button class="btn btn-warning btn-sm" (click)="changeSize()">Change</button></div>
+    </div>
+    
+
+    <table class="table table-striped"  *ngIf="displayChangeSize()">
+      
+        <th>Size</th>
+        <th>EOA</th>
+        <th></th>
+       
+      <tr *ngFor="let pro of valveSizes" style="background-color: blanchedalmond;">
+        <td>{{pro.size}}</td>
+        <td>{{pro.eoa}}</td>
+        <td><button class="btn btn-warning btn-sm" (click)="selectThisValve(pro.size)">select</button></td>
+       </tr>
+      
+    </table>
+  
   </div>
   <div class="col-sm-3">
     <h5><span class="badge badge-info">Implant position</span></h5>

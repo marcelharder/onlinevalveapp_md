@@ -123,6 +123,13 @@ namespace api.Controllers
         #region <!-- used by soa -->
 
         [AllowAnonymous]
+        [HttpGet("api/productByValveTypeId/{id}")]
+        public async Task<IActionResult> get042(int id)
+        {
+            var result = await _vc.getDetailsByValveTypeId(id);
+            return Ok(result);
+        }
+        [AllowAnonymous]
         [Route("api/products")]
         [HttpGet]
         public async Task<IActionResult> getAllProducts(){
@@ -137,7 +144,13 @@ namespace api.Controllers
             var result = await _vc.getAllTPProducts(type,position);
             return Ok(result);
         }
-
+        [AllowAnonymous]
+        [Route("api/getValveCodeSizes/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> getSizes(int id){
+            return Ok(await _vc.GetValveCodeSizes(id));
+        }
+        
         #endregion
    
         [Route("api/addSize/{id}")]
@@ -162,11 +175,7 @@ namespace api.Controllers
             
         }
 
-        [Route("api/getValveCodeSizes/{id}")]
-        [HttpGet]
-        public async Task<IActionResult> getSizes(int id){
-            return Ok(await _vc.GetValveCodeSizes(id));
-        }
+       
 
         [Route("api/getSize/{id}", Name = "getSize")]
         [HttpGet]

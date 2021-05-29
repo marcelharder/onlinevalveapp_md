@@ -22,8 +22,6 @@ namespace api.DAL.Implementations
             _user = user;
             _context = context;
         }
-       
-
         
 
         public async Task<string> getModelCode(int code)
@@ -94,6 +92,11 @@ namespace api.DAL.Implementations
             var result = await _context.ValveCodes.Include(a => a.Valve_size).FirstOrDefaultAsync(a => a.No == code);
             return result;
         }
+        public async Task<Class_TypeOfValve> getDetailsByValveTypeId(int id)
+        {
+            var result = await _context.ValveCodes.FirstOrDefaultAsync(a => a.ValveTypeId == id);
+            return result;
+        }
 
         public async Task<string> saveDetails(Class_TypeOfValve tov){
             var result = _context.ValveCodes.Update(tov);
@@ -148,6 +151,8 @@ namespace api.DAL.Implementations
                dto.eoa = cv.EOA;
                h.Add(dto);
             }
+            //order by size
+            h = h.OrderBy(a => a.size).ToList();
             return h;
         }
 
@@ -168,5 +173,7 @@ namespace api.DAL.Implementations
            }
            return l;
         }
+
+       
     }
 }

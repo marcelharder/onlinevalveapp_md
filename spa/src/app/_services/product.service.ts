@@ -19,5 +19,6 @@ export class ProductService {
     deleteValveSize(id:number, vs: number){return this.http.delete<number>(this.baseUrl + 'deleteSize/' + id + '/' + vs)}
     getValveSizes(id: number){return this.http.get<valveSize[]>(this.baseUrl + 'getValveCodeSizes/' + id)}
     addValveSize   (id:number, vs: valveSize){return this.http.post<valveSize>(this.baseUrl + 'addSize/' + id, vs)}
+    getProductsByVTP(v: number, t: string, p: string){ return this.http.get<TypeOfValve[]>(this.baseUrl + 'productsByVTP/' + v + '/' + t + '/' + 'p'); }
 
 }

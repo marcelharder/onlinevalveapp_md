@@ -5,9 +5,13 @@ import { first, take } from 'rxjs/operators';
 import { DropItem } from 'src/app/_models/dropItem';
 import { modelValveParams } from 'src/app/_models/modelValveParams';
 import { PaginatedResult, Pagination } from 'src/app/_models/pagination';
+import { TypeOfValve } from 'src/app/_models/TypeOfValve';
 import { Valve } from 'src/app/_models/Valve';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { AuthService } from 'src/app/_services/auth.service';
+import { DropService } from 'src/app/_services/drop.service';
+import { HospitalService } from 'src/app/_services/hospital.service';
+import { ProductService } from 'src/app/_services/product.service';
 import { ValveService } from 'src/app/_services/valve.service';
 
 @Component({
@@ -18,7 +22,7 @@ import { ValveService } from 'src/app/_services/valve.service';
 export class SelectValveComponent implements OnInit {
 
   pagination: Pagination;
-  title = "";
+  Title = "";
 
   showA = '0';
   bsa = 0.0;
@@ -31,6 +35,9 @@ export class SelectValveComponent implements OnInit {
   ageOptions: Array<DropItem> = [];
   genderOptions: Array<DropItem> = [];
   optionsPositions: Array<DropItem> = [];
+  optionsPos: Array<DropItem> = [];
+  optionsType: Array<DropItem> = [];
+  optionsVendor: Array<DropItem> = [];
 
   selectedHeight = 0;
   selectedAge = 0;
@@ -40,14 +47,19 @@ export class SelectValveComponent implements OnInit {
   lifeStyle = true;
   preference = true;
   selectedPosition = 0;
+  selectedPos = '';
+  selectedType = '';
+  selectedVendor = 0;
   messagePPM = "";
   moderatePPM = 0;
   severePPM = 0;
 
   showAo = 0;
   showM = 0;
+  showOVI = 0;
   aorticvalves: Array<Valve> = [];
   mitralvalves: Array<Valve> = [];
+  products:Array<TypeOfValve> = [];
   productRequested = "";
   AproductRequested = "";
   MproductRequested = "";
@@ -66,23 +78,56 @@ export class SelectValveComponent implements OnInit {
 
   };
 
-  constructor(private alertify: AlertifyService, private vs: ValveService, private auth: AuthService) { }
+  constructor(private alertify: AlertifyService, 
+    private prod: ProductService,
+    private drops: DropService,
+    private vs: ValveService, 
+    private auth: AuthService, 
+    private hs: HospitalService) { }
 
   ngOnInit() {
-    this.title = "Fit a valve for your patient";
+    this.Title = "Fit a valve for your patient";
     this.auth.currentHospital.subscribe((next) => {
       
       this.HospitalName = next;
       // find out if this hospital is enrolled in the OVI program
-      
-    
+      this.hs.isOVIPlace().subscribe((next)=>{ 
+        debugger;
+        if(next === 1){ 
+        
+        this.showOVI = 1; }})
+          
     
     });
+
     this.ImagePath = 'https://res.cloudinary.com/marcelcloud/image/upload/v1620571880/valves/valves02.jpg';
 
     this.loadDrops();
 
   }
+
+  OVIPlace(){if(this.showOVI === 1){
+    this.Title = "Fit a valve for your patient, select from valves in your hospital";
+    return true;} else {this.Title = "Select the valve first"; return false;}}
+
+  Search(){
+    if(this.selectedVendor !== 0 && this.selectedPos !== ''){
+      
+      this.prod.getProductsByVTP(this.selectedVendor, this.selectedType, this.selectedPos).subscribe((next)=>{
+         this.products = next;
+         // show the list table
+      })
+
+      this.alertify.message("Looking up ...");
+    
+    }
+     else {
+      if(this.selectedVendor === 0 && this.selectedPos === '') {this.alertify.error("Please select a vendor and position")}
+      else{
+      if(this.selectedPos === '') {this.alertify.error("Please select implant position")}
+      if(this.selectedVendor === 0 ) {this.alertify.error("Please select a vendor first ...")}
+      }}
+    }
 
   findPossibleValves() {
     if (this.selectedPosition.toString() === "1") {
@@ -189,9 +234,15 @@ export class SelectValveComponent implements OnInit {
     this.optionsPositions.push({ value: 2, description: "Mitral" });
     this.optionsPositions.push({ value: 3, description: "Aortic and Mitral" });
 
+    this.optionsType.push({ value: 0, description: "Biological" });
+    this.optionsType.push({ value: 1, description: "Mechanical" });
+    
     this.genderOptions.push({ value: 0, description: "Choose" });
     this.genderOptions.push({ value: 1, description: "Male" });
     this.genderOptions.push({ value: 2, description: "Female" });
+
+    this.optionsPos.push({ value: 1, description: "Aortic" });
+    this.optionsPos.push({ value: 2, description: "Mitral" });
 
     var i = 0;
     this.sizesOptions.push({ value: 0, description: "Choose" });
@@ -205,6 +256,8 @@ export class SelectValveComponent implements OnInit {
 
     this.heightOptions.push({ value: 0, description: "Choose" });
     for (i = 150; i < 210; i++) { this.heightOptions.push({ value: i, description: i.toString() }); }
+
+    this.drops.getCompanyOptions().subscribe((next)=>{this.optionsVendor = next})
 
 
 

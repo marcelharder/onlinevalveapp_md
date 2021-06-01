@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using api.DAL.Code;
 using api.DAL.dtos;
 using api.DAL.Interfaces;
 using api.DAL.models;
@@ -14,11 +15,13 @@ namespace api.Controllers
     public class HospitalController : ControllerBase
     {
         private IHospital _hospital;
+        private SpecialMaps _special;
         private IUserRepository _user;
-        public HospitalController(IHospital hospital, IUserRepository user)
+        public HospitalController(IHospital hospital, IUserRepository user, SpecialMaps special)
         {
             _hospital = hospital;
             _user = user;
+            _special = special;
         }
 
         [HttpGet("api/hospital/vendors")]
@@ -93,8 +96,14 @@ namespace api.Controllers
         {
           return await _hospital.getAllHospitals();
         }
-        [HttpGet("api/isOVIPlace/{id}")]
-        public async Task<IActionResult> getOVI(int id) { return Ok(await _hospital.isThisHospitalOVI(id)); }
+        [HttpGet("api/isOVIPlace")]
+        public async Task<IActionResult> getOVI() {
+              // find the currentHospital now
+            var currentHospital = _special.getCurrentUserHospitalId();
+            var t = await _hospital.isThisHospitalOVI(await currentHospital);
+            var result = "0";
+            if(t){result = "1";} else {result = "0";}
+            return Ok(result); }
     }
 
 

@@ -174,6 +174,16 @@ namespace api.DAL.Implementations
            return l;
         }
 
-       
+        public async Task<List<Class_TypeOfValve>> getAllProductsByVTP(string vendor, string type, string position)
+        {
+           var ap = await _context.ValveCodes
+           .Include(a => a.Valve_size)
+           .Where(a => a.Vendor_code == vendor)
+           .Where(a => a.Type == type)
+           .Where(b => b.Implant_position == position)
+           .ToListAsync();
+
+           return ap;
+        }
     }
 }

@@ -13,6 +13,6 @@ namespace api.DAL.Interfaces
         Task<IEnumerable<Message>> GetMessageThread(int userId, int recipientId);
         void Add<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
-         Task<bool> SaveAll();
+        Task<bool> SaveAll();
     }
 }

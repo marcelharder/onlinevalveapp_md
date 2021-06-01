@@ -93,6 +93,8 @@ namespace api.Controllers
         {
           return await _hospital.getAllHospitals();
         }
+        [HttpGet("api/isOVIPlace/{id}")]
+        public async Task<IActionResult> getOVI(int id) { return Ok(await _hospital.isThisHospitalOVI(id)); }
     }
 
 

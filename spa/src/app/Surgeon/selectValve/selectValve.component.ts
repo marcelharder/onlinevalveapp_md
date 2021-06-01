@@ -18,6 +18,7 @@ import { ValveService } from 'src/app/_services/valve.service';
 export class SelectValveComponent implements OnInit {
 
   pagination: Pagination;
+  title = "";
 
   showA = '0';
   bsa = 0.0;
@@ -68,7 +69,15 @@ export class SelectValveComponent implements OnInit {
   constructor(private alertify: AlertifyService, private vs: ValveService, private auth: AuthService) { }
 
   ngOnInit() {
-    this.auth.currentHospital.subscribe((next) => { this.HospitalName = next; });
+    this.title = "Fit a valve for your patient";
+    this.auth.currentHospital.subscribe((next) => {
+      
+      this.HospitalName = next;
+      // find out if this hospital is enrolled in the OVI program
+      
+    
+    
+    });
     this.ImagePath = 'https://res.cloudinary.com/marcelcloud/image/upload/v1620571880/valves/valves02.jpg';
 
     this.loadDrops();

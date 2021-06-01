@@ -40,7 +40,7 @@ namespace api.DAL.Implementations
 
 
         public async Task<List<Class_Item>> getVendors()
-        { // get a list of vendors from the XML file
+        {
           var result = new List<Class_Item>();
           Class_Item ci;
           var vendors = await _context.Vendors.ToListAsync();

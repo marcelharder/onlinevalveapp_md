@@ -29,6 +29,12 @@ namespace api.Helpers
             if (theDateTime.AddYears(age) > DateTime.Today) age--;
             return age;
         }
+         public static string makeSureTwoChar(this String inputString)
+        {
+            var help = "";
+            if(inputString.Length == 1){help = "0" + inputString;} else {help = inputString;}
+            return help;
+        }
 
     }
 }

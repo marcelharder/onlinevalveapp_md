@@ -84,25 +84,11 @@ export class ListUserComponent implements OnInit {
     } else {
       this.role = JSON.parse(localStorage.options_role);
     }
-    if (localStorage.options_companies === undefined) {
-      this.drop.getCompanyOptions().subscribe((next) => {
-         this.companies = next;
-        localStorage.setItem('options_companies', JSON.stringify(next));
-      });
-    } else {
-      this.companies = JSON.parse(localStorage.options_companies);
-    }
-    if (localStorage.options_allHospitals === undefined) {
-      this.drop.getAllHospitals().subscribe((next) => {
-        this.optionsAH = next;
-        localStorage.setItem('options_allHospitals', JSON.stringify(next));
-      });
-    } else {
-      this.optionsAH = JSON.parse(localStorage.options_allHospitals);
-    }
-
-
+      // these item might change
+      this.drop.getCompanyOptions().subscribe((next) => { this.companies = next; });
+      this.drop.getAllHospitals().subscribe((next) => {this.optionsAH = next;});
   }
+  
 
   loadUsers() {
     this.userService.getUsers(this.authService.decodedToken.nameid, this.pagination.currentPage, this.pagination.itemsPerPage).subscribe((res: PaginatedResult<User[]>) => {

@@ -6,6 +6,7 @@ using api.DAL.Interfaces;
 using api.DAL.models;
 using Microsoft.EntityFrameworkCore;
 using api.DAL.Code;
+using api.Helpers;
 
 namespace api.DAL.Implementations
 {
@@ -210,6 +211,34 @@ namespace api.DAL.Implementations
             return l;
         }
 
+        public void Add<T>(T entity) where T : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete<T>(T entity) where T : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> SaveAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> isThisHospitalOVI(int hospital_id)
+        {
+            var h = hospital_id.ToString().makeSureTwoChar();
+
+            if(await _context.Hospitals.AnyAsync(a => a.HospitalNo == h)){
+
+             var help = await _context.Hospitals.FirstOrDefaultAsync(a => a.HospitalNo == h);
+             if(help.rp == null) return false;
+             if(help.rp.Equals("1"))return true;
+
+            } else {return false;}
+            return false;
+        }
     }
 }
 

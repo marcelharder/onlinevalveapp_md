@@ -7,6 +7,7 @@ import { modelValveParams } from 'src/app/_models/modelValveParams';
 import { PaginatedResult, Pagination } from 'src/app/_models/pagination';
 import { TypeOfValve } from 'src/app/_models/TypeOfValve';
 import { Valve } from 'src/app/_models/Valve';
+import { valveSize } from 'src/app/_models/valveSize';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { DropService } from 'src/app/_services/drop.service';
@@ -39,6 +40,8 @@ export class SelectValveComponent implements OnInit {
   optionsType: Array<DropItem> = [];
   optionsVendor: Array<DropItem> = [];
 
+  valveSizes:Array<valveSize> = [];
+
   selectedHeight = 0;
   selectedAge = 0;
   selectedGender = 0;
@@ -59,12 +62,14 @@ export class SelectValveComponent implements OnInit {
   showOVI = 0;
   aorticvalves: Array<Valve> = [];
   mitralvalves: Array<Valve> = [];
-  products:Array<TypeOfValve> = [];
+  products: Array<TypeOfValve> = [];
   productRequested = "";
   AproductRequested = "";
   MproductRequested = "";
   HospitalName = "";
   ImagePath = "";
+  showProduct = 0;
+  showBSA = 0;
 
   valveParams: modelValveParams = {
     BioPref: 0,
@@ -78,26 +83,38 @@ export class SelectValveComponent implements OnInit {
 
   };
 
-  constructor(private alertify: AlertifyService, 
+  product: TypeOfValve = {
+    valveTypeId: 0,
+    no: 0,
+    uk_code: '',
+    us_code: '',
+    description: '',
+    valve_size: [],
+    type: '',
+    image: '',
+    vendor_description: '',
+    vendor_code: '',
+    model_code: '',
+    implant_position: '',
+    countries: ''
+};
+
+  constructor(private alertify: AlertifyService,
     private prod: ProductService,
     private drops: DropService,
-    private vs: ValveService, 
-    private auth: AuthService, 
+    private vs: ValveService,
+    private auth: AuthService,
     private hs: HospitalService) { }
 
   ngOnInit() {
-    this.Title = "Fit a valve for your patient";
+    this.selectedPos = "Aortic";
     this.auth.currentHospital.subscribe((next) => {
-      
+
       this.HospitalName = next;
       // find out if this hospital is enrolled in the OVI program
-      this.hs.isOVIPlace().subscribe((next)=>{ 
-        debugger;
-        if(next === 1){ 
-        
-        this.showOVI = 1; }})
-          
-    
+      this.hs.isOVIPlace().subscribe((next) => { if (next === 1) { this.showOVI = 1; } })
+
+
     });
 
     this.ImagePath = 'https://res.cloudinary.com/marcelcloud/image/upload/v1620571880/valves/valves02.jpg';
@@ -106,28 +123,54 @@ export class SelectValveComponent implements OnInit {
 
   }
 
-  OVIPlace(){if(this.showOVI === 1){
-    this.Title = "Fit a valve for your patient, select from valves in your hospital";
-    return true;} else {this.Title = "Select the valve first"; return false;}}
+  OVIPlace() {
+    if (this.showOVI === 1) {
+      this.Title = "Fit a valve for your patient, select from valves in your hospital";
+      return true;
+    } else { this.Title = "Select the valve first"; return false; }
+  }
 
-  Search(){
-    if(this.selectedVendor !== 0 && this.selectedPos !== ''){
-      
-      this.prod.getProductsByVTP(this.selectedVendor, this.selectedType, this.selectedPos).subscribe((next)=>{
-         this.products = next;
-         // show the list table
+  Search() {
+    if (this.selectedVendor !== 0 && this.selectedType !== '') {
+
+      this.prod.getProductsByVTP(this.selectedVendor, this.selectedType, "Aortic").subscribe((next) => {
+        this.products = next;
+        if (this.products.length === 0) {
+          this.alertify.warning("Nothing found ...");
+        } else { this.alertify.message("Found these valve types ..."); }
       })
+    }
+    else {
+      if (this.selectedVendor === 0 && this.selectedType === '') { this.alertify.error("Please select a vendor and position") }
+      else {
+        if (this.selectedType === '') { this.alertify.error("Please select implant position") }
+        if (this.selectedVendor === 0) { this.alertify.error("Please select a vendor first ...") }
+      }
+    }
+  }
 
-      this.alertify.message("Looking up ...");
-    
-    }
-     else {
-      if(this.selectedVendor === 0 && this.selectedPos === '') {this.alertify.error("Please select a vendor and position")}
-      else{
-      if(this.selectedPos === '') {this.alertify.error("Please select implant position")}
-      if(this.selectedVendor === 0 ) {this.alertify.error("Please select a vendor first ...")}
-      }}
-    }
+  SearchDetails(id: number) {
+ 
+    this.prod.getProductById(id).subscribe(
+      (next)=>{ 
+      this.product = next;
+      var bsa = this.calculateBSA(this.selectedHeight, this.selectedWeight);
+           this.valveSizes = this.product.valve_size;
+           debugger;
+           this.valveSizes.forEach(element => {
+            if ((element.eoa/bsa) > .85) { element.ppm = 'none' } else {
+              if ((element.eoa/bsa) <= .85 && (element.eoa/bsa) >= .65) { element.ppm = "moderate" }
+              else {
+                if ((element.eoa/bsa) < .65) { element.ppm = "severe" }
+              }
+            }
+          });
+
+      }, 
+      (error)=>{this.alertify.error(error)}, 
+      ()=>{this.showProduct = 1;})
+  }
+
 
   findPossibleValves() {
     if (this.selectedPosition.toString() === "1") {
@@ -168,6 +211,7 @@ export class SelectValveComponent implements OnInit {
     if (this.selectedPosition.toString() === '3') { this.showAo = 1; this.showM = 1; this.AproductRequested = "Aortic  valves"; this.MproductRequested = "Mitral valves"; }
   }
 
+  
 
   showAoValves() { if (this.showAo === 1) { return true; } }
   showMValves() { if (this.showM === 1) { return true; } }
@@ -175,6 +219,16 @@ export class SelectValveComponent implements OnInit {
   showSeverePPM() { if (this.severePPM === 1) { return true; } }
   showModeratePPM() { if (this.moderatePPM === 1) { return true; } }
   showAdvice() { if (this.showA === '1') { return true; } }
+  showProductDetails(){if (this.showProduct === 1) { return true; } }
+
+  
+
+  noBSA(){if (this.showBSA === 1) { return true; }}
+  
+
+  severePPMCCS(inp: string) { if (inp === 'severe') { return true } }
+  nonePPMCCS(inp: string) { if (inp === 'none') { return true } }
+  moderatePPMCCS(inp: string) { if (inp === 'moderate') { return true } }
 
   loadAoValves() {
 
@@ -193,7 +247,6 @@ export class SelectValveComponent implements OnInit {
         this.AproductRequested = "No aortic valves are available for implant in " + this.HospitalName;
       } else {
         //this.aorticvalves =  this.aorticvalves.filter(valve => {valve.tfd < .65}); // filter the severe ppm's
-        var bsa = this.calculateBSA(this.selectedHeight, this.selectedWeight);
         this.aorticvalves.forEach(element => {
           if (element.tfd > .85) { element.ppm = 'none' } else {
             if (element.tfd <= .85 && element.tfd >= .65) { element.ppm = "moderate" }
@@ -236,7 +289,7 @@ export class SelectValveComponent implements OnInit {
 
     this.optionsType.push({ value: 0, description: "Biological" });
     this.optionsType.push({ value: 1, description: "Mechanical" });
-    
+
     this.genderOptions.push({ value: 0, description: "Choose" });
     this.genderOptions.push({ value: 1, description: "Male" });
     this.genderOptions.push({ value: 2, description: "Female" });
@@ -257,7 +310,7 @@ export class SelectValveComponent implements OnInit {
     this.heightOptions.push({ value: 0, description: "Choose" });
     for (i = 150; i < 210; i++) { this.heightOptions.push({ value: i, description: i.toString() }); }
 
-    this.drops.getCompanyOptions().subscribe((next)=>{this.optionsVendor = next})
+    this.drops.getCompanyOptions().subscribe((next) => { this.optionsVendor = next })
 
 
 
@@ -268,6 +321,7 @@ export class SelectValveComponent implements OnInit {
     var help = 0.0;
     help = 0.007184 * (Math.pow(height, 0.725) * Math.pow(weight, 0.425));
     this.bsa = help;
+    this.showBSA = 1;
     return help;
   }
 

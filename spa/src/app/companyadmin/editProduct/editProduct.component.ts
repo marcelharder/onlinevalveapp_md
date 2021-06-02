@@ -20,7 +20,7 @@ export class EditProductComponent implements OnInit {
   ImagePath = "";
   baseUrl = environment.apiUrl;
   showAdd = 0; newsize = 0; neweoa = 0.0;
-  valvesize: valveSize = {sizeId:0, size:0, eoa: 0.0};
+  valvesize: valveSize = {sizeId:0, size:0, eoa: 0.0, ppm: '0'};
 
   constructor(private alertify: AlertifyService,
     private prod: ProductService,

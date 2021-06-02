@@ -13,7 +13,7 @@ export class productEditDetailsComponent implements OnInit {
   @Input() prod: TypeOfValve;
   @Output() backTo = new EventEmitter<String>();
   listOfSizes: Array<valveSize> = [];
-  valvesize: valveSize = { sizeId: 0, size: 0, eoa: 0.0 };
+  valvesize: valveSize = { sizeId: 0, size: 0, eoa: 0.0, ppm: '0' };
   newSizeToken = 0;
 
   constructor(private alertify: AlertifyService, private pro: ProductService) { }

@@ -502,20 +502,6 @@ namespace api.DAL.Implementations
             var a = f.Valve_size.ToList();
             var b = a.Find(a => a.Size == Convert.ToInt32(size));
             return b.EOA.ToString();
-
-
-
-           /*  var result = await _context.Valves
-            .Where(s => s.Product_code == pc)
-            .Where(s => s.Size == size)
-            .FirstOrDefaultAsync();
-
-            if (result != null) { 
-                // the valve is not found so get the tfd from the 
-                
-                
-                return result.TFD.ToString(); }
-            else { return ""; } */
         }
 
         public async Task<double> calculateIndexedFTD(int height, int weight, double TFD)

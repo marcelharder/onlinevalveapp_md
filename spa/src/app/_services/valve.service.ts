@@ -62,20 +62,13 @@ export class ValveService {
     saveValve(item: Valve) { return this.http.post(this.baseUrl + 'updatevalve', item, { responseType: 'text' as 'json' }); }
     deleteValve(id: number){ return this.http.delete<string>(this.baseUrl + 'deleteValve/' + id, { responseType: 'text' as 'json' })}
     
-    // tslint:disable-next-line:max-line-length
     getValvesByHospitalAndValveCodeId(hospital: number, code: number) { return this.http.get<Valve[]>(this.baseUrl + 'valvesByHospitalAndValveId/' + hospital + '/' + code); }
     getNewValveBasedOnValveType(id: number) { return this.http.get<Valve>(this.baseUrl + 'valveBasedOnTypeOfValve/' + id); }
     getValveExpiry(id: number) { return this.http.get<ExpiringProducts[]>(this.baseUrl + 'valveExpiry/' + id); }
-
-    // tslint:disable-next-line:max-line-length
     getValveTransfers(userId: number, id: number) { return this.http.get<ValveTransfer[]>(this.baseUrl + 'valveTransfers/' + userId + '/' + id) }
-    // tslint:disable-next-line:max-line-length
     getValveTransferDetails(userId: number, id: number) { return this.http.get<ValveTransfer>(this.baseUrl + 'valveTransferDetails/' + userId + '/' + id) }
-    // tslint:disable-next-line:max-line-length
     addValveTransferDetails(userId: number, valveId: number) { return this.http.post<ValveTransfer>(this.baseUrl + 'addValveTransfer/' + userId + '/' + valveId, {}) }
-    // tslint:disable-next-line:max-line-length
     updateValveTransferDetails(userId: number, ct: ValveTransfer) { return this.http.put<number>(this.baseUrl + 'updateValveTransfer/' + userId, ct) }
-
     updateValveTypePhoto(photoUrl:string){return this.http.post<string>(this.baseUrl + 'updatePhoto', photoUrl) }
 
 }

@@ -18,7 +18,7 @@ export class AddProductComponent implements OnInit {
   implantLocation: Array<DropItem> = [];
   ValveCodeSizes:Array<valveSize>=[];
   newsize = 0; neweoa = 0.0; showAdd = 0;
-  valvesize: valveSize = {sizeId:0, size:0, eoa: 0.0};
+  valvesize: valveSize = {sizeId:0, size:0, eoa: 0.0, ppm:'0'};
 
 
   constructor(private drop: DropService, private prodService: ProductService, private alertify: AlertifyService) { }

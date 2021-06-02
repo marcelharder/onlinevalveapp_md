@@ -94,7 +94,7 @@ namespace api.DAL.Implementations
         }
         public async Task<Class_TypeOfValve> getDetailsByValveTypeId(int id)
         {
-            var result = await _context.ValveCodes.FirstOrDefaultAsync(a => a.ValveTypeId == id);
+            var result = await _context.ValveCodes.Include(a => a.Valve_size).FirstOrDefaultAsync(a => a.ValveTypeId == id);
             return result;
         }
 

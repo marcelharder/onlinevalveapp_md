@@ -5,6 +5,7 @@ import { PaginatedResult, Pagination } from 'src/app/_models/pagination';
 import { Valve } from 'src/app/_models/Valve';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { AuthService } from 'src/app/_services/auth.service';
+import { GeneralService } from 'src/app/_services/general.service';
 import { ValveService } from 'src/app/_services/valve.service';
 
 @Component({
@@ -56,8 +57,9 @@ export class LookInOVIComponent implements OnInit {
 
   };
 
-  constructor(private vs :ValveService, 
-    private auth:AuthService, 
+  constructor(private vs :ValveService,
+    private gen:GeneralService,
+    private auth:AuthService,
     private alertify:AlertifyService) { }
 
   ngOnInit() {
@@ -81,18 +83,18 @@ export class LookInOVIComponent implements OnInit {
       if (this.aorticvalves.length === 0) {
         this.AproductRequested = "No aortic valves are available for implant in " + this.HospitalName;
       } else {
-        //this.aorticvalves =  this.aorticvalves.filter(valve => {valve.tfd < .65}); // filter the severe ppm's
-        this.aorticvalves.forEach(element => {
-          if (element.tfd > .85) { element.ppm = 'none' } else {
-            if (element.tfd <= .85 && element.tfd >= .65) { element.ppm = "moderate" }
-            else {
-              if (element.tfd < .65) { element.ppm = "severe" }
+        this.gen.getBSA(+this.selectedHeight, +this.selectedWeight).subscribe((next)=>{
+           this.bsa = next;
+           this.AproductRequested = "These aortic valves are available for implant in " + this.HospitalName;
+           this.aorticvalves.forEach(element => {
+            if (element.tfd > .85) { element.ppm = 'none' } else {
+              if (element.tfd <= .85 && element.tfd >= .65) { element.ppm = "moderate" }
+              else {
+                if (element.tfd < .65) { element.ppm = "severe" }
+              }
             }
-          }
-        });
-        this.AproductRequested = "These aortic valves are available for implant in " + this.HospitalName;
-        this.bsa = this.calculateBSA(this.selectedHeight, this.selectedWeight);
-      
+          });
+        })
       }
     }, (error) => { this.alertify.error(error); })
   }
@@ -149,7 +151,7 @@ export class LookInOVIComponent implements OnInit {
     };
 
   }
- 
+
   showAoValves() { if (this.showAo === 1) { return true; } }
   showMValves() { if (this.showM === 1) { return true; } }
   showPlaatje() { if (this.showAo !== 1 && this.showM !== 1) { return true; } }
@@ -163,12 +165,13 @@ export class LookInOVIComponent implements OnInit {
     if (this.selectedPosition.toString() === '2') { this.showAo = 0; this.showM = 1; this.MproductRequested = "Mitral valves"; this.AproductRequested = ""; }
     if (this.selectedPosition.toString() === '3') { this.showAo = 1; this.showM = 1; this.AproductRequested = "Aortic  valves"; this.MproductRequested = "Mitral valves"; }
   }
-  
+
   calculateBSA(height: number, weight: number): number {
-    //Dubois formula: 0.20247 × H0.725 × W0.425
-    var help = 0.0;
-    help = 0.20247 * (Math.pow(height, 0.725) * Math.pow(weight, 0.425));
-    this.bsa = help;
+    var help = 0;
+     this.gen.getBSA(height, weight).subscribe((next)=>{
+       debugger;
+        help = next;
+     })
     return help;
   }
 
@@ -183,14 +186,14 @@ export class LookInOVIComponent implements OnInit {
     var i = 0;
     this.sizesOptions.push({ value: 0, description: "Choose" });
     for (i = 16; i < 35; i++) { this.sizesOptions.push({ value: i, description: i.toString() }); }
-  
+
     this.weightOptions.push({ value: 0, description: "Choose" });
     for (i = 45; i < 160; i++) { this.weightOptions.push({ value: i, description: i.toString() }); }
 
     this.heightOptions.push({ value: 0, description: "Choose" });
     for (i = 150; i < 210; i++) { this.heightOptions.push({ value: i, description: i.toString() }); }
 
-   
+
 
 
   }

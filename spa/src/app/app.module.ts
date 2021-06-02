@@ -3,12 +3,12 @@ import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
 import { NgModule } from '@angular/core';
-import {TimeAgoPipe} from 'time-ago-pipe';
 import {FileUploadModule} from 'ng2-file-upload';
 import {GoogleChartsModule} from 'angular-google-charts';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {ModalModule} from 'ngx-bootstrap/modal';
 import {PaginationModule} from 'ngx-bootstrap/pagination';
 
 
@@ -82,7 +82,6 @@ export function tokenGet() { return localStorage.getItem('token'); }
 
 @NgModule({
    declarations: [
-      TimeAgoPipe,
       AppComponent,
       HomeComponent,
       AboutComponent,
@@ -130,6 +129,7 @@ export function tokenGet() { return localStorage.getItem('token'); }
       CommonModule,
       HttpClientModule,
       FileUploadModule,
+      ModalModule.forRoot(),
       BsDropdownModule.forRoot(),
       TabsModule.forRoot(),
       PaginationModule,

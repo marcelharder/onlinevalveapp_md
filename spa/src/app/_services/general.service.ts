@@ -23,6 +23,10 @@ export class GeneralService {
     getCountryName(countryCode: string) {
         return this.http.get<string>(this.baseUrl + 'countryNameFromID/' + countryCode, { responseType: 'text' as 'json' });
     }
-   
+
+    getBSA(height: number, weight: number){
+      return this.http.get<number>(this.baseUrl + 'calculateBSA/' + height + '/' + weight);
+    }
+
 
 }

@@ -1,137 +1,171 @@
-
-
 <div *ngIf="!displayOVI()">
-<div class="card">
-  <div class="card-header">
-    <div class="d-flex flex-row">
-      <div class="p-2">{{Title}}</div>
-    </div>
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="row">
-          <div class="col-sm-12"><h5><span class="badge badge-secondary">Choose vendor</span></h5></div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6"><select [(ngModel)]="selectedVendor" name="ve" class="form-control">
-            <option *ngFor="let an of optionsVendor" [value]=an.value>{{ an.description }}</option>
-          </select></div>
-          <div class="col-sm-6"><button class="btn btn-warning btn-sm" (click)="Search()">Search</button></div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12"><h5><span class="badge badge-secondary">Choose implant position</span></h5></div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6"><input type=text [(ngModel)]="selectedPos" class="form-control" readonly></div>
-          <div class="col-sm-6"></div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12"><h5><span class="badge badge-secondary">Choose type</span></h5></div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6"><select [(ngModel)]="selectedType" name="ty" class="form-control">
-            <option *ngFor="let an of optionsType" [value]=an.description>{{ an.description }}</option>
-          </select></div>
-          <div class="col-sm-6"><button class="btn btn-warning btn-sm" (click)="Search()">Search</button></div>
-        </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex flex-row">
+        <div class="p-2">{{ Title }}</div>
       </div>
-      <div class="col-sm-6">
-        <div *ngIf="showProductList()">
-          <app-selectValveTypeList [pro]="products" (selout)="searchDetails($event)"></app-selectValveTypeList>
-        </div>
-        <div *ngIf="!showProductList()">
-         <div *ngIf="!BSApresent()">
-          <div class="card">
-            <div class="card-header"><h4><span class="badge badge-default">To calculate the indexed eoa, the height and weight of the patient is needed </span></h4></div>
-            <div class="card-body">
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-6">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <h5><span class="badge badge-secondary">Choose vendor</span></h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6"> <select  [(ngModel)]="selectedVendor"   name="ve"  class="form-control"  >
+                <option *ngFor="let an of optionsVendor" [value]="an.value"> {{ an.description }} </option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <button class="btn btn-warning btn-sm" (click)="Search()">Search</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <h5><span class="badge badge-secondary">Choose type</span></h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <select [(ngModel)]="selectedType" name="ty" class="form-control">
+                <option *ngFor="let an of optionsType" [value]="an.description">
+                  {{ an.description }}
+                </option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <button class="btn btn-warning btn-sm" (click)="Search()">
+                Search
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
               <div class="row">
-              <div class="col-sm-12 mb-1">
-                <div class="row">
-                  <div class="col-sm-6">
-                    <h5><span class="badge badge-default">Weight (kg)</span></h5>
-                  </div>
-                  <div class="col-sm-6"><select [(ngModel)]="selectedWeight" name="w2" class="form-control">
-                      <option *ngFor="let an of weightOptions" [value]=an.value>{{ an.description }}</option>
-                    </select></div>
-                </div>
+                <div class="col-sm-6"><h5><span class="badge badge-secondary">Height</span></h5></div>
+                <div class="col-sm-6"><button class="badge badge-success btn-xxs" (click)="info()">?</button></div>
               </div>
-              <div class="col-sm-12 mb-1" >
-                <div class="row">
-                  <div class="col-sm-6">
-                    <h5><span class="badge badge-default">Height (cm)</span></h5>
-                  </div>
-                  <div class="col-sm-6"><select [(ngModel)]="selectedHeight" name="h2" class="form-control">
-                      <option *ngFor="let an of heightOptions" [value]=an.value>{{ an.description }}</option>
-                    </select></div>
-                </div>
-              </div>
+
+
             </div>
-            </div>
-            <div class="card-footer"><button class="btn btn-info btn-sm" (click)="endHW()">Done</button></div>
           </div>
-         </div>
-         <div *ngIf="BSApresent()">
-          <div class="card">
-            <div class="card-header">Valve Type Details</div>
-            <div class="card-body">
-  
-            
-  
-              "valveTypeId": 8,
-              "no": 21,
-              "vendor_description": "LivaNova",
-              "vendor_code": "3",
-              "valve_size": null,
-              "model_code": "5687",
-              "implant_position": "Aortic",
-              "uk_code": "CARA",
-              "us_code": null,
-              "image": "https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/carbomedics.jpg",
-              "description": "Carbomedics standard aortic valve",
-              "type": "Mechanical",
-              "countries": "NL,SA,US"
-  
-  
-  
-  <table>
-    <tr>
-               <th>size</th>
-               <th></th>
-              </tr>
-  
-  
-              <tr *ngFor="let pro of sizes">
-               
-                <th><h6>{{pro.size}}</h6></th>
-               
-                <td *ngIf="severePPMCCS(pro.ppm)"><a (click)="selectDetails(pro.valveId)">
-                    <span class="badge badge-danger">{{pro.ppm}}</span></a></td> 
-                <td *ngIf="nonePPMCCS(pro.ppm)"><a (click)="selectDetails(pro.valveId)">
-                    <span class="badge badge-success">{{pro.ppm}}</span></a></td> 
-                <td *ngIf="moderatePPMCCS(pro.ppm)"><a (click)="selectDetails(pro.valveId)">
-                    <span class="badge badge-warning">{{pro.ppm}}</span></a></td> 
-  
-            
-            </tr>
-          </table>         
-  
-  
-  
-  
+          <div class="row">
+            <div class="col-sm-6">
+              <select [(ngModel)]="selectedHeight" name="hei" class="form-control">
+                <option *ngFor="let an of heightOptions" [value]="an.value">
+                  {{ an.description }}
+                </option>
+              </select>
             </div>
-            <div class="card-footer"><button class="btn btn-info btn-sm" (click)="hideHeightWeight()">Done</button></div>
+            <div class="col-sm-6">
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-sm-6"><h5><span class="badge badge-secondary">Weight</span></h5></div>
+                <div class="col-sm-6"><button class="badge badge-success btn-xxs" (click)="info()">?</button></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <select [(ngModel)]="selectedWeight" name="wei" class="form-control">
+                <option *ngFor="let an of weightOptions" [value]="an.value">
+                  {{ an.description }}
+                </option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+
+            </div>
+          </div>
+
+
+
+
+
+
+        </div>
+        <div class="col-sm-6">
+          <div *ngIf="showProductList()">
+            <app-selectValveTypeList
+              [pro]="products"
+              (selout)="searchDetails($event)"
+            ></app-selectValveTypeList>
+          </div>
+          <div *ngIf="!showProductList()">
+              <div class="card">
+                <div class="card-header">Valve Type Details</div>
+                <div class="card-body">
+                  "countries": "NL,SA,US"
+                  <table>
+                    <tr>
+                      <th>size</th>
+                      <th></th>
+                    </tr>
+                    <tr *ngFor="let pro of sizes">
+                      <th>
+                        <h6>{{ pro.size }}</h6>
+                      </th>
+
+                      <td *ngIf="severePPMCCS(pro.ppm)">
+                        <a (click)="selectDetails(pro.valveId)">
+                          <span class="badge badge-danger">{{
+                            pro.ppm
+                          }}</span></a
+                        >
+                      </td>
+                      <td *ngIf="nonePPMCCS(pro.ppm)">
+                        <a (click)="selectDetails(pro.valveId)">
+                          <span class="badge badge-success">{{
+                            pro.ppm
+                          }}</span></a
+                        >
+                      </td>
+                      <td *ngIf="moderatePPMCCS(pro.ppm)">
+                        <a (click)="selectDetails(pro.valveId)">
+                          <span class="badge badge-warning">{{
+                            pro.ppm
+                          }}</span></a
+                        >
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="card-footer">
+                  <button
+                    class="btn btn-info btn-sm"
+                    (click)="hideHeightWeight()"
+                  >
+                    Done
+                  </button>
+                </div>
+              </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
-</div>
 </div>
 
 <div *ngIf="displayOVI()">
   <app-lookInOVI></app-lookInOVI>
 </div>
 
-
+<ng-template #NYHATemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Definition of NYHA</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p *ngFor="let item of optionsModalNyha">{{item}}</p>
+  </div>
+</ng-template>

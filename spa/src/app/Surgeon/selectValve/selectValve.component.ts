@@ -48,6 +48,8 @@ export class SelectValveComponent implements OnInit {
   showProduct = 1;
   showBSA = 0;
 
+  modalRef: BsModalRef;
+
 
 
   product: TypeOfValve = {
@@ -72,6 +74,7 @@ export class SelectValveComponent implements OnInit {
     private drops: DropService,
     private vs: ValveService,
     private auth: AuthService,
+    private modalService: BsModalService,
     private hs: HospitalService) { }
 
   ngOnInit() {
@@ -155,8 +158,8 @@ export class SelectValveComponent implements OnInit {
     }
   }
 
-  info(){this.alertify.message("hier komt de message");}
-  //info(template: TemplateRef<any>) { this.modalRef = this.modalService.show(template); }
+ // info(){this.alertify.message("hier komt de message");}
+  info(template: TemplateRef<any>) { this.modalRef = this.modalService.show(template); }
 
 
   loadDrops() {

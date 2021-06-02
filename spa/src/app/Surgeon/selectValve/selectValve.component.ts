@@ -42,7 +42,7 @@ export class SelectValveComponent implements OnInit {
   productRequested = "";
 
 
-  showProduct = 0;
+  showProduct = 1;
   showBSA = 0;
 
 
@@ -92,6 +92,7 @@ export class SelectValveComponent implements OnInit {
 
       this.prod.getProductsByVTP(this.selectedVendor, this.selectedType, "Aortic").subscribe((next) => {
         this.products = next;
+        this.showProduct = 1;
         if (this.products.length === 0) {
           this.alertify.warning("Nothing found ...");
         } else { this.alertify.message("Found these valve types ..."); }
@@ -106,8 +107,23 @@ export class SelectValveComponent implements OnInit {
     }
   }
 
-  SearchDetails(id: number) {
+  
 
+  displayOVI() { if (this.showOVI === 1) { return true; } else {return false;} }
+  showProductList() { if (this.showProduct === 1) { return true; } }
+  BSApresent() { if (this.showBSA === 1) { return true; } }
+
+
+  severePPMCCS(inp: string) { if (inp === 'severe') { return true } }
+  nonePPMCCS(inp: string) { if (inp === 'none') { return true } }
+  moderatePPMCCS(inp: string) { if (inp === 'moderate') { return true } }
+ 
+
+
+
+
+
+  searchDetails(id: any) {
     this.prod.getProductById(id).subscribe(
       (next) => {
         this.product = next;
@@ -125,24 +141,14 @@ export class SelectValveComponent implements OnInit {
 
       },
       (error) => { this.alertify.error(error) },
-      () => { this.showProduct = 1; })
+      () => { this.showProduct = 0; })
   }
-
-  displayOVI() { if (this.showOVI === 1) { return true; } else {return false;} }
-  showProductDetails() { if (this.showProduct === 1) { return true; } }
-  noBSA() { if (this.showBSA === 1) { return true; } }
-
-
-  severePPMCCS(inp: string) { if (inp === 'severe') { return true } }
-  nonePPMCCS(inp: string) { if (inp === 'none') { return true } }
-  moderatePPMCCS(inp: string) { if (inp === 'moderate') { return true } }
-
 
 
   loadDrops() {
 
-    this.optionsPos.push({ value: 1, description: "Aortic" });
-    this.optionsPos.push({ value: 2, description: "Mitral" });
+    this.optionsType.push({ value: 1, description: "Biological" });
+    this.optionsType.push({ value: 2, description: "Mechanical" });
 
     var i = 0;
 
@@ -158,12 +164,14 @@ export class SelectValveComponent implements OnInit {
 
   }
 
+  endHW(){ 
+    var bsa = this.calculateBSA(this.selectedHeight, this.selectedHeight);
+    this.alertify.error("hallo" + bsa)}
+
   calculateBSA(height: number, weight: number): number {
-    //Dubois formula: 0.007184 × H0.725 × W0.425
+    //Dubois formula: 0.20247 × H0.725 × W0.425
     var help = 0.0;
-    help = 0.007184 * (Math.pow(height, 0.725) * Math.pow(weight, 0.425));
-    this.bsa = help;
-    this.showBSA = 1;
+    help = 0.20247 * (Math.pow(height, 0.725) * Math.pow(weight, 0.425));
     return help;
   }
 

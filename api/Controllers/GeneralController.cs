@@ -57,6 +57,10 @@ var result = _special.getCountryNameFromID(id);
 return Ok(result);
 }
 
+[Route("api/calculateBSA/{height}/{weight}")]
+[AllowAnonymous]
+public IActionResult getBSA(double height, double weight){return Ok(_special.calculateBSA(height,weight));}
+
 [Route("api/countryList")]
 public IActionResult getListOfCountries(){
     var result = _special.getListOfCountries();

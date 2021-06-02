@@ -37,26 +37,12 @@
         </div>
       </div>
       <div class="col-sm-6">
-        <div class="card" *ngIf="!showProductDetails()">
-          <div class="card-header">Selected Valve(s)</div>
-          <div class="card-body">
-            <table class="table table-striped">
-              <tr>
-                  <th><h6><span class="badge badge-default">Description</span></h6></th>
-                  <th><h6><span class="badge badge-default">Implant position</span></h6></th>
-                  <th></th>
-                </tr>
-              <tr *ngFor="let pro of products">
-                  <th><h6><span class="badge badge-secondary">{{pro.description}}</span></h6></th>
-                  <th><h6>{{pro.implant_position}}</h6></th>
-                  <th><button class="btn btn-info btn-sm" (click)="SearchDetails(pro.valveTypeId)">Details</button></th>
-              </tr>
-          </table>
-          </div>
+        <div *ngIf="showProductList()">
+          <app-selectValveTypeList [pro]="products" (selout)="searchDetails($event)"></app-selectValveTypeList>
         </div>
-        <div *ngIf="showProductDetails()">
-
-          <div class="card" *ngIf="noBSA()">
+        <div *ngIf="!showProductList()">
+         <div *ngIf="!BSApresent()">
+          <div class="card">
             <div class="card-header"><h4><span class="badge badge-default">To calculate the indexed eoa, the height and weight of the patient is needed </span></h4></div>
             <div class="card-body">
               <div class="row">
@@ -82,60 +68,60 @@
               </div>
             </div>
             </div>
-            <div class="card-footer"><button class="btn btn-info btn-sm" (click)=SearchDetails(pro.valveTypeId)>Done</button></div>
+            <div class="card-footer"><button class="btn btn-info btn-sm" (click)="endHW()">Done</button></div>
           </div>
-
-
-
-          <div class="card" *ngIf="!noBSA()">
-          <div class="card-header">Valve Type Details</div>
-          <div class="card-body">
-
-          
-
-            "valveTypeId": 8,
-            "no": 21,
-            "vendor_description": "LivaNova",
-            "vendor_code": "3",
-            "valve_size": null,
-            "model_code": "5687",
-            "implant_position": "Aortic",
-            "uk_code": "CARA",
-            "us_code": null,
-            "image": "https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/carbomedics.jpg",
-            "description": "Carbomedics standard aortic valve",
-            "type": "Mechanical",
-            "countries": "NL,SA,US"
-
-
-
-<table>
-  <tr>
-             <th>size</th>
-             <th></th>
+         </div>
+         <div *ngIf="BSApresent()">
+          <div class="card">
+            <div class="card-header">Valve Type Details</div>
+            <div class="card-body">
+  
+            
+  
+              "valveTypeId": 8,
+              "no": 21,
+              "vendor_description": "LivaNova",
+              "vendor_code": "3",
+              "valve_size": null,
+              "model_code": "5687",
+              "implant_position": "Aortic",
+              "uk_code": "CARA",
+              "us_code": null,
+              "image": "https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/carbomedics.jpg",
+              "description": "Carbomedics standard aortic valve",
+              "type": "Mechanical",
+              "countries": "NL,SA,US"
+  
+  
+  
+  <table>
+    <tr>
+               <th>size</th>
+               <th></th>
+              </tr>
+  
+  
+              <tr *ngFor="let pro of sizes">
+               
+                <th><h6>{{pro.size}}</h6></th>
+               
+                <td *ngIf="severePPMCCS(pro.ppm)"><a (click)="selectDetails(pro.valveId)">
+                    <span class="badge badge-danger">{{pro.ppm}}</span></a></td> 
+                <td *ngIf="nonePPMCCS(pro.ppm)"><a (click)="selectDetails(pro.valveId)">
+                    <span class="badge badge-success">{{pro.ppm}}</span></a></td> 
+                <td *ngIf="moderatePPMCCS(pro.ppm)"><a (click)="selectDetails(pro.valveId)">
+                    <span class="badge badge-warning">{{pro.ppm}}</span></a></td> 
+  
+            
             </tr>
-
-
-            <tr *ngFor="let pro of sizes">
-             
-              <th><h6>{{pro.size}}</h6></th>
-             
-              <td *ngIf="severePPMCCS(pro.ppm)"><a (click)="selectDetails(pro.valveId)">
-                  <span class="badge badge-danger">{{pro.ppm}}</span></a></td> 
-              <td *ngIf="nonePPMCCS(pro.ppm)"><a (click)="selectDetails(pro.valveId)">
-                  <span class="badge badge-success">{{pro.ppm}}</span></a></td> 
-              <td *ngIf="moderatePPMCCS(pro.ppm)"><a (click)="selectDetails(pro.valveId)">
-                  <span class="badge badge-warning">{{pro.ppm}}</span></a></td> 
-
-          
-          </tr>
-        </table>         
-
-
-
-
+          </table>         
+  
+  
+  
+  
+            </div>
+            <div class="card-footer"><button class="btn btn-info btn-sm" (click)="hideHeightWeight()">Done</button></div>
           </div>
-          <div class="card-footer"><button class="btn btn-info btn-sm" (click)="hideHeightWeight()">Done</button></div>
         </div>
       </div>
     </div>

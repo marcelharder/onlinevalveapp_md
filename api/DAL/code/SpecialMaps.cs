@@ -447,6 +447,16 @@ namespace api.DAL.Code
 
             return help;
         }
+
+        public double calculateBSA(double height, double weight){
+          // DuBois formula
+          // height in m en weight in cm
+          // BSA = 0.007184 * Height0.725 * Weight0.425  
+          var result = 0.0;
+          result = .007184 * Math.Pow(height,0.725) * Math.Pow(weight, 0.425);
+          result = Math.Round(result, 2);
+          return result;
+        }
        
         #endregion
         #region <!-- helper functions -->

@@ -73,6 +73,9 @@ import { ListProductsComponent } from './admin/list-products/list-products.compo
 import { ListProductsResolver } from './_resolvers/ListProductsResolver';
 import { ProductDetailsCardComponent } from './admin/productDetailsCard/productDetailsCard.component';
 import { productEditDetailsComponent } from './admin/productEditDetails/productEditDetails.component';
+import { LookInOVIComponent } from './Surgeon/selectValve/lookInOVI/lookInOVI.component';
+import { SelectValveTypeListComponent } from './Surgeon/selectValve/selectValveTypeList/selectValveTypeList.component';
+import { SelectValveTypeDetailsComponent } from './Surgeon/selectValve/selectValveTypeDetails/selectValveTypeDetails.component';
 
 
 export function tokenGet() { return localStorage.getItem('token'); }
@@ -117,7 +120,10 @@ export function tokenGet() { return localStorage.getItem('token'); }
       SuitableMValvesComponent,
       ListProductsComponent,
       ProductDetailsCardComponent,
-      productEditDetailsComponent
+      productEditDetailsComponent,
+      LookInOVIComponent,
+      SelectValveTypeListComponent,
+      SelectValveTypeDetailsComponent
 
    ],
    imports: [

@@ -94,59 +94,11 @@
         </div>
         <div class="col-sm-6">
           <div *ngIf="showProductList()">
-            <app-selectValveTypeList
-              [pro]="products"
-              (selout)="searchDetails($event)"
-            ></app-selectValveTypeList>
+            <app-selectValveTypeList  [pro]="products"  (selout)="searchDetails($event)" ></app-selectValveTypeList>
           </div>
           <div *ngIf="!showProductList()">
-              <div class="card">
-                <div class="card-header">Valve Type Details</div>
-                <div class="card-body">
-                  "countries": "NL,SA,US"
-                  <table>
-                    <tr>
-                      <th>size</th>
-                      <th></th>
-                    </tr>
-                    <tr *ngFor="let pro of sizes">
-                      <th>
-                        <h6>{{ pro.size }}</h6>
-                      </th>
-
-                      <td *ngIf="severePPMCCS(pro.ppm)">
-                        <a (click)="selectDetails(pro.valveId)">
-                          <span class="badge badge-danger">{{
-                            pro.ppm
-                          }}</span></a
-                        >
-                      </td>
-                      <td *ngIf="nonePPMCCS(pro.ppm)">
-                        <a (click)="selectDetails(pro.valveId)">
-                          <span class="badge badge-success">{{
-                            pro.ppm
-                          }}</span></a
-                        >
-                      </td>
-                      <td *ngIf="moderatePPMCCS(pro.ppm)">
-                        <a (click)="selectDetails(pro.valveId)">
-                          <span class="badge badge-warning">{{
-                            pro.ppm
-                          }}</span></a
-                        >
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-                <div class="card-footer">
-                  <button
-                    class="btn btn-info btn-sm"
-                    (click)="hideHeightWeight()"
-                  >
-                    Done
-                  </button>
-                </div>
-              </div>
+            <app-selectValveTypeDetails [pro]="product"></app-selectValveTypeDetails>
+             
           </div>
         </div>
       </div>

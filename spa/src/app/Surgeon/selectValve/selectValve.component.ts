@@ -89,9 +89,21 @@ export class SelectValveComponent implements OnInit {
         (error)=>{this.alertify.error(error);},
         ()=>{this.loadDrops();})
     });
-    this.optionsInfo = [
-      'NYHA stands for New York Heart Association for more information see this wikipedia entry:',
-      'https://en.wikipedia.org/wiki/New_York_Heart_Association_Functional_Classification'];
+    this.optionsInfo = 
+    [
+      'Patient prosthesis mismatch (PPM) was originally described by',
+      ' Rahimtoola almost four decades ago as follows: “the effective',
+      ' prosthetic valve area, after insertion into the patient, is',
+      ' less than that of a normal human valve”. That is, PPM is a',
+      ' situation in which the area of a perfectly functioning prosthetic',
+      ' valve is too small for the body surface area (BSA) of that',
+      ' patient. So, the indexed effective orifice area (IEOA) defined as',
+      ' the ratio between the effective orifice area (EOA) of a prosthetic',
+      ' valve and the BSA of that patient is the optimal parameter to',
+      ' calculate PPM. The height and weight of the patient are needed',
+      ' by the application to calculate the BSA. Further reading here:',
+      ' Rahimtoola SH. The problem of valve prosthesis-patient mismatch. Circulation. 1978;58(1):20–4.'
+    ];
 
 
   }
@@ -124,9 +136,7 @@ export class SelectValveComponent implements OnInit {
   BSApresent() { if (this.showBSA === 1) { return true; } }
 
 
-  severePPMCCS(inp: string) { if (inp === 'severe') { return true } }
-  nonePPMCCS(inp: string) { if (inp === 'none') { return true } }
-  moderatePPMCCS(inp: string) { if (inp === 'moderate') { return true } }
+  
 
 
 

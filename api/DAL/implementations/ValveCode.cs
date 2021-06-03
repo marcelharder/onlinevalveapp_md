@@ -176,6 +176,7 @@ namespace api.DAL.Implementations
 
         public async Task<List<Class_TypeOfValve>> getAllProductsByVTP(string vendor, string type, string position)
         {
+           
            var ap = await _context.ValveCodes
            .Include(a => a.Valve_size)
            .Where(a => a.Vendor_code == vendor)
@@ -183,6 +184,8 @@ namespace api.DAL.Implementations
            .Where(b => b.Implant_position == position)
            .ToListAsync();
 
+           foreach(Class_TypeOfValve cv in ap){ cv.Valve_size = cv.Valve_size.OrderBy(a => a.Size).ToList(); }
+ 
            return ap;
         }
     }

@@ -1,3 +1,37 @@
-<p>
-  selectValveTypeDetails works!
-</p>
+<div class="card">
+  <div class="card-header">Valve Type Details</div>
+  <div class="card-body">
+    "countries": "NL,SA,US"
+    <table>
+      <tr>
+        <th>size</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let p of pro.valve_size">
+        <td><h6>{{ p.size }}</h6></td>
+        <td *ngIf="severePPMCCS(p.ppm)">
+          <div class="row">
+            <div class="col-sm-8"><h6><span class="badge badge-default">The expected patient-prosthesis mismatch is:</span></h6></div>
+            <div class="col-sm-4"><button class="btn btn-danger btn-sm">{{p.ppm}}</button></div>
+          </div>
+          </td>
+        <td *ngIf="nonePPMCCS(p.ppm)">
+          <div class="row">
+            <div class="col-sm-8"><h6><span class="badge badge-default">The expected patient-prosthesis mismatch is:</span></h6></div>
+            <div class="col-sm-4"><button class="btn btn-succes btn-sm">{{p.ppm}}</button></div>
+          </div>
+          
+        </td>
+        <td *ngIf="moderatePPMCCS(p.ppm)">
+          <div class="row">
+            <div class="col-sm-8"><h6><span class="badge badge-default">The expected patient-prosthesis mismatch is:</span></h6></div>
+            <div class="col-sm-4"><button class="btn btn-warning btn-sm">{{p.ppm}}</button></div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-info btn-sm" (click)="hideDetails()" > Done </button>
+  </div>
+</div>

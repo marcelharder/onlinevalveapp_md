@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { TypeOfValve } from 'src/app/_models/TypeOfValve';
+import { valveSize } from 'src/app/_models/valveSize';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 
 @Component({
   selector: 'app-selectValveTypeDetails',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SelectValveTypeDetailsComponent implements OnInit {
 
-  constructor() { }
+  @Input() pro: TypeOfValve;
+
+  constructor(private alertify: AlertifyService) { }
 
   ngOnInit() {
+    
   }
+
+  severePPMCCS(inp: string) { if (inp === 'severe') { return true } }
+  nonePPMCCS(inp: string) { if (inp === 'none') { return true } }
+  moderatePPMCCS(inp: string) { if (inp === 'moderate') { return true } }
+
+  hideDetails(){this.alertify.message("Going where ....");}
 
 }

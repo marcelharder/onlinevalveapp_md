@@ -31,6 +31,7 @@ export class SelectValveComponent implements OnInit {
   optionsPos: Array<DropItem> = [];
   optionsType: Array<DropItem> = [];
   optionsVendor: Array<DropItem> = [];
+  optionsInfo: Array<string> = [];
 
   valveSizes: Array<valveSize> = [];
 
@@ -88,7 +89,9 @@ export class SelectValveComponent implements OnInit {
         (error)=>{this.alertify.error(error);},
         ()=>{this.loadDrops();})
     });
-
+    this.optionsInfo = [
+      'NYHA stands for New York Heart Association for more information see this wikipedia entry:',
+      'https://en.wikipedia.org/wiki/New_York_Heart_Association_Functional_Classification'];
 
 
   }
@@ -158,8 +161,8 @@ export class SelectValveComponent implements OnInit {
     }
   }
 
- // info(){this.alertify.message("hier komt de message");}
-  info(template: TemplateRef<any>) { this.modalRef = this.modalService.show(template); }
+ 
+  openModal(template: TemplateRef<any>) { this.modalRef = this.modalService.show(template); }
 
 
   loadDrops() {

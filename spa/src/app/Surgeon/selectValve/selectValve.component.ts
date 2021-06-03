@@ -171,6 +171,8 @@ export class SelectValveComponent implements OnInit {
     }
   }
 
+  backFromDetails(id: any){this.showProduct = 1; }
+
  
   openModal(template: TemplateRef<any>) { this.modalRef = this.modalService.show(template); }
 
@@ -189,7 +191,13 @@ export class SelectValveComponent implements OnInit {
     this.heightOptions.push({ value: 0, description: "Choose" });
     for (i = 150; i < 210; i++) { this.heightOptions.push({ value: i, description: i.toString() }); }
 
-    this.drops.getCompanyOptions().subscribe((next) => { this.optionsVendor = next })
+    this.drops.getCompanyOptions().subscribe((next) => { 
+      this.optionsVendor = next;
+      this.optionsVendor.unshift({value: 0, description: 'Choose'});
+     
+
+      
+    })
 
 
 

@@ -23,7 +23,6 @@
               <button class="btn btn-warning btn-sm" (click)="Search()">Search</button>
             </div>
           </div>
-
           <div class="row">
             <div class="col-sm-12">
               <h5><span class="badge badge-secondary">Choose type</span></h5>
@@ -85,21 +84,14 @@
 
             </div>
           </div>
-
-
-
-
-
-
         </div>
         <div class="col-sm-6">
           <div *ngIf="showProductList()">
             <app-selectValveTypeList  [pro]="products"  (selout)="searchDetails($event)" ></app-selectValveTypeList>
           </div>
           <div *ngIf="!showProductList()">
-            <app-selectValveTypeDetails [pro]="product"></app-selectValveTypeDetails>
-             
-          </div>
+            <app-selectValveTypeDetails [pro]="product" (selout)="backFromDetails($event)"></app-selectValveTypeDetails>
+           </div>
         </div>
       </div>
     </div>

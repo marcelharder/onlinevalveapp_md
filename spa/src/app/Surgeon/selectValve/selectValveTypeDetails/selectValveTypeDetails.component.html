@@ -1,10 +1,59 @@
 <div class="card">
-  <div class="card-header">Valve Type Details</div>
+  <div class="card-header">
+    <div class="d-flex">
+      <div class="mr-auto p-2"><h4><span class="badge badge-default">Valve Type Details</span></h4></div>
+      <div class="p-2"><button class="btn btn-success btn-sm" (click)="showAdditionalInfo()">Additional info</button></div>
+    </div>
+    
+    
+    
+    
+    </div>
   <div class="card-body">
-    "countries": "NL,SA,US"
+
+   <div class="row">
+     <div class="col-sm-6">
+       <div class="row">
+         <div class="col-sm-12">
+          <h6><span class="badge badge-secondary">Description:</span></h6>
+         </div>
+       </div>
+       <div class="row">
+        <div class="col-sm-12">
+         <h6><span class="badge badge-default">{{pro.description}}</span></h6>
+        </div>
+      </div>
+
+      <div class="row">
+      <div class="col-sm-12">
+       <h6><span class="badge badge-secondary">Type:</span></h6>
+      </div>
+    </div>
+    <div class="row">
+     <div class="col-sm-12">
+      <h6><span class="badge badge-default">{{pro.type}}</span></h6>
+     </div>
+   </div>
+
+   <div class="row">
+    <div class="col-sm-12">
+     <h6><span class="badge badge-secondary">Implant position:</span></h6>
+    </div>
+  </div>
+  <div class="row">
+   <div class="col-sm-12">
+    <h6><span class="badge badge-default">{{pro.implant_position}}</span></h6>
+   </div>
+ </div>
+
+
+     </div>
+     <div class="col-sm-6"><img [src]="ImagePath" width="250px" height="200px"></div>
+   </div>
+    <hr/>
     <table>
       <tr>
-        <th>size</th>
+        <th><h6><span class="badge badge-secondary">Valve sizes</span></h6></th>
         <th></th>
       </tr>
       <tr *ngFor="let p of pro.valve_size">
@@ -18,7 +67,7 @@
         <td *ngIf="nonePPMCCS(p.ppm)">
           <div class="row">
             <div class="col-sm-8"><h6><span class="badge badge-default">The expected patient-prosthesis mismatch is:</span></h6></div>
-            <div class="col-sm-4"><button class="btn btn-succes btn-sm">{{p.ppm}}</button></div>
+            <div class="col-sm-4"><button class="btn btn-success btn-sm">{{p.ppm}}</button></div>
           </div>
           
         </td>

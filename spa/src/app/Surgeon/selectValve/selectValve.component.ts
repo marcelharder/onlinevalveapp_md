@@ -80,6 +80,9 @@ export class SelectValveComponent implements OnInit {
 
   ngOnInit() {
     this.selectedPos = "Aortic";
+
+    if(this.auth.loggedIn()){
+    // this
     this.auth.currentHospital.subscribe((next) => {
       this.HospitalName = next;
       // find out if this hospital is enrolled in the OVI program
@@ -89,6 +92,10 @@ export class SelectValveComponent implements OnInit {
         (error)=>{this.alertify.error(error);},
         ()=>{this.loadDrops();})
     });
+
+    }
+    this.loadDrops();
+    
     this.optionsInfo = 
     [
       'Patient prosthesis mismatch (PPM) was originally described by',

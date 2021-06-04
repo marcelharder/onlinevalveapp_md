@@ -26,6 +26,7 @@ import { ListProductsResolver } from './_resolvers/ListProductsResolver';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'selectValve', component: SelectValveComponent },
   { path: 'about', component: AboutComponent },
   {
     path: '',
@@ -42,7 +43,7 @@ const routes: Routes = [
       { path: 'companyadmin', component: CompanyadminComponent },
       { path: 'addCompanyValve/:id', component: AddCompanyValveComponent, resolve: {valve: ValveResolver} },
       { path: 'superuser', component: SuperuserComponent },
-      { path: 'selectValve', component: SelectValveComponent },
+     // { path: 'selectValve', component: SelectValveComponent },
       { path: 'search', component: SearchserialComponent },
       //    { path: 'tutorials', component: TutorialsComponent },
       //    { path: 'statistics', component: StatisticsComponent },

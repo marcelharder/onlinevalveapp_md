@@ -17,7 +17,7 @@ export class ProductDetailsCardComponent implements OnInit {
     
   }
 
-  showDetails(){
-    this.details.emit(this.cd.no.toString());}
+  showDetails(id:number){
+    this.details.emit(id.toString());}
 
 }

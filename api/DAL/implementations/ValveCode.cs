@@ -141,7 +141,7 @@ namespace api.DAL.Implementations
         }
         public async Task<List<ValveCodeSizesDTO>> GetValveCodeSizes(int id)
         {
-            var result = await getDetails(id);
+            var result = await getDetailsByValveTypeId(id);
             var h = new List<ValveCodeSizesDTO>();
             var l = new List<Class_Valve_Size>();
             l = result.Valve_size.ToList();

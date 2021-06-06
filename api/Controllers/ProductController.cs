@@ -167,7 +167,7 @@ namespace api.Controllers
             result.Size = vs.Size;
             result.EOA = vs.EOA;
 
-            var selectedValve = await _vc.getDetails(id);
+            var selectedValve = await _vc.getDetailsByValveTypeId(id);
             selectedValve.Valve_size.Add(result);
 
             _vc.Update(selectedValve);

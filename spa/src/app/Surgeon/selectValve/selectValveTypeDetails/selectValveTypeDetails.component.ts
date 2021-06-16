@@ -21,21 +21,24 @@ export class SelectValveTypeDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.ImagePath = this.pro.image;
-    this.optionsInfo = 
-    [
-      'Patient prosthesis mismatch (PPM) was originally described by',
-      ' Rahimtoola almost four decades ago as follows: “the effective',
-      ' prosthetic valve area, after insertion into the patient, is',
-      ' less than that of a normal human valve”. That is, PPM is a',
-      ' situation in which the area of a perfectly functioning prosthetic',
-      ' valve is too small for the body surface area (BSA) of that',
-      ' patient. So, the indexed effective orifice area (IEOA) defined as',
-      ' the ratio between the effective orifice area (EOA) of a prosthetic',
-      ' valve and the BSA of that patient is the optimal parameter to',
-      ' calculate PPM. The height and weight of the patient are needed',
-      ' by the application to calculate the BSA. Further reading here:',
-      ' Rahimtoola SH. The problem of valve prosthesis-patient mismatch. Circulation. 1978;58(1):20–4.'
-    ];
+    if(this.pro.valveTypeId === 13){
+      this.optionsInfo = 
+      [
+        'Patient prosthesis mismatch (PPM) was originally described by',
+        ' Rahimtoola almost four decades ago as follows: “the effective',
+        ' prosthetic valve area, after insertion into the patient, is',
+        ' less than that of a normal human valve”. That is, PPM is a',
+        ' situation in which the area of a perfectly functioning prosthetic',
+        ' valve is too small for the body surface area (BSA) of that',
+        ' patient. So, the indexed effective orifice area (IEOA) defined as',
+        ' the ratio between the effective orifice area (EOA) of a prosthetic',
+        ' valve and the BSA of that patient is the optimal parameter to',
+        ' calculate PPM. The height and weight of the patient are needed',
+        ' by the application to calculate the BSA. Further reading here:',
+        ' Rahimtoola SH. The problem of valve prosthesis-patient mismatch. Circulation. 1978;58(1):20–4.'
+      ];
+    }
+   
 
   }
 

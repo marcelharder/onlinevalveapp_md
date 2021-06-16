@@ -60,21 +60,21 @@
         <td><h6>{{ p.size }}</h6></td>
         <td *ngIf="severePPMCCS(p.ppm)">
           <div class="row">
-            <div class="col-sm-8"><h6><span class="badge badge-default">The expected patient-prosthesis mismatch is:</span></h6></div>
-            <div class="col-sm-4"><button class="btn btn-danger btn-sm">{{p.ppm}}</button></div>
+            <div class="col-sm-8"><h6><span class="badge badge-danger">The patient-prosthesis mismatch is severe</span></h6></div>
+            <div class="col-sm-4"></div>
           </div>
           </td>
         <td *ngIf="nonePPMCCS(p.ppm)">
           <div class="row">
-            <div class="col-sm-8"><h6><span class="badge badge-default">The expected patient-prosthesis mismatch is:</span></h6></div>
-            <div class="col-sm-4"><button class="btn btn-success btn-sm">{{p.ppm}}</button></div>
+            <div class="col-sm-8"><h6><span class="badge badge-success">No patient-prosthesis mismatch</span></h6></div>
+            <div class="col-sm-4"></div>
           </div>
           
         </td>
         <td *ngIf="moderatePPMCCS(p.ppm)">
           <div class="row">
-            <div class="col-sm-8"><h6><span class="badge badge-default">The expected patient-prosthesis mismatch is:</span></h6></div>
-            <div class="col-sm-4"><button class="btn btn-warning btn-sm">{{p.ppm}}</button></div>
+            <div class="col-sm-8"><h6><span class="badge badge-warning">The patient-prosthesis mismatch is moderate</span></h6></div>
+            <div class="col-sm-4"></div>
           </div>
         </td>
       </tr>

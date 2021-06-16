@@ -20,6 +20,7 @@ namespace api.Controllers
     public class ProductController : ControllerBase
     {
         private IValveCode _vc;
+
         private SpecialMaps _special;
         private Cloudinary _cloudinary;
         private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
@@ -44,7 +45,7 @@ namespace api.Controllers
             var help = new Class_TypeOfValve();
             help.Vendor_code = currentVendor.ToString();
             help.Vendor_description = await _special.getVendorNameFromVendorCodeAsync(currentVendor.ToString());
-            help.countries = "31,966";
+            help.countries = "NL,US,KSA";
             help.Type = "";
             help.image = "https://res.cloudinary.com/marcelcloud/image/upload/v1620571880/valves/valves02.jpg";
 

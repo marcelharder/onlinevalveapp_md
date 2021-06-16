@@ -21,21 +21,21 @@ export class SelectValveTypeDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.ImagePath = this.pro.image;
-    if(this.pro.valveTypeId === 13){
+    if(this.pro.model_code === 'PVS-67'){
       this.optionsInfo = 
       [
-        'Patient prosthesis mismatch (PPM) was originally described by',
-        ' Rahimtoola almost four decades ago as follows: “the effective',
-        ' prosthetic valve area, after insertion into the patient, is',
-        ' less than that of a normal human valve”. That is, PPM is a',
-        ' situation in which the area of a perfectly functioning prosthetic',
-        ' valve is too small for the body surface area (BSA) of that',
-        ' patient. So, the indexed effective orifice area (IEOA) defined as',
-        ' the ratio between the effective orifice area (EOA) of a prosthetic',
-        ' valve and the BSA of that patient is the optimal parameter to',
-        ' calculate PPM. The height and weight of the patient are needed',
-        ' by the application to calculate the BSA. Further reading here:',
-        ' Rahimtoola SH. The problem of valve prosthesis-patient mismatch. Circulation. 1978;58(1):20–4.'
+        'The Perceval valve has different sizing unlike other valves',
+        'For the Perceval bioprosthesis, each size covers a range of',
+        ' 2 annular diameters, therefore the EOA varies ',
+        ' from 2,07 to 2,20 cm2 for the S size; ',
+        ' from 2,47 to 2,63 cm2 for the M size; ', 
+        ' from 2,81 to 2,95 cm2 for L size and ', 
+        ' from 3,11 to 3,43 for the XL size ',
+        ' ',
+        ' ',
+        ' Pragmatically the application uses mean values, so 20-22-24-26',
+        ' ',
+        ' '
       ];
     }
    
@@ -43,7 +43,7 @@ export class SelectValveTypeDetailsComponent implements OnInit {
   }
 
   showAdditionalInfo(template: TemplateRef<any>){
-     if(this.pro.valveTypeId === 13){
+     if(this.pro.model_code === 'PVS-67'){
      this.openModal(template);
      }
      else{this.alertify.message("No additional info on " + this.pro.description);}

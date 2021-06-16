@@ -20,7 +20,7 @@ export class SelectValveTypeDetailsComponent implements OnInit {
     this.ImagePath = this.pro.image;
   }
 
-  showAdditionalInfo(){this.alertify.message("No additional info on valve " + this.pro.valveTypeId);}
+  showAdditionalInfo(){this.alertify.message("No additional info on " + this.pro.description);}
 
   severePPMCCS(inp: string) { if (inp === 'severe') { return true } }
   nonePPMCCS(inp: string) { if (inp === 'none') { return true } }

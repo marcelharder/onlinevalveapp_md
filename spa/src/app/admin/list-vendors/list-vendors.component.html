@@ -1,3 +1,18 @@
-<p>
-  list-vendors works!
-</p>
+<div class="card">
+  <div class="card-header">
+    <h4><span class="badge badge-default">List of vendors</span></h4>
+  </div>
+  <div class="card-body">
+    <div class="row" *ngIf="!displayDetails()">
+      <div *ngFor="let vendor of listOfVendors" class="col-sm-4">
+        <app-vendorDetailsCard [cd]="vendor" (details)="showDetails($event)"></app-vendorDetailsCard>
+      </div>
+    </div>
+    <div class="row" *ngIf="displayDetails()">
+      <div class="col-sm-12">
+        <app-vendorEditCard [prod]="vendorDetails" (backTo)="returnFromEditDetails($event)"></app-vendorEditCard>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer"></div>
+</div>

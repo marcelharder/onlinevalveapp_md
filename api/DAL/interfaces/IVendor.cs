@@ -1,16 +1,19 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using api.DAL.models;
+using api.Helpers;
 
 namespace api.DAL.Interfaces
 {
    public interface IVendor
     {
         Task<Class_Vendors> getVendor(int id);
-        
+        Task<PagedList<Class_Vendors>> getVendorsFull(UserParams userParams);
         Task<List<Class_Item>> getVendors();
-        Task<int> updateVendor(Class_Vendors cv);
-        void Add(Class_Vendors v);
         Task<bool> SaveAll();
+        void Delete<T>(T entity) where T : class;
+        void Add<T>(T entity) where T : class;
+        void Update<T>(T entity) where T : class;
+     
     } 
 }

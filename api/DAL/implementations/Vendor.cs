@@ -7,6 +7,7 @@ using System.Xml.Linq;
 using api.DAL.Code;
 using api.DAL.Interfaces;
 using api.DAL.models;
+using api.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,18 +28,15 @@ namespace api.DAL.Implementations
 
         }
 
-        public void Add(Class_Vendors v)
-        {
-            throw new NotImplementedException();
-        }
+        
+
+       
 
         public async Task<Class_Vendors> getVendor(int id)
         {
             var result = await _context.Vendors.FirstOrDefaultAsync(x => x.database_no == id.ToString());
             return result;
         }
-
-
         public async Task<List<Class_Item>> getVendors()
         {
             var result = new List<Class_Item>();
@@ -59,15 +57,19 @@ namespace api.DAL.Implementations
             return result;
 
         }
-
-        public Task<bool> SaveAll()
+        public async Task<PagedList<Class_Vendors>> getVendorsFull(UserParams userParams)
         {
-            throw new NotImplementedException();
+            var vendors = _context.Vendors.AsQueryable();
+            return await PagedList<Class_Vendors>.CreateAsync(vendors, userParams.PageNumber, userParams.PageSize);
+            
         }
+        public async Task<bool> SaveAll() { return await _context.SaveChangesAsync() > 0; }
+        public void Add<T>(T entity) where T : class{ _context.Add(entity); }
+        public void Delete<T>(T entity) where T : class{ _context.Remove(entity); }
+        public void Update<T>(T entity) where T : class{ _context.Update(entity); }
 
-        public Task<int> updateVendor(Class_Vendors cv)
-        {
-            throw new NotImplementedException();
-        }
+        
+
+        
     }
 }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using api.DAL.Interfaces;
 using api.DAL.models;
+using api.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,7 +45,7 @@ namespace api.Controllers
         [HttpPost]
         public async Task<IActionResult> postVendor([FromRoute]Class_Vendors cv)
         {
-            await _vendor.updateVendor(cv);
+            _vendor.Update(cv);
             if (await _vendor.SaveAll()) { return Ok("Vendor saved"); }
             return BadRequest("Can't save this vendor");
 
@@ -55,6 +56,31 @@ namespace api.Controllers
          public async Task<IActionResult> allVendors(){
              var result = await _vendor.getVendors();
              return Ok(result);
+         }
+       
+       
+         [Route("api/vendorsFull")]
+         [HttpGet]
+         public async Task<IActionResult> allVendorsFull([FromQuery] UserParams up){
+
+            var result = await _vendor.getVendorsFull(up);
+
+            Response.AddPagination(result.Currentpage,
+            result.PageSize,
+            result.TotalCount,
+            result.TotalPages);
+
+             return Ok(result);
+         }
+
+         [Route("api/deleteVendor/{id}")]
+         [HttpDelete]
+         public async Task<IActionResult> deleteVendor(int id){
+              var help = await _vendor.getVendor(id);
+             _vendor.Delete(help);
+             if(await _vendor.SaveAll()){return Ok("Deleted");}
+             return BadRequest("Could not delete entity");
+
          }
    
    

@@ -70,11 +70,12 @@ namespace api.DAL.Implementations
 
         public async Task<PagedList<User>> GetUsersInHospital(UserParams userParams)
         {
-            List<UserForReturnDTO> ufr = new List<UserForReturnDTO>();
+           // List<UserForReturnDTO> ufr = new List<UserForReturnDTO>();
             var users = _context.Users.Include(u => u.Photos).AsQueryable();
             users = users.Where(a => a.hospital_id == userParams.selectedHospital);
 
-            return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
+            return await PagedList<User>.CreateAsync(
+                users, userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<string> GetCountryCodeFromUser(int userId)

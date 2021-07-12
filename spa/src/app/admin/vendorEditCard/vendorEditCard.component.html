@@ -1,3 +1,25 @@
-<p>
-  vendorEditCard works!
-</p>
+<div class="card">
+  <div class="card-header"> <h4><span class="badge badge-info">{{vendor.description}}</span></h4></div>
+  <div class="card-body">
+
+   
+    <div class="row">
+      <div class="col-sm-6"></div>
+      <div class="col-sm-6"><img src="{{vendor.reps}}" height="100px" weight="100px"></div>
+    </div>
+    
+   
+
+
+  </div>
+  <div class="card-footer">
+    <div class="row">
+      <div class="col-sm-6"></div>
+      <div class="col-sm-6">
+        <button class="form-control" (click)="backToList()">Back</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

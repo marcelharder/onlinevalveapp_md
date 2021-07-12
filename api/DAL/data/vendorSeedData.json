@@ -29,7 +29,7 @@
     "spare2": "willa",
     "active": null,
     "spare4": "14",
-    "reps": null
+    "reps": "https://res.cloudinary.com/marcelcloud/image/upload/v1626118659/vendors/edwards.png"
   },
 
   /* 3 */
@@ -46,7 +46,7 @@
     "spare2": "pat",
     "active": null,
     "spare4": "13",
-    "reps": null
+    "reps": "https://res.cloudinary.com/marcelcloud/image/upload/v1626118659/vendors/medtronic.png"
   },
 
   /* 4 */
@@ -63,7 +63,7 @@
     "spare2": "rosalind",
     "active": null,
     "spare4": "12",
-    "reps": null
+    "reps": "https://res.cloudinary.com/marcelcloud/image/upload/v1626118979/vendors/kingfaisal.png"
   },
 
   /* 5 */
@@ -80,7 +80,7 @@
     "spare2": "hilary",
     "active": null,
     "spare4": "11",
-    "reps": null
+    "reps": "https://res.cloudinary.com/marcelcloud/image/upload/v1626118659/vendors/sjm.png"
   },
 
   /* 6 */
@@ -97,7 +97,7 @@
     "spare2": "lorene",
     "active": null,
     "spare4": "10",
-    "reps": null
+    "reps": "https://res.cloudinary.com/marcelcloud/image/upload/v1626118979/vendors/gore.png"
   },
 
   /* 7 */
@@ -114,7 +114,7 @@
     "spare2": "leanne",
     "active": null,
     "spare4": "9",
-    "reps": null
+    "reps": "https://res.cloudinary.com/marcelcloud/image/upload/v1626118659/vendors/livanova.png"
   },
 
   /* 8 */
@@ -131,7 +131,7 @@
     "spare2": "freda",
     "active": null,
     "spare4": "8",
-    "reps": ""
+    "reps": "https://res.cloudinary.com/marcelcloud/image/upload/v1626118979/vendors/atrium.png"
   }
 
 ]

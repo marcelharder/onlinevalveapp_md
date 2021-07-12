@@ -12,7 +12,7 @@ import { VendorService } from '../_services/vendor.service';
 
 @Injectable()
 export class ListVendorsResolver implements Resolve<Vendor[]> {
-    pageSize = 7;
+    pageSize = 6;
     pageNumber = 1;
     messageContainer = 'Unread';
     constructor(private vendorService: VendorService,

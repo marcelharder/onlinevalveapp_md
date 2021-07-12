@@ -9,8 +9,8 @@ using api.DAL;
 namespace api.Migrations
 {
     [DbContext(typeof(dataContext))]
-    [Migration("20210403141816_TFD-Added")]
-    partial class TFDAdded
+    [Migration("20210712141645_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -132,7 +132,7 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.DAL.models.Class_TypeOfValve", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ValveTypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -152,9 +152,6 @@ namespace api.Migrations
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Valve_size")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
                     b.Property<string>("Vendor_code")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -164,13 +161,16 @@ namespace api.Migrations
                     b.Property<string>("countries")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("image")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("uk_code")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("us_code")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.HasKey("Id");
+                    b.HasKey("ValveTypeId");
 
                     b.ToTable("ValveCodes");
                 });
@@ -189,6 +189,9 @@ namespace api.Migrations
 
                     b.Property<int>("Hospital_code")
                         .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<DateTime>("Implant_date")
                         .HasColumnType("datetime(6)");
@@ -220,8 +223,8 @@ namespace api.Migrations
                     b.Property<string>("Size")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("TFD")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<double>("TFD")
+                        .HasColumnType("double");
 
                     b.Property<string>("Type")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -235,6 +238,31 @@ namespace api.Migrations
                     b.HasKey("ValveId");
 
                     b.ToTable("Valves");
+                });
+
+            modelBuilder.Entity("api.DAL.models.Class_Valve_Size", b =>
+                {
+                    b.Property<int>("SizeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<float>("EOA")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("VTValveTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ValveTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SizeId");
+
+                    b.HasIndex("VTValveTypeId");
+
+                    b.ToTable("Valve_sizes");
                 });
 
             modelBuilder.Entity("api.DAL.models.Class_Vendors", b =>
@@ -493,6 +521,13 @@ namespace api.Migrations
                         .HasForeignKey("ValveId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("api.DAL.models.Class_Valve_Size", b =>
+                {
+                    b.HasOne("api.DAL.models.Class_TypeOfValve", "VT")
+                        .WithMany("Valve_size")
+                        .HasForeignKey("VTValveTypeId");
                 });
 
             modelBuilder.Entity("api.DAL.models.Message", b =>

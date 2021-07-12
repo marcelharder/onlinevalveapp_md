@@ -76,6 +76,8 @@ import { productEditDetailsComponent } from './admin/productEditDetails/productE
 import { LookInOVIComponent } from './Surgeon/selectValve/lookInOVI/lookInOVI.component';
 import { SelectValveTypeListComponent } from './Surgeon/selectValve/selectValveTypeList/selectValveTypeList.component';
 import { SelectValveTypeDetailsComponent } from './Surgeon/selectValve/selectValveTypeDetails/selectValveTypeDetails.component';
+import { ListVendorsComponent } from './admin/list-vendors/list-vendors.component';
+import { ListVendorsResolver } from './_resolvers/ListVendorsResolver';
 
 
 export function tokenGet() { return localStorage.getItem('token'); }
@@ -118,6 +120,7 @@ export function tokenGet() { return localStorage.getItem('token'); }
       SuitableAOValvesComponent,
       SuitableMValvesComponent,
       ListProductsComponent,
+      ListVendorsComponent,
       ProductDetailsCardComponent,
       productEditDetailsComponent,
       LookInOVIComponent,
@@ -164,6 +167,7 @@ export function tokenGet() { return localStorage.getItem('token'); }
         MessagesResolver,
         ExpiringProductsResolver,
         ListProductsResolver,
+        ListVendorsResolver,
         PreventUnsavedChanges,
         ProfileResolver,
         ListUserResolver,

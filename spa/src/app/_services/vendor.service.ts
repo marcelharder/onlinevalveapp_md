@@ -1,14 +1,35 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Vendor } from '../_models/Vendor';
 import { DropItem } from '../_models/dropItem';
 import { TypeOfValve } from '../_models/TypeOfValve';
+import { PaginatedResult } from '../_models/pagination';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class VendorService {
+    
     baseUrl = environment.apiUrl;
     constructor(private http: HttpClient) { }
+
+
+    getVendorsFull(nameid: any, page: number, itemsPerPage: number) {
+        const paginatedResult: PaginatedResult<Vendor[]> = new PaginatedResult<Vendor[]>();
+        let params = new HttpParams();
+        if (page != null && itemsPerPage != null) {
+            params = params.append('pageNumber', page.toString());
+            params = params.append('pageSize', itemsPerPage.toString());
+        }
+        return this.http.get<Vendor[]>(this.baseUrl + 'vendorsFull',{ observe: 'response', params } )
+        .pipe(
+            map(response => {
+                paginatedResult.result = response.body;
+                if (response.headers.get('Pagination') !== null) {
+                    paginatedResult.pagination = JSON.parse(response.headers.get('Pagination')); }
+                return paginatedResult;
+            }));
+    }
 
     getVendors() { return this.http.get<DropItem[]>(this.baseUrl + 'vendors'); }
 

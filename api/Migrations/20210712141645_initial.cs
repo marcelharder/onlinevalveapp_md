@@ -116,23 +116,23 @@ namespace api.Migrations
                 name: "ValveCodes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    ValveTypeId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     No = table.Column<int>(nullable: false),
                     Vendor_description = table.Column<string>(nullable: true),
                     Vendor_code = table.Column<string>(nullable: true),
-                    Valve_size = table.Column<string>(nullable: true),
                     Model_code = table.Column<string>(nullable: true),
                     Implant_position = table.Column<string>(nullable: true),
                     uk_code = table.Column<string>(nullable: true),
                     us_code = table.Column<string>(nullable: true),
+                    image = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Type = table.Column<string>(nullable: false),
                     countries = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ValveCodes", x => x.Id);
+                    table.PrimaryKey("PK_ValveCodes", x => x.ValveTypeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,6 +152,8 @@ namespace api.Migrations
                     Serial_no = table.Column<string>(nullable: true),
                     Model_code = table.Column<string>(nullable: true),
                     Size = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true),
+                    TFD = table.Column<double>(nullable: false),
                     Implant_position = table.Column<string>(nullable: true),
                     Procedure_id = table.Column<int>(nullable: false),
                     implanted = table.Column<int>(nullable: false),
@@ -244,6 +246,28 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Valve_sizes",
+                columns: table => new
+                {
+                    SizeId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Size = table.Column<int>(nullable: false),
+                    EOA = table.Column<float>(nullable: false),
+                    VTValveTypeId = table.Column<int>(nullable: true),
+                    ValveTypeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Valve_sizes", x => x.SizeId);
+                    table.ForeignKey(
+                        name: "FK_Valve_sizes_ValveCodes_VTValveTypeId",
+                        column: x => x.VTValveTypeId,
+                        principalTable: "ValveCodes",
+                        principalColumn: "ValveTypeId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Transfers",
                 columns: table => new
                 {
@@ -286,6 +310,11 @@ namespace api.Migrations
                 name: "IX_Transfers_ValveId",
                 table: "Transfers",
                 column: "ValveId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Valve_sizes_VTValveTypeId",
+                table: "Valve_sizes",
+                column: "VTValveTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -309,7 +338,7 @@ namespace api.Migrations
                 name: "Transfers");
 
             migrationBuilder.DropTable(
-                name: "ValveCodes");
+                name: "Valve_sizes");
 
             migrationBuilder.DropTable(
                 name: "Vendors");
@@ -319,6 +348,9 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "Valves");
+
+            migrationBuilder.DropTable(
+                name: "ValveCodes");
         }
     }
 }

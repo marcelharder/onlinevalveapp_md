@@ -11,9 +11,6 @@ import { TypeOfValve } from '../_models/TypeOfValve';
 
 @Injectable()
 export class UserService {
-
-    
-
     baseUrl = environment.apiUrl;
     constructor(private http: HttpClient) { }
 

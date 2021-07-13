@@ -1,20 +1,61 @@
 <div class="card">
   <div class="card-header"> <h4><span class="badge badge-info">{{vendor.description}}</span></h4></div>
   <div class="card-body">
-
-   
     <div class="row">
-      <div class="col-sm-6"></div>
       <div class="col-sm-6"><img src="{{vendor.reps}}" height="100px" weight="100px"></div>
+      <div class="col-sm-6"><button class="form-control" (click)="uploadLogo()">Upload Logo</button></div>
     </div>
-    
+   <div class="row" *ngIf="requestPhotoChange()">
+     <div class="col-sm-6"></div>
+     <div class="col-sm-6"><app-photo-editor [photos]="user.photos" (getMemberPhotoChange)="changeMainPhoto($event)"></app-photo-editor>
+     </div>
+    </div> 
+   <div class="row">
+      <div class="col-sm-6"><h5><span class="badge badge-secondary">Description</span></h5></div>
+      <div class="col-sm-6"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6"><h5><span class="badge badge-secondary">Contact</span></h5></div>
+      <div class="col-sm-6"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6"><h5><span class="badge badge-secondary">Address</span></h5></div>
+      <div class="col-sm-6"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6"><h5><span class="badge badge-secondary">Email</span></h5></div>
+      <div class="col-sm-6"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6"><h5><span class="badge badge-secondary">Telephone</span></h5></div>
+      <div class="col-sm-6"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6"><h5><span class="badge badge-secondary">Fax</span></h5></div>
+      <div class="col-sm-6"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6"><h5><span class="badge badge-secondary">Database_no</span></h5></div>
+      <div class="col-sm-6"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6"><h5><span class="badge badge-secondary">Spare_2</span></h5></div>
+      <div class="col-sm-6"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6"><h5><span class="badge badge-secondary">Active</span></h5></div>
+      <div class="col-sm-6"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6"><h5><span class="badge badge-secondary">Spare_4</span></h5></div>
+      <div class="col-sm-6"></div>
+    </div>
    
-
 
   </div>
   <div class="card-footer">
     <div class="row">
-      <div class="col-sm-6"></div>
+      <div class="col-sm-6"><button class="form-control" (click)="Save()">Save</button></div>
       <div class="col-sm-6">
         <button class="form-control" (click)="backToList()">Back</button>
       </div>

@@ -20,7 +20,7 @@ namespace api.Controllers
             _vendor = vendor;
             _code = code;
         }
-        [Route("api/vendor/{id}")]
+        [Route("api/vendor/{id}", Name = "getVendor")]
         public async Task<Class_Vendors> getVendor(int id)
         {
             var help = await _vendor.getVendor(id);
@@ -83,6 +83,16 @@ namespace api.Controllers
 
          }
    
+         [Route("api/addVendor")]
+         [HttpGet]
+         public async Task<IActionResult> addVendor(){
+             var ven = new Class_Vendors();
+             _vendor.Add(ven);
+             if(await _vendor.SaveAll()){
+                 return CreatedAtRoute("getVendor", new { id = ven.Id }, ven);}
+             return BadRequest("Could not add entity");
+
+         }
    
    
     }

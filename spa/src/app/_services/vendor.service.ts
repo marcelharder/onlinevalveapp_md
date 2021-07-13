@@ -31,6 +31,12 @@ export class VendorService {
             }));
     }
 
+    updateVendor(v: Vendor){return this.http.put<string>(this.baseUrl + 'updatevendor/', v);}
+
+    addVendor(){return this.http.get<Vendor>(this.baseUrl + 'addvendor', { responseType: 'text' as 'json' });}
+
+    deleteVendor(id: number){return this.http.delete<string>(this.baseUrl + 'deletevendor/' + id);}
+
     getVendors() { return this.http.get<DropItem[]>(this.baseUrl + 'vendors'); }
 
     getVendor(id: number) { return this.http.get<Vendor>(this.baseUrl + 'vendor/' + id); }

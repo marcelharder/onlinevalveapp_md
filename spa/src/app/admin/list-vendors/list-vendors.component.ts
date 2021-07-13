@@ -29,8 +29,7 @@ export class ListVendorsComponent implements OnInit {
       this.pagination = data.vendors.pagination;
       this.listOfVendors = data.vendors.result; })
   }
-
-  addVendor(){}
+  addVendor(){this.vendorService.addVendor().subscribe((next)=>{this.vendorDetails = next;this.details = 1; })}
   loadVendors() {
     this.vendorService.getVendorsFull(this.authService.decodedToken.nameid, this.pagination.currentPage, this.pagination.itemsPerPage)
     .subscribe((res: PaginatedResult<Vendor[]>) => {
@@ -38,18 +37,14 @@ export class ListVendorsComponent implements OnInit {
       this.pagination = res.pagination;
     }, (error) => { this.alertify.error(error); });
   }
-
   displayDetails(){if(this.details === 1){return true;}}
-
   returnFromEditDetails(test: string){if(test === "1"){this.details = 0;}}
-
   showDetails(id: string){
     // get details of this valve type
     this.vendorService.getVendor(+id).subscribe((next)=>{
       this.vendorDetails = next});
       this.details = 1;
    }
-
    pageChanged(event: any): void {
     this.pagination.currentPage = event.page;
     this.loadVendors();

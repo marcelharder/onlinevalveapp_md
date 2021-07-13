@@ -11,5 +11,6 @@ export interface Vendor {
     spare2: string;
     active: string;
     spare4: string;
+    reps: string;
 }
 

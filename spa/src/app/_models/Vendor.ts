@@ -1,6 +1,6 @@
 export interface Vendor {
-    Id: number;
-    No: number;
+    id: number;
+    no: number;
     description: string;
     contact: string;
     address: string;

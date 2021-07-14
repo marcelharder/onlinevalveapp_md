@@ -15,8 +15,8 @@ export class VendorDetailsCardComponent implements OnInit {
   ngOnInit() {
   }
 
-  showDetails(id:number){
-    this.details.emit(id.toString());}
+  showDetails(id:string){
+    this.details.emit(id);}
 
 }
 

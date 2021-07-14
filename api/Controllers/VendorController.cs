@@ -42,7 +42,7 @@ namespace api.Controllers
         }
 
         [Route("api/updatevendor")]
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> postVendor([FromRoute]Class_Vendors cv)
         {
             _vendor.Update(cv);
@@ -89,7 +89,7 @@ namespace api.Controllers
              var ven = new Class_Vendors();
              _vendor.Add(ven);
              if(await _vendor.SaveAll()){
-                 return CreatedAtRoute("getVendor", new { id = ven.Id }, ven);}
+                return CreatedAtRoute("getVendor", new { id = ven.Id }, ven);}
              return BadRequest("Could not add entity");
 
          }

@@ -9,7 +9,7 @@ import { VendorService } from 'src/app/_services/vendor.service';
   styleUrls: ['./vendorEditCard.component.css']
 })
 export class VendorEditCardComponent implements OnInit {
-  @Input() ven: Vendor;
+  @Input() cd: Vendor;
   @Output() backTo = new EventEmitter<String>();
   photo = 0;
   des = 0;
@@ -19,7 +19,7 @@ export class VendorEditCardComponent implements OnInit {
     private alertify:AlertifyService) { }
 
   ngOnInit() {
-    if(this.ven.description === ""){this.des = 1;};
+    if(this.cd.description === ""){this.des = 1;};
   }
 
   requestPhotoChange(){if(this.photo === 1){return true;}}
@@ -29,13 +29,12 @@ export class VendorEditCardComponent implements OnInit {
     this.photo = 1;
     this.alertify.message("Upload logo here");}
 
-    changeMainPhoto(photoUrl) { this.ven.reps = photoUrl; }
+    changeMainPhoto(photoUrl) { this.cd.reps = photoUrl; }
 
   Save(){
     //update the vendor
-    debugger;
-    this.ven.database_no = this.ven.id.toString();
-    this.vs.updateVendor(this.ven).subscribe((next)=>{
+    this.cd.database_no = this.cd.id.toString();
+    this.vs.updateVendor(this.cd).subscribe((next)=>{
       this.alertify.message(next);
       this.backToList();
     })

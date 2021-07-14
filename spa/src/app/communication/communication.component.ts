@@ -38,7 +38,7 @@ message: EmailMessage = {
 
     this.message.senderId = +this.auth.decodedToken.nameid;
 
-    this.vendorService.getVendor(+this.valve.vendor_code).subscribe((r) => {
+    this.vendorService.getVendor(this.valve.vendor_code).subscribe((r) => {
       this.message.recipientId = +r.spare4; // spare 4 houses the user id that is the contact for this company
       this.message.recipientKnownAs = r.spare2; // spare 2 houses the user name that is the contact for this company
 

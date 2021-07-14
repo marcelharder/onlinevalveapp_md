@@ -31,15 +31,15 @@ export class VendorService {
             }));
     }
 
-    updateVendor(v: Vendor){return this.http.put<string>(this.baseUrl + 'updatevendor/', v);}
+    updateVendor(v: Vendor){return this.http.put<string>(this.baseUrl + 'updatevendor/', v, { responseType: 'text' as 'json' });}
 
-    addVendor(){return this.http.get<Vendor>(this.baseUrl + 'addvendor', { responseType: 'text' as 'json' });}
+    addVendor(){return this.http.get<Vendor>(this.baseUrl + 'addvendor');}
 
     deleteVendor(id: number){return this.http.delete<string>(this.baseUrl + 'deletevendor/' + id);}
 
     getVendors() { return this.http.get<DropItem[]>(this.baseUrl + 'vendors'); }
 
-    getVendor(id: number) { return this.http.get<Vendor>(this.baseUrl + 'vendor/' + id); }
+    getVendor(database_no: string) { return this.http.get<Vendor>(this.baseUrl + 'vendor/' + database_no); }
 
     getVendorContactPerson(vendorId: number){ return this.http.get<number>(this.baseUrl + 'vendorContact/' + vendorId);}
 

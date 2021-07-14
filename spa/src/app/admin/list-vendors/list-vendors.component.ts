@@ -15,7 +15,9 @@ export class ListVendorsComponent implements OnInit {
 
   listOfVendors: Array<Vendor> = [];
   pagination: Pagination;
-  vendorDetails:Vendor = {id: 0,no:0,description: "",contact: "",address: "",email: "",telephone: "",fax: "",database_no: "",spare2: "",active: "",spare4: "", reps:""};
+  vendorDetails:Vendor = {id: 0,no:0,description: "",
+  contact: "",address: "",email: "",telephone: "",fax: "",
+  database_no: "",spare2: "",active: "",spare4: "", reps:""};
   details = 0;
 
   constructor(private route: ActivatedRoute, 
@@ -38,11 +40,12 @@ export class ListVendorsComponent implements OnInit {
     }, (error) => { this.alertify.error(error); });
   }
   displayDetails(){if(this.details === 1){return true;}}
+  
   returnFromEditDetails(test: string){if(test === "1"){this.details = 0;}}
+
   showDetails(id: string){
     // get details of this valve type
-    debugger;
-    this.vendorService.getVendor(+id).subscribe((next)=>{
+  this.vendorService.getVendor(id).subscribe((next)=>{
       this.vendorDetails = next});
       this.details = 1;
    }

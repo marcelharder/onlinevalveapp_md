@@ -30,7 +30,7 @@ export class VendorEditCardComponent implements OnInit {
 
   uploadLogo(){ this.photo = 1; this.alertify.message("Upload logo here");}
 
-  changeMainPhoto(photoUrl) { this.cd.reps = photoUrl; }
+  changeMainPhoto(photoUrl) { this.cd.reps = photoUrl; this.photo = 0;}
 
   Save(){
     //update the vendor

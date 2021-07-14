@@ -35,7 +35,7 @@ export class VendorService {
 
     addVendor(){return this.http.get<Vendor>(this.baseUrl + 'addvendor');}
 
-    deleteVendor(id: number){return this.http.delete<string>(this.baseUrl + 'deletevendor/' + id);}
+    deleteVendor(id: number){return this.http.delete<string>(this.baseUrl + 'deletevendor/' + id, { responseType: 'text' as 'json' });}
 
     getVendors() { return this.http.get<DropItem[]>(this.baseUrl + 'vendors'); }
 

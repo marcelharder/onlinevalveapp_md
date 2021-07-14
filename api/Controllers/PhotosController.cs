@@ -41,6 +41,10 @@ namespace api.Controllers
          );
             _cloudinary = new Cloudinary(acc);
         }
+         
+         
+
+
         [HttpGet("{id}", Name = "GetPhoto")]
         public async Task<IActionResult> GetPhoto(int id)
         {
@@ -49,7 +53,7 @@ namespace api.Controllers
             return Ok(photo);
         }
 
-        [HttpPost]
+        [HttpPost("{id}")]
         public async Task<IActionResult> AddPhotoForUser(int userId, [FromForm]PhotoForCreationDto photoDto)
         {
             var user = await _repo.GetUser(userId);

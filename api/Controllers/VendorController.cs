@@ -1,10 +1,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using api.DAL.dtos;
 using api.DAL.Interfaces;
 using api.DAL.models;
 using api.Helpers;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace api.Controllers
 {
@@ -15,10 +19,22 @@ namespace api.Controllers
 
         private IVendor _vendor;
         private IValveCode _code;
-        public VendorController(IVendor vendor, IValveCode code)
+        private Cloudinary _cloudinary;
+        private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
+        public VendorController(
+            IVendor vendor, 
+            IValveCode code, 
+            IOptions<CloudinarySettings> cloudinaryConfig)
         {
             _vendor = vendor;
             _code = code;
+            _cloudinaryConfig = cloudinaryConfig;
+             Account acc = new Account(
+               _cloudinaryConfig.Value.CloudName,
+               _cloudinaryConfig.Value.ApiKey,
+               _cloudinaryConfig.Value.ApiSecret
+           );
+            _cloudinary = new Cloudinary(acc);
         }
         [Route("api/vendor/{id}", Name = "getVendor")]
         public async Task<Class_Vendors> getVendor(int id)
@@ -94,7 +110,46 @@ namespace api.Controllers
              return BadRequest("Could not add entity");
 
          }
-   
+
+         
+        [Route("api/addCompanyLogo/{id}")]
+        [HttpPost]
+        public async Task<IActionResult> AddLogoToCompany(int id, [FromQuery] PhotoForCreationDto photoDto)
+        {
+            var vendor = await getVendor(id);
+
+            var file = photoDto.File;
+            var uploadresult = new ImageUploadResult();
+
+            if (file.Length > 0)
+            {
+                using (var stream = file.OpenReadStream())
+                {
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(file.Name, stream),
+                        Transformation = new Transformation().Width(500).Height(500).Crop("fill").Gravity("face")
+                    };
+                    uploadresult = _cloudinary.Upload(uploadParams);
+                }
+                vendor.reps = uploadresult.Uri.ToString();
+                
+                if (await _vendor.SaveAll())
+                {
+                    return CreatedAtRoute("getVendor", new { id = vendor.database_no }, vendor);
+                }
+            }
+            return BadRequest();
+        }
+
+
+       /*   [Route("api/addVendorLogo")]
+         [HttpPost]
+         public async Task<IActionResult> addPhoto([FromForm]PhotoForCreationDto photoDto){
+
+
+         }
+    */
    
     }
 }

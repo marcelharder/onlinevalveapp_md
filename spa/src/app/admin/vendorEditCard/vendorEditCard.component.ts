@@ -12,6 +12,7 @@ export class VendorEditCardComponent implements OnInit {
   @Input() cd: Vendor;
   @Output() backTo = new EventEmitter<String>();
   photo = 0;
+  photos:Array<string>=[];
   des = 0;
 
   constructor(
@@ -19,17 +20,17 @@ export class VendorEditCardComponent implements OnInit {
     private alertify:AlertifyService) { }
 
   ngOnInit() {
+    this.photos.push(this.cd.reps);
     if(this.cd.description === ""){this.des = 1;};
   }
 
   requestPhotoChange(){if(this.photo === 1){return true;}}
+
   showDescriptionEdit(){if(this.des === 1){return true;}}
 
-  uploadLogo(){
-    this.photo = 1;
-    this.alertify.message("Upload logo here");}
+  uploadLogo(){ this.photo = 1; this.alertify.message("Upload logo here");}
 
-    changeMainPhoto(photoUrl) { this.cd.reps = photoUrl; }
+  changeMainPhoto(photoUrl) { this.cd.reps = photoUrl; }
 
   Save(){
     //update the vendor

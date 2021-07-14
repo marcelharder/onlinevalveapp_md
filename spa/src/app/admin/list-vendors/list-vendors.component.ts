@@ -27,8 +27,7 @@ export class ListVendorsComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe((data) => { 
-      debugger;
-      this.pagination = data.vendors.pagination;
+     this.pagination = data.vendors.pagination;
       this.listOfVendors = data.vendors.result; })
   }
   addVendor(){this.vendorService.addVendor().subscribe((next)=>{this.vendorDetails = next;this.details = 1; })}

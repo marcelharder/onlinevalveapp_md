@@ -170,7 +170,6 @@ export class SelectValveComponent implements OnInit {
               }
             }
           });
-          debugger;
          }, (error)=>{this.alertify.error(error)})
       },
       (error) => { this.alertify.error(error) },

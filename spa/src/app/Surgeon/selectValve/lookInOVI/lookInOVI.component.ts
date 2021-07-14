@@ -169,7 +169,6 @@ export class LookInOVIComponent implements OnInit {
   calculateBSA(height: number, weight: number): number {
     var help = 0;
      this.gen.getBSA(height, weight).subscribe((next)=>{
-       debugger;
         help = next;
      })
     return help;

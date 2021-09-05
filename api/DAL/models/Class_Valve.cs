@@ -27,6 +27,7 @@ namespace api.DAL.models
         public int Hospital_code { get; set; }
         public DateTime Implant_date { get; set; }
         public ICollection<Class_Transfer> transfers { get; set;}
+       
 
     }
 }

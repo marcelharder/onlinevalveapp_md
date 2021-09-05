@@ -49,6 +49,8 @@ namespace api.DAL.data
             foreach (var item in emp)
             {
                context.ValveCodes.Add(item);
+               foreach (Class_Valve_Size s in item.Valve_size){ context.Valve_sizes.Add(s); }
+               
             }
             await context.SaveChangesAsync();
         }
@@ -61,6 +63,7 @@ namespace api.DAL.data
             foreach (var item in emp)
             {
                context.Valves.Add(item);
+             
             }
             await context.SaveChangesAsync();
         }

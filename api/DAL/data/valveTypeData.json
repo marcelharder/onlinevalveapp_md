@@ -3,7 +3,7 @@
     "No": 1,
     "vendor_description": "Medtronic",
     "vendor_code": "5",
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "valve_size": [{"size":19,"EOA":1.2},{"size":21,"EOA":1.5},{"size":23,"EOA":1.7},{"size":25,"EOA":2.1},{"size":27,"EOA":2.5},{"size":29,"EOA":3.1},{"size":31,"EOA":3.1}],
     "model_code": "4500",
     "implant_position": "Aortic",
     "uk_code": "ATSA",
@@ -13,45 +13,26 @@
     "Type": "Mechanical",
     "countries":"NL,SA,US"
   },
-
-  
+ 
   {
-    "No": 2,
-    "vendor_description": "Medtronic",
-    "vendor_code": "5",
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-    "model_code": "4600",
-    "implant_position": "Mitral",
-    "uk_code": "ATSM",
-    "us_code": "M2",
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431017/valves/MedtronicOpenPivotAP.jpg",
-    "description": "Open Pivot Standard Mitral Heart Valve",
-    "Type": "Mechanical",
-    "countries":"NL,SA,US"
-  },
-
-  
-  {
-   "No": 3,
-    "vendor_description": "St Jude Medical",
-    "vendor_code": "2", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-    "model_code": "32145",
-    "implant_position": "Aortic",
-    "uk_code": "SJMA",
-    "us_code": "M2",
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431017/valves/SJM-Regent.jpg",
-    "description": "SJM Regent",
-    "Type": "Mechanical",
-    "countries":"NL,SA,US"
-  },
-
-
-  {
+    "No": 3,
+     "vendor_description": "St Jude Medical",
+     "vendor_code": "2", 
+     "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+     "model_code": "32145",
+     "implant_position": "Aortic",
+     "uk_code": "SJMA",
+     "us_code": "M2",
+     "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431017/valves/SJM-Regent.jpg",
+     "description": "SJM Regent",
+     "Type": "Mechanical",
+     "countries":"NL,SA,US"
+   },
+   {
     "No": 4,
     "vendor_description": "Medtronic",
     "vendor_code": "5", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "valve_size": [{"size":19,"EOA":1.7},{"size":21,"EOA":2.0},{"size":23,"EOA":2.5},{"size":25,"EOA":2.6},{"size":27,"EOA":3.5},{"size":29,"EOA":3.5}],
     "model_code": "4679",
     "implant_position": "Aortic",
     "uk_code": "AP-A",
@@ -61,24 +42,20 @@
     "Type": "Mechanical",
     "countries":"NL,SA,US"
   },
-
-  
   {
     "No": 5,
     "vendor_description": "Medtronic",
     "vendor_code": "5", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "valve_size": [{"size":16,"EOA":1.2},{"size":18,"EOA":1.5},{"size":20,"EOA":1.7},{"size":22,"EOA":2.1},{"size":24,"EOA":2.5},{"size":26,"EOA":3.1},{"size":28,"EOA":3.1}],
     "model_code": "4678",
     "implant_position": "Aortic",
     "uk_code": "AP360",
     "us_code": null,
     "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431017/valves/MedtronicOpenPivotAP.jpg",
-    "description": "Open Pivot AP360",
+    "description": "Open Pivot AP360 (supra annular)",
     "Type": "Mechanical",
     "countries":"NL,SA,US"
   },
-
-  
   {
     "No": 6,
     "vendor_description": "Medtronic",
@@ -93,29 +70,11 @@
     "Type": "Valved_Conduit",
     "countries":"NL,SA,US"
   },
-
-  
-  {
-    "No": 7,
-    "vendor_description": "Medtronic",
-    "vendor_code": "5", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-    "model_code": "4781",
-    "implant_position": "Mitral",
-    "uk_code": "P3D",
-    "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
-    "description": "Profile 3D Ring",
-    "Type": "Annuloplasty_Ring",
-    "countries":"NL,SA,US"
-  },
-
-  
   {
     "No": 8,
     "vendor_description": "Medtronic",
     "vendor_code": "5", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "valve_size": [{"size":21,"EOA":1.3},{"size":23,"EOA":1.5},{"size":25,"EOA":1.8},{"size":27,"EOA":1.9},{"size":29,"EOA":2.2}],
      "model_code": "4782",
     "implant_position": "Aortic",
     "uk_code": "Mosaic",
@@ -125,24 +84,6 @@
     "Type": "Biological",
     "countries":"NL,SA,US"
   },
-
-  
-  {
-    "No": 9,
-    "vendor_description": "Medtronic",
-    "vendor_code": "5", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-     "model_code": "4683",
-    "implant_position": "Mitral",
-    "uk_code": "Hancock-M",
-    "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/Hancock2.jpg",
-    "description": "Hancock II Tissue Valve - Mitral",
-    "Type": "Biological",
-    "countries":"NL,SA,US"
-  },
-
-  
   {
     "No": 10,
     "vendor_description": "Medtronic",
@@ -157,40 +98,6 @@
     "Type": "Biological",
     "countries":"NL,SA,US"
   },
-
-  
-  {
-    "No": 11,
-    "vendor_description": "Medtronic",
-    "vendor_code": "5", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-    "model_code": "4685",
-    "implant_position": "Mitral",
-    "uk_code": "SimFlex",
-    "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
-    "description": "Simulus Flexible Annuloplasty System",
-    "Type": "Annuloplasty_Ring",
-    "countries":"NL,SA,US"
-  },
-
-  
-  {
-    "No": 12,
-    "vendor_description": "Medtronic",
-    "vendor_code": "5", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-    "model_code": "4886",
-    "implant_position": "Mitral",
-    "uk_code": "SimSem",
-    "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
-    "description": "Simulus Semi-Rigid Annuloplasty System",
-    "Type": "Annuloplasty_Ring",
-    "countries":"NL,SA,US"
-  },
-
- 
   {
     "No": 13,
     "vendor_description": "St Jude Medical",
@@ -205,120 +112,6 @@
     "Type": "Biological",
     "countries":"NL,SA,US"
   },
-
- 
-  {
-   "No": 14,
-    "vendor_description": "Edwards",
-    "vendor_code": "4", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-    "model_code": "6900P",
-    "implant_position": "Mitral",
-    "uk_code": "CEPM",
-    "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1620578693/valves/trifecta.jpg",
-    "description": "CE-Perimount Plus Mitral Pericardial valve",
-    "Type": "Biological",
-    "countries":"NL,SA,US"
-  },
-
-  
-  {
-     "No": 15,
-    "vendor_description": "Edwards",
-    "vendor_code": "4", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-    "model_code": "7300TFX",
-    "implant_position": "Mitral",
-    "uk_code": "CEPA",
-    "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1620578693/valves/trifecta.jpg",
-    "description": "CE-Perimount Mitral Magna Ease valve",
-    "Type": "Biological",
-    "countries":"NL,SA,US"
-  },
-
-  
-  {
-    "No": 16,
-    "vendor_description": "Edwards",
-    "vendor_code": "4", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-    "model_code": "6900PTFX",
-    "implant_position": "Mitral",
-    "uk_code": "CEPT",
-    "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1620578693/valves/trifecta.jpg",
-    "description": "CE-Perimount Theon valve",
-    "Type": "Biological",
-    "countries":"NL,SA,US"
-  },
-
-  
-  {
-    "No": 17,
-    "vendor_description": "Edwards",
-    "vendor_code": "4", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-    "model_code": "4450",
-    "implant_position": "Mitral",
-    "uk_code": "CEPHR",
-    "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
-    "description": "CE-PhysioRing",
-    "Type": "Annuloplasty_Ring",
-    "countries":"NL,SA,US"
-  },
-
-  
-  {
-    "No": 18,
-    "vendor_description": "Edwards",
-    "vendor_code": "4", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-    "model_code": "5200",
-    "implant_position": "Mitral",
-    "uk_code": "CEP2HR",
-    "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
-    "description": "CE-Physio-ll",
-    "Type": "Annuloplasty_Ring",
-    "countries":"NL,SA,US"
-  },
-
-  
-  {
-    "No": 19,
-    "vendor_description": "Edwards",
-    "vendor_code": "4", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-    "model_code": "4475",
-    "implant_position": "Mitral",
-    "uk_code": "CEPHRDT",
-    "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
-    "description": "CE-PhysioRing with Duraflo",
-    "Type": "Annuloplasty_Ring",
-    "countries":"NL,SA,US"
-  },
-
- 
-  {
-    "No": 20,
-    "vendor_description": "Edwards",
-    "vendor_code": "4", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-     "model_code": "4900",
-    "implant_position": "Tricuspid",
-    "uk_code": "CEMC3",
-    "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
-    "description": "Edwards MC3 Tricuspid Ring",
-    "Type": "Annuloplasty_Ring",
-    "countries":"NL,SA,US"
-  },
-
-  
   {
     "No": 21,
     "vendor_description": "LivaNova",
@@ -333,72 +126,6 @@
     "Type": "Mechanical",
     "countries":"NL,SA,US"
   },
-
-  
-  {
-    "No": 22,
-    "vendor_description": "St Jude Medical",
-    "vendor_code": "2", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-    "model_code": "6523",
-    "implant_position": "Mitral",
-    "uk_code": "SJMM",
-    "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/sjm_masters.jpg",
-    "description": "St Jude Medical Mechanical Prosthesis",
-    "Type": "Mechanical",
-    "countries":"NL,SA,US"
-  },
-
-  
-  {
-    "No": 23,
-    "vendor_description": "St Jude Medical",
-    "vendor_code": "2", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-     "model_code": "8639",
-    "implant_position": "Mitral",
-    "uk_code": "SJMVG",
-    "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/valved_conduit.jpg",
-    "description": "St Jude Medical Vascular Graft",
-    "Type": "Valved_Conduit",
-    "countries":"NL,SA,US"
-  },
-
- 
-  {
-    "No": 24,
-    "vendor_description": "Medtronic",
-    "vendor_code": "5", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-    "model_code": "8734",
-    "implant_position": "Mitral",
-    "uk_code": "MedDuran",
-    "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
-    "description": "Duran AnCore Annuloplasty Ring",
-    "Type": "Annuloplasty_Ring",
-    "countries":"NL,SA,US"
-  },
-
-  
-  {
-   "No": 25,
-    "vendor_description": "St Jude Medical",
-    "vendor_code": "2", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-    "model_code": "8276",
-    "implant_position": "Mitral",
-    "uk_code": "SJMR",
-    "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
-    "description": "St Jude Medical Annuloplasty Ring",
-    "Type": "Annuloplasty_Ring",
-    "countries":"NL,SA,US"
-  },
-
-  
   {
     "No": 26,
     "vendor_description": "Medtronic",
@@ -414,7 +141,231 @@
     "countries":"NL,SA,US"
   },
 
-  
+
+  {
+    "No": 2,
+    "vendor_description": "Medtronic",
+    "vendor_code": "5",
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "model_code": "4600",
+    "implant_position": "Mitral",
+    "uk_code": "ATSM",
+    "us_code": "M2",
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431017/valves/MedtronicOpenPivotAP.jpg",
+    "description": "Open Pivot Standard Mitral Heart Valve",
+    "Type": "Mechanical",
+    "countries":"NL,SA,US"
+  },
+  {
+    "No": 7,
+    "vendor_description": "Medtronic",
+    "vendor_code": "5", 
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "model_code": "4781",
+    "implant_position": "Mitral",
+    "uk_code": "P3D",
+    "us_code": null,
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
+    "description": "Profile 3D Ring",
+    "Type": "Annuloplasty_Ring",
+    "countries":"NL,SA,US"
+  },
+  {
+    "No": 9,
+    "vendor_description": "Medtronic",
+    "vendor_code": "5", 
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+     "model_code": "4683",
+    "implant_position": "Mitral",
+    "uk_code": "Hancock-M",
+    "us_code": null,
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/Hancock2.jpg",
+    "description": "Hancock II Tissue Valve - Mitral",
+    "Type": "Biological",
+    "countries":"NL,SA,US"
+  },
+  {
+    "No": 11,
+    "vendor_description": "Medtronic",
+    "vendor_code": "5", 
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "model_code": "4685",
+    "implant_position": "Mitral",
+    "uk_code": "SimFlex",
+    "us_code": null,
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
+    "description": "Simulus Flexible Annuloplasty System",
+    "Type": "Annuloplasty_Ring",
+    "countries":"NL,SA,US"
+  },
+  {
+    "No": 12,
+    "vendor_description": "Medtronic",
+    "vendor_code": "5", 
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "model_code": "4886",
+    "implant_position": "Mitral",
+    "uk_code": "SimSem",
+    "us_code": null,
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
+    "description": "Simulus Semi-Rigid Annuloplasty System",
+    "Type": "Annuloplasty_Ring",
+    "countries":"NL,SA,US"
+  },
+  {
+   "No": 14,
+    "vendor_description": "Edwards",
+    "vendor_code": "4", 
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "model_code": "6900P",
+    "implant_position": "Mitral",
+    "uk_code": "CEPM",
+    "us_code": null,
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1620578693/valves/trifecta.jpg",
+    "description": "CE-Perimount Plus Mitral Pericardial valve",
+    "Type": "Biological",
+    "countries":"NL,SA,US"
+  },
+  {
+     "No": 15,
+    "vendor_description": "Edwards",
+    "vendor_code": "4", 
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "model_code": "7300TFX",
+    "implant_position": "Mitral",
+    "uk_code": "CEPA",
+    "us_code": null,
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1620578693/valves/trifecta.jpg",
+    "description": "CE-Perimount Mitral Magna Ease valve",
+    "Type": "Biological",
+    "countries":"NL,SA,US"
+  },
+  {
+    "No": 16,
+    "vendor_description": "Edwards",
+    "vendor_code": "4", 
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "model_code": "6900PTFX",
+    "implant_position": "Mitral",
+    "uk_code": "CEPT",
+    "us_code": null,
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1620578693/valves/trifecta.jpg",
+    "description": "CE-Perimount Theon valve",
+    "Type": "Biological",
+    "countries":"NL,SA,US"
+  },
+  {
+    "No": 17,
+    "vendor_description": "Edwards",
+    "vendor_code": "4", 
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "model_code": "4450",
+    "implant_position": "Mitral",
+    "uk_code": "CEPHR",
+    "us_code": null,
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
+    "description": "CE-PhysioRing",
+    "Type": "Annuloplasty_Ring",
+    "countries":"NL,SA,US"
+  },
+  {
+    "No": 18,
+    "vendor_description": "Edwards",
+    "vendor_code": "4", 
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "model_code": "5200",
+    "implant_position": "Mitral",
+    "uk_code": "CEP2HR",
+    "us_code": null,
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
+    "description": "CE-Physio-ll",
+    "Type": "Annuloplasty_Ring",
+    "countries":"NL,SA,US"
+  },
+  {
+    "No": 19,
+    "vendor_description": "Edwards",
+    "vendor_code": "4", 
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "model_code": "4475",
+    "implant_position": "Mitral",
+    "uk_code": "CEPHRDT",
+    "us_code": null,
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
+    "description": "CE-PhysioRing with Duraflo",
+    "Type": "Annuloplasty_Ring",
+    "countries":"NL,SA,US"
+  },
+  {
+    "No": 20,
+    "vendor_description": "Edwards",
+    "vendor_code": "4", 
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+     "model_code": "4900",
+    "implant_position": "Tricuspid",
+    "uk_code": "CEMC3",
+    "us_code": null,
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
+    "description": "Edwards MC3 Tricuspid Ring",
+    "Type": "Annuloplasty_Ring",
+    "countries":"NL,SA,US"
+  },
+  {
+    "No": 22,
+    "vendor_description": "St Jude Medical",
+    "vendor_code": "2", 
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "model_code": "6523",
+    "implant_position": "Mitral",
+    "uk_code": "SJMM",
+    "us_code": null,
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/sjm_masters.jpg",
+    "description": "St Jude Medical Mechanical Prosthesis",
+    "Type": "Mechanical",
+    "countries":"NL,SA,US"
+  },
+  {
+    "No": 23,
+    "vendor_description": "St Jude Medical",
+    "vendor_code": "2", 
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+     "model_code": "8639",
+    "implant_position": "Mitral",
+    "uk_code": "SJMVG",
+    "us_code": null,
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/valved_conduit.jpg",
+    "description": "St Jude Medical Vascular Graft",
+    "Type": "Valved_Conduit",
+    "countries":"NL,SA,US"
+  },
+  {
+    "No": 24,
+    "vendor_description": "Medtronic",
+    "vendor_code": "5", 
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "model_code": "8734",
+    "implant_position": "Mitral",
+    "uk_code": "MedDuran",
+    "us_code": null,
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
+    "description": "Duran AnCore Annuloplasty Ring",
+    "Type": "Annuloplasty_Ring",
+    "countries":"NL,SA,US"
+  },
+  {
+   "No": 25,
+    "vendor_description": "St Jude Medical",
+    "vendor_code": "2", 
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "model_code": "8276",
+    "implant_position": "Mitral",
+    "uk_code": "SJMR",
+    "us_code": null,
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
+    "description": "St Jude Medical Annuloplasty Ring",
+    "Type": "Annuloplasty_Ring",
+    "countries":"NL,SA,US"
+  },
   {
    "No": 27,
     "vendor_description": "Medtronic",
@@ -429,24 +380,6 @@
     "Type": "Mechanical",
     "countries":"NL,SA,US"
   },
-
-  
-  {
-    "No": 28,
-    "vendor_description": "St Jude Medical",
-    "vendor_code": "2", 
-    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
-    "model_code": "4500",
-    "implant_position": "Aortic",
-    "uk_code": "SJMP",
-    "us_code": "M1",
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431504/valves/patch_encap.jpg",
-    "description": "SJM pericardial patch with Encap",
-    "Type": "Pericardial Patch",
-    "countries":"NL,SA,US"
-  },
-
-  
   {
    "No": 29,
     "vendor_description": "St Jude Medical",
@@ -459,6 +392,20 @@
     "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/annuloplasty.jpg",
     "description": "St Jude Medical Annuloplasty Ring",
     "Type": "Annuloplasty_Ring",
+    "countries":"NL,SA,US"
+  },
+  {
+    "No": 28,
+    "vendor_description": "St Jude Medical",
+    "vendor_code": "2", 
+    "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
+    "model_code": "4500",
+    "implant_position": "Aortic",
+    "uk_code": "SJMP",
+    "us_code": "M1",
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431504/valves/patch_encap.jpg",
+    "description": "SJM pericardial patch with Encap",
+    "Type": "Pericardial Patch",
     "countries":"NL,SA,US"
   }
 ]

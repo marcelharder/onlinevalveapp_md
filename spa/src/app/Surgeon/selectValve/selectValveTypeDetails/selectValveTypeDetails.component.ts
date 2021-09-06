@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TypeOfValve } from 'src/app/_models/TypeOfValve';
-import { valveSize } from 'src/app/_models/valveSize';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 
 @Component({
@@ -9,9 +8,10 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
   templateUrl: './selectValveTypeDetails.component.html',
   styleUrls: ['./selectValveTypeDetails.component.css']
 })
-export class SelectValveTypeDetailsComponent implements OnInit {
+export class SelectValveTypeDetailsComponent implements OnInit, OnChanges {
 
   @Input() pro: TypeOfValve;
+ 
   @Output() selout: EventEmitter<number> = new EventEmitter();
   ImagePath = '';
   optionsInfo: Array<string> = [];
@@ -19,8 +19,12 @@ export class SelectValveTypeDetailsComponent implements OnInit {
 
   constructor(private alertify: AlertifyService, private modalService: BsModalService,) { }
 
-  ngOnInit() {
+  ngOnChanges(){
     this.ImagePath = this.pro.image;
+  }
+
+  ngOnInit() {
+   
     if(this.pro.model_code === 'PVS-67'){
       this.optionsInfo = 
       [

@@ -155,11 +155,8 @@ export class SelectValveComponent implements OnInit {
     if(this.selectedHeight === 0){
       this.alertify.error("Please enter the height and weight of your patient ...");
     } else {
-
-    this.prod.getProductById(id).subscribe(
-      (next) => {
-        this.product = next;
-        this.valveSizes = this.product.valve_size;
+      this.prod.getValveSizes(id).subscribe((nex)=>{
+        this.valveSizes = nex;
         this.gen.getBSA(+this.selectedHeight, +this.selectedWeight).subscribe((next)=>{
           this.bsa = next;
           this.valveSizes.forEach(element => {
@@ -170,18 +167,19 @@ export class SelectValveComponent implements OnInit {
               }
             }
           });
-         }, (error)=>{this.alertify.error(error)})
-      },
-      (error) => { this.alertify.error(error) },
-      () => { this.showProduct = 0; })
+        });
+        this.prod.getProductById(id).subscribe(
+          (next) => {
+            this.product = next;
+            this.product.valve_size = this.valveSizes;
+          })
+      },(error) => { this.alertify.error(error) },() => { this.showProduct = 0; });
     }
   }
 
   backFromDetails(id: any){this.showProduct = 1; }
 
- 
   openModal(template: TemplateRef<any>) { this.modalRef = this.modalService.show(template); }
-
 
   loadDrops() {
 

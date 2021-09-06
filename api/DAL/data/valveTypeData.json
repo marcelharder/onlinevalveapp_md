@@ -224,7 +224,7 @@
     "implant_position": "Aortic",
     "uk_code": "TRIF",
     "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1620578693/valves/trifecta.jpg",
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/valved_conduit.jpg",
     "description": "HP Masters Valved Graft",
     "Type": "Valved_Conduit",
     "countries":"NL,SA,US"
@@ -315,7 +315,7 @@
     "implant_position": "Aortic",
     "uk_code": "CM-Ease",
     "us_code": null,
-    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1621431016/valves/carbomedics.jpg",
+    "image":"https://res.cloudinary.com/marcelcloud/image/upload/v1630918821/valves/perimount_magna_ease.jpg",
     "description": "CE-Magna Ease",
     "Type": "Biological",
     "countries":"NL,SA,US"

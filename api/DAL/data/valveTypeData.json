@@ -515,7 +515,7 @@
   },
   {
     "No": 22,
-    "vendor_description": "St Jude Medical",
+    "vendor_description": "Abbott",
     "vendor_code": "2", 
     "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
     "model_code": "6523",
@@ -529,7 +529,7 @@
   },
   {
     "No": 23,
-    "vendor_description": "St Jude Medical",
+    "vendor_description": "Abbott",
     "vendor_code": "2", 
     "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
      "model_code": "8639",
@@ -557,7 +557,7 @@
   },
   {
    "No": 25,
-    "vendor_description": "St Jude Medical",
+    "vendor_description": "Abbott",
     "vendor_code": "2", 
     "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
     "model_code": "8276",
@@ -585,7 +585,7 @@
   },
   {
    "No": 29,
-    "vendor_description": "St Jude Medical",
+    "vendor_description": "Abbott",
     "vendor_code": "2", 
     "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
     "model_code": "8735",
@@ -599,7 +599,7 @@
   },
   {
     "No": 28,
-    "vendor_description": "St Jude Medical",
+    "vendor_description": "Abbott",
     "vendor_code": "2", 
     "valve_size": [{"size":19,"EOA":1.3},{"size":21,"EOA":1.5}],
     "model_code": "4500",

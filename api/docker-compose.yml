@@ -2,7 +2,7 @@ version: '3.1'
 
 services: 
 
-  db:
+  mariadb:
     image: mariadb
     restart: always
     environment:
@@ -13,7 +13,7 @@ services:
      - mariadb-data:/var/lib/mysql
 
   valveinventory:
-    image: inventory_md:v3
+    image: inventory_md:v4
     ports:
       - 8045:80
     networks: 
@@ -21,7 +21,7 @@ services:
     volumes:
      - sqldata:/root/.aspnet/DataProtection-Keys
     depends_on: 
-       - db
+       - mariadb
    
 volumes:
   sqldata:

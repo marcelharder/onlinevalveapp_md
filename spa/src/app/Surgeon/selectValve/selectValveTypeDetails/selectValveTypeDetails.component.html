@@ -1,0 +1,97 @@
+<div class="card">
+  <div class="card-header">
+    <div class="d-flex">
+      <div class="mr-auto p-2"><h4><span class="badge badge-default">Valve Type Details</span></h4></div>
+      <div class="p-2"><button class="btn btn-success btn-sm" (click)="showAdditionalInfo(infoPerceval)">Additional info</button></div>
+    </div>
+    
+    
+    
+    
+    </div>
+  <div class="card-body">
+
+   <div class="row">
+     <div class="col-sm-6">
+       <div class="row">
+         <div class="col-sm-12">
+          <h6><span class="badge badge-secondary">Description:</span></h6>
+         </div>
+       </div>
+       <div class="row">
+        <div class="col-sm-12">
+         <h6><span class="badge badge-default">{{pro.description}}</span></h6>
+        </div>
+      </div>
+
+      <div class="row">
+      <div class="col-sm-12">
+       <h6><span class="badge badge-secondary">Type:</span></h6>
+      </div>
+    </div>
+    <div class="row">
+     <div class="col-sm-12">
+      <h6><span class="badge badge-default">{{pro.type}}</span></h6>
+     </div>
+   </div>
+
+   <div class="row">
+    <div class="col-sm-12">
+     <h6><span class="badge badge-secondary">Implant position:</span></h6>
+    </div>
+  </div>
+  <div class="row">
+   <div class="col-sm-12">
+    <h6><span class="badge badge-default">{{pro.implant_position}}</span></h6>
+   </div>
+ </div>
+
+
+     </div>
+     <div class="col-sm-6"><img [src]="ImagePath" width="250px" height="200px"></div>
+   </div>
+    <hr/>
+    <table>
+      <tr>
+        <th><h6><span class="badge badge-secondary">Valve sizes</span></h6></th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let p of pro.valve_size">
+        <td><h6>{{ p.size }}</h6></td>
+        <td *ngIf="severePPMCCS(p.ppm)">
+          <div class="row">
+            <div class="col-sm-8"><h6><span class="badge badge-danger">The patient-prosthesis mismatch is severe</span></h6></div>
+            <div class="col-sm-4"></div>
+          </div>
+          </td>
+        <td *ngIf="nonePPMCCS(p.ppm)">
+          <div class="row">
+            <div class="col-sm-8"><h6><span class="badge badge-success">No patient-prosthesis mismatch</span></h6></div>
+            <div class="col-sm-4"></div>
+          </div>
+          
+        </td>
+        <td *ngIf="moderatePPMCCS(p.ppm)">
+          <div class="row">
+            <div class="col-sm-8"><h6><span class="badge badge-warning">The patient-prosthesis mismatch is moderate</span></h6></div>
+            <div class="col-sm-4"></div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-info btn-sm" (click)="hideDetails()" > Done </button>
+  </div>
+</div>
+<ng-template #infoPerceval>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Additional info on the {{pro.description}} valve</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p *ngFor="let item of optionsInfo">{{item}}</p>
+  </div>
+</ng-template>

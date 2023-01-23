@@ -1,0 +1,29 @@
+<div class="card" *ngIf="showList()">
+  <div class="card-header"><h2><span>List of expiring products in the next {{timePeriod}} in {{country}}</span></h2></div>
+  <div class="card-body">
+    <!--here is the table-->
+    <table class="table table-striped">
+      <tr>
+        <th>Id</th>
+        <th>Hospital</th>
+        <th>Product</th>
+        <th>Expiry Date</th>
+        <th>Hospital Contact</th>
+        <th>email</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let p of products">
+        <th>{{p.id}}</th>
+        <th>{{p.hospital}}</th>
+        <th>{{p.description}}</th>
+        <th>{{p.expiryDate | date}}</th>
+        <th>{{p.contact}}</th>
+        <th>{{p.email}}</th>
+        <td><a (click)="selectDetails(p.id)">Details</a></td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div *ngIf="!showList()">
+<h2><span>No expiring products found within 1 month ahead.</span></h2>
+</div>

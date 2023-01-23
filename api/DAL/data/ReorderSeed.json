@@ -1,0 +1,39 @@
+﻿[
+  {
+    "rule": "Vendor",
+    "contact": "Joop",
+    "tel": "0282839",
+    "mobile": "068232323",
+    "email": "joop@gmail.com"
+  },
+  {
+    "rule": "Hospital",
+    "contact": "Piet",
+    "tel": "0282839",
+    "mobile": "068232323",
+    "email": "joop@gmail.com"
+  },
+  {
+    "rule": "Vendor",
+    "contact": "Klaas",
+    "tel": "0282839",
+    "mobile": "068232323",
+    "email": "joop@gmail.com"
+  },
+  {
+    "rule": "Vendor",
+    "contact": "Margrethe",
+    "tel": "0282839",
+    "mobile": "068232323",
+    "email": "joop@gmail.com"
+  },
+  {
+    "rule": "Vendor",
+    "contact": "Jeroen",
+    "tel": "0282839",
+    "mobile": "068232323",
+    "email": "joop@gmail.com"
+  }
+
+
+]

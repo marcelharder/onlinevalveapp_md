@@ -1,0 +1,11 @@
+
+
+<!--display list of products and maybe crud some products-->
+<div *ngIf="showProducts()">
+  <app-prod-types [prod]="FullProducts"></app-prod-types>
+</div>
+
+<!--display list of hospitals and maybe crud some hospitals -->
+<div *ngIf="showHospitals()">
+  <app-list-hospitals-for-ref [hos]="FullHospitals"></app-list-hospitals-for-ref>
+</div>

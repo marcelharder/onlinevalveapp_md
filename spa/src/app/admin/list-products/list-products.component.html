@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card-header"  *ngIf="!displayDetails()">
+    <div class="p-2 bd-highlight"><h3><span class="badge badge-secondary">Select Vendor</span></h3></div>
+    <div class="p-2 flex-grow-1 bd-highlight">
+      <select [(ngModel)]="selectedVendor" name="select3" class="form-control" (change)="vendorChanged()">
+        <option *ngFor="let oop of listOfVendors" [value]="oop.value">{{ oop.description }}</option>
+      </select>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row" *ngIf="!displayDetails()">
+      <div *ngFor="let product of listOfProducts" class="col-sm-4">
+        <app-productDetailsCard [cd]="product" (details)="showDetails($event)"></app-productDetailsCard>
+      </div>
+    </div>
+    <div class="row" *ngIf="displayDetails()">
+      <div class="col-sm-12">
+        <app-productEditDetails [prod]="productDetails" (backTo)="returnFromEditDetails($event)"></app-productEditDetails>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer"></div>
+</div>

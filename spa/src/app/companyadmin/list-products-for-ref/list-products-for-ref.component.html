@@ -1,0 +1,36 @@
+<div class="card mt-2">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-sm-12 ml" *ngIf="!displayAddDetails()">
+        <button class="badge badge-default float-right" type="button" (click)="addProduct()">Add a product to this list</button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body" *ngIf="displayList()">
+    <div class="row">
+      <div class="col-sm-12">
+        <h2><span class="badge badge-default">List of products in {{currentCountry}}</span></h2>
+      </div>
+    </div>
+    <!--here is the table-->
+    <table class="table table-striped">
+      <tr>
+        <th>ID</th>
+        <th>Description</th>
+         <th></th>
+      </tr>
+      <tr *ngFor="let p of prod">
+        <th>{{p?.no}}</th>
+        <th>{{p?.description}}</th>
+       <td><a (click)="showDetails(p.valveTypeId)">Details</a></td>
+      </tr>
+    </table>
+  </div>
+  <div class="card-body" *ngIf="displayDetails()">
+    <app-editProduct [vc]="selectedProduct" (povOut)="changeViewBackToList($event)"></app-editProduct>
+  </div>
+  <div class="card-body" *ngIf="displayAddDetails()">
+    <app-addProduct [vc]="newProduct" (povOut)="changeViewBackToList($event)"></app-addProduct>
+  </div>
+</div>
+

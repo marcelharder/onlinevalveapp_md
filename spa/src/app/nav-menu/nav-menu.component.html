@@ -1,0 +1,102 @@
+<header>
+  <nav
+    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+  >
+    <div class="container">
+     
+      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]="{ show: isExpanded }">
+        
+        <div *ngIf="loggedIn()" class="dropdown" dropdown>
+          <a class="dropdown-toggle" style="background-color:rgb(240, 237, 233)" dropdownToggle>
+            Welcome {{ auth.decodedToken?.unique_name | titlecase }}
+          </a>
+          <div class="dropdown-menu mt-3" *dropdownMenu>
+            <a class="dropdown-item" href="#" [routerLink]="['/profile/', auth.decodedToken?.nameid]" queryParamsHandling="preserve"><i class="fa fa-user"></i>Profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" (click)="logOut()"><i class="fa fa-sign-out"></i>Log out</a>
+          </div>
+        </div>
+
+        <div *ngIf="companyAdminLogged && loggedIn()" class="dropdown ml-2 mr-2" dropdown>
+          <a class="dropdown-toggle"  dropdownToggle>| Statistics </a>
+          <div class="dropdown-menu mt-3" *dropdownMenu>
+            <a class="dropdown-item" href="#" [routerLink]="['/expiry3/3']">Expiry within 3 months</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" [routerLink]="['/expiry1/1']">Expiry within 1 month</a>
+          </div>
+        </div>
+
+        <div *ngIf="companyAdminLogged && loggedIn()" class="dropdown ml-2 mr-2" dropdown>
+          <a class="dropdown-toggle"  dropdownToggle>| Settings </a>
+          <div class="dropdown-menu mt-3" *dropdownMenu>
+            <a class="dropdown-item" href="#" [routerLink]="['/companysettings/1']" queryParamsHandling="preserve">Hospitals</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" [routerLink]="['/companysettings/2']" queryParamsHandling="preserve">Products</a>
+          </div>
+        </div>
+        <div *ngIf="adminLogged && loggedIn()" class="dropdown ml-2 mr-2" dropdown>
+          <a class="dropdown-toggle"  dropdownToggle>| Management </a>
+          <div class="dropdown-menu mt-3" *dropdownMenu>
+            <a class="dropdown-item" href="#" [routerLink]="['/userlist']" >List Users</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" [routerLink]="['/productlist']" >List Products</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" [routerLink]="['/vendorlist']" >List Vendors</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" [routerLink]="['/hospitallist']" >List Hospitals</a>
+          </div>
+        </div>
+
+        <div *ngIf="companyAdminLogged && loggedIn()" class="dropdown ml-2 mr-2" dropdown>
+          <a class="dropdown-toggle"  dropdownToggle>| Products </a>
+          <div class="dropdown-menu mt-3" *dropdownMenu>
+            <a class="dropdown-item" href="#" [routerLink]="['/companyadmin']">In Hospitals</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" [routerLink]="['/search']">Search on serial#</a>
+          </div>
+        </div>
+
+
+
+        <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline my-2 my-lg-0 d-none d-lg-block" (ngSubmit)="login()" required>
+          <input class="form-control mr-sm-2"
+                 name="username"
+                 placeholder="Naam"
+                 [(ngModel)]="model.username"
+                 required />
+          <input class="form-control mr-sm-2"
+                 name="password"
+                 placeholder="PWD"
+                 type="password"
+                 [(ngModel)]="model.password" />
+          <button [disabled]="!loginForm.valid" class="btn btn-success my-2 my-sm-0" type="submit">
+            Login
+          </button>
+        </form>
+
+
+        <ul class="navbar-nav flex-grow">
+          <li class="nav-item" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }"> <a class="nav-link text-dark" [routerLink]="['/']">Home</a> </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']"> <a class="nav-link text-dark" [routerLink]="['/about']">| About</a> </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="!loggedIn()"> <a class="nav-link text-dark" [routerLink]="['/selectValve']">| PPM</a> </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="specialLogged"> <a class="nav-link text-dark" [routerLink]="['/superuser']">| ManageValves</a> </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="specialLogged"> <a class="nav-link text-dark" [routerLink]="['/settings']">| Settings</a> </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="specialLogged"> <a class="nav-link text-dark" [routerLink]="['/tutorials']">| Tutorial</a> </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="specialLogged"> <a class="nav-link text-dark" [routerLink]="['/statistics']">| Statistics</a> </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="specialLogged || companyHQLogged"> <a class="nav-link text-dark" [routerLink]="['/messages']">| Messages</a> </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="normalLogged"> <a class="nav-link text-dark" [routerLink]="['/selectValve']">| Select Valve</a> </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="normalLogged"> <a class="nav-link text-dark" [routerLink]="['/surgeon']">| No of Valves</a> </li>
+         
+          
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="companyAdminLogged"> <a class="nav-link text-dark" [routerLink]="['/messages']">| Messages</a> </li>
+
+        </ul>
+
+
+
+
+
+      </div>
+    </div>
+  </nav>
+</header>

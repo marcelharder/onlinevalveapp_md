@@ -1,0 +1,53 @@
+<div class="card">
+  <div class="card-header">
+    <div class="row"*ngIf="!contentFound()">
+      <div class="col-sm-6"> <h5><span class="badge badge-success">No {{productRequested}} found</span></h5></div>
+    </div>
+
+    <div class="row"*ngIf="contentFound()">
+      <div class="col-sm-6"> <h5><span class="badge badge-success">Products ready for implant</span></h5></div>
+      <div class="col-sm-6">  <h5><button class="button button-secondary float-right" (click)="GeneratePDF()">Print</button></h5></div>        
+    </div>
+   
+  </div>
+  <div class="card-body" id="contentToConvert" *ngIf="contentFound()">
+    
+  <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-striped">
+            <tr>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Expiry date</th>
+              <th>Serial No</th>
+              <th>Model code</th>
+              <th>Size</th>
+              <th>Implant position</th>
+              <!-- hide this when request comes from vendor -->
+              <th *ngIf="comesFromVendor()"></th>
+            </tr>
+            <tr *ngFor="let pro of valves">
+              <th><h5><span class="badge badge-secondary">{{pro.description}}</span></h5></th>
+              <th>{{pro.type}}</th>
+              <th>{{pro.expiry_date | date : 'shortDate'}}</th>
+              <th>{{pro.serial_no}}</th>
+              <th><h5><span class="badge badge-default">{{pro.model_code}}</span></h5></th>
+              <th *ngIf="getPatchSize(pro.type)">{{pro.patchSize}}</th>
+              <th *ngIf="!getPatchSize(pro.type)">{{pro.size}}</th>
+              <th>{{pro.implant_position}}</th>
+              <!-- hide this when request comes from vendor -->
+              <td *ngIf="comesFromVendor()"><a (click)="selectDetails(pro.valveId)">Details</a></td> 
+            </tr>
+          </table>
+        </div>
+    </div>
+      <!--<div class="d-flex justify-content-center">
+        <pagination [boundaryLinks]="true"
+                    [totalItems]="pagination.totalItems"
+                    [(ngModel)]="pagination.currentPage"
+                    (pageChanged)="pageChanged($event)"
+                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+        </pagination>
+      </div>-->
+   </div>
+</div>

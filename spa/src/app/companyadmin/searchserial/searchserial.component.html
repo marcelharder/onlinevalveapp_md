@@ -1,0 +1,77 @@
+<form #editForm="ngForm" id="editForm">
+  <div class="card">
+    <div class="card-header">
+      <h2><span class="badge badge-default">Search on serial number</span></h2>
+    </div>
+    <div class="card-body">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-sm-4">
+            <h5><span class="badge badge-default">Search on serial no:</span></h5>
+          </div>
+          <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="serial" name="serial" /> </div>
+          <div class="col-sm-4">
+            <h5>
+              <button class="btn btn-primary" [disabled]="!editForm.dirty" (click)="SearchOnSerial()">Go</button>
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="searchButtonPressed()">
+      <div class="card" *ngIf="valveIsFound()">
+        <div class="card-header">
+          <h2><span class="badge badge-success">Found ...</span></h2>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-sm-2">Description: </div>
+                <div class="col-sm-10"><b>{{selectedValve.description}}</b></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-sm-2">Location: </div>
+                <div class="col-sm-10"><b>{{selectedHospital.naam}}</b></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-sm-2">Country: </div>
+                <div class="col-sm-10"><b>{{selectedHospital.country}}</b></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-sm-2">Expiry: </div>
+                <div class="col-sm-10"><b>{{selectedValve.expiry_date | date}}</b></div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-2">
+            <app-list_Transfers [transfers]="transfers" [selectedValve]="selectedValve" ></app-list_Transfers>
+          </div>
+
+        </div>
+      </div>
+      <div class="card" *ngIf="!valveIsFound()">
+        <div class="card-header">
+          <h2><span class="badge badge-danger">Product not found</span></h2>
+        </div>
+        <div class="card-body"></div>
+      </div>
+    </div>
+  </div>
+</form>

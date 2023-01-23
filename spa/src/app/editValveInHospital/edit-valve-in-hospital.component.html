@@ -1,0 +1,166 @@
+<div class="card">
+
+  <div class="card-header">Edit valve details</div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-3">
+        <h5><span class="badge badge-info">Description</span></h5>
+      </div>
+      <div class="col-sm-9">
+        <h5><span class="badge badge-default">{{valve.description}}</span></h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <h5><span class="badge badge-info">Location in hospital</span></h5>
+      </div>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" [(ngModel)]="valve.location" name="test100" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <h5><span class="badge badge-info">Hospital</span></h5>
+      </div>
+      <div class="col-sm-3">
+        <h5><span class="badge badge-default">{{HospitalName}}</span></h5>
+      </div>
+      <div class="col-sm-3">
+        <h5><span class="badge badge-info">Vendor</span></h5>
+      </div>
+      <div class="col-sm-3">
+        <h5><span class="badge badge-default">{{valve.vendor_name}}</span></h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <h5><span class="badge badge-info">Product code</span></h5>
+      </div>
+      <div class="col-sm-3">
+        <h5><span class="badge badge-default">{{valve.product_code}}</span></h5>
+      </div>
+      <div class="col-sm-3">
+        <h5><span class="badge badge-info">Type</span></h5>
+      </div>
+      <div class="col-sm-3">
+        <h5><span class="badge badge-default">{{valve.type}}</span></h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <h5><span class="badge badge-info">Manufactoring date</span></h5>
+      </div>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [(ngModel)]="valve.manufac_date"
+          [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }" name="datum" />
+
+      </div>
+      <div class="col-sm-3">
+        <h5><span class="badge badge-info">Expiry date</span></h5>
+      </div>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [(ngModel)]="valve.expiry_date"
+          [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }" name="datum2" />
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <h5><span class="badge badge-info">Serial number</span></h5>
+      </div>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" [(ngModel)]="valve.serial_no" name="test7" />
+      </div>
+      <div class="col-sm-3">
+        <h5><span class="badge badge-info">Model code</span></h5>
+      </div>
+      <div class="col-sm-3">
+        <h5><span class="badge badge-default">{{valve.model_code}}</span></h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <h5><span class="badge badge-info">Size</span></h5>
+      </div>
+      <div class="col-sm-3">
+
+
+
+        <div *ngIf="getPatchType()"> 
+          
+          <select [(ngModel)]="valve.patchSize" name="implantedsize" class="form-control">
+            <option *ngFor="let item of SizeList" [value]="item.value">{{item.name}}</option>
+  
+          </select> 
+        
+        
+        </div>
+        <div *ngIf="!getPatchType()">
+          <div class="row" *ngIf="!displayChangeSize()">
+            <div class="col-sm-6"><span><input class="form-control" [(ngModel)]="valve.size" name="1" readonly></span>
+            </div>
+            <div class="col-sm-6"><button class="btn btn-warning btn-sm" (click)="changeSize()">Change</button></div>
+          </div>
+          <table class="table table-striped" *ngIf="displayChangeSize()">
+
+            <th>Size</th>
+            <th>EOA</th>
+            <th></th>
+
+            <tr *ngFor="let pro of valveSizes" style="background-color: blanchedalmond;">
+              <td>{{pro.size}}</td>
+              <td>{{pro.eoa}}</td>
+              <td><button class="btn btn-warning btn-sm" (click)="selectThisValve(pro.size)">select</button></td>
+            </tr>
+
+          </table>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <h5><span class="badge badge-info">Implant position</span></h5>
+      </div>
+      <!--  <div class="col-sm-3">
+    <h5><span class="badge badge-default">{{valve.implant_position}}</span></h5>
+  </div> -->
+      <div class="col-sm-3">
+        <select [(ngModel)]="valve.implant_position" name="implantedPosition" class="form-control">
+          <option *ngFor="let item of PositionList" [value]="item.value">{{item.name}}</option>
+
+        </select>
+      </div>
+
+
+
+
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <h5><span class="badge badge-info">Procedure id</span></h5>
+      </div>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" [(ngModel)]="valve.procedure_id" name="test17" />
+      </div>
+      <div class="col-sm-3">
+        <h5><span class="badge badge-info">Implanted</span></h5>
+      </div>
+      <div class="col-sm-3" *ngIf="superUserLoggedin()">
+        <select [(ngModel)]="valve.implanted" name="implanted" class="form-control">
+          <option *ngFor="let an of optionsImplant" [value]=an.value>{{ an.description }}</option>
+        </select>
+      </div>
+
+
+    </div>
+    <div class="row mt-2">
+      <div class="row">
+        <div class="col-sm-9">
+          <div class="row">
+            <div class="col-sm-6"><button type="button" class="btn btn-warning" (click)="Cancel()">Cancel</button></div>
+            <div class="col-sm-6"><button type="button" class="btn btn-success" (click)="Save()">Save</button></div>
+          </div>
+        </div>
+        <div class="col-sm-3"></div>
+      </div>
+    </div>
+  </div>
+</div>

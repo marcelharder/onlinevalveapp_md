@@ -1,0 +1,98 @@
+
+  <form #hospitalEditForm="ngForm" id="editHospitalForm">
+    <div class="card">
+      <div class="card-header">
+        <h4><span>Adding a hospital to the list</span></h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="row">
+              <div class="col-sm-6">
+                <h5><span class="badge badge-secondary">Name</span></h5>
+              </div>
+              <div class="col-sm-6"><input [(ngModel)]="new_hospital.naam" name="name" class="form-control"></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <h5><span class="badge badge-secondary">Address</span></h5>
+              </div>
+              <div class="col-sm-6"><input [(ngModel)]="new_hospital.adres" name="adres" class="form-control"></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <h5><span class="badge badge-secondary">PostalCode</span></h5>
+              </div>
+              <div class="col-sm-6"><input [(ngModel)]="new_hospital.postalCode" name="pc" class="form-control"></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <h5><span class="badge badge-secondary">HospitalCode</span></h5>
+              </div>
+              <div class="col-sm-6"><input [(ngModel)]="new_hospital.hospitalNo" name="code" class="form-control" readonly></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <h5><span class="badge badge-secondary">Country</span></h5>
+              </div>
+              <div class="col-sm-6"><input [(ngModel)]="new_hospital.country" name="country" class="form-control" readonly></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <h5><span class="badge badge-secondary">Email</span></h5>
+              </div>
+              <div class="col-sm-6"><input [(ngModel)]="new_hospital.email" name="email" class="form-control" ></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <h5><span class="badge badge-secondary">Contact person</span></h5>
+              </div>
+              <div class="col-sm-6"><input [(ngModel)]="new_hospital.contact" name="contactP" class="form-control" ></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <h5><span class="badge badge-secondary">Telephone</span></h5>
+              </div>
+              <div class="col-sm-6"><input [(ngModel)]="new_hospital.telephone" name="tel" class="form-control" ></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <h5><span class="badge badge-secondary">Fax</span></h5>
+              </div>
+              <div class="col-sm-6"><input [(ngModel)]="new_hospital.fax" name="fax" class="form-control" ></div>
+            </div>
+          </div>
+          <div class="col-sm-4"></div>
+        </div>
+       
+
+       <!--  public string Image { get; set; }
+        public string RefHospitals { get; set; }
+        public string StandardRef { get; set; }
+        public string Contact_image { get; set; } -->
+       
+           
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="card-footer">
+        <div class="row">
+         <div class="col-sm-6"><div class="btn-group" role="group">
+          <button class="btn btn-warning" (click)="cancel()">Cancel</button>
+          <button class="btn btn-success" (click)="updateHospital()">Update Hospital</button>
+        </div></div>
+         <div class="col-sm-6"></div>
+          </div>
+        </div>
+      </div>
+
+
+  </form>

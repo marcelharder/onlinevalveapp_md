@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h2><span class="badge badge-default">{{vendorName}}</span></h2>
+  </div>
+</div>
+
+
+<div class="row mt-2">
+  <div class="col-sm-6">
+    <select [(ngModel)]="selectedHospital"  name="hos" class="form-control" id="two">
+      <option *ngFor="let an of optionsHospitals" [value]=an.value>{{ an.description }}</option>
+    </select>
+  </div>
+  <div class="col-sm-6">
+    <div class="row">
+      <div class="col-sm-10">
+        <select [(ngModel)]="sp"  name="produst"  class="form-control" id="one">
+          <option *ngFor="let ane of optionsProducts">{{ ane.description }}</option>
+        </select>
+      </div>
+      <div class="col-sm-2"><button type="button" class="btn btn-warning" (click)="findMatchingValves()">Go</button></div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="GoClicked()"> <!--Hides itself before Go button is clicked-->
+<!--display list of valves that meet the above criteria-->
+<div *ngIf="showListOfValves()" class="mt-2">
+  <app-list-valve [valves]="valves"></app-list-valve>
+  <div class="row mt-2">
+    <div class="col-sm-8" *ngIf="showAddButton()">
+      <button type="button"  class="btn btn-info" (click)="addProducts()">{{getDescription()}} </button>
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
+</div>
+<div  *ngIf="!showListOfValves()" class="mt-2">
+  <div class="card" *ngIf="!showAddButton()">
+    <div class="card-body"><h2>No {{vendorName}} products found here ...</h2></div>
+   </div>
+
+  <div class="card" *ngIf="showAddButton()">
+    <div class="card-body"><h2>{{getDescription()}}</h2></div>
+    <button type="button"  class="btn btn-info" (click)="addProducts()" *ngIf="showAddButton()"> {{getDescription()}} </button>
+  </div>
+
+</div>
+</div>
+
+
+<footer>
+  <p>&copy; 2020 - CardiacSoftwareDevelopers(<a (click)="linkToCSD()">CSD</a>)</p>
+</footer>
+

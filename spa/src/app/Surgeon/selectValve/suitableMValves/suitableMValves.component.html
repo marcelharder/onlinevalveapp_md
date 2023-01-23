@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="card-header" style="background-color: silver;">
+      <h5><span class="badge badge-success">{{title}}</span></h5>
+  </div>
+  <div class="card-body"  style="background-color: lightgrey;" *ngIf="valves.length > 0">
+      <table class="table table-striped">
+        <tr>
+            <th>
+                <h6><span class="badge badge-default">Description</span></h6>
+            </th>
+                            
+            <th>
+                <h6><span class="badge badge-default">Serial No</span></h6>
+            </th>
+
+            <th>
+                <h6><span class="badge badge-default">Size</span></h6>
+            </th>
+            
+            <th>
+                <h6><span class="badge badge-default">Implant position</span></h6>
+            </th>
+
+        </tr>
+          <tr *ngFor="let pro of valves">
+              <th>
+                  <h6><span class="badge badge-secondary">{{pro.description}}</span></h6>
+              </th>
+             
+              <th><h6>{{pro.serial_no}}</h6></th>
+
+              <th><h6>{{pro.size}}</h6></th>
+              
+              <th><h6>{{pro.implant_position}}</h6></th>
+          </tr>
+      </table>
+  </div>
+</div>

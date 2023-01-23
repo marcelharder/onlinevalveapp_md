@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-sm-6"><h4><span class="badge badge-default">List of vendors</span></h4></div>
+      <div class="col-sm-6 ml" *ngIf="!displayDetails()">
+        <button class="badge badge-warning float-right" type="button" (click)="addVendor()">Add a vendor to this list</button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row" *ngIf="!displayDetails()">
+      <div *ngFor="let vendor of listOfVendors" class="col-sm-4">
+        <app-vendorDetailsCard [cd]="vendor" (details)="showDetails($event)"></app-vendorDetailsCard>
+      </div>
+    </div>
+    <div class="row" *ngIf="displayDetails()">
+      <div class="col-sm-12">
+        <app-vendorEditCard [cd]="vendorDetails" (backTo)="returnFromEditDetails($event)"></app-vendorEditCard>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="d-flex justify-content-center" *ngIf="!displayDetails()">
+      <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+        [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+      </pagination>
+    </div>
+  </div>
+</div>

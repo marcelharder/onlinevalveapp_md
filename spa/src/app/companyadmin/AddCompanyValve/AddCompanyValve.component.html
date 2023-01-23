@@ -1,0 +1,12 @@
+<div class="card mt-2">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-sm-12 ml">
+        <button class="badge badge-default float-center" type="button">Add a {{currentProduct}} from {{currentCompany}}'s product line</button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+   <app-edit-valve-in-hospital [valve]="valveToAdd" (valveBack)="saveValve($event)"></app-edit-valve-in-hospital>
+  </div>
+</div>

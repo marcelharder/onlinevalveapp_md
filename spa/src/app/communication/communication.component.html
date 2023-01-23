@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="card-header"><h3><span class="badge badge-secondary" style="align-items: center;">
+    Request a replacement {{valve.description}} from {{valve.vendor_name}}</span></h3></div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-6">
+<div class="row">
+  <div class="col-sm-2"><h6><span class="badge badge-secondary">To:</span></h6></div>
+  <div class="col-sm-6"><h5>{{message.recipientKnownAs}}</h5></div>
+  <div class="col-sm-2"></div>
+</div>
+<div class="row">
+  <div class="col-sm-2"><h6><span class="badge badge-secondary">From:</span></h6></div>
+  <div class="col-sm-6"><h5>{{ auth.decodedToken?.unique_name | titlecase }}</h5></div>
+  <div class="col-sm-2"></div>
+</div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="comment"><h5><span class="badge badge-primary">Message:</span></h5></label>
+          <textarea class="form-control" rows="5" id="comment" name="message" [(ngModel)]="message.content"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="btn-group">
+        <button class="btn btn-primary" (click)="cancel()"><i class="fa fa-angle-left"></i> Cancel</button>
+        <button class="btn btn-warning" (click)="send()"><i class="fa fa-paper-plane"></i> Send</button>
+      </div>
+    </div>
+
+
+    
+  </div>
+  
+</div>

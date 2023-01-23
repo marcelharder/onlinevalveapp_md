@@ -1,0 +1,163 @@
+<div class="card">
+  <div class="card-header">
+    <div class="d-inline-flex flex-row">
+      <div class="p-2"><h5><span class="badge badge-secondary">Search:</span></h5></div>
+      <div class="p-2"><select [(ngModel)]="selectedHospital" name="selHospital" class="form-control">
+          <option *ngFor="let an of optionsAH" [value]="an.value">{{ an.description }}</option>
+        </select></div>
+      <div class="p-2"><button class="btn btn-primary" (click)="Search()">Go</button></div>
+    </div>
+    <button  *ngIf="!displayDetails()" style="float: right;" class="btn btn-secondary" (click)="addUser()">Add</button>
+    <button  *ngIf="displayDetails()" style="float: right;" class="btn btn-secondary" (click)="deleteUser()">Delete</button>
+  </div>
+  <div class="card-body" id="contentToConvert" *ngIf="contentFound()">
+
+    <div class="row" *ngIf="!displayDetails()">
+      <div class="col-sm-12">
+        <table class="table table-striped">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Mobile</th>
+            <th>Affiliation</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>created</th>
+            <th></th>
+          </tr>
+          <tr *ngFor="let pro of listOfUsers">
+            <td>{{pro.userId}}</td>
+            <td>{{pro.username}}</td>
+            <td>{{pro.userRole}}</td>
+            <td>{{pro.mobile}}</td>
+            <td>{{pro.worked_in}}</td>
+            <td>{{pro.city}}</td>
+            <td>{{pro.country}}</td>
+            <td>{{pro.created | date : 'shortDate'}}</td>
+            <td><button class="btn btn-primary" (click)="showDetails(pro.userId)">details</button></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="card" *ngIf="displayDetails()">
+      <form >
+      <div class="card-header"></div>
+      <div class="card-body">
+        <form>
+          <div class="row">
+            <div class="col-sm-4">
+              <h5><span class="badge badge-secondary">Id</span></h5>
+            </div>
+            <div class="col-sm-4"><input class="form-control" [ngModel]="selectedUser.userId" name="nameId" readonly>
+            </div>
+            <div class="col-sm-4"></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <h5><span class="badge badge-secondary">Name</span></h5>
+            </div>
+            <div class="col-sm-4"><input class="form-control" [(ngModel)]="selectedUser.username" name="nameName"></div>
+            <div class="col-sm-4"></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <h5><span class="badge badge-secondary">Gender</span></h5>
+            </div>
+            <div class="col-sm-4">
+               <select [(ngModel)]="selectedUser.gender" name="namegender" class="form-control">
+                <option *ngFor="let an of optionsGender" [value]="an.value">{{ an.description }}</option>
+              </select></div>
+            <div class="col-sm-4"></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <h5><span class="badge badge-secondary">email</span></h5>
+            </div>
+            <div class="col-sm-4"><input class="form-control" [(ngModel)]="selectedUser.email" name="nameemail"></div>
+            <div class="col-sm-4"></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <h5><span class="badge badge-secondary">City</span></h5>
+            </div>
+            <div class="col-sm-4"><input class="form-control" [(ngModel)]="selectedUser.city" name="nameCity"></div>
+            <div class="col-sm-4"></div>
+          </div>
+        
+          <div class="row">
+            <div class="col-sm-4">
+              <h5><span class="badge badge-secondary">Mobile</span></h5>
+            </div>
+            <div class="col-sm-4"><input class="form-control" [(ngModel)]="selectedUser.mobile" name="nameMobile"></div>
+            <div class="col-sm-4"></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <h5><span class="badge badge-secondary">Role</span></h5>
+            </div>
+            <div class="col-sm-4">
+              <select [(ngModel)]="selectedUser.userRole" name="nameRole" class="form-control">
+                <option *ngFor="let an of role" [value]="an.description">{{ an.description }}</option>
+              </select></div>
+            <div class="col-sm-4"></div>
+          </div>
+          <div class="row" *ngIf="userIsVendor()">
+            <div class="col-sm-4">
+              <h5><span class="badge badge-secondary">Affiliated</span></h5>
+            </div>
+            <div class="col-sm-4">
+             <select [(ngModel)]="selectedUser.worked_in"  name="namework" class="form-control">
+                <option *ngFor="let an of companies" [value]="an.description">{{ an.description }}</option>
+              </select>
+            </div>
+            <div class="col-sm-4"></div>
+          </div>
+          <div class="row" *ngIf="!userIsVendor()">
+            <div class="col-sm-4">
+              <h5><span class="badge badge-secondary">Hospital</span></h5>
+            </div>
+            <div class="col-sm-4"><input class="form-control" [(ngModel)]="currentHospital" name="nameCH" disabled>
+            </div>
+            <div class="col-sm-4"><button class="btn btn-secondary" (click)="showChangeHospital()">Change</button></div>
+          </div>
+          <hr/>
+          <div class="row mt-1" *ngIf="changeHospital()" style="background-color: coral;">
+            <div class="col-sm-4">
+              <h5><span class="badge badge-secondary vertical-center">Change hospital</span></h5>
+            </div>
+            <div class="col-sm-4">
+              <select 
+              [(ngModel)]="selectedUser.country" 
+              (change)="findHospitalsInCountry()" 
+              name="nameHospital"
+              class="form-control">
+                <option *ngFor="let an of optionCountries" [value]="an.description">{{ an.description }}</option>
+              </select>
+            </div>
+            <div class="col-sm-4"><select 
+              [(ngModel)]="currentHospital" 
+              name="nameCountry" 
+              class="form-control">
+                <option [ngValue]="null">Choose</option>
+                <option *ngFor="let an of optionHospitals" [value]="an.description">{{ an.description }}</option>
+              </select></div>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer">
+        <div class="btn-group" role="group">
+          <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+          <button class="btn btn-secondary" (click)="hideDetails()">Update User</button>
+        </div>
+      </div>
+    </form>
+    </div>
+    <div class="d-flex justify-content-center" *ngIf="!displayDetails()">
+      <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+        [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+      </pagination>
+    </div>
+  </div>
+</div>

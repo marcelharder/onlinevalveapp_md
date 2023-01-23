@@ -1,0 +1,115 @@
+<div *ngIf="!displayOVI()">
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex flex-row">
+        <div class="p-2">{{ Title }}</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-6">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <h5><span class="badge badge-secondary">Choose vendor</span></h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6"> <select  [(ngModel)]="selectedVendor"   name="ve"  class="form-control"  >
+                <option *ngFor="let an of optionsVendor" [value]="an.value"> {{ an.description }} </option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <button class="btn btn-warning btn-sm" (click)="Search()">Search</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <h5><span class="badge badge-secondary">Choose type</span></h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <select [(ngModel)]="selectedType" name="ty" class="form-control">
+                <option *ngFor="let an of optionsType" [value]="an.description">
+                  {{ an.description }}
+                </option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <button class="btn btn-warning btn-sm" (click)="Search()">
+                Search
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-sm-6"><h5><span class="badge badge-secondary">Height</span></h5></div>
+                <div class="col-sm-6"><button class="badge badge-success btn-xxs" (click)="openModal(infoTemplate)">?</button></div>
+              </div>
+
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <select [(ngModel)]="selectedHeight" name="hei" class="form-control">
+                <option *ngFor="let an of heightOptions" [value]="an.value">
+                  {{ an.description }}
+                </option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-sm-6"><h5><span class="badge badge-secondary">Weight</span></h5></div>
+                <div class="col-sm-6"><button class="badge badge-success btn-xxs" (click)="openModal(infoTemplate)">?</button></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <select [(ngModel)]="selectedWeight" name="wei" class="form-control">
+                <option *ngFor="let an of weightOptions" [value]="an.value">
+                  {{ an.description }}
+                </option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div *ngIf="showProductList()">
+            <app-selectValveTypeList  [pro]="products"  (selout)="searchDetails($event)" ></app-selectValveTypeList>
+          </div>
+          <div *ngIf="!showProductList()">
+            <app-selectValveTypeDetails [pro]="product" (selout)="backFromDetails($event)"></app-selectValveTypeDetails>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="displayOVI()">
+  <app-lookInOVI></app-lookInOVI>
+</div>
+
+<ng-template #infoTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Why do we need height and weight ?</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p *ngFor="let item of optionsInfo">{{item}}</p>
+  </div>
+</ng-template>

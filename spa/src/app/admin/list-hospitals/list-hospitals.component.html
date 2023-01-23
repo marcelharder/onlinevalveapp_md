@@ -1,0 +1,105 @@
+<div class="card">
+  <div class="card-header">
+    <div class="d-inline-flex flex-row">
+      <div class="p-2">
+        <h5><span class="badge badge-secondary">Search:</span></h5>
+      </div>
+      <div class="p-2"><select [(ngModel)]="selectedCountry" name="selHospital" class="form-control">
+          <option *ngFor="let an of optionCountries" [value]="an.value">{{ an.description }}</option>
+        </select></div>
+      <div class="p-2"><button class="btn btn-primary" (click)="search()">Go</button></div>
+    </div>
+    <button *ngIf="!displayDetails()" style="float: right;" class="btn btn-secondary"
+      (click)="addHospital()">Add Hospital</button>
+    <button *ngIf="displayDetails()" style="float: right;" class="btn btn-secondary"
+      (click)="deleteHospital()">Delete Hospital</button>
+  </div>
+  <div class="card-body" id="contentToConvert" *ngIf="contentFound()">
+
+    <div class="row" *ngIf="displayList()">
+      <div class="col-sm-12">
+        <table class="table table-striped">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+           <th>Country</th>
+             <th></th>
+          </tr>
+          <tr *ngFor="let pro of listOfHospitals">
+            <td>{{pro.hospitalNo}}</td>
+            <td>{{pro.naam}}</td>
+            <td>{{pro.adres}}</td>
+            <td>{{pro.country}}</td>
+            <td><button class="btn btn-primary" (click)="showDetails(pro.hospitalNo)">details</button></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="card" *ngIf="displayDetails()">
+      <form >
+      <div class="card-header"></div>
+      <div class="card-body">
+        <form>
+          <div class="row">
+            <div class="col-sm-4">
+              <h5><span class="badge badge-secondary">id</span></h5>
+            </div>
+            <div class="col-sm-4"><input class="form-control" [ngModel]="selectedHospital.hospitalNo" name="nameId" readonly>
+            </div>
+            <div class="col-sm-4"></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <h5><span class="badge badge-secondary">name</span></h5>
+            </div>
+            <div class="col-sm-4"><input class="form-control" [(ngModel)]="selectedHospital.naam" name="nameName"></div>
+            <div class="col-sm-4"></div>
+          </div>
+          
+          <div class="row">
+            <div class="col-sm-4">
+              <h5><span class="badge badge-secondary">address</span></h5>
+            </div>
+            <div class="col-sm-4"><input class="form-control" [(ngModel)]="selectedHospital.adres" name="nameemail"></div>
+            <div class="col-sm-4"></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <h5><span class="badge badge-secondary">country</span></h5>
+            </div>
+            <div class="col-sm-4"><input class="form-control" [(ngModel)]="selectedHospital.country" name="nameCountry" readonly></div>
+            <div class="col-sm-4"></div>
+          </div>
+        
+          
+          
+          
+          
+          
+         
+        </form>
+      </div>
+      <div class="card-footer">
+        <div class="btn-group" role="group">
+          <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+          <button class="btn btn-secondary" (click)="saveDetails()">Update Hospital</button>
+        </div>
+      </div>
+    </form>
+    </div>
+
+    <div class="card" *ngIf="displayEdit()">
+     <app-hospitalEditCard [new_hospital]="this.selectedHospital" (backTo)="returnFromAdding($event)"></app-hospitalEditCard>
+    </div>
+  
+    <div class="d-flex justify-content-center" *ngIf="displayList()">
+      <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+        [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+      </pagination>
+    </div>
+   
+  </div>
+  <div class="card-footer"></div>
+</div>

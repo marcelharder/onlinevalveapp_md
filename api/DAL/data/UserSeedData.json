@@ -1,0 +1,556 @@
+﻿[
+  {
+    "Username": "Marissa",
+    "Role": "companyadmin",
+    "hospital_id": 0,
+    "worked_in": "Medtronic",
+    "Gender": "2",
+    "email": "marissagardner@vidto.com",
+    "DateOfBirth": "1962-03-18",
+    "Password": "password",
+    "Created": "2017-07-29",
+    "address": "966 Greene Avenue, Datil, District Of Columbia, 9911",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/women/42.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+
+     "Country": "NL"
+  },
+  {
+    "Username": "Marcel",
+    "Role": "admin",
+    "hospital_id": 0,
+    "worked_in": "",
+    "Gender": "1",
+    "email": "marcelharder@protonmail.com",
+    "DateOfBirth": "1962-03-18",
+    "Password": "password",
+    "Created": "2020-04-29",
+    "address": "Wittelaan 9 2743 CP Baarn Holland",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/men/27.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+
+     "Country": "NL"
+  },
+  {
+    "Username": "demoSuperUser",
+    "Role": "superuser",
+    "hospital_id": 48,
+    "worked_in": "",
+    "Gender": "1",
+    "email": "sur@protonmail.com",
+    "DateOfBirth": "1962-03-18",
+    "Password": "password",
+    "Created": "2020-07-31",
+    "address": "",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/men/47.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+
+     "Country": "US"
+  },
+  {
+    "Username": "demoVendor",
+    "Role": "companyadmin",
+    "hospital_id": 0,
+    "worked_in": "Abbott",
+    "Gender": "1",
+    "email": "info@sjm.us",
+    "DateOfBirth": "1962-03-18",
+    "Password": "password",
+    "Created": "2020-07-12",
+    "address": "",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/men/67.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+
+     "Country": "US"
+  },
+  {
+    "Username": "demoSurgeon",
+    "Role": "surgeon",
+    "hospital_id": 48,
+    "worked_in": "",
+    "Gender": "1",
+    "email": "info@sjm.us",
+    "DateOfBirth": "1962-03-18",
+    "Password": "password",
+    "Created": "2020-07-12",
+    "address": "",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/men/17.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+
+     "Country": "US"
+  },
+  {
+    "Username": "Joyce",
+    "Role": "companyadmin",
+    "hospital_id": 0,
+    "worked_in": "Abbott",
+    "Gender": "2",
+    "email": "joycegardner@vidto.com",
+    "DateOfBirth": "1990-08-10",
+    "Password": "password",
+    "Created": "2017-06-30",
+    "address": "677 Martense Street, Lopezo, Louisiana, 5808",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/women/32.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "NL"
+  },
+  {
+    "Username": "Lucy",
+    "Role": "surgeon",
+    "hospital_id": 5,
+    "worked_in": "",
+    "Gender": "2",
+    "email": "lucygardner@vidto.com",
+    "DateOfBirth": "1965-01-18",
+    "Password": "password",
+    "Created": "2017-05-05",
+    "address": "540 Vanderbilt Street, Ellerslie, Illinois, 6317",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/women/25.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "NL"
+  },
+  {
+    "Username": "Laurens",
+    "Role": "superuser",
+    "hospital_id": 8,
+    "worked_in": "",
+    "Gender": "1",
+    "email": "lucygardner@vidto.com",
+    "DateOfBirth": "1965-01-18",
+    "Password": "password",
+    "Created": "2017-05-05",
+    "address": "540 Vanderbilt Street, Ellerslie, Illinois, 6317",
+    "Photos": [
+      {
+        "url": "https://res.cloudinary.com/marcelcloud/image/upload/v1559818775/user.png.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "NL"
+  },
+  {
+    "Username": "Verreck",
+    "Role": "superuser",
+    "hospital_id": 13,
+    "worked_in": "",
+    "Gender": "1",
+    "email": "lucygardner@vidto.com",
+    "DateOfBirth": "1965-01-18",
+    "Password": "password",
+    "Created": "2017-05-05",
+    "address": "540 Vanderbilt Street, Ellerslie, Illinois, 6317",
+    "Photos": [
+      {
+        "url": "https://res.cloudinary.com/marcelcloud/image/upload/v1559818775/user.png.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "NL"
+  },
+  {
+    "Username": "Mallory",
+    "Role": "surgeon",
+    "hospital_id": 8,
+    "worked_in": "",
+    "Gender": "2",
+    "email": "mallorygardner@vidto.com",
+    "DateOfBirth": "1973-04-12",
+    "Password": "password",
+    "Created": "2017-04-01",
+    "address": "823 Schenck Place, Forbestown, Connecticut, 2160",
+    "Photos": [
+      {
+        "url": "https://res.cloudinary.com/marcelcloud/image/upload/v1559818775/user.png.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+     "Country": "NL"
+  },
+  {
+    "Username": "Sara",
+    "Role": "superuser",
+    "hospital_id": 13,
+    "worked_in": "",
+    "Gender": "2",
+    "email": "saragardner@vidto.com",
+    "DateOfBirth": "1993-09-06",
+    "Password": "password",
+    "Created": "2017-03-21",
+    "address": "974 Goodwin Place, Vincent, Delaware, 7304",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/women/34.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "GB"
+  },
+  {
+    "Username": "Jerri",
+    "Role": "superuser",
+    "hospital_id": 8,
+    "worked_in": "",
+    "Gender": "2",
+    "email": "jerrigardner@vidto.com",
+    "DateOfBirth": "1987-08-11",
+    "Password": "password",
+    "Created": "2017-03-16",
+    "address": "482 Church Lane, Fulford, Indiana, 2124",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/men/12.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "GB"
+  },
+  {
+    "Username": "Freda",
+    "Role": "companyHQ",
+    "worked_in": "Atrium",
+    "hospital_id": 0,
+    "Gender": "2",
+    "email": "fredagardner@vidto.com",
+    "DateOfBirth": "1993-08-28",
+    "Password": "password",
+    "Created": "2017-01-10",
+    "address": "762 Irving Street, Elrama, Hawaii, 4303",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/women/78.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "FR"
+  },
+  {
+    "Username": "Leanne",
+    "Role": "companyHQ",
+    "hospital_id": 0,
+    "worked_in": "LivaNova",
+    "Gender": "2",
+    "email": "leannegardner@vidto.com",
+    "DateOfBirth": "1985-11-09",
+    "Password": "password",
+    "Created": "2017-04-15",
+    "address": "342 Visitation Place, Norwood, West Virginia, 4442",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/women/47.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "FR"
+  },
+  {
+    "Username": "Lorene",
+    "Role": "companyHQ",
+    "hospital_id": 0,
+    "worked_in": "Gore",
+    "Gender": "2",
+    "email": "lorenegardner@vidto.com",
+    "DateOfBirth": "1951-06-23",
+    "Password": "password",
+    "Created": "2017-05-07",
+    "address": "516 Senator Street, Condon, Michigan, 4672",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/women/46.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "IT"
+  },
+  {
+    "Username": "Hilary",
+    "Role": "companyHQ",
+    "hospital_id": 0,
+    "worked_in": "Abbott",
+    "Gender": "2",
+    "email": "hilarygardner@vidto.com",
+    "DateOfBirth": "1955-07-23",
+    "Password": "password",
+    "Created": "2017-04-01",
+    "address": "852 Commerce Street, Salix, Texas, 2580",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/women/44.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "US"
+  },
+  {
+    "Username": "Rosalind",
+    "Role": "companyHQ",
+    "hospital_id": 0,
+    "worked_in": "KFSRC",
+    "Gender": "2",
+    "email": "rosalindgardner@vidto.com",
+    "DateOfBirth": "1995-05-18",
+    "Password": "password",
+    "Created": "2017-07-29",
+    "address": "192 Lacon Court, Finzel, Virgin Islands, 5477",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/women/42.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "BE"
+  },
+  {
+    "Username": "Pat",
+    "Role": "companyHQ",
+    "hospital_id": 0,
+    "worked_in": "Medtronic",
+    "Gender": "2",
+    "email": "patgardner@vidto.com",
+    "DateOfBirth": "1982-10-22",
+    "Password": "password",
+    "Created": "2017-01-02",
+    "address": "182 McClancy Place, Orason, Guam, 1934",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/women/47.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "BE"
+  },
+  {
+    "Username": "Willa",
+    "Role": "companyHQ",
+    "hospital_id": 0,
+    "worked_in": "Edwards",
+    "Gender": "2",
+    "email": "willagardner@vidto.com",
+    "DateOfBirth": "1959-10-01",
+    "Password": "password",
+    "Created": "2017-08-11",
+    "address": "890 Thomas Street, Bloomington, South Dakota, 2811",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/women/49.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "FR"
+  },
+  
+  {
+    "Username": "Barnes",
+    "Role": "surgeon",
+    "hospital_id": 5,
+    "worked_in": "",
+    "Gender": "1",
+    "email": "barnesgardner@vidto.com",
+    "DateOfBirth": "1976-08-13",
+    "Password": "password",
+    "Created": "2017-05-12",
+    "address": "427 Winthrop Street, Ironton, Louisiana, 7200",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/women/47.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+     "Country": "NL"
+  },
+  {
+    "Username": "Ortiz",
+    "Role": "surgeon",
+    "hospital_id": 10,
+    "worked_in": "",
+    "Gender": "1",
+    "email": "ortizgardner@vidto.com",
+    "DateOfBirth": "1978-02-21",
+    "Password": "password",
+    "Created": "2017-06-02",
+    "address": "506 Victor Road, Chamberino, American Samoa, 1968",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/women/47.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "SA"
+  },
+  {
+    "Username": "Gutierrez",
+    "Role": "surgeon",
+    "hospital_id": 10,
+    "worked_in": "",
+    "Gender": "1",
+    "email": "gutierrezgardner@vidto.com",
+    "DateOfBirth": "1952-06-03",
+    "Password": "password",
+    "Created": "2017-04-17",
+    "address": "923 Chase Court, Spelter, Alabama, 7510",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/women/47.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "ES"
+  },
+  {
+    "Username": "Richardson",
+    "Role": "surgeon",
+    "hospital_id": 8,
+    "worked_in": "",
+    "Gender": "1",
+    "email": "richardsongardner@vidto.com",
+    "DateOfBirth": "1951-09-01",
+    "Password": "password",
+    "Created": "2017-06-14",
+    "address": "818 Cooke Court, Benson, Marshall Islands, 7490",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/women/47.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+     "Country": "NL"
+  },
+  {
+    "Username": "Joyce",
+    "Role": "surgeon",
+    "worked_in": "",
+    "hospital_id": 13,
+    "Gender": "1",
+    "email": "joycegardner@vidto.com",
+    "DateOfBirth": "1979-05-01",
+    "Password": "password",
+    "Created": "2017-03-21",
+    "address": "850 Krier Place, Coloma, West Virginia, 5267",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/women/47.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "BE"
+  },
+  {
+    "Username": "Burnett",
+    "Role": "surgeon",
+    "hospital_id": 0,
+    "worked_in": "",
+    "Gender": "1",
+    "email": "burnettgardner@vidto.com",
+    "DateOfBirth": "1994-05-11",
+    "Password": "password",
+    "Created": "2017-04-25",
+    "address": "242 Stryker Street, Brookfield, Pennsylvania, 3067",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/men/48.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "BE"
+  },
+  
+  
+  {
+    "Username": "Santana",
+    "Role": "superuser",
+    "worked_in": "",
+    "hospital_id": 13,
+    "Gender": "1",
+    "email": "santanagardner@vidto.com",
+    "DateOfBirth": "1957-01-07",
+    "Password": "password",
+    "Created": "2017-07-22",
+    "address": "208 Veterans Avenue, Chesapeake, Puerto Rico, 7975",
+    "Photos": [
+      {
+        "url": "https://randomuser.me/api/portraits/men/41.jpg",
+        "isMain": true,
+        "description":
+          "Ut dolore minim ipsum minim exercitation anim aliqua esse."
+      }
+    ],
+    "Country": "BE"
+  }
+]

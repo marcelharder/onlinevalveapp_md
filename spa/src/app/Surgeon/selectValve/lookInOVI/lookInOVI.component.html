@@ -1,0 +1,130 @@
+
+
+<div class="card">
+  <div class="card-header" style="background-color: silver;">
+    <div class="d-flex flex-row">
+      <div class="p-2">{{Title}}</div>
+
+    </div>
+  </div>
+  <div class="card-body" style="background-color: beige;">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-12">
+            <h5><span class="badge badge-secondary">Patient data</span></h5>
+          </div>
+          <div class="col-sm-12 mb-1">
+            <div class="row">
+              <div class="col-sm-6">
+                <h5><span class="badge badge-default">Implant position</span></h5>
+              </div>
+              <div class="col-sm-6"><select [(ngModel)]="selectedPosition" (change)="onPositionChange()" name="pos"
+                  class="form-control">
+                  <option *ngFor="let an of optionsPositions" [value]=an.value>{{ an.description }}</option>
+                </select></div>
+            </div>
+          </div>
+          <!-- <div class="col-sm-12 mb-1">
+            <div class="row">
+              <div class="col-sm-6">
+                <h5><span class="badge badge-default">Gender</span></h5>
+              </div>
+              <div class="col-sm-6"><select [(ngModel)]="selectedGender" name="gender" class="form-control">
+                  <option *ngFor="let an of genderOptions" [value]=an.value>{{ an.description }}</option>
+                </select></div>
+            </div>
+          </div> -->
+
+          <div class="col-sm-12 mb-1" *ngIf="showAoValves()">
+            <div class="row">
+              <div class="col-sm-6">
+                <h5><span class="badge badge-default">Weight (kg)</span></h5>
+              </div>
+              <div class="col-sm-6"><select [(ngModel)]="selectedWeight" name="w" class="form-control">
+                  <option *ngFor="let an of weightOptions" [value]=an.value>{{ an.description }}</option>
+                </select></div>
+            </div>
+          </div>
+          <div class="col-sm-12 mb-1" *ngIf="showAoValves()">
+            <div class="row">
+              <div class="col-sm-6">
+                <h5><span class="badge badge-default">Height (cm)</span></h5>
+              </div>
+              <div class="col-sm-6"><select [(ngModel)]="selectedHeight" name="h" class="form-control">
+                  <option *ngFor="let an of heightOptions" [value]=an.value>{{ an.description }}</option>
+                </select></div>
+            </div>
+          </div>
+          <!-- <div class="col-sm-12 mb-1">
+            <div class="row">
+              <div class="col-sm-6"><h5><span class="badge badge-default">Age (yrs)</span></h5></div>
+              <div class="col-sm-6"><select [(ngModel)]="selectedAge" name="age" class="form-control">
+                <option *ngFor="let an of ageOptions" [value]=an.value>{{ an.description }}</option>
+              </select></div>
+            </div>
+          </div> -->
+          <div class="col-sm-12 mb-1">
+            <div class="row">
+              <div class="col-sm-6">
+                <h5><span class="badge badge-default">Size</span></h5>
+              </div>
+              <div class="col-sm-6"><select [(ngModel)]="selectedSize" name="sos" class="form-control">
+                  <option *ngFor="let an of sizesOptions" [value]=an.value>{{ an.description }}</option>
+                </select></div>
+            </div>
+          </div>
+
+          <!-- <div class="col-sm-12 mb-1">
+            <div class="row">
+              <div class="col-sm-6"></div>
+              <div class="col-sm-6">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="lifeStyle"
+                    name="ls">
+                  <label class="custom-control-label" for="customSwitch1">
+                    <h6><span class="badge badge-secondary">Active lifestyle</span></h6>
+                  </label>
+                </div>
+
+              </div>
+            </div>
+          </div> -->
+          <div class="col-sm-12 mb-1">
+            <div class="row">
+              <div class="col-sm-6"></div>
+              <div class="col-sm-6">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" 
+                  id="customSwitch2" [(ngModel)]="preference"
+                    name="ps">
+                  <label class="custom-control-label" for="customSwitch2">
+                    <h6><span class="badge badge-secondary">Tissue valve only</span></h6>
+                  </label>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 mb-1">
+            <button (click)="findPossibleValves()" class="form-control">Search valves</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-sm-8">
+        <div class="col-sm-12">
+          <img [src]="ImagePath">
+        </div>
+        <div class="col-sm-12" *ngIf="showAoValves()">
+          <app-suitableAOValves [valves]="aorticvalves" [bsa]="bsa" [title]="AproductRequested"></app-suitableAOValves>
+        </div>
+        <div class="col-sm-12" *ngIf="showMValves()">
+          <app-suitableMValves [valves]="mitralvalves" [title]="MproductRequested"></app-suitableMValves>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,138 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h2><span class="badge badge-default">Add a product</span></h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card" style="background-color:beige">
+      <div class="card-header"></div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-3">
+            <h5><span class="badge badge-info">Id</span></h5>
+          </div>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" [(ngModel)]="vc.no" name="test" readonly />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <h5><span class="badge badge-info">Description</span></h5>
+          </div>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" [(ngModel)]="vc.description" name="test" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <h5><span class="badge badge-info">UK-Code</span></h5>
+          </div>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" [(ngModel)]="vc.uk_code" name="test4" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <h5><span class="badge badge-info">US-Code</span></h5>
+          </div>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" [(ngModel)]="vc.us_code" name="test41" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <h5><span class="badge badge-info">Type</span></h5>
+          </div>
+          <div class="col-sm-9">
+            <div class="row">
+              <div class="col-sm-6"><select [(ngModel)]="vc.type" name="test11" class="form-control">
+                <option *ngFor="let an of typeOfValve" [value]="an.description">{{ an.description }}</option>
+              </select></div>
+              <div class="col-sm-6"><input type="text" class="form-control" [(ngModel)]="vc.type" name="test5" /></div>
+              <div class="col-sm-6"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+              <h5><span class="badge badge-info">Model Code</span></h5>
+          </div>
+          <div class="col-sm-9">
+            <div class="row">
+              <div class="col-sm-6"><input type="text" class="form-control" [(ngModel)]="vc.model_code" name="test555" /></div>
+              <div class="col-sm-6"></div>
+            </div>
+           </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <h5><span class="badge badge-info">Sizes</span></h5>
+          </div>
+          <div class="col-sm-9">
+            <div class="row">
+              <table class="table table-striped">
+                <tr>
+                  <th>ID</th>
+                  <th>Size</th>
+                  <th>EOA</th>
+                  <th><button class="btn btn-warning" (click)="addSize()" *ngIf="displayAdd()">Add size</button></th>
+                  <th><button class="btn btn-warning" (click)="saveSize()" *ngIf="!displayAdd()">Save</button></th>
+                </tr>
+                <tr *ngFor="let pro of ValveCodeSizes">
+                  <td>{{pro.sizeId}}</td>
+                  <td>{{pro.size}}</td>
+                  <td>{{pro.eoa}}</td>
+                  <td><button class="btn btn-warning" (click)="deleteSize(pro.sizeId)">Delete</button></td>
+                  <td></td>
+                 </tr>
+                <tr>
+                  <td></td>
+                  <td><input [(ngModel)]="newsize" name="size" class="form-control"></td>
+                  <td><input [(ngModel)]="neweoa" name="eoa" class="form-control" ></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <h5><span class="badge badge-info">Countries</span></h5>
+          </div>
+          <div class="col-sm-9">
+            <div class="row">
+              <div class="col-sm-6"><input type="text" class="form-control" [(ngModel)]="vc.countries" name="test58" />
+              </div>
+              <div class="col-sm-6"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <h5><span class="badge badge-info">Implant position</span></h5>
+          </div>
+          <div class="col-sm-9">
+            <div class="row">
+              <div class="col-sm-6"><select [(ngModel)]="vc.implant_position" name="test10" class="form-control">
+                  <option *ngFor="let an of implantLocation" [value]="an.description">{{ an.description }}</option>
+                </select></div>
+              <div class="col-sm-6"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="btn-group">
+            <button class="btn btn-primary" (click)="cancel()"><i class="fa fa-window-close" aria-hidden="true"></i>Cancel</button>
+             <button class="btn btn-primary" (click)="updateProductDetails()"><i class="fa fa-update" aria-hidden="true"></i> Update</button>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>

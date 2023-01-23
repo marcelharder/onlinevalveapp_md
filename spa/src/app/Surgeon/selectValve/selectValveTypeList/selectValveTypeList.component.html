@@ -1,0 +1,26 @@
+<div class="card">
+  <div class="card-header">Selected Valve(s)</div>
+  <div class="card-body">
+    <table class="table table-striped">
+      <tr>
+        <th>
+          <h6><span class="badge badge-default">Description</span></h6>
+        </th>
+        <th>
+          <h6><span class="badge badge-default">Implant position</span></h6>
+        </th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let p of pro">
+        <th>
+          <h6><span class="badge badge-secondary">{{p.description}}</span></h6>
+        </th>
+        <th>
+          <h6>{{p.implant_position}}</h6>
+        </th>
+        <th><button class="btn btn-info btn-sm" (click)="SearchD(p.valveTypeId)">Details</button></th>
+      </tr>
+    </table>
+  </div>
+
+</div>

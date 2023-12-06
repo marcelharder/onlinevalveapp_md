@@ -16,8 +16,8 @@
             </div>
           </div>
           <div class="card-body">
-            <div *ngIf="displayVendors()"><app-superManageVendors></app-superManageVendors></div>
-            <div *ngIf="displayContacts()"><app-superManageContacts></app-superManageContacts></div>
+            <div *ngIf="displayVendors()"><app-superManageVendors [selectedHospital]="hos"></app-superManageVendors></div>
+            <div *ngIf="displayContacts()"><app-superManageContacts [selectedHospital]="hos"></app-superManageContacts></div>
           </div>
           <div class="card-footer"></div>
         </div>

@@ -58,6 +58,7 @@ export class SearchserialComponent implements OnInit {
     email: '',
     contact: '',
     contact_image: '',
+    vendors:'',
     telephone: '',
     fax: '',
     logo: '',

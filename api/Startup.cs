@@ -73,15 +73,7 @@ namespace api
             services.AddScoped<IVendor, Vendor>();
             services.AddScoped<IGenerator, Generator>();
 
-           /*  services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
-            }); */
-
-          /*   services.AddControllers().AddNewtonsoftJson(options =>
-            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
- */
+          
 
             services.AddCors(options =>
                         {
@@ -120,9 +112,7 @@ namespace api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseDeveloperExceptionPage(); // is replaced by usemiddleware
-               /*  app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "api v1")); */
+               
             }
 
             //app.UseHttpsRedirection();

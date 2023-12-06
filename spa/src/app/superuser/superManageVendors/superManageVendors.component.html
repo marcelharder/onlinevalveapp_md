@@ -1,3 +1,17 @@
 <p>
-  superManageVendors works!
+  superManageVendors works! {{selectedHospital.naam}}{{selectedHospital.vendors}}{{availableVendors()}}
 </p>
+
+  <!--here is the table-->
+  <table class="table table-striped">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let p of currentVendors">
+      <th>{{p.value}}</th>
+      <th>{{p.description}}</th>
+      <td><a (click)="selectDetails(p.hospitalNo)">Details</a></td>
+    </tr>
+  </table>

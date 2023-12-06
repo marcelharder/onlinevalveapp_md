@@ -172,6 +172,7 @@ namespace api.DAL.Implementations
             selected_record.Contact_image = hrdto.Contact_image;
             selected_record.Telephone = hrdto.Telephone;
             selected_record.Fax = hrdto.Fax;
+            selected_record.vendors = hrdto.vendors;
 
            
             var result = _context.Hospitals.Update(selected_record);

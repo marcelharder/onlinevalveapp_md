@@ -456,6 +456,7 @@ namespace api.DAL.Code
         hr.Contact_image = u.Contact_image;
         hr.Telephone = u.Telephone;
         hr.Fax = u.Fax;
+        hr.vendors = u.vendors;
 
            return hr;
         }

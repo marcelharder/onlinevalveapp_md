@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Hospital } from 'src/app/_models/Hospital';
 
 @Component({
   selector: 'app-superManageContacts',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./superManageContacts.component.css']
 })
 export class SuperManageContactsComponent implements OnInit {
-
+@Input() selectedHospital: Hospital;
   constructor() { }
 
   ngOnInit() {

@@ -17,6 +17,7 @@ namespace api.DAL.dtos
         public string Contact_image { get; set; }
         public string Telephone { get; set; }
         public string Fax { get; set; }
+        public string vendors { get; set; }
            
     }
 }

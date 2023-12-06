@@ -11,6 +11,7 @@ export interface Hospital {
         email: string;
         contact: string;
         contact_image: string;
+        vendors:string;
         telephone: string;
         fax: string;
         logo: string;

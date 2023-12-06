@@ -13,13 +13,13 @@ services:
      - mariadb-data:/var/lib/mysql
      
   comservice:
-    image: comservice:v2
+    image: comservice:v91
     restart: always
     networks: 
      - internal-container-network  
 
   valveinventory:
-    image: inventory_md:v25
+    image: inventory_md:v26
     ports:
       - 8045:80
     networks: 

@@ -35,18 +35,18 @@ namespace api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-           /*  services.AddDbContext<dataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("SQLconnection"))
-            //.EnableSensitiveDataLogging()
-            ); */
+            /*  services.AddDbContext<dataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("SQLconnection"))
+             //.EnableSensitiveDataLogging()
+             ); */
 
-            services.AddDbContext<dataContext>(options => options      
-                .UseMySql(Configuration.GetConnectionString("SQLConnection"),      
-                    mysqlOptions =>      
+            services.AddDbContext<dataContext>(options => options
+                .UseMySql(Configuration.GetConnectionString("SQLConnection"),
+                    mysqlOptions =>
                         mysqlOptions.ServerVersion(
-                            new Pomelo.EntityFrameworkCore.MySql.Storage.ServerVersion(new Version(10, 4, 6), 
+                            new Pomelo.EntityFrameworkCore.MySql.Storage.ServerVersion(new Version(10, 4, 6),
                             ServerType.MariaDb)).EnableRetryOnFailure()));
 
-           
+
 
             services.AddHttpContextAccessor();
             services.AddCors();
@@ -112,10 +112,10 @@ namespace api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seed seeder)
         {
-         if (env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                 //app.UseDeveloperExceptionPage(); // is replaced by usemiddleware
+                //app.UseDeveloperExceptionPage(); // is replaced by usemiddleware
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "api v1"));
             }
@@ -129,16 +129,16 @@ namespace api
             app.UseAuthentication();
             app.UseAuthorization();
 
-           app.UseDefaultFiles();
-           app.UseStaticFiles();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
-          
+
 
 
             app.UseEndpoints(endpoints =>
             {
-               endpoints.MapControllers();
-               endpoints.MapFallbackToController("Index", "Fallback");
+                endpoints.MapControllers();
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }

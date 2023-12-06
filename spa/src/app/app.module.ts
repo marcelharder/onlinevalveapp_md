@@ -84,6 +84,8 @@ import { ListHospitalsComponent } from './admin/list-hospitals/list-hospitals.co
 import { ListHospitalsResolver } from './_resolvers/ListHospitalsResolver';
 import { HospitalEditCardComponent } from './admin/hospitalEditCard/hospitalEditCard.component';
 import { TimeagoModule } from 'ngx-timeago';
+import { SuperManageContactsComponent } from './superuser/superManageContacts/superManageContacts.component';
+import { SuperManageVendorsComponent } from './superuser/superManageVendors/superManageVendors.component';
 
 
 export function tokenGet() { return localStorage.getItem('token'); }
@@ -136,6 +138,8 @@ export function tokenGet() { return localStorage.getItem('token'); }
       SelectValveTypeListComponent,
       SelectValveTypeDetailsComponent,
       HospitalEditCardComponent,
+      SuperManageContactsComponent,
+      SuperManageVendorsComponent
    ],
    imports: [
       CommonModule,

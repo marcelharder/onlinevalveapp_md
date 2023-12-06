@@ -80,7 +80,9 @@
           <li class="nav-item" [routerLinkActive]="['link-active']"> <a class="nav-link text-dark" [routerLink]="['/about']">| About</a> </li>
           <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="!loggedIn()"> <a class="nav-link text-dark" [routerLink]="['/selectValve']">| PPM</a> </li>
           <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="specialLogged"> <a class="nav-link text-dark" [routerLink]="['/superuser']">| ManageValves</a> </li>
+          
           <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="specialLogged"> <a class="nav-link text-dark" [routerLink]="['/settings']">| Settings</a> </li>
+           
           <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="specialLogged"> <a class="nav-link text-dark" [routerLink]="['/tutorials']">| Tutorial</a> </li>
           <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="specialLogged"> <a class="nav-link text-dark" [routerLink]="['/statistics']">| Statistics</a> </li>
           <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="specialLogged || companyHQLogged"> <a class="nav-link text-dark" [routerLink]="['/messages']">| Messages</a> </li>

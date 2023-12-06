@@ -22,7 +22,7 @@ namespace api.Controllers
     public class ValveController : ControllerBase
     {
         private IValve _valve;
-        
+
         private IValveCode _code;
         private SpecialMaps _special;
         public ValveController(IValve valve, SpecialMaps special, IValveCode code)
@@ -80,7 +80,7 @@ namespace api.Controllers
         }
         [AllowAnonymous]
         [Route("api/tfd/{pc}/{size}")]
-[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> getTFD(string pc, string size)
         {
             var result = await _valve.getTFD(pc, size);
@@ -94,14 +94,14 @@ namespace api.Controllers
         #endregion
 
         [Route("api/valvesBySoort/{soort}/{position}")]
-[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> getValve01(int soort, int position)
         {
             var result = await _valve.getValvesBySoort(soort, position);
             return Ok(result);
         }
         [Route("api/valvesByHospitalAndValveId/{hospital}/{code}")]
-[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> getValve02(int hospital, int code)
         {
             // get modelcode from no, 
@@ -120,55 +120,53 @@ namespace api.Controllers
                 return Ok(result);
             }
         }
-
         [Route("api/updatevalve")]
         [HttpPost]
         public async Task<IActionResult> postValve(ValveForReturnDTO cv)
         {
             var help = 0.0;
-            if(cv.Type != "Pericardial Patch"){ // don't bother with the valve size with pericardial poatches
-            if (cv.TFD == 0)
-            {
-            //get the valvecode from the description and stuff it in the newly added valve
-            var sel = await _code.getDetailsByProductCode(cv.Product_code);
-            var selSizes =  sel.Valve_size.ToList();
-            var selectedSize = selSizes.FirstOrDefault(a => a.Size == Convert.ToInt32(cv.Size));
-            help = selectedSize.EOA;
-            }
-            else
-            {
-                help = cv.TFD;
-            }
-            cv.TFD = help;
+            if (cv.Type != "Pericardial Patch")
+            { // don't bother with the valve size with pericardial poatches
+                if (cv.TFD == 0)
+                {
+                    //get the valvecode from the description and stuff it in the newly added valve
+                    var sel = await _code.getDetailsByProductCode(cv.Product_code);
+                    var selSizes = sel.Valve_size.ToList();
+                    var selectedSize = selSizes.FirstOrDefault(a => a.Size == Convert.ToInt32(cv.Size));
+                    help = selectedSize.EOA;
+                }
+                else
+                {
+                    help = cv.TFD;
+                }
+                cv.TFD = help;
             }
             _valve.updateValve(cv);
             if (await _valve.SaveAll()) { return Ok("Valve saved"); }
             return BadRequest("Can't save this valve");
 
         }
-
         [Route("api/deleteValve/{id}")]
         [HttpDelete]
-        public async Task<IActionResult> removeValve(int id){
+        public async Task<IActionResult> removeValve(int id)
+        {
             var result = await _valve.removeValve(id);
-             return Ok(result);
+            return Ok(result);
         }
-
         [Route("api/valveBySerial/{serial}/requester/{whoWantsToKnow}")]
-[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> getValve01(string serial, string whoWantsToKnow)
         {
 
             var result = await _valve.getValveBySerial(serial, whoWantsToKnow);
             return Ok(result);
         }
-
         [Route("api/valveBasedOnTypeOfValve/{id}")]
-[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> getValve02(int id) // a valve is added here
         {
             var v = await _valve.valveBasedOnTypeOfValve(id);
-            
+
             _valve.Add(v);
             if (await _valve.SaveAll())
             {
@@ -181,9 +179,8 @@ namespace api.Controllers
             }
 
         }
-
         [Route("api/valveExpiry/{months}")]
-[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> getValveExpiry(int months)
         {
             var result = await _valve.getValveExpiry(months);
@@ -193,7 +190,7 @@ namespace api.Controllers
         #region <--! transfer stuff-->
 
         [Route("api/valveTransfers/{UserId}/{ValveId}")]
-[HttpGet]
+        [HttpGet]
         public IActionResult getTransfer(int UserId, int ValveId)
         {
             if (UserId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)) return Unauthorized();
@@ -201,7 +198,7 @@ namespace api.Controllers
             return Ok(result);
         }
         [Route("api/valveTransferDetails/{UserId}/{TransferId}", Name = "GetTransfer")]
-[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> getTransferDetails(int UserId, int TransferId)
         {
             if (UserId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)) return Unauthorized();
@@ -250,9 +247,9 @@ namespace api.Controllers
         [HttpGet("api/ppm")]
         public async Task<IActionResult> getPPM([FromQuery] PPMParams pp)
         {
-           var tfd = await _valve.getTFD(pp.productCode, pp.size);
-            
-            
+            var tfd = await _valve.getTFD(pp.productCode, pp.size);
+
+
             if (tfd != "")
             {
                 var tfdDouble = Convert.ToDouble(tfd);

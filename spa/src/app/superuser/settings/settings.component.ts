@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Hospital } from 'src/app/_models/Hospital';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { GeneralService } from 'src/app/_services/general.service';
 
@@ -32,8 +33,12 @@ export class SettingsComponent implements OnInit {
     triggerTwoMonth: '',
     triggerThreeMonth: '',
     dBBackend: ''
-};
-  constructor(private gen: GeneralService, private auth: AuthService) { }
+  };
+  title = "Vendors";
+  CardCaption = "List of Vendors in this hospital";
+  contacts = 0;
+  vendors = 1;
+  constructor(private gen: GeneralService, private auth: AuthService, private alertify: AlertifyService) { }
 
   ngOnInit() {
     this.gen.getHospital().subscribe((next) => { this.hos = next; });
@@ -41,4 +46,34 @@ export class SettingsComponent implements OnInit {
 
   }
 
+  displayVendors() { if (this.vendors === 1) { return true; } }
+  displayContacts() { if (this.contacts === 1) { return true; } }
+
+  showVendors() {
+    this.title = "Vendors";
+    this.CardCaption = "List of Vendors in this hospital";
+    this.vendors = 1; this.contacts = 0;
+  }
+  manageContact() {
+    this.title = "Contacts";
+    this.CardCaption = "Select the hospital contact person from the list";
+    this.vendors = 0; this.contacts = 1;
+  }
+
+  addVendor() {
+    debugger;
+    if (this.vendors === 1) { this.addVendors(); }
+    else { this.addContacts(); }
+  }
+
+  addVendors() {
+    this.alertify.message("Add Vendor");
+  }
+  
+  addContacts() {
+    this.alertify.message("Add Contact")
+  }
+
 }
+
+

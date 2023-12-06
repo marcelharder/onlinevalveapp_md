@@ -110,7 +110,7 @@ namespace api.Controllers
                     };
                     uploadresult = _cloudinary.Upload(uploadParams);
                 }
-                product.image = uploadresult.Uri.ToString();
+                product.image = uploadresult.Url.ToString();
                 
                 if (await _vc.SaveAll())
                 {

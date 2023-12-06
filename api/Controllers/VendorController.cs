@@ -135,7 +135,7 @@ namespace api.Controllers
                     };
                     uploadresult = _cloudinary.Upload(uploadParams);
                 }
-                vendor.reps = uploadresult.Uri.ToString();
+                vendor.reps = uploadresult.Url.ToString();
                 
                 if (await _vendor.SaveAll())
                 {

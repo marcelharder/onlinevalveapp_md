@@ -74,7 +74,7 @@ namespace api.Controllers
                     uploadResult = _cloudinary.Upload(uploadParams);
                 }
             }
-            photoDto.Url = uploadResult.Uri.ToString();
+            photoDto.Url = uploadResult.Url.ToString();
             photoDto.PublicId = uploadResult.PublicId;
 
             var photo = _special.mapToPhoto(photoDto);

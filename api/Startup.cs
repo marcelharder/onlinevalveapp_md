@@ -15,9 +15,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-using Pomelo.EntityFrameworkCore.MySql.Storage;
 
 namespace api
 {
@@ -39,12 +36,20 @@ namespace api
              //.EnableSensitiveDataLogging()
              ); */
 
-            services.AddDbContext<dataContext>(options => options
+            var _connectionString = Configuration.GetConnectionString("SQLConnection");
+            services.AddDbContext<dataContext>(
+                options => options.UseMySql(
+                    _connectionString,
+                    ServerVersion.AutoDetect(_connectionString)
+                )
+            );
+
+            /* services.AddDbContext<dataContext>(options => options
                 .UseMySql(Configuration.GetConnectionString("SQLConnection"),
                     mysqlOptions =>
                         mysqlOptions.ServerVersion(
                             new Pomelo.EntityFrameworkCore.MySql.Storage.ServerVersion(new Version(10, 4, 6),
-                            ServerType.MariaDb)).EnableRetryOnFailure()));
+                            ServerType.MariaDb)).EnableRetryOnFailure())); */
 
 
 
@@ -68,15 +73,15 @@ namespace api
             services.AddScoped<IVendor, Vendor>();
             services.AddScoped<IGenerator, Generator>();
 
-            services.AddSwaggerGen(c =>
+           /*  services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
-            });
+            }); */
 
-            services.AddControllers().AddNewtonsoftJson(options =>
+          /*   services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
-
+ */
 
             services.AddCors(options =>
                         {
@@ -116,8 +121,8 @@ namespace api
             {
                 app.UseDeveloperExceptionPage();
                 //app.UseDeveloperExceptionPage(); // is replaced by usemiddleware
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "api v1"));
+               /*  app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "api v1")); */
             }
 
             //app.UseHttpsRedirection();

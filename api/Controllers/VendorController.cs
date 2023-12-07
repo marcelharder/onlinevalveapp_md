@@ -22,30 +22,36 @@ namespace api.Controllers
         private Cloudinary _cloudinary;
         private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
         public VendorController(
-            IVendor vendor, 
-            IValveCode code, 
+            IVendor vendor,
+            IValveCode code,
             IOptions<CloudinarySettings> cloudinaryConfig)
         {
             _vendor = vendor;
             _code = code;
             _cloudinaryConfig = cloudinaryConfig;
-             Account acc = new Account(
-               _cloudinaryConfig.Value.CloudName,
-               _cloudinaryConfig.Value.ApiKey,
-               _cloudinaryConfig.Value.ApiSecret
-           );
+            Account acc = new Account(
+              _cloudinaryConfig.Value.CloudName,
+              _cloudinaryConfig.Value.ApiKey,
+              _cloudinaryConfig.Value.ApiSecret
+          );
             _cloudinary = new Cloudinary(acc);
         }
         [Route("api/vendor/{id}", Name = "getVendor")]
-[HttpGet]
+        [HttpGet]
         public async Task<Class_Vendors> getVendor(int id)
         {
             var help = await _vendor.getVendor(id);
             return help;
         }
-          
+        [Route("api/vendorByName/{name}")]
+        [HttpGet]
+        public async Task<Class_Vendors> getVendor(string name)
+        {
+            var help = await _vendor.getVendorByName(name);
+            return help;
+        }
         [Route("api/vendor/valvecodes/{id}")]
-[HttpGet]
+        [HttpGet]
         public async Task<List<Class_Item>> getVendor02(int id)
         {
             var help = await _code.getValveCodesPerCountry(id);
@@ -53,7 +59,7 @@ namespace api.Controllers
         }
 
         [Route("api/vendor/fullProducts/{id}")]
-[HttpGet]
+        [HttpGet]
         public async Task<List<Class_TypeOfValve>> getVendor03(int id)
         {
             var help = await _code.getTypeOfValvesPerCountry(id);
@@ -65,23 +71,25 @@ namespace api.Controllers
         public async Task<IActionResult> postVendor(Class_Vendors cv)
         {
 
-           _vendor.Update(cv);
-           if (await _vendor.SaveAll()) { return Ok("Vendor saved"); }
-           return BadRequest("Can't save this vendor");
+            _vendor.Update(cv);
+            if (await _vendor.SaveAll()) { return Ok("Vendor saved"); }
+            return BadRequest("Can't save this vendor");
 
         }
-   
-         [Route("api/vendors")]
-         [HttpGet]
-         public async Task<IActionResult> allVendors(){
-             var result = await _vendor.getVendors();
-             return Ok(result);
-         }
-       
-       
-         [Route("api/vendorsFull")]
-         [HttpGet]
-         public async Task<IActionResult> allVendorsFull([FromQuery] UserParams up){
+
+        [Route("api/vendors")]
+        [HttpGet]
+        public async Task<IActionResult> allVendors()
+        {
+            var result = await _vendor.getVendors();
+            return Ok(result);
+        }
+
+
+        [Route("api/vendorsFull")]
+        [HttpGet]
+        public async Task<IActionResult> allVendorsFull([FromQuery] UserParams up)
+        {
 
             var result = await _vendor.getVendorsFull(up);
 
@@ -90,31 +98,35 @@ namespace api.Controllers
             result.TotalCount,
             result.TotalPages);
 
-             return Ok(result);
-         }
+            return Ok(result);
+        }
 
-         [Route("api/deleteVendor/{id}")]
-         [HttpDelete]
-         public async Task<IActionResult> deleteVendor(int id){
-              var help = await _vendor.getVendor(id);
-             _vendor.Delete(help);
-             if(await _vendor.SaveAll()){return Ok("Deleted");}
-             return BadRequest("Could not delete entity");
+        [Route("api/deleteVendor/{id}")]
+        [HttpDelete]
+        public async Task<IActionResult> deleteVendor(int id)
+        {
+            var help = await _vendor.getVendor(id);
+            _vendor.Delete(help);
+            if (await _vendor.SaveAll()) { return Ok("Deleted"); }
+            return BadRequest("Could not delete entity");
 
-         }
-   
-         [Route("api/addVendor")]
-         [HttpGet]
-         public async Task<IActionResult> addVendor(){
-             var ven = new Class_Vendors();
-             _vendor.Add(ven);
-             if(await _vendor.SaveAll()){
-                return CreatedAtRoute("getVendor", new { id = ven.Id }, ven);}
-             return BadRequest("Could not add entity");
+        }
 
-         }
+        [Route("api/addVendor")]
+        [HttpGet]
+        public async Task<IActionResult> addVendor()
+        {
+            var ven = new Class_Vendors();
+            _vendor.Add(ven);
+            if (await _vendor.SaveAll())
+            {
+                return CreatedAtRoute("getVendor", new { id = ven.Id }, ven);
+            }
+            return BadRequest("Could not add entity");
 
-         
+        }
+
+
         [Route("api/addCompanyLogo/{id}")]
         [HttpPost]
         public async Task<IActionResult> AddLogoToCompany(int id, [FromQuery] PhotoForCreationDto photoDto)
@@ -136,7 +148,7 @@ namespace api.Controllers
                     uploadresult = _cloudinary.Upload(uploadParams);
                 }
                 vendor.reps = uploadresult.Url.ToString();
-                
+
                 if (await _vendor.SaveAll())
                 {
                     return CreatedAtRoute("getVendor", new { id = vendor.database_no }, vendor);
@@ -146,13 +158,13 @@ namespace api.Controllers
         }
 
 
-       /*   [Route("api/addVendorLogo")]
-         [HttpPost]
-         public async Task<IActionResult> addPhoto([FromForm]PhotoForCreationDto photoDto){
+        /*   [Route("api/addVendorLogo")]
+          [HttpPost]
+          public async Task<IActionResult> addPhoto([FromForm]PhotoForCreationDto photoDto){
 
 
-         }
-    */
-   
+          }
+     */
+
     }
 }

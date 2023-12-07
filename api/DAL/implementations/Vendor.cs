@@ -37,6 +37,13 @@ namespace api.DAL.Implementations
             var result = await _context.Vendors.FirstOrDefaultAsync(x => x.database_no == id.ToString());
             return result;
         }
+        public async Task<Class_Vendors> getVendorByName(string name)
+        {
+            var result = await _context.Vendors.FirstOrDefaultAsync(x => x.description == name);
+            return result;
+        }
+
+
         public async Task<List<Class_Item>> getVendors()
         {
             var result = new List<Class_Item>();
@@ -67,8 +74,6 @@ namespace api.DAL.Implementations
         public void Add<T>(T entity) where T : class{ _context.Add(entity); }
         public void Delete<T>(T entity) where T : class{ _context.Remove(entity); }
         public void Update<T>(T entity) where T : class{ _context.Update(entity); }
-
-        
 
         
     }

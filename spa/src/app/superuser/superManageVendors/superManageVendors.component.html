@@ -1,17 +1,99 @@
-<p>
-  superManageVendors works! {{selectedHospital.naam}}{{selectedHospital.vendors}}{{availableVendors()}}
-</p>
-
+<form #vendorForm="ngForm" id="vendorForm">
   <!--here is the table-->
-  <table class="table table-striped">
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th></th>
-    </tr>
-    <tr *ngFor="let p of currentVendors">
-      <th>{{p.value}}</th>
-      <th>{{p.description}}</th>
-      <td><a (click)="selectDetails(p.hospitalNo)">Details</a></td>
-    </tr>
-  </table>
+
+  <div *ngIf="!displayDetails()">
+    <div class="row">
+      <div class="col-sm-6">
+        <div>
+          <h6><span>Vendors in hospital</span></h6>
+        </div>
+        <table class="table table-striped">
+          <tr>
+            <th>Name</th>
+            <th></th>
+          </tr>
+          <tr *ngFor="let p of vendors">
+            <th>{{p}}</th>
+            <td><button class="btn btn-sm btn-success" (click)="showDetails(p)">details</button></td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-sm-6">
+        <div>
+          <h6><span>All vendors</span></h6>
+        </div>
+        <table class="table table-striped">
+          <tr>
+            <th>Name</th>
+            <th></th>
+          </tr>
+          <tr *ngFor="let p of allvendors">
+            <th>{{p.description}}</th>
+            <td><button class="btn btn-sm btn-success" (click)="moveToHospital(p.description)">Move to hospital</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div *ngIf="displayDetails()">
+ <div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="row">
+          <div class="col-sm-6">
+            <h6><span><label class="badge badge-default">id</label></span></h6>
+          </div>
+          <div class="col-sm-6">{{vendorDetails.id}}</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <h6><span><label class="badge badge-default">no</label></span></h6>
+          </div>
+          <div class="col-sm-6">{{vendorDetails.no}}</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <h6><span><label class="badge badge-default">description</label></span></h6>
+          </div>
+          <div class="col-sm-6">{{vendorDetails.description}}</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <h6><span><label class="badge badge-default">address</label></span></h6>
+          </div>
+          <div class="col-sm-6">{{vendorDetails.address}}</div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <img src={{vendorDetails.reps}} width="400px" height="300px">
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="row">
+      <div class="btn-group">
+        <button class="btn btn-primary" (click)="cancel()"><i class="fa fa-window-close" aria-hidden="true"></i>Cancel</button>
+        <button class="btn btn-danger" (click)="deleteVendor()"><i class="fa fa-update" aria-hidden="true"></i> Delete</button>
+      </div>
+    </div>
+  </div>
+ </div>
+ 
+  "id": 4,
+  "no": 8,
+  "description": "Gore",
+  "contact": null,
+  "address": "GoreWeg 12",
+  "email": "info.gore@gmail.com",
+  "telephone": null,
+  "fax": null,
+  "database_no": "8",
+  "spare2": "lorene",
+  "active": null,
+  "spare4": "10",
+  "reps": "https://res.cloudinary.com/marcelcloud/image/upload/v1626118979/vendors/gore.png"
+</div>

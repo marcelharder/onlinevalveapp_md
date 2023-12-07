@@ -73,21 +73,9 @@ namespace api
             services.AddScoped<IVendor, Vendor>();
             services.AddScoped<IGenerator, Generator>();
 
-          
-
-            services.AddCors(options =>
-                        {
-                            options.AddPolicy("CorsPolicy",
-                            builder =>
-                            {
-                                builder.WithOrigins("http://localhost:4200")
-                                                    .AllowAnyHeader()
-                                                    .AllowCredentials()
-                                                    .AllowAnyMethod();
-                            });
-                        });
-
-
+            services.AddControllers().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -119,7 +107,13 @@ namespace api
 
             app.UseRouting();
 
-            app.UseCors("CorsPolicy");
+            app.UseCors(x => x.AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials()
+            .WithOrigins("http://localhost:4200"));
+            app.UseAuthentication();
+            app.UseAuthorization();
+
 
             app.UseAuthentication();
             app.UseAuthorization();

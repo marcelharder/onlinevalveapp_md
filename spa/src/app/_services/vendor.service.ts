@@ -41,6 +41,8 @@ export class VendorService {
 
     getVendor(database_no: string) { return this.http.get<Vendor>(this.baseUrl + 'vendor/' + database_no); }
 
+    getVendorByName(name: string) { return this.http.get<Vendor>(this.baseUrl + 'vendorByName/' + name); }
+
     getVendorContactPerson(vendorId: number){ return this.http.get<number>(this.baseUrl + 'vendorContact/' + vendorId);}
 
     getProductByVendor(vendorId: number) { return this.http.get<DropItem[]>(this.baseUrl + 'vendor/valvecodes/' + vendorId); }

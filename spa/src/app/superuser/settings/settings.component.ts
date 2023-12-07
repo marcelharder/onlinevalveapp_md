@@ -3,6 +3,7 @@ import { Hospital } from 'src/app/_models/Hospital';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { GeneralService } from 'src/app/_services/general.service';
+import { HospitalService } from 'src/app/_services/hospital.service';
 
 @Component({
   selector: 'app-settings',
@@ -39,7 +40,11 @@ export class SettingsComponent implements OnInit {
   CardCaption = "List of Vendors in this hospital";
   contacts = 0;
   vendors = 1;
-  constructor(private gen: GeneralService, private auth: AuthService, private alertify: AlertifyService) { }
+  constructor(
+    private hosService: HospitalService,
+    private gen: GeneralService, 
+    private auth: AuthService, 
+    private alertify: AlertifyService) { }
 
   ngOnInit() {
     this.gen.getHospital().subscribe((next) => { this.hos = next; });
@@ -61,18 +66,20 @@ export class SettingsComponent implements OnInit {
     this.vendors = 0; this.contacts = 1;
   }
 
-  addVendor() {
-    debugger;
-    if (this.vendors === 1) { this.addVendors(); }
-    else { this.addContacts(); }
-  }
+    
 
-  addVendors() {
-    this.alertify.message("Add Vendor");
+  getVendorList(): string[]{
+    return this.hos.vendors.split(',');
   }
-  
-  addContacts() {
-    this.alertify.message("Add Contact")
+  returnFromVendor(description: string){
+    this.hos.vendors = description;
+    this.hosService.saveDetails(this.hos).subscribe((next)=>{
+      this.vendors = 0;
+    });
+    
+  }
+  cancelFromVendor(up: string){
+    this.vendors = 0;
   }
 
 }

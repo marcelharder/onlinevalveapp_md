@@ -1,3 +1,9 @@
-<p>
-  superManageContacts works! 
-</p>
+<div class="card">
+  <div class="card-header">
+    <div class="d-flex">
+      <div class="mr-auto p-2"><h4><span class="badge badge-default">{{ContactTitle()}}</span></h4></div>
+      <div class="p-2" *ngIf="displayContacts()"><button class="btn btn-success btn-sm" (click)="addContact()">Add</button></div>
+    </div>
+  </div>
+  <div class="card-body"></div>
+</div>

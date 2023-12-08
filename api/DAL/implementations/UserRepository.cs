@@ -84,5 +84,11 @@ namespace api.DAL.Implementations
 
             return _sp.getCountryIDFromISO(currentUser.Country);
         }
+
+        public async Task<User> GetUserFromName(string name)
+        {
+            var currentUser = await _context.Users.FirstOrDefaultAsync(x => x.Username == name);
+            return currentUser;
+        }
     }
 }

@@ -16,12 +16,6 @@
             </div>
           </div>
           <div class="card-footer">
-            <div class="row">
-              <div class="btn-group">
-                <button class="btn btn-primary" (click)="cancel()"><i class="fa fa-window-close" aria-hidden="true"></i>Cancel</button>
-                <button class="btn btn-danger" (click)="deleteVendor()"><i class="fa fa-update" aria-hidden="true"></i> Save</button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -34,17 +28,16 @@
                 <th>Name</th>
                 <th></th>
               </tr>
-              <tr *ngFor="let p of contactNames">
-                <th>{{p}}</th>
-                <td><button class="btn btn-sm btn-success" (click)="showDetails(p)">details</button></td>
+              <tr *ngFor="let p of availableUsers">
+                <th>{{p.username}}</th>
+                <td><button class="btn btn-sm btn-success" (click)="makeCurrentContact(p)">make current contact</button></td>
               </tr>
             </table>
           </div>
           <div class="card-footer">
             <div class="row">
               <div class="btn-group">
-                <button class="btn btn-primary" (click)="cancel()"><i class="fa fa-window-close" aria-hidden="true"></i>Cancel</button>
-                <button class="btn btn-danger" (click)="deleteVendor()"><i class="fa fa-update" aria-hidden="true"></i> Update contact</button>
+                <button class="btn btn-primary" (click)="Cancel()"><i class="fa fa-window-close" aria-hidden="true"></i>Cancel</button>
               </div>
             </div>
           </div>

@@ -78,8 +78,14 @@ export class SettingsComponent implements OnInit {
     });
     
   }
-  cancelFromVendor(up: string){
-    this.vendors = 0;
+  cancelFromVendor(up: string){this.title = "Vendors"; }
+  cancelFromContact(up: string){this.vendors = 1; this.contacts = 0;this.title = "Vendors";}
+
+  returnFromContact(up: string){
+  // save the hospitalwith the new contact
+  this.hosService.saveDetails(this.hos).subscribe((next)=>{
+    this.vendors = 1; this.contacts = 0;
+  }, (error)=>{this.alertify.error(error)});
   }
 
 }

@@ -65,7 +65,7 @@ export class SuperManageVendorsComponent implements OnInit {
     }
   }
 
-  cancel() {this.cancelTo.emit("1");}
+  cancel() {this.details = 0;}
 
   showDetails(vendorName: string) {
     this.vendorService.getVendorByName(vendorName).subscribe((next) => {

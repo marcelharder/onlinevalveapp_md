@@ -24,5 +24,6 @@ public interface IUserRepository
          Task<PagedList<User>> GetUsersInHospital(UserParams userParams);
 
          Task<string> GetCountryCodeFromUser(int userId);
+        Task<User> GetUserFromName(string name);
     }
 }

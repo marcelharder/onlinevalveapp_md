@@ -16,7 +16,7 @@ export class UserService {
 
     getUser(id: number) { return this.http.get<User>(this.baseUrl + 'userById/' + id); }
     addUser(id: number) { return this.http.get<User>(this.baseUrl + 'adduser/' + id);  }
-
+    getUserIdFromName(name:string) { return this.http.get<number>(this.baseUrl + 'getUserIdFromName/' + name);  }
     getUsers(id: number, page?: number, itemsPerPage?: number ) {
         const paginatedResult: PaginatedResult<User[]> = new PaginatedResult<User[]>();
         let params = new HttpParams();
@@ -77,7 +77,6 @@ export class UserService {
     setMainPhoto(userId: number, id: number) {
         return this.http.post(this.baseUrl + 'users/' + userId + '/photos/' + id + '/setMain', {});
      }
-
     getCurrentCountryCode(id: number){return this.http.get<string>(this.baseUrl + 'currentCountryCode/' + id, { responseType: 'text' as 'json' } );}
 
     getListOfUsersInHospital(id: number, selectedHospital: number, page?: number, itemsPerPage?: number ) {

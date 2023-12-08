@@ -30,6 +30,12 @@ namespace api.Controllers
             var result = await _user.GetUser(id);
             return Ok(await _special.getUserforReturnDTOAsync(result));
         }
+         [HttpGet("api/getUserIdFromName/{name}")]
+        public async Task<IActionResult> getUserIdFromName(string name)
+        {
+            var result = await _user.GetUserFromName(name);
+            return Ok(result.UserId);
+        }
 
         [HttpGet("api/users")]
         public async Task<IActionResult> getUser03([FromQuery] UserParams up)

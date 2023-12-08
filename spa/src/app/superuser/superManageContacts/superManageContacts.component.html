@@ -1,9 +1,55 @@
 <div class="card">
-  <div class="card-header">
-    <div class="d-flex">
-      <div class="mr-auto p-2"><h4><span class="badge badge-default">{{ContactTitle()}}</span></h4></div>
-      <div class="p-2" *ngIf="displayContacts()"><button class="btn btn-success btn-sm" (click)="addContact()">Add</button></div>
+  
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-header"><h6><span>Current contact</span></h6></div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12"><h5><span class="badge badge-secondary">{{current_contact_username}}</span></h5></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <img src={{current_contact_image}} width="200px" height="200px">
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="row">
+              <div class="btn-group">
+                <button class="btn btn-primary" (click)="cancel()"><i class="fa fa-window-close" aria-hidden="true"></i>Cancel</button>
+                <button class="btn btn-danger" (click)="deleteVendor()"><i class="fa fa-update" aria-hidden="true"></i> Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-header"><h6><span>Available contacts for this hospital</span></h6></div>
+          <div class="card-body">
+            <table class="table table-striped">
+              <tr>
+                <th>Name</th>
+                <th></th>
+              </tr>
+              <tr *ngFor="let p of contactNames">
+                <th>{{p}}</th>
+                <td><button class="btn btn-sm btn-success" (click)="showDetails(p)">details</button></td>
+              </tr>
+            </table>
+          </div>
+          <div class="card-footer">
+            <div class="row">
+              <div class="btn-group">
+                <button class="btn btn-primary" (click)="cancel()"><i class="fa fa-window-close" aria-hidden="true"></i>Cancel</button>
+                <button class="btn btn-danger" (click)="deleteVendor()"><i class="fa fa-update" aria-hidden="true"></i> Update contact</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="card-body"></div>
 </div>

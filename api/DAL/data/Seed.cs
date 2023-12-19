@@ -40,20 +40,6 @@ namespace api.DAL.data
             }
             await context.SaveChangesAsync();
         }
-        public static async Task SeedValveTypes(dataContext context)
-        {
-            if(await context.ValveCodes.AnyAsync()) return;
-
-            var userData = await System.IO.File.ReadAllTextAsync("DAL/data/valveTypeData.json");
-            var emp = JsonConvert.DeserializeObject<List<Class_TypeOfValve>>(userData);
-            foreach (var item in emp)
-            {
-               context.ValveCodes.Add(item);
-               foreach (Class_Valve_Size s in item.Valve_size){ context.Valve_sizes.Add(s); }
-               
-            }
-            await context.SaveChangesAsync();
-        }
         public static async Task SeedValvesInHospital(dataContext context)
         {
             if(await context.Valves.AnyAsync()) return;

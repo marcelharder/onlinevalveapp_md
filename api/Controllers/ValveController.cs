@@ -9,9 +9,6 @@ using api.DAL.models;
 using System;
 using api.Helpers;
 using System.Collections.Generic;
-using CloudinaryDotNet.Actions;
-using CloudinaryDotNet;
-using Microsoft.Extensions.Options;
 using System.Linq;
 
 namespace api.Controllers
@@ -23,13 +20,11 @@ namespace api.Controllers
     {
         private IValve _valve;
 
-        private IValveCode _code;
         private SpecialMaps _special;
-        public ValveController(IValve valve, SpecialMaps special, IValveCode code)
+        public ValveController(IValve valve, SpecialMaps special)
         {
             _valve = valve;
             _special = special;
-            _code = code;
         }
         #region <!-- endpoints for SOA -->
 

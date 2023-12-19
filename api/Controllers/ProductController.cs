@@ -1,10 +1,7 @@
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using api.DAL.Code;
 using api.DAL.dtos;
-using api.DAL.Interfaces;
-using api.DAL.models;
 using api.Helpers;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
@@ -19,14 +16,13 @@ namespace api.Controllers
     [Authorize]
     public class ProductController : ControllerBase
     {
-        private IValveCode _vc;
+       
 
         private SpecialMaps _special;
         private Cloudinary _cloudinary;
         private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
-        public ProductController(IValveCode vc, SpecialMaps special, IOptions<CloudinarySettings> cloudinaryConfig)
+        public ProductController(SpecialMaps special, IOptions<CloudinarySettings> cloudinaryConfig)
         {
-            _vc = vc;
             _special = special;
             _cloudinaryConfig = cloudinaryConfig;
 
@@ -42,12 +38,17 @@ namespace api.Controllers
         public async Task<IActionResult> addProduct(int id)
         {
             var currentVendor = await _special.getCurrentVendorAsync();
-            var help = new Class_TypeOfValve();
+
+            var help = new Valve_Code();
             help.Vendor_code = currentVendor.ToString();
+            help.Valve_size = null;
             help.Vendor_description = await _special.getVendorNameFromVendorCodeAsync(currentVendor.ToString());
             help.countries = "NL,US,KSA";
             help.Type = "";
             help.image = "https://res.cloudinary.com/marcelcloud/image/upload/v1620571880/valves/valves02.jpg";
+
+
+            // send it up to the product_app
 
             _vc.Add(help);
             if (await _vc.SaveAll())
@@ -70,7 +71,7 @@ namespace api.Controllers
         }
 
         [HttpPost("api/saveProductDetails")]
-        public async Task<IActionResult> postProductdetails(Class_TypeOfValve tov)
+        public async Task<IActionResult> postProductdetails(Valve_Code tov)
         {
             var help = await _vc.saveDetails(tov);
             return Ok(help);
@@ -92,7 +93,7 @@ namespace api.Controllers
 
         [Route("api/addProductPhoto/{id}")]
         [HttpPost]
-        public async Task<IActionResult> AddPhotoForProduct(int id, [FromQuery] PhotoForCreationDto photoDto)
+        public async Task<IActionResult> AddPhotoForProduct(int id, [FromForm] PhotoForCreationDto photoDto)
         {
             var product = await _vc.getDetails(id);
 

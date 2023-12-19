@@ -75,12 +75,6 @@ namespace api.DAL.Implementations
         public async Task<bool> SaveAll() { return await _context.SaveChangesAsync() > 0; }
         public void Add(Class_Valve v) { _context.Valves.Add(v); }
         public void updateValve(ValveForReturnDTO p) { _context.Valves.Update(_special.mapToValveFromReturn(p)); }
-        public async Task<Class_Valve> valveBasedOnTypeOfValve(int id)
-        {
-            var selectedValveCode = await _context.ValveCodes.FirstOrDefaultAsync(x => x.No == id);
-            var val = await _special.getValveFromValveCodeAsync(selectedValveCode);
-            return val;
-        }
         public List<Class_Valve> getValvesByHospitalAndCode(int hospital, string model_code)
         {
             var result = _context.Valves.Where(x => x.Model_code == model_code).AsQueryable();

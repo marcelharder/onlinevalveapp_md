@@ -235,32 +235,7 @@ namespace api.DAL.Code
 
         #endregion
         #region <!-- valve mappings -->
-        public async Task<Class_Valve> getValveFromValveCodeAsync(Class_TypeOfValve selectedValveCode)
-        {
-            // a new valve is created here with a valvetype as basis
-            var help = new Class_Valve();
-            help.No = await getNewValveNumberAsync();// dit is een uniek identifying number
-            help.Description = selectedValveCode.Description;
-            help.Vendor_code = selectedValveCode.Vendor_code;
-            help.Product_code = selectedValveCode.uk_code;
-            help.Type = selectedValveCode.Type;
-            help.Location = "";
-            help.Manufac_date = new DateTime();
-            help.Expiry_date = new DateTime();
-            help.Serial_no = "";
-            help.Model_code = selectedValveCode.Model_code;
-            help.PatchSize = "";
-            help.Size = "";
-            help.TFD = 0.0;
-            help.Image = selectedValveCode.image;
-            help.Implant_position = selectedValveCode.Implant_position;
-            help.Procedure_id = 0;
-            help.implanted = 0;
-            help.Hospital_code = await getCurrentUserHospitalId();
-            help.Implant_date = new DateTime();
-
-            return help;
-        }
+        
         public async Task<ValveForReturnDTO> mapToValveForReturnAsync(Class_Valve valve)
         {
 

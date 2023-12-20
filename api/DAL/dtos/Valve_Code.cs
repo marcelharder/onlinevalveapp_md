@@ -9,6 +9,7 @@ namespace api.DAL.dtos
         public string countries { get; set; }
         public string Type { get; set; }
         public string image { get; set; }
+        public string Description { get; set; }
         
 
 

@@ -11,23 +11,41 @@ services:
       - internal-container-network  
     volumes:
      - mariadb-data:/var/lib/mysql
-     
+
+  hospital:
+    image: hospital_app:v5
+    networks:
+      - internal-container-network
+    ports:
+      - 8103:80
+    depends_on:
+      - db
+  
+  product:
+    image: product_app:v2
+    networks:
+      - internal-container-network
+    depends_on:
+      - db
+    ports:
+      - 8104:80   
+  
   comservice:
     image: comservice:v91
     restart: always
     networks: 
      - internal-container-network  
 
-  valveinventory:
-    image: inventory_md:v26
-    ports:
-      - 8045:80
-    networks: 
-      - internal-container-network
-    volumes:
-     - sqldata:/root/.aspnet/DataProtection-Keys
-    depends_on: 
-       - db
+  #valveinventory:
+  #  image: inventory_md:v26
+  #  ports:
+  #    - 8045:80
+  #  networks: 
+  #    - internal-container-network
+  #  volumes:
+  #   - sqldata:/root/.aspnet/DataProtection-Keys
+  #  depends_on: 
+  #     - db
    
 volumes:
   sqldata:

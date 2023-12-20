@@ -29,6 +29,11 @@ namespace api.DAL.Implementations
             _special = special;
             _hospital = hospital;
         }
+
+        public Valve()
+        {
+        }
+
         public async Task<ValveForReturnDTO> getValveById(int id)
         {
             var result = await _context.Valves.FirstOrDefaultAsync(x => x.ValveId == id);

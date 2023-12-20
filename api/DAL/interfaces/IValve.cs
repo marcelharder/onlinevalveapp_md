@@ -27,6 +27,7 @@ namespace api.DAL.Interfaces
 
 
         Task<List<Class_Valve>> getValvesForSOAAsync(ValveParams v);
+        
         //Task<Class_Valve> valveBasedOnTypeOfValve(int id);
         Task<List<Class_Valve>> getAllProductsByVendor(int hospital, int vendor);
         Task<string> getValveByProductCode(string productCode);

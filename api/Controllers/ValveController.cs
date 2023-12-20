@@ -10,6 +10,7 @@ using System;
 using api.Helpers;
 using System.Collections.Generic;
 using System.Linq;
+using api.DAL.Implementations;
 
 namespace api.Controllers
 {
@@ -160,7 +161,8 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IActionResult> getValve02(int id) // a valve is added here
         {
-            var v = await _valve.valveBasedOnTypeOfValve(id);
+            //var v = await _valve.valveBasedOnTypeOfValve(id);
+            var v = new Class_Valve();
 
             _valve.Add(v);
             if (await _valve.SaveAll())

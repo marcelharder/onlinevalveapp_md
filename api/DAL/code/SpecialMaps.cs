@@ -544,6 +544,26 @@ namespace api.DAL.Code
             return selectedUser.Username;
         }
 
+        internal Task<List<Valve_Code>> getTypeOfValvesPerCountry(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal Task<List<Class_Item>> getValveCodesPerCountry(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal Task<string> getModelCode(int code)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal Task getDetailsByProductCode(string product_code)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

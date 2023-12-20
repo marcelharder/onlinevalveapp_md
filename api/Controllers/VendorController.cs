@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using api.DAL.Code;
 using api.DAL.dtos;
 using api.DAL.Interfaces;
 using api.DAL.models;
@@ -18,15 +19,18 @@ namespace api.Controllers
     {
 
         private IVendor _vendor;
+
+        private SpecialMaps _code;
        
         private Cloudinary _cloudinary;
         private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
         public VendorController(
             IVendor vendor,
-           
+            SpecialMaps code,
             IOptions<CloudinarySettings> cloudinaryConfig)
         {
             _vendor = vendor;
+            _code = code;
             
             _cloudinaryConfig = cloudinaryConfig;
             Account acc = new Account(

@@ -111,7 +111,7 @@ namespace api.Controllers
             }
             else
             {
-                var model_Code = await _code.getModelCode(code);
+                var model_Code = await _special.getModelCode(code);
                 var result = _valve.getValvesByHospitalAndCode(hospital, model_Code);
                 return Ok(result);
             }
@@ -126,10 +126,10 @@ namespace api.Controllers
                 if (cv.TFD == 0)
                 {
                     //get the valvecode from the description and stuff it in the newly added valve
-                    var sel = await _code.getDetailsByProductCode(cv.Product_code);
+                   /*  var sel = _special.getDetailsByProductCode(cv.Product_code);
                     var selSizes = sel.Valve_size.ToList();
                     var selectedSize = selSizes.FirstOrDefault(a => a.Size == Convert.ToInt32(cv.Size));
-                    help = selectedSize.EOA;
+                    help = selectedSize.EOA; */
                 }
                 else
                 {

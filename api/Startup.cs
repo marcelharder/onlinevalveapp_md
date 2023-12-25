@@ -37,6 +37,7 @@ namespace api
              ); */
 
             var _connectionString = Configuration.GetConnectionString("SQLConnection");
+            services.Configure<ComSettings>(Configuration.GetSection("ComSettings"));
             services.AddDbContext<dataContext>(
                 options => options.UseMySql(
                     _connectionString,

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using api.DAL.Code;
 using api.DAL.dtos;
@@ -7,6 +8,7 @@ using api.DAL.models;
 using api.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace api.Controllers
 {
@@ -16,76 +18,149 @@ namespace api.Controllers
     public class HospitalController : ControllerBase
     {
         private IHospital _hospital;
+        private IOptions<ComSettings> _com;
         private SpecialMaps _special;
         private IUserRepository _user;
-        public HospitalController(IHospital hospital, IUserRepository user, SpecialMaps special)
+        public HospitalController(IHospital hospital, IUserRepository user, SpecialMaps special, IOptions<ComSettings> com)
         {
             _hospital = hospital;
             _user = user;
             _special = special;
+            _com = com;
         }
 
+
         [HttpGet("api/hospital/vendors")]
-        public async Task<List<Class_Item>> getVendorsInHospital()
+        public async Task<IActionResult> getVendorsInHospital()
         {
-            var help = await _hospital.getHospitalVendors();
-            return help;
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/vendors" + _special.getCurrentUserHospitalId();
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    // var help2 = Newtonsoft.Json.JsonConvert.DeserializeObject<Class_Hospital>(help);
+                    return Ok(help);
+                }
+            }
         }
+
         [HttpGet("api/sphlist")]
-        public async Task<List<Class_Item>> getQuestion01()
+        public async Task<IActionResult> getQuestion01()
         {
-            var help = await _hospital.getSphList();
-            return help;
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/sphList" + _special.getCurrentUserHospitalId();
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);
+                }
+            }
+            //var help = await _hospital.getSphList();
+            //return help;
         }
+
         [HttpGet("api/addVendor/{vendor}/{hospital_id}")]
-        public async Task<string> getQuestion05(string vendor, int hospital_id)
+        public async Task<IActionResult> getQuestion05(string vendor, int hospital_id)
         {
-            var help = await _hospital.addVendor(vendor, hospital_id);
-            return help;
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/addVendor" + vendor + "/" + hospital_id;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);
+                }
+            }
+            // var help = await _hospital.addVendor(vendor, hospital_id);
+            //  return help;
         }
         [HttpGet("api/removeVendor/{vendor}/{hospital_id}")]
-        public async Task<string> getQuestion06(string vendor, int hospital_id)
+        public async Task<IActionResult> getQuestion06(string vendor, int hospital_id)
         {
-            var help = await _hospital.removeVendor(vendor, hospital_id);
-            return help;
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/removeVendor" + vendor + "/" + hospital_id;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);
+                }
+            }
+            //var help = await _hospital.removeVendor(vendor, hospital_id);
+            //return help;
         }
-       
+
         [HttpGet("api/sphlist_full")]
-        public async Task<List<Class_Hospital>> getQuestion02()
+        public async Task<IActionResult> getQuestion02()
         {
-            var help = await _hospital.getSphListFull();
-            return help;
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/sphlist_full";
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);
+                }
+            }
+            //var help = await _hospital.getSphListFull();
+            //return help;
         }
-       
+
         [HttpGet("api/neg_sphlist_full")]
-        public async Task<List<Class_Hospital>> getQuestion03()
+        public async Task<IActionResult> getQuestion03()
         {
-            var help = await _hospital.getNegSphListFull();
-            return help;
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/neg_sphlist_full";
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);
+                }
+            }
+            //var help = await _hospital.getNegSphListFull();
+            //return help;
         }
         [AllowAnonymous]
-        [HttpGet("api/getHospitalDetails/{id}", Name = "getHospital")]
-        public async Task<Class_Hospital> getQuestion07(int id)
+        [HttpGet("api/getHospitalDetails/{id}")]
+        public async Task<IActionResult> getQuestion07(int id)
         {
-            var help = await _hospital.getDetails(id);
-            return help;
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/" + id;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);
+                }
+            }
+            //var help = await _hospital.getDetails(id);
+            //return help;
         }
-       
+
         [HttpPut("api/saveHospitalDetails")]
         public async Task<string> postQuestion07(HospitalForReturnDTO hos)
         {
             var help = await _hospital.saveDetails(hos);
             return help;
         }
-        [HttpPost("api/changeHospital/{hospitalID}")]
-        // this comes from the SOA application, where the userId will be different
-        public async Task<string> postQuestion08(UserForUpdate cv, int hospitalID)
-        {
-            // find the correct user now
-            User currentUser = _user.findCurrentUser(cv);
-            var help = await _hospital.changeHospitalForCurrentUser(hospitalID, currentUser);
-            return help;
-        }
+
 
         [AllowAnonymous]
         [HttpGet("api/getHospitalsInCountry/{code}")]
@@ -98,11 +173,11 @@ namespace api.Controllers
         [HttpGet("api/getFullHospitalsInCountry")]
         public async Task<IActionResult> getQuestion19([FromQuery] HospitalParams hp)
         {
-           
+
             var result = await _hospital.hospitalsFullInCountry(hp);
             var l = _special.mapToListOfHospitalsToReturn(result);
 
-             // code here is '47' for instance
+            // code here is '47' for instance
             Response.AddPagination(result.Currentpage,
             result.PageSize,
             result.TotalCount,
@@ -131,7 +206,7 @@ namespace api.Controllers
         {
             Class_Hospital h = await _hospital.getDetails(id);
             _hospital.Delete(h);
-            if(await _hospital.SaveAll()){return Ok("hospital removed");}
+            if (await _hospital.SaveAll()) { return Ok("hospital removed"); }
             return BadRequest("Could not remove this hospital");
         }
 
@@ -153,7 +228,8 @@ namespace api.Controllers
         }
 
         [HttpGet("api/findNextHospitalCode")]
-        public async Task<IActionResult> findNextHospitalCode(){
+        public async Task<IActionResult> findNextHospitalCode()
+        {
             return Ok(await _hospital.getNewHospitalCode());
         }
     }

@@ -46,7 +46,6 @@ namespace api.Controllers
                 }
             }
         }
-
         [HttpGet("api/sphlist")]
         public async Task<IActionResult> getQuestion01()
         {
@@ -64,7 +63,6 @@ namespace api.Controllers
             //var help = await _hospital.getSphList();
             //return help;
         }
-
         [HttpGet("api/addVendor/{vendor}/{hospital_id}")]
         public async Task<IActionResult> getQuestion05(string vendor, int hospital_id)
         {
@@ -99,7 +97,6 @@ namespace api.Controllers
             //var help = await _hospital.removeVendor(vendor, hospital_id);
             //return help;
         }
-
         [HttpGet("api/sphlist_full")]
         public async Task<IActionResult> getQuestion02()
         {
@@ -117,7 +114,6 @@ namespace api.Controllers
             //var help = await _hospital.getSphListFull();
             //return help;
         }
-
         [HttpGet("api/neg_sphlist_full")]
         public async Task<IActionResult> getQuestion03()
         {
@@ -153,85 +149,125 @@ namespace api.Controllers
             //var help = await _hospital.getDetails(id);
             //return help;
         }
-
         [HttpPut("api/saveHospitalDetails")]
         public async Task<string> postQuestion07(HospitalForReturnDTO hos)
         {
             var help = await _hospital.saveDetails(hos);
             return help;
         }
-
-
         [AllowAnonymous]
         [HttpGet("api/getHospitalsInCountry/{code}")]
-        public async Task<List<Class_Item>> getQuestion09(string code)
+        public async Task<IActionResult> getQuestion09(string code)
         {
             // code here is '47' for instance
-            return await _hospital.hospitalsInCountry(code);
+            var isoCode = _special.getIsoCode(code);
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/hospitalsInCountry/" + isoCode;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);// returns a list of Class_Item
+                }
+            }
+            //return await _hospital.hospitalsInCountry(code);
         }
-
         [HttpGet("api/getFullHospitalsInCountry")]
         public async Task<IActionResult> getQuestion19([FromQuery] HospitalParams hp)
         {
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/getFullHospitalsInCountry/" + hp;
+            comaddress = comaddress + st;
 
-            var result = await _hospital.hospitalsFullInCountry(hp);
-            var l = _special.mapToListOfHospitalsToReturn(result);
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    var help2 = Newtonsoft.Json.JsonConvert.DeserializeObject<PagedList<Class_Hospital>>(result);
+                    var l = _special.mapToListOfHospitalsToReturn(help2);
 
-            // code here is '47' for instance
-            Response.AddPagination(result.Currentpage,
-            result.PageSize,
-            result.TotalCount,
-            result.TotalPages);
-
-            return Ok(l);
+                    Response.AddPagination(help2.Currentpage,
+                    help2.PageSize,
+                    help2.TotalCount,
+                    help2.TotalPages);
+                    return Ok(l);
+                }
+            }
         }
-
         [HttpPost("/api/createHospital/{country}/{code}")]
         public async Task<IActionResult> createHospital(string country, string code)
         {
-            Class_Hospital ch = new Class_Hospital();
-            ch.Country = _special.getIsoCode(country);// nb country is 63 en moet FR worden.....
-            ch.HospitalNo = code;
-            _hospital.Add(ch);
-            if (await _hospital.SaveAll())
+            // country here is '47' for instance
+            // code which is the hospitalNo is ignored
+            var isoCode = _special.getIsoCode(country);
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/createHospital/" + isoCode;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
             {
-                return CreatedAtRoute("getHospital", new { id = code }, ch);
-            };
-
-            return BadRequest("can not add Hospital");
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);// returns a new Class_Hospital
+                }
+            }
         }
-
         [HttpDelete("/api/deleteHospital/{id}")]
         public async Task<IActionResult> deleteHospital(int id)
         {
-            Class_Hospital h = await _hospital.getDetails(id);
-            _hospital.Delete(h);
-            if (await _hospital.SaveAll()) { return Ok("hospital removed"); }
-            return BadRequest("Could not remove this hospital");
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/deleteHospital/" + id;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.DeleteAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);
+                }
+            }
+
         }
-
-
         [HttpGet("api/allHospitals")]
-        public async Task<List<Class_Item>> getAllHospitalsAsync()
+        public async Task<IActionResult> getAllHospitalsAsync() // return list of class_item
         {
-            return await _hospital.getAllHospitals();
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/allHospitals";
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);
+                }
+            }
+
         }
+    
         [HttpGet("api/isOVIPlace")]
         public async Task<IActionResult> getOVI()
         {
-            // find the currentHospital now
-            var currentHospital = _special.getCurrentUserHospitalId();
-            var t = await _hospital.isThisHospitalOVI(await currentHospital);
-            var result = "0";
-            if (t) { result = "1"; } else { result = "0"; }
-            return Ok(result);
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/isOVIPlace";
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    return Ok(result);// returns 1, which is yes or 0 which is no
+                }
+            }
+
+
+           
         }
 
-        [HttpGet("api/findNextHospitalCode")]
-        public async Task<IActionResult> findNextHospitalCode()
-        {
-            return Ok(await _hospital.getNewHospitalCode());
-        }
+
     }
 
 

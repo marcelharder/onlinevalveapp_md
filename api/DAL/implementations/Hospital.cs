@@ -262,21 +262,7 @@ namespace api.DAL.Implementations
             hospitals = hospitals.Where(s => s.Country == _code);
 
             return await PagedList<Class_Hospital>.CreateAsync(hospitals, hp.PageNumber, hp.PageSize);
-           /*  var l = new List<HospitalForReturnDTO>();
-            var _code = _special.getIsoCode(hp.code);
-            await Task.Run(() =>
-            {
-                var result = _context.Hospitals.AsQueryable();
-                result = result.Where(s => s.Country == _code);
-                foreach (Class_Hospital x in result)
-                {
-
-                    l.Add(_special.getHospitalforReturnDTO(x));
-                }
-            });
-           
-            return await PagedList<HospitalForReturnDTO>.CreateAsync(l.AsQueryable, hp.PageNumber, hp.PageSize);
-        */ }
+           }
 
         public async Task<string> getNewHospitalCode()
         {

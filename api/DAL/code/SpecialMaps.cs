@@ -5,14 +5,12 @@ using System;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using api.DAL.models;
 using api.DAL.dtos;
 using api.Helpers;
 using System.Xml.Linq;
 using System.IO;
-using api.DAL.Interfaces;
 
 namespace api.DAL.Code
 {

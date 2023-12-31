@@ -160,9 +160,9 @@ namespace api.Controllers
         public async Task<IActionResult> getQuestion09(string code)
         {
             // code here is '47' for instance
-            var isoCode = _special.getIsoCode(code);
+            var isoCode = await _special.getIsoCode(code);
             var comaddress = _com.Value.hospitalURL;
-            var st = "Hospital/hospitalsInCountry/" + isoCode;
+            var st = "Hospital/allFullHospitalsPerCountry/" + isoCode;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {

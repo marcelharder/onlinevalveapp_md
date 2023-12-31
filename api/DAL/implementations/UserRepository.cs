@@ -82,7 +82,7 @@ namespace api.DAL.Implementations
         {
             var currentUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == userId);
 
-            return _sp.getCountryIDFromISO(currentUser.Country);
+            return await _sp.getCountryIDFromISO(currentUser.Country);
         }
 
         public async Task<User> GetUserFromName(string name)

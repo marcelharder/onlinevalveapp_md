@@ -193,7 +193,7 @@ namespace api.DAL.Implementations
         public async Task<List<Class_Item>> hospitalsInCountry(string code)
         {
             // make from 47 the code of DE
-            var _code = _special.getIsoCode(code);
+            var _code = await _special.getIsoCode(code);
 
 
             var l = new List<Class_Item>();
@@ -257,7 +257,7 @@ namespace api.DAL.Implementations
 
         public async Task<PagedList<Class_Hospital>> hospitalsFullInCountry(HospitalParams hp)
         {
-            var _code = _special.getIsoCode(hp.code);
+            var _code = await _special.getIsoCode(hp.code);
             var hospitals = _context.Hospitals.AsQueryable();
             hospitals = hospitals.Where(s => s.Country == _code);
 

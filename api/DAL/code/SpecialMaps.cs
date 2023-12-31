@@ -159,24 +159,21 @@ namespace api.DAL.Code
         }
 
 
-
-
-        public string setCountryCode(string naam)
+        public async Task<string> getIsoCode(string code)
         {
-            var result = "";
-            IEnumerable<XElement> op = _testje.Descendants("Country");
-            foreach (XElement s in op)
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Country/fromId/" + code;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
             {
-                if (s.Element("Description").Value == naam)
+                using (var response = await httpClient.GetAsync(comaddress))
                 {
-                    return s.Element("ISO").Value;
+                    var help = await response.Content.ReadAsStringAsync();
+                    var h = Newtonsoft.Json.JsonConvert.DeserializeObject<Class_Country>(help);
+                    return h.IsoCode;
                 }
             }
-            return result;
-        }
-        public string getIsoCode(string code)
-        {
-            var result = "";
+            /* var result = "";
             IEnumerable<XElement> op = _testje.Descendants("Country");
             foreach (XElement s in op)
             {
@@ -185,7 +182,7 @@ namespace api.DAL.Code
                     return s.Element("ISO").Value;
                 }
             }
-            return result;
+            return result; */
         }
         public async Task<List<Class_Item>> getListOfCountries()
         {
@@ -457,7 +454,7 @@ namespace api.DAL.Code
             help.userRole = u.Role;
             help.interests = u.Interests;
             help.city = u.City;
-            help.country = getCountryNameFromISO(u.Country);
+            help.country = await getCountryNameFromISO(u.Country);
 
 
             return help;
@@ -481,6 +478,12 @@ namespace api.DAL.Code
             currentUser.worked_in = ufr.worked_in;
             return currentUser;
         }
+
+        private string setCountryCode(string country)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<UserForReturnDTO>> mapToListOfUserToReturn(IEnumerable<User> us)
         {
             var help = new List<UserForReturnDTO>();
@@ -585,7 +588,7 @@ namespace api.DAL.Code
         {
             var userId = getCurrentUserId();
             var currentUser = await _context.Users.FindAsync(userId);
-            return getCountryNameFromISO(currentUser.Country);
+        return await getCountryNameFromISO(currentUser.Country);
         }
         private async Task<int> getNewValveNumberAsync()
         {

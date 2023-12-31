@@ -52,10 +52,10 @@ namespace api.Controllers
         }
 
         [HttpGet("api/countries")]
-        public IActionResult getUser09()
+        public async Task<IActionResult> getUser09()
         {
             List<Class_Item> result;
-            result = _special.getListOfCountries();
+            result = await _special.getListOfCountries();
             return Ok(result);
         }
 

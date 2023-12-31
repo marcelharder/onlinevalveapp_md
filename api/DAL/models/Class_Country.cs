@@ -2,9 +2,10 @@
 {
     public class Class_Country
     {
-        public string Naam { get; set; }
-        public string Code { get; set; }
-
-
+        public int Id { get; set; }
+        public int TelCode { get; set; }
+        public string IsoCode { get; set; }
+        public string Description { get; set; }
+        public string Cities { get; set; }
     }
 }

@@ -11,6 +11,9 @@ using api.DAL.dtos;
 using api.Helpers;
 using System.Xml.Linq;
 using System.IO;
+using Microsoft.Extensions.Options;
+using System.Net.Http;
+using System.Runtime.CompilerServices;
 
 namespace api.DAL.Code
 {
@@ -23,45 +26,75 @@ namespace api.DAL.Code
         private dataContext _context;
         private IWebHostEnvironment _env;
         private IHttpContextAccessor _http;
+        private IOptions<ComSettings> _com;
 
-       
 
-        public SpecialMaps(dataContext context, IWebHostEnvironment env,
+
+        public SpecialMaps(dataContext context, IOptions<ComSettings> com, IWebHostEnvironment env,
             IHttpContextAccessor http)
         {
             _context = context;
             _env = env;
             _http = http;
-            var content = _env.ContentRootPath;
-            var filename = "DAL/data/countries.xml";
-            var test = Path.Combine(content, filename);
-            XElement testje = XElement.Load($"{test}");
-            _testje = testje;
+            _com = com;
 
         }
         public async Task<Class_Hospital> getHospital(int id)
         {
-            var help = id.ToString().makeSureTwoChar();
-            return await _context.Hospitals.FirstOrDefaultAsync(h => h.HospitalNo == help);
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/" + id;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<Class_Hospital>(help);
+                }
+            }
         }
 
         #region <!-- country stuff -->   
-        public string getCountryNameFromISO(string code)
+        public async Task<string> getCountryNameFromISO(string code)
         {
-            var result = "";
-            IEnumerable<XElement> op = _testje.Descendants("Country");
-            foreach (XElement s in op)
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Country/" + code;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
             {
-                if (s.Element("ISO").Value == code)
+                using (var response = await httpClient.GetAsync(comaddress))
                 {
-                    return s.Element("Description").Value;
+                    var help = await response.Content.ReadAsStringAsync();
+                    var country = Newtonsoft.Json.JsonConvert.DeserializeObject<Class_Country>(help);
+                    return country.Description;
                 }
             }
-            return result;
+            /*  var result = "";
+             IEnumerable<XElement> op = _testje.Descendants("Country");
+             foreach (XElement s in op)
+             {
+                 if (s.Element("ISO").Value == code)
+                 {
+                     return s.Element("Description").Value;
+                 }
+             }
+             return result; */
         }
-        public string getCountryIDFromISO(string code)
+        public async Task<string> getCountryIDFromISO(string code)
         {
-            var result = "";
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Country/fromISO/" + code;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    var h = Newtonsoft.Json.JsonConvert.DeserializeObject<Class_Country>(help);
+                    return h.Id.ToString();
+                }
+            }
+            /* var result = "";
             IEnumerable<XElement> op = _testje.Descendants("Country");
             foreach (XElement s in op)
             {
@@ -70,24 +103,50 @@ namespace api.DAL.Code
                     return s.Element("ID").Value;
                 }
             }
-            return result;
+            return result; */
         }
-        public string getCountryIDFromDescription(string description)
+        public async Task<string> getCountryIDFromDescription(string description)
         {
-            var result = "";
-            IEnumerable<XElement> op = _testje.Descendants("Country");
-            foreach (XElement s in op)
+
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Country/fromDescription" + description;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
             {
-                if (s.Element("Description").Value == description)
+                using (var response = await httpClient.GetAsync(comaddress))
                 {
-                    return s.Element("ID").Value;
+                    var help = await response.Content.ReadAsStringAsync();
+                    var h = Newtonsoft.Json.JsonConvert.DeserializeObject<Class_Country>(help);
+                    return h.Id.ToString();
                 }
             }
-            return result;
+            /*  var result = "";
+             IEnumerable<XElement> op = _testje.Descendants("Country");
+             foreach (XElement s in op)
+             {
+                 if (s.Element("Description").Value == description)
+                 {
+                     return s.Element("ID").Value;
+                 }
+             }
+             return result; */
         }
-        public string getCountryNameFromID(string id)
+        public async Task<string> getCountryNameFromID(string id)
         {
-            var result = "";
+
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Country/fromId" + id;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    var h = Newtonsoft.Json.JsonConvert.DeserializeObject<Class_Country>(help);
+                    return h.Description;
+                }
+            }
+            /* var result = "";
             IEnumerable<XElement> op = _testje.Descendants("Country");
             foreach (XElement s in op)
             {
@@ -96,7 +155,7 @@ namespace api.DAL.Code
                     return s.Element("Description").Value;
                 }
             }
-            return result;
+            return result; */
         }
 
 
@@ -128,9 +187,31 @@ namespace api.DAL.Code
             }
             return result;
         }
-        public List<Class_Item> getListOfCountries()
+        public async Task<List<Class_Item>> getListOfCountries()
         {
-            IEnumerable<XElement> op = _testje.Descendants("Country");
+            var toreturn = new List<Class_Item>();
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Country/all";
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    var test = help.Split(",");
+                    foreach (string s in test)
+                    {
+                        var c = new Class_Item();
+                        var h = Newtonsoft.Json.JsonConvert.DeserializeObject<Class_Country>(s);
+                        c.Description = h.Description;
+                        c.Value = Convert.ToInt32(h.Id);
+                        toreturn.Add(c);
+                    }
+                    return toreturn;
+                }
+            }
+
+          /*   IEnumerable<XElement> op = _testje.Descendants("Country");
             Class_Item ci;
             var cl = new List<Class_Item>();
             foreach (XElement s in op)
@@ -141,7 +222,7 @@ namespace api.DAL.Code
                 cl.Add(ci);
 
             }
-            return cl;
+            return cl; */
         }
 
         #endregion
@@ -301,7 +382,7 @@ namespace api.DAL.Code
             help.Expiry_date = p.Expiry_date;
             help.Serial_no = p.Serial_no;
             help.Model_code = p.Model_code;
-            if(p.Type == "Pericardial Patch"){ help.PatchSize = p.PatchSize;}else {help.Size = p.Size;}
+            if (p.Type == "Pericardial Patch") { help.PatchSize = p.PatchSize; } else { help.Size = p.Size; }
             help.TFD = p.TFD;
             help.Image = p.Image;
             help.Implant_position = p.Implant_position;
@@ -313,7 +394,7 @@ namespace api.DAL.Code
             return help;
         }
 
-      
+
         public async Task<ExpiringProduct> mapValveToExpiringProduct(Class_Valve cv, int months)
         {
             var help = new ExpiringProduct();
@@ -332,7 +413,7 @@ namespace api.DAL.Code
             return help;
         }
         #endregion
-      
+
         #region <!-- user mappings -->
         public async Task<UserForReturnDTO> getUserforReturnDTOAsync(User u)
         {
@@ -440,23 +521,23 @@ namespace api.DAL.Code
         #region <!-- hospitalmap-->
         public HospitalForReturnDTO getHospitalforReturnDTO(Class_Hospital u)
         {
-           HospitalForReturnDTO hr = new HospitalForReturnDTO();
-        hr.Naam = u.Naam;
-        hr.Adres = u.Adres;
-        hr.PostalCode = u.PostalCode;
-        hr.HospitalNo = u.HospitalNo;
-        hr.Country = u.Country;
-        hr.Image = u.Image;
-        hr.RefHospitals = u.RefHospitals;
-        hr.StandardRef = u.StandardRef;
-        hr.Email = u.Email;
-        hr.Contact = u.Contact;
-        hr.Contact_image = u.Contact_image;
-        hr.Telephone = u.Telephone;
-        hr.Fax = u.Fax;
-        hr.vendors = u.vendors;
+            HospitalForReturnDTO hr = new HospitalForReturnDTO();
+            hr.Naam = u.Naam;
+            hr.Adres = u.Adres;
+            hr.PostalCode = u.PostalCode;
+            hr.HospitalNo = u.HospitalNo;
+            hr.Country = u.Country;
+            hr.Image = u.Image;
+            hr.RefHospitals = u.RefHospitals;
+            hr.StandardRef = u.StandardRef;
+            hr.Email = u.Email;
+            hr.Contact = u.Contact;
+            hr.Contact_image = u.Contact_image;
+            hr.Telephone = u.Telephone;
+            hr.Fax = u.Fax;
+            hr.vendors = u.vendors;
 
-           return hr;
+            return hr;
         }
 
         public List<HospitalForReturnDTO> mapToListOfHospitalsToReturn(IEnumerable<Class_Hospital> us)
@@ -469,9 +550,9 @@ namespace api.DAL.Code
             return help;
         }
         #endregion
-        
-        
-        
+
+
+
         #region <!-- TFD -->
 
         public bool isMeasuredSizeEnough(int size, SelectParams sv)
@@ -481,16 +562,17 @@ namespace api.DAL.Code
             return help;
         }
 
-        public double calculateBSA(double height, double weight){
-          // DuBois formula
-          // height in m en weight in cm
-          // BSA = 0.007184 * Height0.725 * Weight0.425  
-          var result = 0.0;
-          result = .007184 * Math.Pow(height,0.725) * Math.Pow(weight, 0.425);
-          result = Math.Round(result, 2);
-          return result;
+        public double calculateBSA(double height, double weight)
+        {
+            // DuBois formula
+            // height in m en weight in cm
+            // BSA = 0.007184 * Height0.725 * Weight0.425  
+            var result = 0.0;
+            result = .007184 * Math.Pow(height, 0.725) * Math.Pow(weight, 0.425);
+            result = Math.Round(result, 2);
+            return result;
         }
-       
+
         #endregion
         #region <!-- helper functions -->
         private Boolean IsLoggedInUserARep(User u)

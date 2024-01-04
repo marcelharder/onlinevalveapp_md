@@ -55,10 +55,10 @@ namespace api.DAL.Code
         }
 
         #region <!-- country stuff -->   
-        public async Task<string> getCountryNameFromISO(string code)
+        public async Task<string> getCountryNameFromISO(string IsoCode)
         {
             var comaddress = _com.Value.hospitalURL;
-            var st = "Country/" + code;
+            var st = "Country/" + IsoCode;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
@@ -80,10 +80,10 @@ namespace api.DAL.Code
              }
              return result; */
         }
-        public async Task<string> getCountryIDFromISO(string code)
+        public async Task<string> getCountryIDFromISO(string IsoCode)
         {
             var comaddress = _com.Value.hospitalURL;
-            var st = "Country/fromISO/" + code;
+            var st = "Country/" + IsoCode;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
@@ -135,15 +135,15 @@ namespace api.DAL.Code
         {
 
             var comaddress = _com.Value.hospitalURL;
-            var st = "Country/fromId" + id;
+            var st = "Country/getCountryNameFromId" + id;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     var help = await response.Content.ReadAsStringAsync();
-                    var h = Newtonsoft.Json.JsonConvert.DeserializeObject<Class_Country>(help);
-                    return h.Description;
+                    
+                    return help;
                 }
             }
             /* var result = "";
@@ -162,15 +162,15 @@ namespace api.DAL.Code
         public async Task<string> getIsoCode(string code)
         {
             var comaddress = _com.Value.hospitalURL;
-            var st = "Country/fromId/" + code;
+            var st = "Country/getIsoFromId/" + code;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     var help = await response.Content.ReadAsStringAsync();
-                    var h = Newtonsoft.Json.JsonConvert.DeserializeObject<Class_Country>(help);
-                    return h.IsoCode;
+                   
+                    return help;
                 }
             }
             /* var result = "";

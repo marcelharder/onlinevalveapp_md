@@ -8,6 +8,8 @@ using api.DAL.models;
 using Microsoft.EntityFrameworkCore;
 using api.DAL.Code;
 using api.Helpers;
+using System.Net.Http;
+using Microsoft.Extensions.Options;
 
 namespace api.DAL.Implementations
 {
@@ -15,23 +17,27 @@ namespace api.DAL.Implementations
     public class Valve : IValve
     {
         private dataContext _context;
+
+         private readonly IOptions<ComSettings> _com;
+
         private SpecialMaps _special;
         private IHospital _hospital;
-        public Valve(dataContext context, SpecialMaps special, IHospital hospital)
+        public Valve(dataContext context, SpecialMaps special, IHospital hospital, IOptions<ComSettings> com)
         {
             _context = context;
+            _com = com;
             _special = special;
             _hospital = hospital;
         }
+
+        public Valve()
+        {
+        }
+
         public async Task<ValveForReturnDTO> getValveById(int id)
         {
             var result = await _context.Valves.FirstOrDefaultAsync(x => x.ValveId == id);
             return await _special.mapToValveForReturnAsync(result);
-        }
-        public async Task<string> getValveByProductCode(string productCode)
-        {
-            var result = await _context.ValveCodes.FirstOrDefaultAsync(x => x.uk_code == productCode);
-            return result.Description;
         }
         public async Task<ValveForReturnDTO> getValveBySerial(string serial, string whoWantsToKnow)
         {
@@ -75,12 +81,6 @@ namespace api.DAL.Implementations
         public async Task<bool> SaveAll() { return await _context.SaveChangesAsync() > 0; }
         public void Add(Class_Valve v) { _context.Valves.Add(v); }
         public void updateValve(ValveForReturnDTO p) { _context.Valves.Update(_special.mapToValveFromReturn(p)); }
-        public async Task<Class_Valve> valveBasedOnTypeOfValve(int id)
-        {
-            var selectedValveCode = await _context.ValveCodes.FirstOrDefaultAsync(x => x.No == id);
-            var val = await _special.getValveFromValveCodeAsync(selectedValveCode);
-            return val;
-        }
         public List<Class_Valve> getValvesByHospitalAndCode(int hospital, string model_code)
         {
             var result = _context.Valves.Where(x => x.Model_code == model_code).AsQueryable();
@@ -513,15 +513,40 @@ namespace api.DAL.Implementations
             return result;
         }
 
-        public async Task<string> getTFD(string pc, string size)
+        public async Task<string> getTFD(string uk_code, string size)
         {
-            // get the TFD from the valvecode
+            var eoa = "";
+            var comaddress = _com.Value.productURL;
+            var st = "ValveSize/getEOAForThisValve/" + uk_code + "/" + size ;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    eoa = await response.Content.ReadAsStringAsync();
+                }
+            }
+            return eoa;
+            /* // get the TFD from the valvecode
             var f = await _context.ValveCodes.Include(a => a.Valve_size).FirstOrDefaultAsync(x => x.uk_code == pc);
             var a = f.Valve_size.ToList();
             var b = a.Find(a => a.Size == Convert.ToInt32(size));
-            return b.EOA.ToString();
+            return b.EOA.ToString(); */
         }
-
+        public async Task<string> getValveByProductCode(string uk_code)
+        {
+            var result = "";
+            var comaddress = _com.Value.productURL;
+            var st = "ValveCode/getValveDescriptionByUkCode/" + uk_code;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress)) { result = await response.Content.ReadAsStringAsync(); }
+            }
+            return result;
+            //var result = await _context.ValveCodes.FirstOrDefaultAsync(x => x.uk_code == productCode);
+            //return result.Description;
+        }
         public async Task<double> calculateIndexedFTD(int height, int weight, double TFD)
         {
             var help = 0.0;

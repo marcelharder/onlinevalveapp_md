@@ -9,10 +9,8 @@ using api.DAL.models;
 using System;
 using api.Helpers;
 using System.Collections.Generic;
-using CloudinaryDotNet.Actions;
-using CloudinaryDotNet;
-using Microsoft.Extensions.Options;
 using System.Linq;
+using api.DAL.Implementations;
 
 namespace api.Controllers
 {
@@ -23,13 +21,11 @@ namespace api.Controllers
     {
         private IValve _valve;
 
-        private IValveCode _code;
         private SpecialMaps _special;
-        public ValveController(IValve valve, SpecialMaps special, IValveCode code)
+        public ValveController(IValve valve, SpecialMaps special)
         {
             _valve = valve;
             _special = special;
-            _code = code;
         }
         #region <!-- endpoints for SOA -->
 
@@ -115,7 +111,7 @@ namespace api.Controllers
             }
             else
             {
-                var model_Code = await _code.getModelCode(code);
+                var model_Code = await _special.getModelCode(code);
                 var result = _valve.getValvesByHospitalAndCode(hospital, model_Code);
                 return Ok(result);
             }
@@ -130,10 +126,10 @@ namespace api.Controllers
                 if (cv.TFD == 0)
                 {
                     //get the valvecode from the description and stuff it in the newly added valve
-                    var sel = await _code.getDetailsByProductCode(cv.Product_code);
+                   /*  var sel = _special.getDetailsByProductCode(cv.Product_code);
                     var selSizes = sel.Valve_size.ToList();
                     var selectedSize = selSizes.FirstOrDefault(a => a.Size == Convert.ToInt32(cv.Size));
-                    help = selectedSize.EOA;
+                    help = selectedSize.EOA; */
                 }
                 else
                 {
@@ -165,7 +161,8 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IActionResult> getValve02(int id) // a valve is added here
         {
-            var v = await _valve.valveBasedOnTypeOfValve(id);
+            //var v = await _valve.valveBasedOnTypeOfValve(id);
+            var v = new Class_Valve();
 
             _valve.Add(v);
             if (await _valve.SaveAll())

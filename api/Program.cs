@@ -27,7 +27,6 @@ namespace api
             await Seed.SeedUsers(context);
             await Seed.SeedHospitals(context);
             await Seed.SeedValvesInHospital(context);
-            await Seed.SeedValveTypes(context);
             await Seed.SeedVendors(context);
                      
             }

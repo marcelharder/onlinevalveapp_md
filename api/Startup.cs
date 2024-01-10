@@ -69,7 +69,6 @@ namespace api
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IHospital, Hospital>();
-            services.AddScoped<IValveCode, ValveCode>();
             services.AddScoped<IValve, Valve>();
             services.AddScoped<IVendor, Vendor>();
             services.AddScoped<IGenerator, Generator>();

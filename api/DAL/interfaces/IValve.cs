@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using api.Controllers;
 using api.DAL.dtos;
 using api.DAL.models;
 using api.Helpers;
@@ -28,8 +27,8 @@ namespace api.DAL.Interfaces
 
 
         Task<List<Class_Valve>> getValvesForSOAAsync(ValveParams v);
-
-        Task<Class_Valve> valveBasedOnTypeOfValve(int id);
+        
+        //Task<Class_Valve> valveBasedOnTypeOfValve(int id);
         Task<List<Class_Valve>> getAllProductsByVendor(int hospital, int vendor);
         Task<string> getValveByProductCode(string productCode);
         Task<List<ExpiringProduct>> getValveExpiry(int months);

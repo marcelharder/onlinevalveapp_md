@@ -240,7 +240,7 @@ namespace api.Migrations
                     b.ToTable("Valves");
                 });
 
-            modelBuilder.Entity("api.DAL.models.Class_Valve_Size", b =>
+            modelBuilder.Entity("api.DAL.models.Valve_Size", b =>
                 {
                     b.Property<int>("SizeId")
                         .ValueGeneratedOnAdd()
@@ -523,7 +523,7 @@ namespace api.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("api.DAL.models.Class_Valve_Size", b =>
+            modelBuilder.Entity("api.DAL.models.Valve_Size", b =>
                 {
                     b.HasOne("api.DAL.models.Class_TypeOfValve", "VT")
                         .WithMany("Valve_size")

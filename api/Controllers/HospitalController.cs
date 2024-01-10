@@ -51,7 +51,7 @@ namespace api.Controllers
         }
 
         [HttpGet("api/addVendor/{vendor}")]
-        public async Task<IActionResult> getQuestion05(int vendor)
+        public async Task<IActionResult> getQuestion05(string vendor)
         {
             var comaddress = _com.Value.hospitalURL;
             var st = "Hospital/addVendorToHospital/" + vendor + "/" + await _special.getCurrentUserHospitalId();
@@ -67,7 +67,7 @@ namespace api.Controllers
         }
 
         [HttpGet("api/removeVendor/{vendor}")]
-        public async Task<IActionResult> getQuestion06(string vendor, int hospital_id)
+        public async Task<IActionResult> getQuestion06(string vendor)
         {
             var comaddress = _com.Value.hospitalURL;
             var st = "Hospital/removeVendorFromHospital/" + vendor + "/" + await _special.getCurrentUserHospitalId();

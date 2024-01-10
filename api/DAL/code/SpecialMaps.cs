@@ -10,25 +10,18 @@ using api.DAL.models;
 using api.DAL.dtos;
 using api.Helpers;
 using System.Xml.Linq;
-using System.IO;
 using Microsoft.Extensions.Options;
 using System.Net.Http;
-using System.Runtime.CompilerServices;
 
 namespace api.DAL.Code
 {
     public class SpecialMaps
     {
-
-
-
         XElement _testje;
         private dataContext _context;
         private IWebHostEnvironment _env;
         private IHttpContextAccessor _http;
         private IOptions<ComSettings> _com;
-
-
 
         public SpecialMaps(dataContext context, IOptions<ComSettings> com, IWebHostEnvironment env,
             IHttpContextAccessor http)
@@ -107,17 +100,15 @@ namespace api.DAL.Code
         }
         public async Task<string> getCountryIDFromDescription(string description)
         {
-
             var comaddress = _com.Value.hospitalURL;
-            var st = "Country/fromDescription" + description;
+            var st = "Country/fromDescription/" + description;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     var help = await response.Content.ReadAsStringAsync();
-                    var h = Newtonsoft.Json.JsonConvert.DeserializeObject<Class_Country>(help);
-                    return h.Id.ToString();
+                    return help;
                 }
             }
             /*  var result = "";
@@ -135,7 +126,7 @@ namespace api.DAL.Code
         {
 
             var comaddress = _com.Value.hospitalURL;
-            var st = "Country/getCountryNameFromId" + id;
+            var st = "Country/getCountryNameFromId/" + id;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
@@ -157,8 +148,6 @@ namespace api.DAL.Code
             }
             return result; */
         }
-
-
         public async Task<string> getIsoCode(string code)
         {
             var comaddress = _com.Value.hospitalURL;
@@ -195,13 +184,14 @@ namespace api.DAL.Code
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     var help = await response.Content.ReadAsStringAsync();
-                    var test = help.Split(",");
-                    foreach (string s in test)
+
+                    var test = Newtonsoft.Json.JsonConvert.DeserializeObject<Class_Country[]>(help);
+                   
+                    foreach (Class_Country s in test)
                     {
                         var c = new Class_Item();
-                        var h = Newtonsoft.Json.JsonConvert.DeserializeObject<Class_Country>(s);
-                        c.Description = h.Description;
-                        c.Value = Convert.ToInt32(h.Id);
+                        c.Description = s.Description;
+                        c.Value = Convert.ToInt32(s.Id);
                         toreturn.Add(c);
                     }
                     return toreturn;
@@ -553,8 +543,6 @@ namespace api.DAL.Code
             return help;
         }
         #endregion
-
-
 
         #region <!-- TFD -->
 

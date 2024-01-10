@@ -18,16 +18,26 @@ services:
     networks: 
      - internal-container-network  
 
-  valveinventory:
-    image: inventory_md:v26
-    ports:
-      - 8045:80
-    networks: 
-      - internal-container-network
-    volumes:
-     - sqldata:/root/.aspnet/DataProtection-Keys
-    depends_on: 
-       - db
+  hospital:
+     image: hospital_app:v8
+     ports:
+       - 8103:80
+     networks: 
+       - internal-container-network
+     volumes:
+      - sqldata:/root/.aspnet/DataProtection-Keys
+     depends_on: 
+        - db
+  #valveinventory:
+  #  image: inventory_md:v26
+  #  ports:
+  #    - 8045:80
+  #  networks: 
+  #    - internal-container-network
+  #  volumes:
+  #   - sqldata:/root/.aspnet/DataProtection-Keys
+  #  depends_on: 
+  #     - db
    
 volumes:
   sqldata:

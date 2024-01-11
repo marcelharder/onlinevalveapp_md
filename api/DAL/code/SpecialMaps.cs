@@ -446,21 +446,9 @@ namespace api.DAL.Code
 
         private async Task<string> setCountryCode(string description)
         {
-            // description is bv "Nederland" hier
-            var countryId = "0";
-            var comaddress = _com.Value.hospitalURL;
-            var st = "Country/fromDescription/" + description;
-            comaddress = comaddress + st;
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync(comaddress))
-                {
-                    countryId = await response.Content.ReadAsStringAsync();
-                }
-            }
-            
-            st = "Country/getIsoFromId/" + countryId;
-            comaddress = _com.Value.hospitalURL + st;
+              
+            var st = "Country/getIsoFromDescription/" + description;
+            var comaddress = _com.Value.hospitalURL + st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(comaddress))

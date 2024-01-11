@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getCountries().subscribe((next)=>{
       this.listCountries = next;
-      this.selectedCountry = this.listCountries.find(x => x.value == +this.user.country).description;
+     // this.selectedCountry = this.listCountries.find(x => x.value == +this.user.country).description;
     });
     
 

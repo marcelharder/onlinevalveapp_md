@@ -181,7 +181,7 @@ namespace api.Controllers
         [HttpGet("api/productByValveTypeId/{id}")]
         public async Task<IActionResult> get042(int id)
         {
-             var help = new Valve_Code();
+            var help = "";
             var comaddress = _com.Value.productURL;
             var st = "ValveCode/" + id;
             comaddress = comaddress + st;
@@ -189,11 +189,9 @@ namespace api.Controllers
             {
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
-                    var g = await response.Content.ReadAsStringAsync();
-                    help = (Valve_Code)JsonConvert.DeserializeObject(g);
+                    help = await response.Content.ReadAsStringAsync();
                 }
             }
-           // var result = await _vc.getDetails(id);
             return Ok(help);
         }
         [AllowAnonymous]

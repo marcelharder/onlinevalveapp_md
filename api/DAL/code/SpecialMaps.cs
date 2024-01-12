@@ -436,7 +436,7 @@ namespace api.DAL.Code
             currentUser.Username = ufr.username;
             currentUser.Email = ufr.email;
             currentUser.Mobile = ufr.mobile;
-            currentUser.Country = setCountryCode(ufr.country);
+            currentUser.Country = await setCountryCode(ufr.country);
             currentUser.Introduction = ufr.introduction;
             currentUser.Interests = ufr.interests;
             currentUser.hospital_id = ufr.hospitalCode;
@@ -444,9 +444,19 @@ namespace api.DAL.Code
             return currentUser;
         }
 
-        private string setCountryCode(string country)
+        private async Task<string> setCountryCode(string description)
         {
-            throw new NotImplementedException();
+              
+            var st = "Country/getIsoFromDescription/" + description;
+            var comaddress = _com.Value.hospitalURL + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return help;
+                }
+            }
         }
 
         public async Task<List<UserForReturnDTO>> mapToListOfUserToReturn(IEnumerable<User> us)
@@ -596,9 +606,7 @@ namespace api.DAL.Code
         /* public async Task<string[]> getValveSizesAsync(string Product_code)
         {
             var selectedValveCode = await _context.ValveCodes.FirstOrDefaultAsync(x => x.uk_code == Product_code);
-            
-            
-            
+              
             
             
             

@@ -18,6 +18,7 @@ import { HospitalService } from '../_services/hospital.service';
 export class ProfileComponent implements OnInit {
   user: User;
   listCountries:Array<DropItem> = [];
+  selectedCountry = "";
   photo: Photo =
     {
       id: 0,
@@ -40,7 +41,15 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userService.getCountries().subscribe((next)=>{this.listCountries = next;});
+    this.userService.getCountries().subscribe((next)=>{
+      this.listCountries = next;
+     // this.selectedCountry = this.listCountries.find(x => x.value == +this.user.country).description;
+    });
+    
+
+
+
+
     this.route.data.subscribe(data => {
       this.user = data.user;
       if (this.user.userRole === 'companyadmin') {

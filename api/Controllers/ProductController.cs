@@ -175,6 +175,13 @@ namespace api.Controllers
         }
 
 
+
+
+
+
+
+
+
         #region <!-- used by soa -->
 
         [AllowAnonymous]
@@ -196,6 +203,7 @@ namespace api.Controllers
            // var result = await _vc.getDetails(id);
             return Ok(help);
         }
+       
         [AllowAnonymous]
         [Route("api/products")]
         [HttpGet]
@@ -304,6 +312,12 @@ namespace api.Controllers
         }
 
         #endregion
+
+
+
+
+
+
 
         [Route("api/addSize/{id}")]
         [HttpPost]

@@ -190,12 +190,12 @@ namespace api.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("api/getHospitalsInCountry/{TelCode}")]
-        public async Task<IActionResult> getQuestion09(string TelCode)
+        [HttpGet("api/getHospitalsInCountry/{CountryId}")]
+        public async Task<IActionResult> getQuestion09(string CountryId)
         {
             // code here is '47' for instance
             var comaddress = _com.Value.hospitalURL;
-            var st = "Hospital/getHospitalItemsPerCountryFromTelCode/" + TelCode;
+            var st = "Hospital/getHospitalItemsPerCountryFromCountryId/" + CountryId;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {

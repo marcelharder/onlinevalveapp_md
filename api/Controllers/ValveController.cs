@@ -159,10 +159,11 @@ namespace api.Controllers
         }
         [Route("api/valveBasedOnTypeOfValve/{id}")]
         [HttpGet]
-        public async Task<IActionResult> getValve02(int id) // a valve is added here
+        public async Task<IActionResult> getValve02(string id) // a valve is added here
         {
             //var v = await _valve.valveBasedOnTypeOfValve(id);
             var v = new Class_Valve();
+            v.Vendor_code = id;
 
             _valve.Add(v);
             if (await _valve.SaveAll())

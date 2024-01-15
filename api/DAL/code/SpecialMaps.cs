@@ -375,7 +375,6 @@ namespace api.DAL.Code
             return help;
         }
         #endregion
-
         #region <!-- user mappings -->
         public async Task<UserForReturnDTO> getUserforReturnDTOAsync(User u)
         {
@@ -529,7 +528,6 @@ namespace api.DAL.Code
             return help;
         }
         #endregion
-
         #region <!-- TFD -->
 
         public bool isMeasuredSizeEnough(int size, SelectParams sv)

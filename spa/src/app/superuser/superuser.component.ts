@@ -50,31 +50,7 @@ export class SuperuserComponent implements OnInit {
     notF = 0;
     searchString = '';
     productRequested = '';
-    hos: Hospital = {
-        id: 0,
-        naam: '',
-        adres: '',
-        postalCode: '',
-        hospitalNo: 0,
-        country: '',
-        image: '',
-        refHospitals: '',
-        standardRef: '',
-        email: '',
-        contact: '',
-        contact_image: '',
-        vendors:'',
-        telephone: '',
-        fax: '',
-        logo: '',
-        mrnSample: '',
-        sMS_mobile_number: '',
-        sMS_send_time: '',
-        triggerOneMonth: '',
-        triggerTwoMonth: '',
-        triggerThreeMonth: '',
-        dBBackend: ''
-    };
+    hos: Partial<Hospital> = { };
     valves: Array<Valve> = [];
     IsValveImplanted = 0;
 
@@ -88,7 +64,7 @@ export class SuperuserComponent implements OnInit {
 
     ngOnInit(): void {
         this.gen.getHospital().subscribe((next) => { this.hos = next; });
-        this.auth.changeCurrentHospital(this.hos.naam);
+        this.auth.changeCurrentHospital(this.hos.HospitalName);
 
 
     }

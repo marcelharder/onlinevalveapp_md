@@ -23,31 +23,8 @@ export class ListHospitalsForRefComponent implements OnInit {
   selectPage = 0;
   FullHospitals: Array<Hospital> = [];
 
-  selectedHospital: Hospital = {
-    id: 0,
-    naam: '',
-    adres: '',
-    postalCode: '',
-    hospitalNo: 0,
-    country: '',
-    image: '',
-    refHospitals: '',
-    standardRef: '',
-    email: '',
-    contact: '',
-    contact_image: '',
-    vendors:'',
-    telephone: '',
-    fax: '',
-    logo: '',
-    mrnSample: '',
-    sMS_mobile_number: '',
-    sMS_send_time: '',
-    triggerOneMonth: '',
-    triggerTwoMonth: '',
-    triggerThreeMonth: '',
-    dBBackend: ''
-  };
+  selectedHospital: Partial<Hospital> = { };
+
   hospitalDescription = '';
 
   constructor(private auth: AuthService,

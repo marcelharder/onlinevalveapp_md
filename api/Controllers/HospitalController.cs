@@ -166,8 +166,19 @@ namespace api.Controllers
         [HttpGet("api/getHospitalDetails/{id}")]
         public async Task<IActionResult> getQuestion07(int id)
         {
-            var hospital = await _special.getHospital(id);
-            return Ok(hospital);
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/" + id;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);
+                }
+            }
+           /*  var hospital = await _special.getHospital(id);
+            return Ok(hospital); */
         }
 
         [HttpPut("api/saveHospitalDetails")]

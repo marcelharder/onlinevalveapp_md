@@ -11,31 +11,7 @@ import { HospitalService } from 'src/app/_services/hospital.service';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-  hos: Hospital = {
-    id: 0,
-    naam: '',
-    adres: '',
-    postalCode: '',
-    hospitalNo: 0,
-    country: '',
-    image: '',
-    refHospitals: '',
-    standardRef: '',
-    email: '',
-    contact: '',
-    contact_image: '',
-    vendors:'',
-    telephone: '',
-    fax: '',
-    logo: '',
-    mrnSample: '',
-    sMS_mobile_number: '',
-    sMS_send_time: '',
-    triggerOneMonth: '',
-    triggerTwoMonth: '',
-    triggerThreeMonth: '',
-    dBBackend: ''
-  };
+  hos: Partial<Hospital> = { };
   title = "Vendors";
   CardCaption = "List of Vendors in this hospital";
   contacts = 0;
@@ -48,7 +24,7 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.gen.getHospital().subscribe((next) => { this.hos = next; });
-    this.auth.changeCurrentHospital(this.hos.naam);
+    this.auth.changeCurrentHospital(this.hos.HospitalName);
 
   }
 

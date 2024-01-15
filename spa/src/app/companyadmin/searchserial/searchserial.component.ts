@@ -45,31 +45,8 @@ export class SearchserialComponent implements OnInit {
     implanted: 0,
     hospital_code: 0
   };
-  selectedHospital: Hospital = {
-    id: 0,
-    naam: '',
-    adres: '',
-    postalCode: '',
-    hospitalNo: 0,
-    country: '',
-    image: '',
-    refHospitals: '',
-    standardRef: '',
-    email: '',
-    contact: '',
-    contact_image: '',
-    vendors:'',
-    telephone: '',
-    fax: '',
-    logo: '',
-    mrnSample: '',
-    sMS_mobile_number: '',
-    sMS_send_time: '',
-    triggerOneMonth: '',
-    triggerTwoMonth: '',
-    triggerThreeMonth: '',
-    dBBackend: ''
-  };
+  selectedHospital: Partial<Hospital> = { };
+
 
   @ViewChild('editForm') editForm: NgForm;
 
@@ -95,7 +72,7 @@ export class SearchserialComponent implements OnInit {
 
       this.hosService.getDetails(this.selectedValve.hospital_code).subscribe((res) => {
         this.selectedHospital = res;
-        this.gen.getCountryName(this.selectedHospital.country).subscribe((c) => {this.country = c; });
+        this.gen.getCountryName(this.selectedHospital.Country).subscribe((c) => {this.country = c; });
 
       });
      }, (error) => {console.log(error); });

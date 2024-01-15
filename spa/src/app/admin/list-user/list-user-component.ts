@@ -125,7 +125,7 @@ export class ListUserComponent implements OnInit {
 
     this.details = 1;
     if (!this.userIsVendor()) {
-      this.hos.getDetails(this.selectedUser.hospitalCode).subscribe((next) => { this.currentHospital = next.naam; })
+      this.hos.getDetails(this.selectedUser.hospitalCode).subscribe((next) => { this.currentHospital = next.HospitalName; })
     }
     this.findHospitalsInCountry();
   }

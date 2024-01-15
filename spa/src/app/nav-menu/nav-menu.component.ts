@@ -53,7 +53,7 @@ export class NavMenuComponent implements OnInit {
                 case 'surgeon':
                     this.normalLogged = true;
                     this.gen.getHospital().subscribe((next) => {
-                        this.auth.changeCurrentHospital(next.naam);});
+                        this.auth.changeCurrentHospital(next.HospitalName);});
                     break;
                 case 'superuser':
                     this.specialLogged = true;

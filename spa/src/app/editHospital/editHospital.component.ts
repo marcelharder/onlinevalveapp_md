@@ -46,7 +46,7 @@ currentVendor = '';
 
 
   deleteVendorInHospital() {
-    this.hosService.removeVendor(this.currentVendor, this.selectedHospital.id).subscribe((next) => {
+    this.hosService.removeVendor(this.currentVendor, this.selectedHospital.HospitalId).subscribe((next) => {
       if (next === 'removed') {
         this.router.navigate(['/home']);
       }

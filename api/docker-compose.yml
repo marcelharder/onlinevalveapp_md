@@ -28,7 +28,7 @@ services:
      - internal-container-network  
 
   hospital:
-     image: hospital_app:v11
+     image: hospital_app:v12
      ports:
        - 8103:80
      networks: 

@@ -40,7 +40,7 @@ export class HospitalService {
    // return this.http.get<PaginatedResult<Hospital[]>>(this.baseUrl + 'getFullHospitalsInCountry/' + countryCode);
    }
   getListOfHospitalsPerCountry(countryCode: string)
-  { return this.http.get<DropItem[]>(this.baseUrl + 'getHospitalsInCountry/' + countryCode); } // countrycode is 31 bv
+  { return this.http.get<DropItem[]>(this.baseUrl + 'getHospitalsInCountry/' + countryCode); } // countryDescription
   
   getNewHospital(country: string, code: string){
    return this.http.post<Hospital>(this.baseUrl + 'createHospital/' + country + '/' + code, null);}

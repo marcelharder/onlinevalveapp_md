@@ -190,22 +190,34 @@ namespace api.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("api/getHospitalsInCountry/{CountryId}")]
-        public async Task<IActionResult> getQuestion09(string CountryId)
+        [HttpGet("api/getHospitalsInCountry/{CountryDescription}")]
+        public async Task<IActionResult> getQuestion09(string CountryDescription)
         {
-            // code here is '47' for instance
             var comaddress = _com.Value.hospitalURL;
-            var st = "Hospital/getHospitalItemsPerCountryFromCountryId/" + CountryId;
+            var selectedIsoCode = "0";
+            // get the isocode first
+            var st = "Country/getIsoFromDescription/" + CountryDescription;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
+                    selectedIsoCode = await response.Content.ReadAsStringAsync();
+                    
+                }
+            }
+
+            var comaddress2 = _com.Value.hospitalURL;
+            var st2 = "Hospital/getHospitalItemsPerCountryFromIso/" + selectedIsoCode;
+            comaddress2 = comaddress2 + st2;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress2))
+                {
                     var help = await response.Content.ReadAsStringAsync();
                     return Ok(help);// returns a list of Class_Item
                 }
             }
-            //return await _hospital.hospitalsInCountry(code);
         }
 
         [HttpGet("api/getFullHospitalsInCountry")]
@@ -220,14 +232,7 @@ namespace api.Controllers
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     var result = await response.Content.ReadAsStringAsync();
-                    var help2 = Newtonsoft.Json.JsonConvert.DeserializeObject<PagedList<Class_Hospital>>(result);
-                    var l = _special.mapToListOfHospitalsToReturn(help2);
-
-                    Response.AddPagination(help2.Currentpage,
-                    help2.PageSize,
-                    help2.TotalCount,
-                    help2.TotalPages);
-                    return Ok(l);
+                    return Ok(result);
                 }
             }
         }

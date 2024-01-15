@@ -50,9 +50,7 @@ export class ListUserComponent implements OnInit {
       this.listOfUsers = data.users.result;
       this.pagination = data.users.pagination;
       this.loadDrops();
-      this.gen.getListOfCountries().subscribe((next) => { this.optionCountries = next; })
-
-
+      this.gen.getListOfCountries().subscribe((next) => { this.optionCountries = next; });
     })
   }
 
@@ -133,14 +131,20 @@ export class ListUserComponent implements OnInit {
   }
 
   findHospitalsInCountry() {
-    this.gen.getCountryIDFromDescription(this.selectedUser.country).subscribe((next) => {
+    this.hos.getListOfHospitalsPerCountry(this.selectedUser.country).subscribe((nex) => {
+      this.optionHospitals = nex;
+
+    })
+
+
+   /*  this.gen.getCountryIDFromDescription(this.selectedUser.country).subscribe((next) => {
       const code = next;
       this.hos.getListOfHospitalsPerCountry(code).subscribe((nex) => {
         this.optionHospitals = nex;
 
       })
 
-    })
+    }) */
 
 
   }

@@ -21,7 +21,8 @@ export class ListHospitalsComponent implements OnInit {
   details = 0;
   list = 1;
   edit = 0;
-  selectedCountry = 31;
+  isocode = "NL";
+  selectedCountry = "Nederland";
   pagination: Pagination;
 
   constructor(
@@ -35,14 +36,18 @@ export class ListHospitalsComponent implements OnInit {
     this.route.data.subscribe((data) => {
       this.listOfHospitals = data.hospitals.result;
       this.pagination = data.hospitals.pagination;
+      debugger;
     });
-    this.gen.getListOfCountries().subscribe((next) => { this.optionCountries = next; })
+    this.gen.getListOfCountries().subscribe((next) => {
+      debugger;
+      this.optionCountries = next;
+    })
 
   }
 
   contentFound() {
     if (this.listOfHospitals.length > 0) {
-     
+
       return true;
     } else { return false; }
   }
@@ -69,41 +74,44 @@ export class ListHospitalsComponent implements OnInit {
     this.alertify.message("adding ...")
   }
 
-  deleteHospital() { 
+  deleteHospital() {
     this.hos.removeHospital(+this.selectedHospital.HospitalNo).subscribe(
-      (next)=>{
-        
-        this.alertify.message("deleting ...");}, 
-        error =>{this.alertify.error(error);}, 
-        () => {this.details = 0; this.list = 1; this.edit = 0;})
-     };
+      (next) => {
+
+        this.alertify.message("deleting ...");
+      },
+      error => { this.alertify.error(error); },
+      () => { this.details = 0; this.list = 1; this.edit = 0; })
+  };
 
   cancel() { this.details = 0; this.list = 1; this.edit = 0; }
 
-  saveDetails(){
+  saveDetails() {
     this.hos.saveDetails(this.selectedHospital).subscribe(
-      (next)=>{this.alertify.message(next)}, 
-      (error)=> {this.alertify.error(error)},()=>{this.details = 0; this.list = 1; this.edit = 0; });
+      (next) => { this.alertify.message(next) },
+      (error) => { this.alertify.error(error) }, () => { this.details = 0; this.list = 1; this.edit = 0; });
   }
 
   showDetails(id: number) {
     this.selectedHospital = this.listOfHospitals.find(x => x.HospitalNo === id.toString());
-    this.details = 1; 
-    this.list = 0; 
+    this.details = 1;
+    this.list = 0;
     this.edit = 0;
   }
 
   loadHospitals() {
     this.hos.getListOfFullHospitalsPerCountry(
-      this.selectedCountry.toString(),
-      this.pagination.currentPage, this.pagination.itemsPerPage).subscribe(
+      this.selectedCountry,
+      this.pagination.currentPage,
+      this.pagination.itemsPerPage).subscribe(
         (next: PaginatedResult<Hospital[]>) => {
           this.listOfHospitals = next.result;
           this.pagination = next.pagination;
         }, (error) => { this.alertify.error(error); });
+
   }
 
-  returnFromAdding(help: string){
+  returnFromAdding(help: string) {
     this.alertify.message(help);
     this.details = 0; this.edit = 0; this.list = 1;
     // refresh the page

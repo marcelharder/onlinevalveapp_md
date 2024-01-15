@@ -235,12 +235,26 @@ namespace api.Controllers
         public async Task<IActionResult> getQuestion19([FromQuery] HospitalParams hp)
         {
             var comaddress = _com.Value.hospitalURL;
-            var st = "Hospital/pagedList?code=" + hp.code + "&PageNumber=" + hp.PageNumber + "&PageSize=" + hp.PageSize;
+            var selectedIsoCode = "0";
+            // get the isocode first
+            var st = "Country/getIsoFromDescription/" + hp.code;
             comaddress = comaddress + st;
-
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    selectedIsoCode = await response.Content.ReadAsStringAsync();
+                    
+                }
+            }
+
+            var comaddress1 = _com.Value.hospitalURL;
+            var st1 = "Hospital/pagedList?code=" + selectedIsoCode + "&PageNumber=" + hp.PageNumber + "&PageSize=" + hp.PageSize;
+            comaddress1 = comaddress1 + st1;
+
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress1))
                 {
                     var result = await response.Content.ReadAsStringAsync();
                     return Ok(result);

@@ -4,9 +4,11 @@
       <div class="p-2">
         <h5><span class="badge badge-secondary">Search:</span></h5>
       </div>
-      <div class="p-2"><select [(ngModel)]="selectedCountry" name="selHospital" class="form-control">
-          <option *ngFor="let an of optionCountries" [value]="an.value">{{ an.description }}</option>
-        </select></div>
+      <div class="p-2">
+        <select [(ngModel)]="selectedCountry" name="HPC" class="form-control">
+          <option *ngFor="let an of optionCountries" [value]="an.desciption">{{ an.description }}</option>
+        </select>
+      </div>
       <div class="p-2"><button class="btn btn-primary" (click)="search()">Go</button></div>
     </div>
     <button *ngIf="!displayDetails()" style="float: right;" class="btn btn-secondary"
@@ -22,15 +24,15 @@
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Address</th>
+            <th>City</th>
            <th>Country</th>
              <th></th>
           </tr>
           <tr *ngFor="let pro of listOfHospitals">
-            <td>{{pro.hospitalNo}}</td>
-            <td>{{pro.naam}}</td>
-            <td>{{pro.adres}}</td>
-            <td>{{pro.country}}</td>
+            <td>{{pro.HospitalNo}}</td>
+            <td>{{pro.HospitalName}}</td>
+            <td>{{pro.City}}</td>
+            <td>{{pro.Country}}</td>
             <td><button class="btn btn-primary" (click)="showDetails(pro.hospitalNo)">details</button></td>
           </tr>
         </table>

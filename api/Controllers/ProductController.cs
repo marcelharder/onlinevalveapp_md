@@ -58,7 +58,7 @@ namespace api.Controllers
             help.Type = "0";
             help.image = "https://res.cloudinary.com/marcelcloud/image/upload/v1620571880/valves/valves02.jpg";
 
-            
+
             var comaddress = _com.Value.productURL;
             var st = "ValveCode";
             comaddress = comaddress + st;
@@ -79,7 +79,7 @@ namespace api.Controllers
         [HttpDelete("api/deleteProduct/{id}")]
         public async Task<IActionResult> deleteProductdetails(int id)
         {
-           var help = "";
+            var help = "";
             var comaddress = _com.Value.productURL;
             var st = "ValveCode/" + id;
             comaddress = comaddress + st;
@@ -128,9 +128,10 @@ namespace api.Controllers
                     help = (Valve_Code)JsonConvert.DeserializeObject(g);
                 }
             }
-           // var result = await _vc.getDetails(id);
+            // var result = await _vc.getDetails(id);
             return Ok(help);
         }
+
         [HttpGet("api/productByCode/{code}")]
         public async Task<IActionResult> get041(string code)
         {
@@ -151,7 +152,6 @@ namespace api.Controllers
             //return Ok(result);
         }
 
-
         [Route("api/addProductPhoto/{id}")]
         [HttpPost]
         public async Task<IActionResult> AddPhotoForProduct(int id, [FromForm] PhotoForCreationDto photoDto)
@@ -171,151 +171,8 @@ namespace api.Controllers
                     help = await response.Content.ReadFromJsonAsync<photoResult>();
                 }
             }
-            return Ok(help.document_url); 
+            return Ok(help.document_url);
         }
-
-
-
-
-
-
-
-
-
-        #region <!-- used by soa -->
-
-        [AllowAnonymous]
-        [HttpGet("api/productByValveTypeId/{id}")]
-        public async Task<IActionResult> get042(int id)
-        {
-            var help = "";
-            var comaddress = _com.Value.productURL;
-            var st = "ValveCode/" + id;
-            comaddress = comaddress + st;
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync(comaddress))
-                {
-                    help = await response.Content.ReadAsStringAsync();
-                }
-            }
-            return Ok(help);
-        }
-       
-        [AllowAnonymous]
-        [Route("api/products")]
-        [HttpGet]
-       
-        public async Task<IActionResult> getAllProducts()
-        {
-            var help = new List<Valve_Code>();
-            var comaddress = _com.Value.productURL;
-            var st = "ValveCode/getAllValveCodes";
-            comaddress = comaddress + st;
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync(comaddress))
-                {
-                    var g = await response.Content.ReadAsStringAsync();
-                    var t = g.Split(',');
-                    foreach (string s in t)
-                    {
-                        help.Add((Valve_Code)JsonConvert.DeserializeObject(s));
-                    }
-                }
-            }
-            return Ok(help);
-            //  var result = await _vc.getAllProducts();
-            //  return Ok(result);
-        }
-
-        [AllowAnonymous]
-        [Route("api/products/{type}/{position}")]
-        [HttpGet]
-        public async Task<IActionResult> getAllProducts(string type, string position)
-        {
-            var help = new List<Valve_Code>();
-            var comaddress = _com.Value.productURL;
-            var st = "ValveCode/getAllValveCodesByTypeAndPosition/" + type + "/" + position;
-            comaddress = comaddress + st;
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync(comaddress))
-                {
-                    var g = await response.Content.ReadAsStringAsync();
-                    var t = g.Split(',');
-                    foreach (string s in t)
-                    {
-                        help.Add((Valve_Code)JsonConvert.DeserializeObject(s));
-                    }
-                }
-            }
-            return Ok(help);
-
-
-            //  var result = await _vc.getAllTPProducts(type, position);
-            //  return Ok(result);
-        }
-      
-        [AllowAnonymous]
-        [Route("api/productsByVTP/{vendor}/{type}/{position}")]
-        [HttpGet]
-        public async Task<IActionResult> getAllProducts(string vendor, string type, string position)
-        {
-            var help = new List<Valve_Code>();
-            var comaddress = _com.Value.productURL;
-            var st = "ValveCode/getAllValveCodesForThisVendor/" + vendor + "/" + type + "/" + position;
-            comaddress = comaddress + st;
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync(comaddress))
-                {
-                    var g = await response.Content.ReadAsStringAsync();
-                    var t = g.Split(',');
-                    foreach (string s in t)
-                    {
-                        help.Add((Valve_Code)JsonConvert.DeserializeObject(s));
-                    }
-                }
-            }
-            return Ok(help);
-
-            //var result = await _vc.getAllProductsByVTP(vendor, type, position);
-            //return Ok(result);
-        }
-       
-        [AllowAnonymous]
-        [Route("api/getValveCodeSizes/{id}")]
-        [HttpGet]
-        public async Task<IActionResult> getSizes(int id)
-        { //get the sizes for this valve, return list<Valve_Size>
-            var help = new List<Valve_Size>();
-            var comaddress = _com.Value.productURL;
-            var st = "ValveSize/getValveSizesForSpecificValve/" + id;
-            comaddress = comaddress + st;
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync(comaddress))
-                {
-                    var g = await response.Content.ReadAsStringAsync();
-                    var t = g.Split(',');
-                    foreach (string s in t)
-                    {
-                        help.Add((Valve_Size)JsonConvert.DeserializeObject(s));
-                    }
-                }
-            }
-            return Ok(help);
-            //return Ok(await _vc.GetValveCodeSizes(id));
-        }
-
-        #endregion
-
-
-
-
-
-
 
         [Route("api/addSize/{id}")]
         [HttpPost]
@@ -402,5 +259,147 @@ namespace api.Controllers
             /*   var result = await _vc.deleteSize(id, sizeId);
               return Ok(result); */
         }
+
+
+
+
+
+
+
+
+        #region <!-- used by soa -->
+
+        [AllowAnonymous]
+        [HttpGet("api/productByValveTypeId/{id}")]
+        public async Task<IActionResult> get042(int id)
+        {
+            var help = "";
+            var comaddress = _com.Value.productURL;
+            var st = "ValveCode/" + id;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    help = await response.Content.ReadAsStringAsync();
+                }
+            }
+            return Ok(help);
+        }
+
+        [AllowAnonymous]
+        [Route("api/products")]
+        [HttpGet]
+        public async Task<IActionResult> getAllProducts()
+        {
+            var help = new List<Valve_Code>();
+            var comaddress = _com.Value.productURL;
+            var st = "ValveCode/getAllValveCodes";
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var g = await response.Content.ReadAsStringAsync();
+                    var t = g.Split(',');
+                    foreach (string s in t)
+                    {
+                        help.Add((Valve_Code)JsonConvert.DeserializeObject(s));
+                    }
+                }
+            }
+            return Ok(help);
+            //  var result = await _vc.getAllProducts();
+            //  return Ok(result);
+        }
+
+        [AllowAnonymous]
+        [Route("api/products/{type}/{position}")]
+        [HttpGet]
+        public async Task<IActionResult> getAllProducts(string type, string position)
+        {
+            var help = new List<Valve_Code>();
+            var comaddress = _com.Value.productURL;
+            var st = "ValveCode/getAllValveCodesByTypeAndPosition/" + type + "/" + position;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var g = await response.Content.ReadAsStringAsync();
+                    var t = g.Split(',');
+                    foreach (string s in t)
+                    {
+                        help.Add((Valve_Code)JsonConvert.DeserializeObject(s));
+                    }
+                }
+            }
+            return Ok(help);
+
+
+            //  var result = await _vc.getAllTPProducts(type, position);
+            //  return Ok(result);
+        }
+
+        [AllowAnonymous]
+        [Route("api/productsByVTP/{vendor}/{type}/{position}")]
+        [HttpGet]
+        public async Task<IActionResult> getAllProducts(string vendor, string type, string position)
+        {
+            var help = new List<Valve_Code>();
+            var comaddress = _com.Value.productURL;
+            var st = "ValveCode/getAllValveCodesForThisVendor/" + vendor + "/" + type + "/" + position;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var g = await response.Content.ReadAsStringAsync();
+                    var t = g.Split(',');
+                    foreach (string s in t)
+                    {
+                        help.Add((Valve_Code)JsonConvert.DeserializeObject(s));
+                    }
+                }
+            }
+            return Ok(help);
+
+            //var result = await _vc.getAllProductsByVTP(vendor, type, position);
+            //return Ok(result);
+        }
+
+        [AllowAnonymous]
+        [Route("api/getValveCodeSizes/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> getSizes(int id)
+        { //get the sizes for this valve, return list<Valve_Size>
+            var help = new List<Valve_Size>();
+            var comaddress = _com.Value.productURL;
+            var st = "ValveSize/getValveSizesForSpecificValve/" + id;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var g = await response.Content.ReadAsStringAsync();
+                    var t = g.Split(',');
+                    foreach (string s in t)
+                    {
+                        help.Add((Valve_Size)JsonConvert.DeserializeObject(s));
+                    }
+                }
+            }
+            return Ok(help);
+            //return Ok(await _vc.GetValveCodeSizes(id));
+        }
+
+        #endregion
+
+
+
+
+
+
+
     }
 }

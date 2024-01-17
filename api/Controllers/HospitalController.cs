@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -235,6 +238,8 @@ namespace api.Controllers
         public async Task<IActionResult> getQuestion19([FromQuery] HospitalParams hp)
         {
             var comaddress = _com.Value.hospitalURL;
+            var plFromC = new Class_PL_From_Container();
+            
             var selectedIsoCode = "0";
             // get the isocode first
             var st = "Country/getIsoFromDescription/" + hp.code;
@@ -256,21 +261,46 @@ namespace api.Controllers
             {
                 using (var response = await httpClient.GetAsync(comaddress1))
                 {
-                    var result = await response.Content.ReadAsStringAsync();
-                    return Ok(result);
+                    var help = await response.Content.ReadAsStringAsync();
+                    // serialize
+                    var res = JsonConvert.DeserializeObject<List<Class_Hospital_from_Container>>(help);
+                    /* 
+                     foreach(var header in response.Headers){
+                        Console.WriteLine($"{header.Key}={header.Value.First()}");
+                    } */ 
+                    if(response.Headers.Contains("Pagination")){
+                      var ph = response.Headers.GetValues("Pagination").First();
+                      plFromC = JsonConvert.DeserializeObject<Class_PL_From_Container>(ph);
+                    }
+                    Response.AddPagination(plFromC.currentPage, plFromC.itemsPerPage, plFromC.totalItems, plFromC.totalPages);
+               
+                    return Ok(res);
                 }
             }
         }
 
-        [HttpPost("/api/createHospital/{TelCode}/{hospitalNo}")]
-        public async Task<IActionResult> createHospital(string TelCode, string hospitalNo)
+        [HttpPost("/api/createHospital/{description}/{hospitalNo}")]
+        public async Task<IActionResult> createHospital(string description, string hospitalNo)
         {
-            // country here is '47' for instance
-            // code which is the hospitalNo is ignored
-            var isoCode = _special.getIsoCode(TelCode);
+
+            // country here is 'Greece' for instance
+           
             var comaddress = _com.Value.hospitalURL;
-            var st = "Hospital/" + isoCode + "/" + hospitalNo;
+            var selectedIsoCode = "0";
+            // get the isocode first
+            var st = "Country/getIsoFromDescription/" + description;
             comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    selectedIsoCode = await response.Content.ReadAsStringAsync();
+               }
+            }
+
+            var comaddress1 = _com.Value.hospitalURL;
+            var st1 = "Hospital/" + selectedIsoCode + "/" + hospitalNo;
+            comaddress1 = comaddress1 + st1;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.PostAsync(comaddress, null))
@@ -330,6 +360,23 @@ namespace api.Controllers
                 {
                     var result = await response.Content.ReadAsStringAsync();
                     return Ok(result);// returns 1, which is yes or 0 which is no
+                }
+            }
+
+        }
+        [HttpGet("api/findNextHospitalCode")]
+        public async Task<IActionResult> getHPC()
+        {
+            var hospitalNo = await _special.getCurrentUserHospitalId();
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/findNextHospitalCode";
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    return Ok(result);// returns the new code
                 }
             }
 

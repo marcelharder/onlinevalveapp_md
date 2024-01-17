@@ -57,7 +57,7 @@ export class AddValveComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this.gen.getHospital().subscribe((next) => { this.hospitalName = next.HospitalName; }); // get the current hospital
+        this.gen.getHospital().subscribe((next) => { this.hospitalName = next.hospitalName; }); // get the current hospital
         // tslint:disable-next-line:max-line-length
         this.hos.getVendorsInHospital().subscribe((next) => { this.optionsHospitalVendors = next; }); // get the vendors active in this hospital
     }

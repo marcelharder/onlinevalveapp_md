@@ -21,7 +21,6 @@ export class ListHospitalsComponent implements OnInit {
   details = 0;
   list = 1;
   edit = 0;
-  isocode = "NL";
   selectedCountry = "Nederland";
   pagination: Pagination;
 
@@ -36,48 +35,35 @@ export class ListHospitalsComponent implements OnInit {
     this.route.data.subscribe((data) => {
       this.listOfHospitals = data.hospitals.result;
       this.pagination = data.hospitals.pagination;
-      debugger;
     });
-    this.gen.getListOfCountries().subscribe((next) => {
-      debugger;
-      this.optionCountries = next;
-    })
+    this.gen.getListOfCountries().subscribe((next) => {this.optionCountries = next;})
 
   }
 
-  contentFound() {
-    if (this.listOfHospitals.length > 0) {
-
-      return true;
-    } else { return false; }
-  }
-
+  contentFound() {if (this.listOfHospitals.length > 0) { return true;} else { return false; }}
   displayList() { if (this.list === 1) { return true; } else { return false; } }
   displayDetails() { if (this.details === 1) { return true; } else { return false; } }
   displayEdit() { if (this.edit === 1) { return true; } else { return false; } }
 
-  search() {
+  search() {// this.selectedCountry is bv Greece
     this.loadHospitals();
-    this.alertify.message("searching ...")
   }
 
   addHospital() {
     this.hos.findNextHospitalCode().subscribe((next) => {
       var new_code = next;
-      this.hos.getNewHospital(this.selectedCountry.toString(), new_code).subscribe((next) => {
+      this.hos.getNewHospital(this.selectedCountry, new_code).subscribe((next) => {
         this.selectedHospital = next;
         this.details = 0; this.list = 0; this.edit = 1;
       })
-
     });
 
     this.alertify.message("adding ...")
   }
 
   deleteHospital() {
-    this.hos.removeHospital(+this.selectedHospital.HospitalNo).subscribe(
+    this.hos.removeHospital(+this.selectedHospital.hospitalNo).subscribe(
       (next) => {
-
         this.alertify.message("deleting ...");
       },
       error => { this.alertify.error(error); },
@@ -93,22 +79,18 @@ export class ListHospitalsComponent implements OnInit {
   }
 
   showDetails(id: number) {
-    this.selectedHospital = this.listOfHospitals.find(x => x.HospitalNo === id.toString());
+    this.selectedHospital = this.listOfHospitals.find(x => x.hospitalNo === id.toString());
     this.details = 1;
     this.list = 0;
     this.edit = 0;
   }
 
   loadHospitals() {
-    this.hos.getListOfFullHospitalsPerCountry(
-      this.selectedCountry,
-      this.pagination.currentPage,
-      this.pagination.itemsPerPage).subscribe(
+    this.hos.getListOfFullHospitalsPerCountry(this.selectedCountry,1,5).subscribe(
         (next: PaginatedResult<Hospital[]>) => {
           this.listOfHospitals = next.result;
           this.pagination = next.pagination;
         }, (error) => { this.alertify.error(error); });
-
   }
 
   returnFromAdding(help: string) {

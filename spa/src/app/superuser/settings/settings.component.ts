@@ -24,7 +24,7 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.gen.getHospital().subscribe((next) => { this.hos = next; });
-    this.auth.changeCurrentHospital(this.hos.HospitalName);
+    this.auth.changeCurrentHospital(this.hos.hospitalName);
 
   }
 

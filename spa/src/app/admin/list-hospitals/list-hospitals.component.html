@@ -6,7 +6,7 @@
       </div>
       <div class="p-2">
         <select [(ngModel)]="selectedCountry" name="HPC" class="form-control">
-          <option *ngFor="let an of optionCountries" [value]="an.desciption">{{ an.description }}</option>
+          <option *ngFor="let an of optionCountries" [value]="an.description">{{ an.description }}</option>
         </select>
       </div>
       <div class="p-2"><button class="btn btn-primary" (click)="search()">Go</button></div>
@@ -25,14 +25,14 @@
             <th>ID</th>
             <th>Name</th>
             <th>City</th>
-           <th>Country</th>
+            <th>Country</th>
              <th></th>
           </tr>
           <tr *ngFor="let pro of listOfHospitals">
-            <td>{{pro.HospitalNo}}</td>
-            <td>{{pro.HospitalName}}</td>
-            <td>{{pro.City}}</td>
-            <td>{{pro.Country}}</td>
+            <td>{{pro.hospitalNo}}</td>
+            <td>{{pro.hospitalName}}</td>
+            <td>{{pro.city}}</td>
+            <td>{{pro.country}}</td>
             <td><button class="btn btn-primary" (click)="showDetails(pro.hospitalNo)">details</button></td>
           </tr>
         </table>
@@ -55,7 +55,7 @@
             <div class="col-sm-4">
               <h5><span class="badge badge-secondary">name</span></h5>
             </div>
-            <div class="col-sm-4"><input class="form-control" [(ngModel)]="selectedHospital.naam" name="nameName"></div>
+            <div class="col-sm-4"><input class="form-control" [(ngModel)]="selectedHospital.hospitalName" name="nameName"></div>
             <div class="col-sm-4"></div>
           </div>
           
@@ -63,7 +63,7 @@
             <div class="col-sm-4">
               <h5><span class="badge badge-secondary">address</span></h5>
             </div>
-            <div class="col-sm-4"><input class="form-control" [(ngModel)]="selectedHospital.adres" name="nameemail"></div>
+            <div class="col-sm-4"><input class="form-control" [(ngModel)]="selectedHospital.address" name="nameemail"></div>
             <div class="col-sm-4"></div>
           </div>
           <div class="row">

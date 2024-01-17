@@ -17,7 +17,7 @@ export class ListHospitalsResolver implements Resolve<Hospital[]> {
         ) { }
 
     resolve(route: ActivatedRouteSnapshot): Observable<Hospital[]> {
-        return this.hospitalService.getListOfFullHospitalsPerCountry("NL", this.pageNumber, this.pageSize).pipe(
+        return this.hospitalService.getListOfFullHospitalsPerCountry("Nederland", this.pageNumber, this.pageSize).pipe(
                 catchError(error => {
                     this.alertify.error('Problem retrieving data');
                     this.router.navigate(['/home']);

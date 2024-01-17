@@ -64,7 +64,7 @@ export class SuperuserComponent implements OnInit {
 
     ngOnInit(): void {
         this.gen.getHospital().subscribe((next) => { this.hos = next; });
-        this.auth.changeCurrentHospital(this.hos.HospitalName);
+        this.auth.changeCurrentHospital(this.hos.hospitalName);
 
 
     }

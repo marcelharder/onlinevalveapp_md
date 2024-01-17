@@ -18,7 +18,7 @@ export class HospitalEditCardComponent implements OnInit {
 
   cancel(){
     // delete the newly added hospital
-    this.hos.removeHospital(+this.new_hospital.HospitalNo).subscribe((next)=>{this.alertify.message(next)})
+    this.hos.removeHospital(+this.new_hospital.hospitalNo).subscribe((next)=>{this.alertify.message(next)})
     this.backTo.emit("Cancelled");}
 
   updateHospital(){

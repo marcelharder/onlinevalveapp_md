@@ -72,7 +72,7 @@ export class SearchserialComponent implements OnInit {
 
       this.hosService.getDetails(this.selectedValve.hospital_code).subscribe((res) => {
         this.selectedHospital = res;
-        this.gen.getCountryName(this.selectedHospital.Country).subscribe((c) => {this.country = c; });
+        this.gen.getCountryName(this.selectedHospital.country).subscribe((c) => {this.country = c; });
 
       });
      }, (error) => {console.log(error); });

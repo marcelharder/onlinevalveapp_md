@@ -64,9 +64,24 @@ namespace api.Controllers
 
         [Route("api/vendor/fullProducts/{id}")]
         [HttpGet]
-        public async Task<List<Valve_Code>> getVendor03(int id)
+        public async Task<List<Valve_Code>> getVendor03(int id) // id is vendor code
         {
+            // get currentCountry
+
             var help = await _code.getTypeOfValvesPerCountry(id);
+
+            
+
+             
+
+
+
+
+
+
+
+
+
             return help;
         }
 

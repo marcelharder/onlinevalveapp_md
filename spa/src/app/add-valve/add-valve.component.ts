@@ -30,20 +30,20 @@ export class AddValveComponent implements OnInit {
     allValves = 0;
     valveSizes:Array<number> = [];
     product: TypeOfValve = {
-        valveTypeId: 0,
-        no: 0,
+        ValveTypeId: 0,
+        No: 0,
         uk_code: '',
         us_code: '',
-        description: '',
-        valve_size: [],
-        type: '',
+        Description: '',
+        Valve_size: [],
+        Type: '',
+        Vendor_description: '',
+        Vendor_code: '',
+        Model_code: '',
         image: '',
-        vendor_description: '',
-        vendor_code: '',
-        model_code: '',
-        implant_position: '',
+        Implant_position: '',
         countries: ''
-   };
+    };
     valveInParent: Valve;
 
     constructor(private gen: GeneralService,

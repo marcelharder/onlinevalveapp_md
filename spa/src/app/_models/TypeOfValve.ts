@@ -1,18 +1,18 @@
 import { valveSize } from "./valveSize";
 
 export interface TypeOfValve {
-    valveTypeId: number;
-    no: number;
+    ValveTypeId: number;
+    No: number;
     uk_code: string;
     us_code: string;
-    description: string;
-    valve_size: valveSize[];
-    type: string;
-    vendor_description: string;
-    vendor_code: string;
-    model_code: string;
+    Description: string;
+    Valve_size: valveSize[];
+    Type: string;
+    Vendor_description: string;
+    Vendor_code: string;
+    Model_code: string;
     image: string;
-    implant_position: string;
+    Implant_position: string;
     countries: string;
 }
 

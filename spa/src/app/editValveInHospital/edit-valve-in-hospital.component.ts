@@ -40,18 +40,18 @@ export class EditValveInHospitalComponent implements OnInit {
     valveIsPatch = false;
     ch = 0;
     product: TypeOfValve = {
-        valveTypeId: 0,
-        no: 0,
+        ValveTypeId: 0,
+        No: 0,
         uk_code: '',
         us_code: '',
-        description: '',
-        valve_size: [],
-        type: '',
+        Description: '',
+        Valve_size: [],
+        Type: '',
+        Vendor_description: '',
+        Vendor_code: '',
+        Model_code: '',
         image: '',
-        vendor_description: '',
-        vendor_code: '',
-        model_code: '',
-        implant_position: '',
+        Implant_position: '',
         countries: ''
     };
 
@@ -110,11 +110,11 @@ export class EditValveInHospitalComponent implements OnInit {
         this.ch = 1;
         // find the valvetype through the modelNo, get the valve sizes
         this.prod.getProductByProduct_code(this.valve.product_code).subscribe((next) => {
-            this.prod.getValveSizes(next.valveTypeId).subscribe((next) => {
+            this.prod.getValveSizes(next.ValveTypeId).subscribe((next) => {
                 this.valveSizes = next;
             })
 
-            this.alertify.message(this.product.description);
+            this.alertify.message(this.product.Description);
         }, error => {
             this.alertify.error(error);
         })

@@ -54,9 +54,9 @@ export class EditProductComponent implements OnInit {
      this.showAdd = 0;
      this.valvesize.size = this.newsize;
      this.valvesize.eoa = this.neweoa;
-     this.prod.addValveSize(this.vc.valveTypeId, this.valvesize).subscribe((next)=>{
+     this.prod.addValveSize(this.vc.ValveTypeId, this.valvesize).subscribe((next)=>{
           // get the changed valveType
-      this.prod.getProductById(this.vc.valveTypeId).subscribe((next)=>{
+      this.prod.getProductById(this.vc.ValveTypeId).subscribe((next)=>{
         this.newsize = 0; 
         this.neweoa = 0.0;
         this.alertify.message("uploading size");
@@ -70,10 +70,10 @@ export class EditProductComponent implements OnInit {
      
   }
   deleteSize(id:number){
-    this.prod.deleteValveSize(this.vc.valveTypeId, id).subscribe((next)=>{
+    this.prod.deleteValveSize(this.vc.ValveTypeId, id).subscribe((next)=>{
       this.alertify.message("size removed ...");
       // get the changed valveType
-      this.prod.getProductById(this.vc.valveTypeId).subscribe((next)=>{this.vc = next});
+      this.prod.getProductById(this.vc.ValveTypeId).subscribe((next)=>{this.vc = next});
     })
    
   }
@@ -85,7 +85,7 @@ export class EditProductComponent implements OnInit {
   }
   deleteProduct() {
     this.alertify.confirm('Are you sure ?', () => {
-      this.prod.deleteProduct(this.vc.no).subscribe();
+      this.prod.deleteProduct(this.vc.No).subscribe();
       this.povOut.emit(1);
     });
 

@@ -46,9 +46,9 @@ export class VendorService {
     getVendorContactPerson(vendorId: number){ return this.http.get<number>(this.baseUrl + 'vendorContact/' + vendorId);}
 
     getProductByVendor(vendorId: number, country: string) { return this.http.get<DropItem[]>(
-        this.baseUrl + 'vendor/valveCodesItemsPerCountry/' + vendorId + '/' + country); }
+        this.baseUrl + 'vendor/valvecodes/' + vendorId + '/' + country); }
     
     getAllFullProducts(vendorId: number, country: string) { return this.http.get<TypeOfValve[]>(
-        this.baseUrl + 'vendor/valveCodesPerCountry/' + vendorId  + '/' + country); }
+        this.baseUrl + 'vendor/fullProducts/' + vendorId  + '/' + country); }
 
 }

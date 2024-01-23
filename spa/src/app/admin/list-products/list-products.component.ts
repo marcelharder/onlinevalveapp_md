@@ -19,7 +19,7 @@ export class ListProductsComponent implements OnInit {
   listOfProducts:Array<TypeOfValve> = [];
   listOfVendors:Array<DropItem> =[];
   listOfCountries:Array<DropItem> =[];
-  selectedCountry = "";
+  selectedCountry = "All";
   selectedVendor = 0;
   details = 0;
   productDetails: TypeOfValve;
@@ -33,8 +33,19 @@ export class ListProductsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.vendorService.getVendors().subscribe((nxt)=>{this.listOfVendors = nxt;})
-    this.gen.getListOfCountries().subscribe((next) => { this.listOfCountries = next; });
+    this.vendorService.getVendors().subscribe((nxt)=>{
+      this.listOfVendors = nxt;
+      var h:DropItem = {value:0, description: "Choose"};
+      this.listOfVendors.unshift(h);
+    
+    
+    
+    })
+    this.gen.getListOfCountries().subscribe((next) => {
+       this.listOfCountries = next;
+       var h:DropItem = {value:0, description: "All"};
+       this.listOfCountries.unshift(h);
+      });
     this.route.data.subscribe((data) => { this.listOfProducts = data.products; })
   }
 

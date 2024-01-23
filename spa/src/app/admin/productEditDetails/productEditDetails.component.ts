@@ -21,12 +21,12 @@ export class productEditDetailsComponent implements OnInit {
   ngOnInit() { }
 
   deleteSize(SizeId: number) {
-    this.pro.deleteValveSize(this.prod.no, SizeId).subscribe((next) => {
+    this.pro.deleteValveSize(this.prod.No, SizeId).subscribe((next) => {
       if (next === 1) {
         this.alertify.message("deleted");
         // remove it from the local array
-        let index = this.prod.valve_size.findIndex(d => d.sizeId === SizeId); //find index in your array
-        this.prod.valve_size.splice(index, 1);//remove element from array
+        let index = this.prod.Valve_size.findIndex(d => d.sizeId === SizeId); //find index in your array
+        this.prod.Valve_size.splice(index, 1);//remove element from array
       }
     });
 
@@ -34,7 +34,7 @@ export class productEditDetailsComponent implements OnInit {
 
   addNewSize() {
     // get the latest prod details
-    this.pro.getProductById(this.prod.no).subscribe((next) => {
+    this.pro.getProductById(this.prod.No).subscribe((next) => {
       this.prod = next;
       // zero everything
       this.valvesize.sizeId = 0;
@@ -54,9 +54,9 @@ export class productEditDetailsComponent implements OnInit {
 
   addNewSizeNow() {
     // add this size to the backend first  
-    this.pro.addValveSize(this.prod.no, this.valvesize).subscribe((next) => {
+    this.pro.addValveSize(this.prod.No, this.valvesize).subscribe((next) => {
       this.valvesize = next; // get the new valve size from the backend
-      this.prod.valve_size.push(this.valvesize);
+      this.prod.Valve_size.push(this.valvesize);
 
       this.newSizeToken = 0;
 

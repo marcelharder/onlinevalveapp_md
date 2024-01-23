@@ -54,18 +54,18 @@ export class SelectValveComponent implements OnInit {
 
 
   product: TypeOfValve = {
-    valveTypeId: 0,
-    no: 0,
+    ValveTypeId: 0,
+    No: 0,
     uk_code: '',
     us_code: '',
-    description: '',
-    valve_size: [],
-    type: '',
+    Description: '',
+    Valve_size: [],
+    Type: '',
+    Vendor_description: '',
+    Vendor_code: '',
+    Model_code: '',
     image: '',
-    vendor_description: '',
-    vendor_code: '',
-    model_code: '',
-    implant_position: '',
+    Implant_position: '',
     countries: ''
   };
 
@@ -171,7 +171,7 @@ export class SelectValveComponent implements OnInit {
         this.prod.getProductById(id).subscribe(
           (next) => {
             this.product = next;
-            this.product.valve_size = this.valveSizes;
+            this.product.Valve_size = this.valveSizes;
           })
       },(error) => { this.alertify.error(error) },() => { this.showProduct = 0; });
     }

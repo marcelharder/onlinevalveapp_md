@@ -25,7 +25,7 @@ export class SelectValveTypeDetailsComponent implements OnInit, OnChanges {
 
   ngOnInit() {
    
-    if(this.pro.model_code === 'PVS-67'){
+    if(this.pro.Model_code === 'PVS-67'){
       this.optionsInfo = 
       [
         'The Perceval valve has different sizing unlike other valves',
@@ -47,10 +47,10 @@ export class SelectValveTypeDetailsComponent implements OnInit, OnChanges {
   }
 
   showAdditionalInfo(template: TemplateRef<any>){
-     if(this.pro.model_code === 'PVS-67'){
+     if(this.pro.Model_code === 'PVS-67'){
      this.openModal(template);
      }
-     else{this.alertify.message("No additional info on " + this.pro.description);}
+     else{this.alertify.message("No additional info on " + this.pro.Description);}
     }
 
   openModal(template: TemplateRef<any>) { this.modalRef = this.modalService.show(template); }  

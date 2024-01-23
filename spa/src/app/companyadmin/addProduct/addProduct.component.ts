@@ -25,7 +25,7 @@ export class AddProductComponent implements OnInit {
 
   ngOnInit() { 
     
-    this.prodService.getValveSizes(this.vc.valveTypeId).subscribe((next)=>{
+    this.prodService.getValveSizes(this.vc.ValveTypeId).subscribe((next)=>{
       this.ValveCodeSizes = next;
     });
     
@@ -48,7 +48,7 @@ export class AddProductComponent implements OnInit {
      this.showAdd = 0;
      this.valvesize.size = this.newsize;
      this.valvesize.eoa = this.neweoa;
-     this.prodService.addValveSize(this.vc.valveTypeId, this.valvesize).subscribe((next)=>{
+     this.prodService.addValveSize(this.vc.ValveTypeId, this.valvesize).subscribe((next)=>{
        this.ValveCodeSizes.push(next);
        this.newsize = 0; 
        this.neweoa = 0.0;
@@ -57,7 +57,7 @@ export class AddProductComponent implements OnInit {
      
   }
   deleteSize(id:number){
-    this.prodService.deleteValveSize(this.vc.valveTypeId, id).subscribe((next)=>{
+    this.prodService.deleteValveSize(this.vc.ValveTypeId, id).subscribe((next)=>{
       this.alertify.message("size removed ...");
       var index = this.ValveCodeSizes.findIndex(a => a.sizeId === id);
        this.ValveCodeSizes.splice[index];

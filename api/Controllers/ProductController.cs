@@ -294,21 +294,22 @@ namespace api.Controllers
         {
             var help = new List<Valve_Code>();
             var comaddress = _com.Value.productURL;
-            var st = "ValveCode/getAllValveCodes";
+            var st = "ValveCode/products";
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     var g = await response.Content.ReadAsStringAsync();
-                    var t = g.Split(',');
+                    return Ok(g);
+                   /*  var t = g.Split(',');
                     foreach (string s in t)
                     {
                         help.Add((Valve_Code)JsonConvert.DeserializeObject(s));
-                    }
+                    } */
                 }
             }
-            return Ok(help);
+            
             //  var result = await _vc.getAllProducts();
             //  return Ok(result);
         }

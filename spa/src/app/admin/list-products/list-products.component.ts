@@ -5,6 +5,7 @@ import { TypeOfValve } from 'src/app/_models/TypeOfValve';
 import { Vendor } from 'src/app/_models/Vendor';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { AuthService } from 'src/app/_services/auth.service';
+import { GeneralService } from 'src/app/_services/general.service';
 import { ProductService } from 'src/app/_services/product.service';
 import { VendorService } from 'src/app/_services/vendor.service';
 
@@ -17,12 +18,15 @@ export class ListProductsComponent implements OnInit {
 
   listOfProducts:Array<TypeOfValve> = [];
   listOfVendors:Array<DropItem> =[];
+  listOfCountries:Array<DropItem> =[];
+  selectedCountry = "";
   selectedVendor = 0;
   details = 0;
   productDetails: TypeOfValve;
 
   constructor(private route: ActivatedRoute,
     private vendorService: VendorService,
+    private gen: GeneralService,
     private prod: ProductService,
     private alertify: AlertifyService,
     private authService: AuthService) { }
@@ -30,13 +34,13 @@ export class ListProductsComponent implements OnInit {
   ngOnInit() {
 
     this.vendorService.getVendors().subscribe((nxt)=>{this.listOfVendors = nxt;})
-
+    this.gen.getListOfCountries().subscribe((next) => { this.listOfCountries = next; });
     this.route.data.subscribe((data) => { this.listOfProducts = data.products; })
   }
 
   vendorChanged(){
     // get the products from this vendor
-    this.vendorService.getAllFullProducts(this.selectedVendor).subscribe((next)=>{
+    this.vendorService.getAllFullProducts(this.selectedVendor, this.selectedCountry).subscribe((next)=>{
       this.listOfProducts = next;
     })
     

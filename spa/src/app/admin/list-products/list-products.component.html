@@ -2,9 +2,13 @@
   <div class="card-header"  *ngIf="!displayDetails()">
     <div class="p-2 bd-highlight"><h3><span class="badge badge-secondary">Select Vendor</span></h3></div>
     <div class="p-2 flex-grow-1 bd-highlight">
-      <select [(ngModel)]="selectedVendor" name="select3" class="form-control" (change)="vendorChanged()">
+      <select [(ngModel)]="selectedVendor" name="select3" class="form-control" >
         <option *ngFor="let oop of listOfVendors" [value]="oop.value">{{ oop.description }}</option>
       </select>
+      <select [(ngModel)]="selectedCountry" name="select456" class="form-control">
+        <option *ngFor="let oop of listOfCountries" [value]="oop.description">{{ oop.description }}</option>
+      </select>
+      <button (click)="vendorChanged">Go</button>
     </div>
   </div>
   <div class="card-body">

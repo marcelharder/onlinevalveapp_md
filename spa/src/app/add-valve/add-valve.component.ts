@@ -63,7 +63,9 @@ export class AddValveComponent implements OnInit {
     }
 
     findValveshere(s: number) {
-        this.ven.getProductByVendor(s).subscribe((next) => { this.optionsHospitalProducts = next; });
+        var cc = "";
+        this.auth.currentCountry.subscribe(next => {cc = next;})
+        this.ven.getProductByVendor(s,cc).subscribe((next) => { this.optionsHospitalProducts = next; });
     }
 
     getPresets(p: number) {

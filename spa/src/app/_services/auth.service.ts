@@ -16,6 +16,9 @@ export class AuthService {
   Hospital = new BehaviorSubject<string>('0');
   currentHospital = this.Hospital.asObservable();
 
+  Country = new BehaviorSubject<string>('0');
+  currentCountry = this.Hospital.asObservable();
+
   SerialNumber = new BehaviorSubject<string>('');
   currentSerial = this.SerialNumber.asObservable();
 
@@ -25,6 +28,7 @@ constructor(private http: HttpClient) { }
 
 changeCurrentHospital(sh: string) { this.Hospital.next(sh); }
 changeCurrentSerial(sh: string) { this.SerialNumber.next(sh); }
+changeCurrentCountry(sh: string) { this.Country.next(sh); }
 
 login(model: any) {
     return this.http.post(this.baseUrl + 'auth/login', model).pipe(

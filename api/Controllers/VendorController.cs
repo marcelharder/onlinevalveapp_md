@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using api.DAL.Code;
 using api.DAL.dtos;
@@ -19,19 +20,22 @@ namespace api.Controllers
     {
 
         private IVendor _vendor;
+        private IOptions<ComSettings> _com;
 
         private SpecialMaps _code;
-       
+
         private Cloudinary _cloudinary;
         private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
         public VendorController(
+            IOptions<ComSettings> com,
             IVendor vendor,
             SpecialMaps code,
             IOptions<CloudinarySettings> cloudinaryConfig)
         {
             _vendor = vendor;
             _code = code;
-            
+            _com = com;
+
             _cloudinaryConfig = cloudinaryConfig;
             Account acc = new Account(
               _cloudinaryConfig.Value.CloudName,
@@ -40,6 +44,10 @@ namespace api.Controllers
           );
             _cloudinary = new Cloudinary(acc);
         }
+
+
+
+
         [Route("api/vendor/{id}", Name = "getVendor")]
         [HttpGet]
         public async Task<Class_Vendors> getVendor(int id)
@@ -54,21 +62,8 @@ namespace api.Controllers
             var help = await _vendor.getVendorByName(name);
             return help;
         }
-        [Route("api/vendor/valvecodes/{id}")]
-        [HttpGet]
-        public async Task<List<Class_Item>> getVendor02(int id)
-        {
-            var help = await _code.getValveCodesPerCountry(id);
-            return help;
-        }
 
-        [Route("api/vendor/fullProducts/{id}")]
-        [HttpGet]
-        public async Task<List<Valve_Code>> getVendor03(int id)
-        {
-            var help = await _code.getTypeOfValvesPerCountry(id);
-            return help;
-        }
+
 
         [Route("api/updatevendor")]
         [HttpPut]
@@ -161,6 +156,77 @@ namespace api.Controllers
             return BadRequest();
         }
 
+
+
+        #region <!-- Valve Code Stuff-->
+
+        [Route("api/vendor/valvecodes/{id}/{CountryDescription}")]
+        [HttpGet]
+        public async Task<IActionResult> getVendor02(int id, string CountryDescription)
+        {
+                var comaddress = _com.Value.hospitalURL;
+                var selectedIsoCode = "0";
+                // get the isocode first
+                var st = "Country/getIsoFromDescription/" + CountryDescription;
+                comaddress = comaddress + st;
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.GetAsync(comaddress))
+                    {
+                        selectedIsoCode = await response.Content.ReadAsStringAsync();
+
+                    }
+                }
+
+                var comaddress2 = _com.Value.productURL;
+                var st2 = "Vendor/valveCodesItemsPerCountry/" + id + "/" + selectedIsoCode;
+                comaddress2 = comaddress2 + st2;
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.GetAsync(comaddress2))
+                    {
+                        var help = await response.Content.ReadAsStringAsync();
+                        return Ok(help);
+                    }
+                }
+            
+            //var help = await _code.getValveCodesPerCountry(id);
+            //return help;
+        }
+
+        [Route("api/vendor/fullProducts/{id}/{CountryDescription}")]
+        [HttpGet]
+        public async Task<IActionResult> getVendor03(int id, string CountryDescription)
+        {
+           
+            var comaddress = _com.Value.hospitalURL;
+            var selectedIsoCode = "0";
+            // get the isocode first
+            var st = "Country/getIsoFromDescription/" + CountryDescription;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    selectedIsoCode = await response.Content.ReadAsStringAsync();
+
+                }
+            }
+
+            var comaddress2 = _com.Value.productURL;
+            var st2 = "Vendor/valveCodesPerCountry/" + id + "/" + selectedIsoCode;
+            comaddress2 = comaddress2 + st2;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress2))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);
+                }
+            }
+        }
+
+        #endregion
 
         /*   [Route("api/addVendorLogo")]
           [HttpPost]

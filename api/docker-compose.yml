@@ -13,7 +13,7 @@ services:
      - mariadb-data:/var/lib/mysql
 
   product:
-    image: product_app:v2
+    image: product_app:v4
     networks:
       - internal-container-network
     depends_on:
@@ -28,7 +28,7 @@ services:
      - internal-container-network  
 
   hospital:
-     image: hospital_app:v14
+     image: hospital_app:v15
      ports:
        - 8103:80
      networks: 

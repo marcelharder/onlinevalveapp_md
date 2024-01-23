@@ -57,7 +57,7 @@ export class CompanyadminComponent implements OnInit {
     this.user.getUser(this.auth.decodedToken.nameid).subscribe((next) => {
       rep = next;
       this.vendorName = next.vendorName;
-      this.ven.getProductByVendor(next.vendorCode).subscribe((nex) => {
+      this.ven.getProductByVendor(next.vendorCode, "All").subscribe((nex) => {
         this.optionsProducts = nex;
         this.optionsProducts.unshift(this.allProducts);
         this.sp = this.optionsProducts[0].description;

@@ -57,6 +57,7 @@ export class NavMenuComponent implements OnInit {
                     break;
                 case 'superuser':
                     this.specialLogged = true;
+                    this.auth.changeCurrentCountry(this.auth.decodedToken.Country);
                     break;
                 case 'companyadmin':
                     this.companyAdminLogged = true;

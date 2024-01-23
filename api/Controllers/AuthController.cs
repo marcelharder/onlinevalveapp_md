@@ -45,6 +45,7 @@ namespace OnlineValveApplication_02.Controllers
             var claims = new[] {
         new Claim(ClaimTypes.NameIdentifier, userFromRepo.UserId.ToString()),
         new Claim(ClaimTypes.Name, userFromRepo.Username),
+        new Claim(ClaimTypes.Country, userFromRepo.Country),
         new Claim(ClaimTypes.Role, userFromRepo.Role)
         };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));

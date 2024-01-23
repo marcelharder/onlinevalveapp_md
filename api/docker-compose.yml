@@ -13,7 +13,7 @@ services:
      - mariadb-data:/var/lib/mysql
 
   product:
-    image: product_app:v4
+    image: product_app:v5
     networks:
       - internal-container-network
     depends_on:

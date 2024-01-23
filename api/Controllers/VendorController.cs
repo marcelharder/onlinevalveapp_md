@@ -164,6 +164,64 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IActionResult> getVendor02(int id, string CountryDescription)
         {
+
+            if (CountryDescription != "All")
+            {
+                var comaddress = _com.Value.hospitalURL;
+                var selectedIsoCode = "0";
+                // get the isocode first
+                var st = "Country/getIsoFromDescription/" + CountryDescription;
+                comaddress = comaddress + st;
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.GetAsync(comaddress))
+                    {
+                        selectedIsoCode = await response.Content.ReadAsStringAsync();
+
+                    }
+                }
+
+
+                var comaddress2 = _com.Value.productURL;
+                var st2 = "Vendor/valveCodesItemsPerCountry/" + id + "/" + selectedIsoCode;
+                comaddress2 = comaddress2 + st2;
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.GetAsync(comaddress2))
+                    {
+                        var help = await response.Content.ReadAsStringAsync();
+                        return Ok(help);
+                    }
+                }
+            }
+
+            else
+            {
+
+                var comaddress3 = _com.Value.productURL;
+                var st3 = "Vendor/valveCodesItemsPerCountry/" + id + "/" + "All";
+                comaddress3 = comaddress3 + st3;
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.GetAsync(comaddress3))
+                    {
+                        var help = await response.Content.ReadAsStringAsync();
+                        return Ok(help);
+                    }
+                }
+
+            }
+            //var help = await _code.getValveCodesPerCountry(id);
+            //return help;
+        }
+
+        [Route("api/vendor/fullProducts/{id}/{CountryDescription}")]
+        [HttpGet]
+        public async Task<IActionResult> getVendor03(int id, string CountryDescription)
+        {
+
+            if (CountryDescription != "All")
+            {
                 var comaddress = _com.Value.hospitalURL;
                 var selectedIsoCode = "0";
                 // get the isocode first
@@ -179,7 +237,7 @@ namespace api.Controllers
                 }
 
                 var comaddress2 = _com.Value.productURL;
-                var st2 = "Vendor/valveCodesItemsPerCountry/" + id + "/" + selectedIsoCode;
+                var st2 = "Vendor/valveCodesPerCountry/" + id + "/" + selectedIsoCode;
                 comaddress2 = comaddress2 + st2;
                 using (var httpClient = new HttpClient())
                 {
@@ -189,39 +247,19 @@ namespace api.Controllers
                         return Ok(help);
                     }
                 }
-            
-            //var help = await _code.getValveCodesPerCountry(id);
-            //return help;
-        }
-
-        [Route("api/vendor/fullProducts/{id}/{CountryDescription}")]
-        [HttpGet]
-        public async Task<IActionResult> getVendor03(int id, string CountryDescription)
-        {
-           
-            var comaddress = _com.Value.hospitalURL;
-            var selectedIsoCode = "0";
-            // get the isocode first
-            var st = "Country/getIsoFromDescription/" + CountryDescription;
-            comaddress = comaddress + st;
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync(comaddress))
-                {
-                    selectedIsoCode = await response.Content.ReadAsStringAsync();
-
-                }
             }
-
-            var comaddress2 = _com.Value.productURL;
-            var st2 = "Vendor/valveCodesPerCountry/" + id + "/" + selectedIsoCode;
-            comaddress2 = comaddress2 + st2;
-            using (var httpClient = new HttpClient())
+            else
             {
-                using (var response = await httpClient.GetAsync(comaddress2))
+                var comaddress3 = _com.Value.productURL;
+                var st3 = "Vendor/valveCodesPerCountry/" + id + "/" + "All";
+                comaddress3 = comaddress3 + st3;
+                using (var httpClient = new HttpClient())
                 {
-                    var help = await response.Content.ReadAsStringAsync();
-                    return Ok(help);
+                    using (var response = await httpClient.GetAsync(comaddress3))
+                    {
+                        var help = await response.Content.ReadAsStringAsync();
+                        return Ok(help);
+                    }
                 }
             }
         }

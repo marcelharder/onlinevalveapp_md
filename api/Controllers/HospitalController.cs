@@ -37,6 +37,27 @@ namespace api.Controllers
             _vendor = vendor;
         }
 
+        [HttpGet("api/saveContactToHospital/{contact}/{contactImage}")]
+        public async Task<IActionResult> saveContacts(string contact, string contactImage) {
+            var currentHospitalId = await _special.getCurrentUserHospitalId();
+            if (currentHospitalId != 0)
+            {
+             
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/saveContactToHospital/" + currentHospitalId + '/' + contact + '/' + contactImage;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);
+                }
+            }
+            }
+            return BadRequest("");
+         }
+
         [HttpGet("api/hospital/vendors")]
         public async Task<IActionResult> getVendorsInHospital()
         {
@@ -165,28 +186,30 @@ namespace api.Controllers
             else { return BadRequest("Requestor should be companyHQ or companyadmin"); }
         }
 
+
         [AllowAnonymous]
         [HttpGet("api/getHospitalDetails")]
         public async Task<IActionResult> getQuestion017()
         {
             var currentHospitalId = await _special.getCurrentUserHospitalId();
-            if(currentHospitalId != 0){
-            var comaddress = _com.Value.hospitalURL;
-            var st = "Hospital/" + currentHospitalId;
-            comaddress = comaddress + st;
-            using (var httpClient = new HttpClient())
+            if (currentHospitalId != 0)
             {
-                using (var response = await httpClient.GetAsync(comaddress))
+                var comaddress = _com.Value.hospitalURL;
+                var st = "Hospital/" + currentHospitalId;
+                comaddress = comaddress + st;
+                using (var httpClient = new HttpClient())
                 {
-                    var help = await response.Content.ReadAsStringAsync();
-                    return Ok(help);
+                    using (var response = await httpClient.GetAsync(comaddress))
+                    {
+                        var help = await response.Content.ReadAsStringAsync();
+                        return Ok(help);
+                    }
                 }
             }
-            }
             return BadRequest("");
-          
-           /*  var hospital = await _special.getHospital(id);
-            return Ok(hospital); */
+
+            /*  var hospital = await _special.getHospital(id);
+             return Ok(hospital); */
         }
 
         [HttpPut("api/saveHospitalDetails")]
@@ -222,7 +245,7 @@ namespace api.Controllers
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     selectedIsoCode = await response.Content.ReadAsStringAsync();
-                    
+
                 }
             }
 
@@ -244,7 +267,7 @@ namespace api.Controllers
         {
             var comaddress = _com.Value.hospitalURL;
             var plFromC = new Class_PL_From_Container();
-            
+
             var selectedIsoCode = "0";
             // get the isocode first
             var st = "Country/getIsoFromDescription/" + hp.code;
@@ -254,7 +277,7 @@ namespace api.Controllers
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     selectedIsoCode = await response.Content.ReadAsStringAsync();
-                    
+
                 }
             }
 
@@ -272,13 +295,14 @@ namespace api.Controllers
                     /* 
                      foreach(var header in response.Headers){
                         Console.WriteLine($"{header.Key}={header.Value.First()}");
-                    } */ 
-                    if(response.Headers.Contains("Pagination")){
-                      var ph = response.Headers.GetValues("Pagination").First();
-                      plFromC = JsonConvert.DeserializeObject<Class_PL_From_Container>(ph);
+                    } */
+                    if (response.Headers.Contains("Pagination"))
+                    {
+                        var ph = response.Headers.GetValues("Pagination").First();
+                        plFromC = JsonConvert.DeserializeObject<Class_PL_From_Container>(ph);
                     }
                     Response.AddPagination(plFromC.currentPage, plFromC.itemsPerPage, plFromC.totalItems, plFromC.totalPages);
-               
+
                     return Ok(res);
                 }
             }
@@ -289,7 +313,7 @@ namespace api.Controllers
         {
 
             // country here is 'Greece' for instance
-           
+
             var comaddress = _com.Value.hospitalURL;
             var selectedIsoCode = "0";
             // get the isocode first
@@ -300,7 +324,7 @@ namespace api.Controllers
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     selectedIsoCode = await response.Content.ReadAsStringAsync();
-               }
+                }
             }
 
             var comaddress1 = _com.Value.hospitalURL;
@@ -369,7 +393,7 @@ namespace api.Controllers
             }
 
         }
-      
+
         [HttpGet("api/findNextHospitalCode")]
         public async Task<IActionResult> getHPC()
         {

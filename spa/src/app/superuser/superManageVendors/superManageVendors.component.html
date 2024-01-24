@@ -6,13 +6,14 @@
       <div class="col-sm-6">
         <div>
           <h6><span>Vendors in hospital</span></h6>
+          <button class="btn-warning btn-sm" (click)="saveVendorsInHospital()">Save</button>
         </div>
         <table class="table table-striped">
           <tr>
             <th>Name</th>
             <th></th>
           </tr>
-          <tr *ngFor="let p of vendors">
+          <tr *ngFor="let p of vendorsInHospital">
             <th>{{p}}</th>
             <td><button class="btn btn-sm btn-success" (click)="showDetails(p)">details</button></td>
           </tr>

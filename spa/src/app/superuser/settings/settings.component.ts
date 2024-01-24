@@ -50,26 +50,19 @@ export class SettingsComponent implements OnInit {
 
     
 
-  getVendorList(): string[]{
-    var help:string[]=[];
-    if(this.hos.vendors !== undefined){
-    return this.hos.vendors.split(',');}
-    return help;
-  }
+  
   returnFromVendor(description: string){
-    debugger;
-    this.hos.vendors = description;
-    this.hosService.saveVendorsToHospital(this.hos.HospitalNo, this.hos.vendors).subscribe((next)=>{
-      this.vendors = 0;
-    });
-    
+    this.alertify.message("uploaded ...");
+    //this.vendors = 0;
   }
+  
   cancelFromVendor(up: string){this.title = "Vendors"; }
+  
   cancelFromContact(up: string){this.vendors = 1; this.contacts = 0;this.title = "Vendors";}
 
-  returnFromContact(up: string){
+  returnFromContact(up: string[]){
   // save the hospitalwith the new contact
-  this.hosService.saveContactToHospital(this.hos.HospitalNo, up).subscribe((next)=>{
+  this.hosService.saveContactToHospital(up[0], up[1]).subscribe((next)=>{
     this.vendors = 1; this.contacts = 0;
   }, (error)=>{this.alertify.error(error)});
   }

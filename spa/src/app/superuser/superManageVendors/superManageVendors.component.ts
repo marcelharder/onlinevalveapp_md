@@ -13,10 +13,11 @@ import { VendorService } from 'src/app/_services/vendor.service';
 })
 export class SuperManageVendorsComponent implements OnInit {
   @Input() selectedHospital: Hospital;
-  @Input() vendors: string[];
+ 
   @Output() backTo: EventEmitter<string> = new EventEmitter<string>();
   @Output() cancelTo: EventEmitter<string> = new EventEmitter<string>();
   allvendors: DropItem[];
+  vendorsInHospital: string[];
   vendorDetails: Vendor = {
     "id": 0,
     "no": 0,
@@ -43,25 +44,45 @@ export class SuperManageVendorsComponent implements OnInit {
     // getAllVendors
     this.vendorService.getVendors().subscribe((next) => {
       this.allvendors = next;
-    })
+    });
+
+    this.vendorsInHospital = this.getVendorList();
+    
+    
+  }
+
+  getVendorList(): string[]{
+    var help:string[]=[];
+    if(this.selectedHospital.vendors !== undefined){ return this.selectedHospital.vendors.split(',');}
+    return help;
+  }
+
+  saveVendorsInHospital(){  // this.vendorsInHospital gives array like so 1,2,3,8
+    let descriptionarray: number[] = [];
+    for (var x=0; x < this.vendorsInHospital.length; x++){
+     descriptionarray.push(this.findDescriptionFromDescription(this.vendorsInHospital[x]));  
+    }
+    this.hospitalService.addVendor(descriptionarray.toString()).subscribe((next)=>{
+      this.backTo.emit("1");
+    });
   }
 
   displayDetails() { if (this.details == 1) { return true; } }
 
   moveToHospital(description: string) {
-    var index = this.vendors.indexOf(description);
+    var index = this.vendorsInHospital.indexOf(description);
     if (index == -1) {
-      this.vendors.push(description);
-      this.backTo.emit(this.vendors.toString());
+      this.vendorsInHospital.push(description);
+      //this.backTo.emit(this.vendors.toString());
     }
     else { this.alertify.message("Vendor is already in hospital") }
   }
 
   deleteVendor() {
-    var index = this.vendors.indexOf(this.vendorDetails.description);
+    var index = this.vendorsInHospital.indexOf(this.vendorDetails.description);
     if (index !== -1) {
-      this.vendors.splice(index, 1);
-      this.backTo.emit(this.vendors.toString());
+      this.vendorsInHospital.splice(index, 1);
+     // this.backTo.emit(this.vendors.toString());
     }
   }
 
@@ -73,6 +94,13 @@ export class SuperManageVendorsComponent implements OnInit {
       // show details page
       this.details = 1;
     }, (error) => { this.alertify.error(error); })
+  }
+
+  findDescriptionFromDescription(id: string){
+    var selectedItem = this.allvendors.find(x => x.description == id);
+    return selectedItem.value;
+  
+  
   }
 }
 

@@ -11,12 +11,14 @@ import { UserService } from 'src/app/_services/user.service';
   styleUrls: ['./superManageContacts.component.css']
 })
 export class SuperManageContactsComponent implements OnInit {
+  
   @Input() selectedHospital: Hospital;
-  @Output() backTo: EventEmitter<string> = new EventEmitter<string>();
+  @Output() backTo: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() cancelTo: EventEmitter<string> = new EventEmitter<string>();
   availableUsers: User[];
   current_contact_username = "";
   current_contact_image = "";
+ 
 
 
   constructor(private alertify: AlertifyService, private userService: UserService) { }
@@ -43,7 +45,10 @@ export class SuperManageContactsComponent implements OnInit {
       help = next;
       this.selectedHospital.contact = help.toString();
       this.selectedHospital.contact_image = p.photoUrl;
-      this.backTo.emit("1");
+      var model:string[] = [];
+      model.push(this.selectedHospital.contact);
+      model.push(this.selectedHospital.contact_image);
+      this.backTo.emit(model);
     },(error)=>{this.alertify.error(error)});
    
 

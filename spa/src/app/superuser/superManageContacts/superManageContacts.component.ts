@@ -3,6 +3,7 @@ import { Hospital } from 'src/app/_models/Hospital';
 import { User } from 'src/app/_models/User';
 import { PaginatedResult } from 'src/app/_models/pagination';
 import { AlertifyService } from 'src/app/_services/alertify.service';
+import { HospitalService } from 'src/app/_services/hospital.service';
 import { UserService } from 'src/app/_services/user.service';
 
 @Component({
@@ -21,7 +22,10 @@ export class SuperManageContactsComponent implements OnInit {
  
 
 
-  constructor(private alertify: AlertifyService, private userService: UserService) { }
+  constructor(
+    private alertify: AlertifyService, 
+    private hosservice: HospitalService,
+    private userService: UserService) { }
 
   ngOnInit() {
     // get username from contact
@@ -39,19 +43,15 @@ export class SuperManageContactsComponent implements OnInit {
 
   Cancel(){this.cancelTo.emit("1")}
 
+  Save(){
+  this.hosservice.saveContactToHospital(this.current_contact_username,this.current_contact_image)
+  .subscribe(()=>{this.cancelTo.emit("1")},error => {this.alertify.error(error)})
+  }
+
   makeCurrentContact(p: User) {
     var help = 0;
-    this.userService.getUserIdFromName(p.username).subscribe((next) => {
-      help = next;
-      this.selectedHospital.contact = help.toString();
-      this.selectedHospital.contact_image = p.photoUrl;
-      var model:string[] = [];
-      model.push(this.selectedHospital.contact);
-      model.push(this.selectedHospital.contact_image);
-      this.backTo.emit(model);
-    },(error)=>{this.alertify.error(error)});
-   
-
+    this.selectedHospital.contact = p.username;
+    this.selectedHospital.contact_image = p.photoUrl;
   }
 
 

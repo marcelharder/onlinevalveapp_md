@@ -7,11 +7,11 @@
           <div class="card-header"><h6><span>Current contact</span></h6></div>
           <div class="card-body">
             <div class="row">
-              <div class="col-sm-12"><h5><span class="badge badge-secondary">{{current_contact_username}}</span></h5></div>
+              <div class="col-sm-12"><h5><span class="badge badge-secondary">{{selectedHospital.contact}}</span></h5></div>
             </div>
             <div class="row">
               <div class="col-sm-12">
-                <img src={{current_contact_image}} width="200px" height="200px">
+                <img src={{selectedHospital.contact_image}} width="200px" height="200px">
               </div>
             </div>
           </div>
@@ -38,6 +38,7 @@
             <div class="row">
               <div class="btn-group">
                 <button class="btn btn-primary" (click)="Cancel()"><i class="fa fa-window-close" aria-hidden="true"></i>Cancel</button>
+                <button class="btn btn-danger" (click)="Save()"><i class="fa fa-window-save" aria-hidden="true"></i>Save</button>
               </div>
             </div>
           </div>

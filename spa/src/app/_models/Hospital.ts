@@ -1,10 +1,10 @@
 export interface Hospital {
 
-        hospitalId: number;
-        hospitalName: string;
-        selectedHospitalName: string;
-        description: string;
-        hospitalNo: string;
+        HospitalId: number;
+        HospitalName: string;
+        SelectedHospitalName: string;
+        Description: string;
+        HospitalNo: string;
         address: string;
         country: string;
         imageUrl: string;

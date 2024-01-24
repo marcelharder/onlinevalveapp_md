@@ -22,25 +22,7 @@ namespace api.DAL.Implementations
             _user = user;
             _context = context;
         }
-        public async Task<List<Class_Item>> getHospitalVendors()
-        {
-            var l = new List<Class_Item>();
-            var currentUserId = _special.getCurrentUserId();
-            var currentUser = await _user.GetUser(currentUserId);
-            var currentHospital = await _special.getHospital(currentUser.hospital_id);
-            var vendors = currentHospital.vendors;
-
-            var vendorArray = vendors.Split(',');
-            foreach (string x in vendorArray)
-            {
-                var help = new Class_Item();
-                help.Value = await _special.getIdFromVendorName(x);
-                help.Description = x;
-                l.Add(help);
-            }
-            return l;
-
-        }
+        
         public async Task<List<Class_Item>> getSphList()
         {
             var l = new List<Class_Item>();
@@ -152,34 +134,7 @@ namespace api.DAL.Implementations
             return result;
         }
 
-        public async Task<Class_Hospital> getDetails(int id)
-        {
-            return await _special.getHospital(id);
-        }
-
-        public async Task<string> saveDetails(HospitalForReturnDTO hrdto)
-        {
-            var help = Convert.ToInt32(hrdto.HospitalNo);
-            var selected_record = await getDetails(help);
-            selected_record.Naam = hrdto.Naam;
-            selected_record.Adres = hrdto.Adres;
-            selected_record.PostalCode = hrdto.PostalCode;
-            selected_record.Image = hrdto.Image;
-            selected_record.RefHospitals = hrdto.RefHospitals;
-            selected_record.StandardRef = hrdto.StandardRef;
-            selected_record.Email = hrdto.Email;
-            selected_record.Contact = hrdto.Contact;
-            selected_record.Contact_image = hrdto.Contact_image;
-            selected_record.Telephone = hrdto.Telephone;
-            selected_record.Fax = hrdto.Fax;
-            selected_record.vendors = hrdto.vendors;
-
-           
-            var result = _context.Hospitals.Update(selected_record);
-
-            if (await _context.SaveChangesAsync() > 0) { return "updated"; }
-            return "failed";
-        }
+       
 
         public async Task<string> changeHospitalForCurrentUser(int hospital_id, User currentUser)
         {

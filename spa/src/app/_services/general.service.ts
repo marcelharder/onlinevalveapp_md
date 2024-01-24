@@ -10,7 +10,6 @@ export class GeneralService {
 
     constructor(private http: HttpClient) { }
 
-    getHospital() { return this.http.get<Hospital>(this.baseUrl + 'hospital'); }
     getVendorId(vendorname: string) { return this.http.get<number>(this.baseUrl + 'vendorId/' + vendorname); }
     getListOfCountries() { return this.http.get<DropItem[]>(this.baseUrl + 'countryList'); }
 

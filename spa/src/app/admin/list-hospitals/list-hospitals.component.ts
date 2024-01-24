@@ -62,7 +62,7 @@ export class ListHospitalsComponent implements OnInit {
   }
 
   deleteHospital() {
-    this.hos.removeHospital(+this.selectedHospital.hospitalNo).subscribe(
+    this.hos.removeHospital(+this.selectedHospital.HospitalNo).subscribe(
       (next) => {
         this.alertify.message("deleting ...");
       },
@@ -79,7 +79,7 @@ export class ListHospitalsComponent implements OnInit {
   }
 
   showDetails(id: number) {
-    this.selectedHospital = this.listOfHospitals.find(x => x.hospitalNo === id.toString());
+    this.selectedHospital = this.listOfHospitals.find(x => x.HospitalNo === id.toString());
     this.details = 1;
     this.list = 0;
     this.edit = 0;

@@ -13,6 +13,7 @@ export class AuthService {
   baseUrl = environment.apiUrl;
   jwtHelper = new JwtHelperService();
   decodedToken: any;
+  
   Hospital = new BehaviorSubject<string>('0');
   currentHospital = this.Hospital.asObservable();
 

@@ -56,8 +56,11 @@ export class HospitalService {
   addVendor(vendor: string, hospitalId: number) { return this.http.get<string>(this.baseUrl + 'addVendor' + '/' + vendor + '/' + hospitalId, { responseType: 'text' as 'json' }); }
   // tslint:disable-next-line:max-line-length
   removeVendor(vendor: string, hospitalId: number) { return this.http.get<string>(this.baseUrl + 'removeVendor' + '/' + vendor + '/' + hospitalId, { responseType: 'text' as 'json' }); }
-  getDetails(hospitalId: number) { return this.http.get<Hospital>(this.baseUrl + 'getHospitalDetails' + '/' + hospitalId); }
+  getDetails() { return this.http.get<Hospital>(this.baseUrl + 'getHospitalDetails'); }
   saveDetails(h: Partial<Hospital>) { return this.http.put<string>(this.baseUrl + 'saveHospitalDetails', h, { responseType: 'text' as 'json' }); }
   isOVIPlace(){return this.http.get<number>(this.baseUrl + 'isOVIPlace');}
+
+  saveVendorsToHospital(hosNo:string, vendors:string){return this.http.get<number>(this.baseUrl + 'saveVendorsToHospital/' + hosNo + '/' + vendors);}
+  saveContactToHospital(hosNo:string, contact:string){return this.http.get<number>(this.baseUrl + 'saveContactToHospital/' + hosNo + '/' + contact);}
    
 }

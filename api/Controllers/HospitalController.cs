@@ -166,11 +166,13 @@ namespace api.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("api/getHospitalDetails/{id}")]
-        public async Task<IActionResult> getQuestion07(int id)
+        [HttpGet("api/getHospitalDetails")]
+        public async Task<IActionResult> getQuestion017()
         {
+            var currentHospitalId = await _special.getCurrentUserHospitalId();
+            if(currentHospitalId != 0){
             var comaddress = _com.Value.hospitalURL;
-            var st = "Hospital/" + id;
+            var st = "Hospital/" + currentHospitalId;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
@@ -180,6 +182,9 @@ namespace api.Controllers
                     return Ok(help);
                 }
             }
+            }
+            return BadRequest("");
+          
            /*  var hospital = await _special.getHospital(id);
             return Ok(hospital); */
         }

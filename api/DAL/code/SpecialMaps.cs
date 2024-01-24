@@ -32,20 +32,7 @@ namespace api.DAL.Code
             _com = com;
 
         }
-        public async Task<Class_Hospital> getHospital(int id)
-        {
-            var comaddress = _com.Value.hospitalURL;
-            var st = "Hospital/" + id;
-            comaddress = comaddress + st;
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync(comaddress))
-                {
-                    var help = await response.Content.ReadAsStringAsync();
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject<Class_Hospital>(help);
-                }
-            }
-        }
+       
 
         #region <!-- country stuff -->   
         public async Task<string> getCountryNameFromISO(string IsoCode)
@@ -360,7 +347,7 @@ namespace api.DAL.Code
         public async Task<ExpiringProduct> mapValveToExpiringProduct(Class_Valve cv, int months)
         {
             var help = new ExpiringProduct();
-            var ch = await this.getHospital(cv.Hospital_code);
+           /*  var ch = await this.getHospital(cv.Hospital_code);
 
             help.id = cv.ValveId;
             help.hospital = ch.Naam;
@@ -371,7 +358,7 @@ namespace api.DAL.Code
             help.contact = await this.getContactNameFromCodeAsync(ch.Contact);
             help.email = ch.Email;
             help.country = await this.getCurrentCountryFromLoggedInUser();
-
+ */
             return help;
         }
         #endregion

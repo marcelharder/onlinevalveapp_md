@@ -3,6 +3,7 @@ import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { Router } from '@angular/router';
 import { GeneralService } from '../_services/general.service';
+import { HospitalService } from '../_services/hospital.service';
 
 @Component({
     selector: 'app-nav-menu',
@@ -24,6 +25,7 @@ export class NavMenuComponent implements OnInit {
     constructor(public auth: AuthService, 
         private alertify: AlertifyService,
         private gen: GeneralService, 
+        private hosservice: HospitalService,
         private router: Router) { }
 
     collapse() {
@@ -52,8 +54,8 @@ export class NavMenuComponent implements OnInit {
                     break;
                 case 'surgeon':
                     this.normalLogged = true;
-                    this.gen.getHospital().subscribe((next) => {
-                        this.auth.changeCurrentHospital(next.hospitalName);});
+                    this.hosservice.getDetails().subscribe((next) => {
+                        this.auth.changeCurrentHospital(next.HospitalName);});
                     break;
                 case 'superuser':
                     this.specialLogged = true;

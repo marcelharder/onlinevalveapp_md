@@ -17,26 +17,9 @@ namespace api.Controllers
             _special = special;
         }
 
-        [Route("api/hospital")]
-        [HttpGet]
-        public async Task<IActionResult> getHospitalAsync()
-        {
-            var hospital_id = await _special.getCurrentUserHospitalId();
+       
 
-            return Ok(await _special.getHospital(hospital_id));
-        }
-
-        [Route("api/hospitalName/{code}")]
-        [HttpGet]
-        public async Task<IActionResult> getHospitalName(int code)
-        {
-            if (code != 0)
-            {
-                var hospital = await _special.getHospital(code);
-                return Ok(hospital.Naam);
-            }
-            return BadRequest("code should not be 0");
-        }
+       
 
         [Route("api/vendorId/{name}")]
         [HttpGet]

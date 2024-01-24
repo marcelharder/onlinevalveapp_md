@@ -29,8 +29,7 @@ export class SuperManageContactsComponent implements OnInit {
     });
 
     // get contacts for this hospital
-
-    this.userService.getListOfUsersInHospital(0, +this.selectedHospital.hospitalNo, 1, 20).subscribe((next) => {
+    this.userService.getListOfUsersInHospital(0, +this.selectedHospital.HospitalNo, 1, 20).subscribe((next) => {
       this.availableUsers = next.result;
     });
   }

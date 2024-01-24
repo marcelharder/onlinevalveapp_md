@@ -8,6 +8,7 @@ import { GraphService } from '../_services/graph.service';
 import * as _ from 'underscore';
 import { from } from 'rxjs';
 import { map, pluck, toArray } from 'rxjs/operators';
+import { HospitalService } from '../_services/hospital.service';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class SurgeonComponent implements OnInit {
   constructor(private auth: AuthService,
     private graphService: GraphService,
     private userService: UserService,
+    private hosservice: HospitalService,
     private gen: GeneralService) { }
   dataFromAPI: Array<GraphItem> = [];
   // dataFromAPI: any;
@@ -34,7 +36,7 @@ export class SurgeonComponent implements OnInit {
   private extractTheData: GraphItem[]
 
   ngOnInit() {
-    this.gen.getHospital().subscribe((res) => { this.hos = res; })
+    this.hosservice.getDetails().subscribe((res) => { this.hos = res; })
     this.showAorticValves();
   }
 

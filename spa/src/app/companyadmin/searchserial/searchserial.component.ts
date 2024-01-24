@@ -70,7 +70,7 @@ export class SearchserialComponent implements OnInit {
       this.valveService.getValveTransfers(+this.auth.decodedToken.nameid, this.selectedValve.valveId)
       .subscribe((nex)=>{ this.transfers = nex; })
 
-      this.hosService.getDetails(this.selectedValve.hospital_code).subscribe((res) => {
+      this.hosService.getDetails().subscribe((res) => {
         this.selectedHospital = res;
         this.gen.getCountryName(this.selectedHospital.country).subscribe((c) => {this.country = c; });
 

@@ -12,6 +12,7 @@ import { HospitalService } from 'src/app/_services/hospital.service';
 })
 export class SettingsComponent implements OnInit {
   hos: Partial<Hospital> = { };
+  HospitalName = "";
   title = "Vendors";
   CardCaption = "List of Vendors in this hospital";
   contacts = 0;
@@ -23,8 +24,13 @@ export class SettingsComponent implements OnInit {
     private alertify: AlertifyService) { }
 
   ngOnInit() {
-    this.gen.getHospital().subscribe((next) => { this.hos = next; });
-    this.auth.changeCurrentHospital(this.hos.hospitalName);
+    this.hosService.getDetails().subscribe((next)=>{
+      debugger;
+      this.HospitalName = next.SelectedHospitalName;
+      this.hos = next;
+    })
+
+    
 
   }
 
@@ -45,11 +51,15 @@ export class SettingsComponent implements OnInit {
     
 
   getVendorList(): string[]{
-    return this.hos.vendors.split(',');
+    var help:string[]=[];
+    if(this.hos.vendors !== undefined){
+    return this.hos.vendors.split(',');}
+    return help;
   }
   returnFromVendor(description: string){
+    debugger;
     this.hos.vendors = description;
-    this.hosService.saveDetails(this.hos).subscribe((next)=>{
+    this.hosService.saveVendorsToHospital(this.hos.HospitalNo, this.hos.vendors).subscribe((next)=>{
       this.vendors = 0;
     });
     
@@ -59,7 +69,7 @@ export class SettingsComponent implements OnInit {
 
   returnFromContact(up: string){
   // save the hospitalwith the new contact
-  this.hosService.saveDetails(this.hos).subscribe((next)=>{
+  this.hosService.saveContactToHospital(this.hos.HospitalNo, up).subscribe((next)=>{
     this.vendors = 1; this.contacts = 0;
   }, (error)=>{this.alertify.error(error)});
   }

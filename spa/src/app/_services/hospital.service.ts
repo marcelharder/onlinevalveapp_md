@@ -53,14 +53,14 @@ export class HospitalService {
   getFullHospitalsWhereVendorIsActive() { return this.http.get<Hospital[]>(this.baseUrl + 'sphlist_full'); }
   getFullHospitalsWhereVendorIsNotActive() { return this.http.get<Hospital[]>(this.baseUrl + 'neg_sphlist_full'); }
   // tslint:disable-next-line:max-line-length
-  addVendor(vendor: string, hospitalId: number) { return this.http.get<string>(this.baseUrl + 'addVendor' + '/' + vendor + '/' + hospitalId, { responseType: 'text' as 'json' }); }
+  addVendor(vendor: string) { return this.http.get<string>(this.baseUrl + 'addVendor' + '/' + vendor, { responseType: 'text' as 'json' }); }
   // tslint:disable-next-line:max-line-length
-  removeVendor(vendor: string, hospitalId: number) { return this.http.get<string>(this.baseUrl + 'removeVendor' + '/' + vendor + '/' + hospitalId, { responseType: 'text' as 'json' }); }
+  removeVendor(vendor: string) { return this.http.get<string>(this.baseUrl + 'removeVendor' + '/' + vendor, { responseType: 'text' as 'json' }); }
   getDetails() { return this.http.get<Hospital>(this.baseUrl + 'getHospitalDetails'); }
   saveDetails(h: Partial<Hospital>) { return this.http.put<string>(this.baseUrl + 'saveHospitalDetails', h, { responseType: 'text' as 'json' }); }
   isOVIPlace(){return this.http.get<number>(this.baseUrl + 'isOVIPlace');}
 
-  saveVendorsToHospital(hosNo:string, vendors:string){return this.http.get<number>(this.baseUrl + 'saveVendorsToHospital/' + hosNo + '/' + vendors);}
-  saveContactToHospital(hosNo:string, contact:string){return this.http.get<number>(this.baseUrl + 'saveContactToHospital/' + hosNo + '/' + contact);}
+  saveContactToHospital(contact:string,contactImage:string){return this.http.get<number>(
+    this.baseUrl + 'saveContactToHospital/' + contact + '/' + contactImage);}
    
 }

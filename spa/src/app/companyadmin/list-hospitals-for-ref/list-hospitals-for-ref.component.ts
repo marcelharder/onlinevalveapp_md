@@ -76,7 +76,7 @@ export class ListHospitalsForRefComponent implements OnInit {
     });
   }
   selectThisHospital(id: number) {
-    this.hosService.addVendor(this.currentVendor, id).subscribe((next) => {
+    this.hosService.addVendor(this.currentVendor).subscribe((next) => {
       if (next === 'updated') {
         this.router.navigate(['/home']);
       }

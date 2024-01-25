@@ -17,14 +17,14 @@
           <div class="card-body">
             <div *ngIf="displayVendors()">
               <app-superManageVendors
-               [selectedHospital]="hos"
+              [selectedHospital]="hos"
                (cancelTo)="cancelFromVendor($event)"
                (backTo)="returnFromVendor($event)">
 
               </app-superManageVendors></div>
             <div *ngIf="displayContacts()"><app-superManageContacts 
-               [selectedHospital]="hos"
-               (cancelTo)="cancelFromContact($event)"
+              [selectedHospital]="hos"
+              (cancelTo)="cancelFromContact($event)"
                (backTo)="returnFromContact($event)"
                >
 

@@ -19,6 +19,7 @@ export class SuperManageContactsComponent implements OnInit {
   availableUsers: User[];
   current_contact_username = "";
   current_contact_image = "";
+  
  
 
 

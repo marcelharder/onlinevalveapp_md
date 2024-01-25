@@ -12,10 +12,11 @@ import { VendorService } from 'src/app/_services/vendor.service';
   styleUrls: ['./superManageVendors.component.css']
 })
 export class SuperManageVendorsComponent implements OnInit {
+  
   @Input() selectedHospital: Hospital;
- 
   @Output() backTo: EventEmitter<string> = new EventEmitter<string>();
   @Output() cancelTo: EventEmitter<string> = new EventEmitter<string>();
+  
   allvendors: DropItem[];
   vendorsInHospital: string[];
   vendorDetails: Vendor = {
@@ -42,9 +43,8 @@ export class SuperManageVendorsComponent implements OnInit {
 
   ngOnInit() {
     // getAllVendors
-    this.vendorService.getVendors().subscribe((next) => {
-      this.allvendors = next;
-    });
+    this.vendorService.getVendors().subscribe((next) => { this.allvendors = next; });
+   
 
     this.vendorsInHospital = this.getVendorList();
     
@@ -53,8 +53,20 @@ export class SuperManageVendorsComponent implements OnInit {
 
   getVendorList(): string[]{
     var help:string[]=[];
-    if(this.selectedHospital.vendors !== undefined){ return this.selectedHospital.vendors.split(',');}
-    return help;
+    var naamStringArray: string[]=[];
+   
+    debugger;
+    if(this.selectedHospital.Vendors !== undefined){
+      
+      help = this.selectedHospital.Vendors.split(',');
+      help = help.filter(a => a!="");
+      for(var x=0;x<help.length;x++)
+      {
+        naamStringArray.push(this.allvendors.find(a => a.value === +help[x]).description);
+      }
+    }
+    
+    return naamStringArray;
   }
 
   saveVendorsInHospital(){  // this.vendorsInHospital gives array like so 1,2,3,8

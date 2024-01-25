@@ -5,8 +5,8 @@ export interface Hospital {
         SelectedHospitalName: string;
         Description: string;
         HospitalNo: string;
-        address: string;
-        country: string;
+        Address: string;
+        Country: string;
         imageUrl: string;
         city: string;
         usesOnlineValveInventory: number;
@@ -25,7 +25,7 @@ export interface Hospital {
         email: string;
         contact: string;
         contact_image: string;
-        vendors:string;
+        Vendors:string;
         telephone: string;
         fax: string;
         logo: string;

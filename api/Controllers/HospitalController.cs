@@ -42,9 +42,8 @@ namespace api.Controllers
             var currentHospitalId = await _special.getCurrentUserHospitalId();
             if (currentHospitalId != 0)
             {
-             
             var comaddress = _com.Value.hospitalURL;
-            var st = "Hospital/saveContactToHospital/" + currentHospitalId + '/' + contact + '/' + contactImage;
+            var st = "Hospital/saveContact/" + currentHospitalId + '/' + contact + '/' + contactImage;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {

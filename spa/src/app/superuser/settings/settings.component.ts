@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { Hospital } from 'src/app/_models/Hospital';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -10,13 +10,13 @@ import { HospitalService } from 'src/app/_services/hospital.service';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, AfterContentInit {
   hos: Partial<Hospital> = { };
   HospitalName = "";
   title = "Vendors";
   CardCaption = "List of Vendors in this hospital";
   contacts = 0;
-  vendors = 1;
+  vendors = 0;
   constructor(
     private hosService: HospitalService,
     private gen: GeneralService, 
@@ -25,13 +25,13 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.hosService.getDetails().subscribe((next)=>{
-      debugger;
       this.HospitalName = next.SelectedHospitalName;
       this.hos = next;
     })
+  }
 
-    
-
+  ngAfterContentInit(){
+    this.vendors = 1;
   }
 
   displayVendors() { if (this.vendors === 1) { return true; } }

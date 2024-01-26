@@ -88,6 +88,21 @@ namespace api.Controllers
                 }
             }
         }
+         [HttpGet("api/replaceVendor/{vendor}")]
+        public async Task<IActionResult> getQuestion05a(string vendor)
+        {
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/replaceVendorInHospital/" + vendor + "/" + await _special.getCurrentUserHospitalId();
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);
+                }
+            }
+        }
 
         [HttpGet("api/removeVendor/{vendor}")]
         public async Task<IActionResult> getQuestion06(string vendor)
@@ -184,8 +199,6 @@ namespace api.Controllers
             }
             else { return BadRequest("Requestor should be companyHQ or companyadmin"); }
         }
-
-
         
         [HttpGet("api/getHospitalDetails")]
         public async Task<IActionResult> getQuestion017()

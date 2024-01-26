@@ -47,7 +47,7 @@ export class SuperManageVendorsComponent implements OnInit {
     for (var x=0; x < this.inHospitalVendors.length; x++){
      descriptionarray.push(this.findValueFromDescription(this.inHospitalVendors[x]));  
     }
-    this.hospitalService.addVendor(descriptionarray.toString()).subscribe((next)=>{
+    this.hospitalService.replaceVendor(descriptionarray.toString()).subscribe((next)=>{
       this.backTo.emit("1");
     }); 
   }

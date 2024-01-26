@@ -160,6 +160,23 @@ namespace api.Controllers
 
         #region <!-- Valve Code Stuff-->
 
+        [Route("api/vendor/valvecodesByIsoCode/{id}/{IsoCode}")]
+        [HttpGet]
+        public async Task<IActionResult> getVendor43(int id, string isocode)
+        {
+            var comaddress3 = _com.Value.productURL;
+            var st3 = "Vendor/valveCodesItemsPerCountry/" + id + "/" + isocode;
+            comaddress3 = comaddress3 + st3;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress3))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);
+                }
+            }
+        }
+
         [Route("api/vendor/valvecodes/{id}/{CountryDescription}")]
         [HttpGet]
         public async Task<IActionResult> getVendor02(int id, string CountryDescription)

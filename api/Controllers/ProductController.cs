@@ -376,21 +376,22 @@ namespace api.Controllers
         { //get the sizes for this valve, return list<Valve_Size>
             var help = new List<Valve_Size>();
             var comaddress = _com.Value.productURL;
-            var st = "ValveSize/getValveSizesForSpecificValve/" + id;
+            var st = "ValveSize/getSizesForValve/" + id;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     var g = await response.Content.ReadAsStringAsync();
-                    var t = g.Split(',');
+                   /*  var t = g.Split(',');
                     foreach (string s in t)
                     {
                         help.Add((Valve_Size)JsonConvert.DeserializeObject(s));
-                    }
+                    } */
+return Ok(g);
                 }
             }
-            return Ok(help);
+            
             //return Ok(await _vc.GetValveCodeSizes(id));
         }
 

@@ -24,11 +24,14 @@ export class AddValveComponent implements OnInit {
     SelectedHospitalVendor = 0;
     SelectedProduct = 0;
     done = 0;
+    currentCountry = "";
+    drop: DropItem;
+    allVendors: Array<DropItem> = [];
     optionsHospitalVendors: Array<DropItem> = [];
     optionsHospitalProducts: Array<DropItem> = [];
     details = 0;
     allValves = 0;
-    valveSizes:Array<number> = [];
+    valveSizes: Array<number> = [];
     product: TypeOfValve = {
         ValveTypeId: 0,
         No: 0,
@@ -47,43 +50,58 @@ export class AddValveComponent implements OnInit {
     valveInParent: Valve;
 
     constructor(private gen: GeneralService,
-                private alertify: AlertifyService,
-                private auth: AuthService,
-                private prod:ProductService,
-                private ven: VendorService,
-                private router: Router,
-                private vs: ValveService,
-                private hos: HospitalService) { }
+        private alertify: AlertifyService,
+        private auth: AuthService,
+        private prod: ProductService,
+        private ven: VendorService,
+        private router: Router,
+        private vs: ValveService,
+        private hos: HospitalService) { }
 
     ngOnInit(): void {
+        var vendorvalues: string[] = [];
+        this.hos.getDetails().subscribe((next) => { // get the current hospital
+            this.hospitalName = next.HospitalName;
+            this.currentCountry = next.Country;
+            vendorvalues = next.Vendors.split(',');
 
-        this.hos.getDetails().subscribe((next) => { this.hospitalName = next.HospitalName; }); // get the current hospital
-        this.hos.getVendorsInHospital().subscribe((next) => {
-            debugger;
-            this.optionsHospitalVendors = next; }); // get the vendors active in this hospital
+            this.ven.getVendors().subscribe((next) => { // get the vendors active in this hospital bv 9,7
+                this.allVendors = next;
+                for (var x = 0; x < vendorvalues.length; x++) {
+                    var help = this.allVendors.find(a => a.value === +vendorvalues[x]);
+                    this.optionsHospitalVendors.push(help);
+                }
+                this.optionsHospitalVendors.unshift({ value: 0, description: "Choose" })
+            });
+        });
     }
 
     findValveshere(s: number) {
-        var cc = "";
-        this.auth.currentCountry.subscribe(next => {cc = next;})
-        this.ven.getProductByVendor(s,cc).subscribe((next) => { this.optionsHospitalProducts = next; });
+        this.optionsHospitalProducts = [];
+        this.ven.getProductByVendorAndIsoCode(s, this.currentCountry).subscribe((next) => {
+            for (var x = 0; x < next.length; x++) { this.optionsHospitalProducts.push(next[x]); }
+        });
     }
 
     getPresets(p: number) {
+        
         if (p !== 0) {
             // get the valveSizes that belog to this valve
             this.valveSizes = [];
-            this.prod.getValveSizes(p).subscribe((next)=>{
-                next.forEach((el)=>{this.valveSizes.push(el.size);});
-               this.valveSizes = this.valveSizes.sort((n1, n2)=> n1 - n2);
+            this.prod.getValveSizes(p).subscribe((next) => {
+                next.forEach((el) => { this.valveSizes.push(el.size); });
+                this.valveSizes = this.valveSizes.sort((n1, n2) => n1 - n2);
             })
+
+           
             // get the selected product, this selectedProduct
-       
+
             this.vs.getValveBasedOnValveCode(p).subscribe((next) => {
+                debugger;
                 this.valveInParent = next;
                 this.details = 1;
                 // get the serial number from the auth service
-                this.auth.currentSerial.subscribe((n) => {this.valveInParent.serial_no = n; });
+                this.auth.currentSerial.subscribe((n) => { this.valveInParent.serial_no = n; });
 
             });
         } else { this.alertify.error('You have to select a type of valve, or use the \'custom valve\' button'); }
@@ -116,9 +134,9 @@ export class AddValveComponent implements OnInit {
         // this.details = 1;
     }
 
-    showDoneButton() { if (this.done === 1) {return true; }}
-    doneWithThis(){
-         // jump naar super user page
+    showDoneButton() { if (this.done === 1) { return true; } }
+    doneWithThis() {
+        // jump naar super user page
         this.router.navigate(['/home']);
     }
 
@@ -131,7 +149,7 @@ export class AddValveComponent implements OnInit {
         // show the done button
         this.valveInParent = $event;
 
-        this.vs.saveValve(this.valveInParent).subscribe((next) => {    }, (error) => { this.alertify.error(error); });
+        this.vs.saveValve(this.valveInParent).subscribe((next) => { }, (error) => { this.alertify.error(error); });
 
     }
 

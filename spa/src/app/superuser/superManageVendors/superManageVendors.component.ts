@@ -18,9 +18,7 @@ export class SuperManageVendorsComponent implements OnInit {
   @Output() backTo: EventEmitter<string> = new EventEmitter<string>();
   @Output() cancelTo: EventEmitter<string> = new EventEmitter<string>();
   
-  allvendors: DropItem[];
-  vendorsInHospital: string[];
-  vendorDetails: Vendor = {
+   vendorDetails: Vendor = {
     "id": 0,
     "no": 0,
     "description": "0",
@@ -42,39 +40,34 @@ export class SuperManageVendorsComponent implements OnInit {
     private hospitalService: HospitalService,
     private alertify: AlertifyService) { }
 
-  ngOnInit() {
-    
-    
-  }
+  ngOnInit() {}
 
- 
-
-  saveVendorsInHospital(){  // this.vendorsInHospital gives array like so 1,2,3,8
-    /* let descriptionarray: number[] = [];
-    for (var x=0; x < this.vendorsInHospital.length; x++){
-     descriptionarray.push(this.findValueFromDescription(this.vendorsInHospital[x]));  
+   saveVendorsInHospital(){  // this.vendorsInHospital gives array like so 1,2,3,8
+     let descriptionarray: number[] = [];
+    for (var x=0; x < this.inHospitalVendors.length; x++){
+     descriptionarray.push(this.findValueFromDescription(this.inHospitalVendors[x]));  
     }
     this.hospitalService.addVendor(descriptionarray.toString()).subscribe((next)=>{
       this.backTo.emit("1");
-    }); */
+    }); 
   }
 
   displayDetails() { if (this.details == 1) { return true; } }
 
   moveToHospital(description: string) {
-    var index = this.vendorsInHospital.indexOf(description);
+    var index = this.inHospitalVendors.indexOf(description);
     if (index == -1) {
-      this.vendorsInHospital.push(description);
+      this.inHospitalVendors.push(description);
       //this.backTo.emit(this.vendors.toString());
     }
     else { this.alertify.message("Vendor is already in hospital") }
   }
 
   deleteVendor() {
-    var index = this.vendorsInHospital.indexOf(this.vendorDetails.description);
+    var index = this.inHospitalVendors.indexOf(this.vendorDetails.description);
     if (index !== -1) {
-      this.vendorsInHospital.splice(index, 1);
-     // this.backTo.emit(this.vendors.toString());
+      this.inHospitalVendors.splice(index, 1);
+      this.details = 0;
     }
   }
 
@@ -88,11 +81,11 @@ export class SuperManageVendorsComponent implements OnInit {
     }, (error) => { this.alertify.error(error); })
   }
 
-  /* findValueFromDescription(id: string){
-    var selectedItem = this.allvendors.find(x => x.description == id);
+   findValueFromDescription(id: string){
+    var selectedItem = this.allVendors.find(x => x.description == id);
     return selectedItem.value;
   
   
-  } */
+  } 
 }
 

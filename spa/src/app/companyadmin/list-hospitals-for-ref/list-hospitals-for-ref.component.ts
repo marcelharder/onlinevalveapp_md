@@ -57,11 +57,11 @@ export class ListHospitalsForRefComponent implements OnInit {
 
       this.selectedHospital = next;
        
-      this.hospitalContactNumber = parseInt(this.selectedHospital.contact, 10);
+      this.hospitalContactNumber = parseInt(this.selectedHospital.Contact, 10);
       //this.auth.changeCurrentRecipient(hospitalContactNumber);
       this.user.getUser(this.hospitalContactNumber).subscribe((reponse) => {
           this.contactName = reponse.username;
-          this.selectedHospital.contact_image = reponse.photoUrl;
+          this.selectedHospital.Contact_image = reponse.photoUrl;
         } );
 
     });

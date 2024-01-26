@@ -23,8 +23,8 @@ export interface Hospital {
         refHospitals: string;
         standardRef: string;
         email: string;
-        contact: string;
-        contact_image: string;
+        Contact: string;
+        Contact_image: string;
         Vendors:string;
         telephone: string;
         fax: string;

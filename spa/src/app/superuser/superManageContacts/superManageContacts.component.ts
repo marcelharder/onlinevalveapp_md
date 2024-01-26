@@ -17,25 +17,15 @@ export class SuperManageContactsComponent implements OnInit {
   @Output() backTo: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() cancelTo: EventEmitter<string> = new EventEmitter<string>();
   availableUsers: User[];
-  current_contact_username = "";
-  current_contact_image = "";
   
- 
-
-
+  
   constructor(
     private alertify: AlertifyService, 
     private hosservice: HospitalService,
     private userService: UserService) { }
 
   ngOnInit() {
-    // get username from contact
-    this.userService.getUser(+this.selectedHospital.contact).subscribe((next) => {
-      this.current_contact_username = next.username;
-      this.current_contact_image = next.photoUrl;
-    });
-
-    // get contacts for this hospital
+    this.selectedHospital.Contact_image = decodeURIComponent(this.selectedHospital.Contact_image);
     this.userService.getListOfUsersInHospital(0, +this.selectedHospital.HospitalNo, 1, 20).subscribe((next) => {
       this.availableUsers = next.result;
     });
@@ -45,14 +35,14 @@ export class SuperManageContactsComponent implements OnInit {
   Cancel(){this.cancelTo.emit("1")}
 
   Save(){
-  this.hosservice.saveContactToHospital(this.current_contact_username,this.current_contact_image)
+  this.hosservice.saveContactToHospital(this.selectedHospital.Contact,this.selectedHospital.Contact_image)
   .subscribe(()=>{this.cancelTo.emit("1")},error => {this.alertify.error(error)})
   }
 
   makeCurrentContact(p: User) {
     var help = 0;
-    this.selectedHospital.contact = p.username;
-    this.selectedHospital.contact_image = p.photoUrl;
+    this.selectedHospital.Contact = p.username;
+    this.selectedHospital.Contact_image = p.photoUrl;
   }
 
 

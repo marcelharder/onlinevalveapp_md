@@ -61,6 +61,6 @@ export class HospitalService {
   isOVIPlace(){return this.http.get<number>(this.baseUrl + 'isOVIPlace');}
 
   saveContactToHospital(contact:string,contactImage:string){return this.http.get<number>(
-    this.baseUrl + 'saveContactToHospital/' + contact + '/' + contactImage);}
+    this.baseUrl + 'saveContactToHospital/' + contact + '/' + encodeURIComponent(contactImage));}
    
 }

@@ -1,9 +1,11 @@
 import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { Hospital } from 'src/app/_models/Hospital';
+import { DropItem } from 'src/app/_models/dropItem';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { GeneralService } from 'src/app/_services/general.service';
 import { HospitalService } from 'src/app/_services/hospital.service';
+import { VendorService } from 'src/app/_services/vendor.service';
 
 @Component({
   selector: 'app-settings',
@@ -12,6 +14,8 @@ import { HospitalService } from 'src/app/_services/hospital.service';
 })
 export class SettingsComponent implements OnInit, AfterContentInit {
   hos: Partial<Hospital> = { };
+  allVendors:DropItem[]=[];
+  ihVendors:string[]=[];
   HospitalName = "";
   title = "Vendors";
   CardCaption = "List of Vendors in this hospital";
@@ -20,19 +24,25 @@ export class SettingsComponent implements OnInit, AfterContentInit {
   constructor(
     private hosService: HospitalService,
     private gen: GeneralService, 
+    private vendorService: VendorService,
     private auth: AuthService, 
     private alertify: AlertifyService) { }
 
   ngOnInit() {
     this.hosService.getDetails().subscribe((next)=>{
-      this.HospitalName = next.SelectedHospitalName;
       this.hos = next;
-    })
+      this.HospitalName = next.SelectedHospitalName;
+      this.vendorService.getVendors().subscribe((next) => { 
+        this.allVendors = next;
+        this.ihVendors = this.getVendorList();
+      });
+    },(error)=>{this.alertify.error(error)
+    },()=>{ })
+   
+
   }
 
-  ngAfterContentInit(){
-    this.vendors = 1;
-  }
+  ngAfterContentInit(){ this.vendors = 1; }
 
   displayVendors() { if (this.vendors === 1) { return true; } }
   displayContacts() { if (this.contacts === 1) { return true; } }
@@ -66,6 +76,21 @@ export class SettingsComponent implements OnInit, AfterContentInit {
     this.vendors = 1; this.contacts = 0;
   }, (error)=>{this.alertify.error(error)});
   }
+
+    getVendorList(): string[]{
+    var help:string[]=[];
+    var naamStringArray: string[]=[];
+    if(this.hos.Vendors !== undefined){
+      help = this.hos.Vendors.split(',');
+      help = help.filter(a => a!="");
+      for(var x=0;x<help.length;x++)
+      {
+        naamStringArray.push(this.allVendors.find(a => a.value === +help[x]).description);
+      }
+    }
+    
+    return naamStringArray;
+  } 
 
 }
 

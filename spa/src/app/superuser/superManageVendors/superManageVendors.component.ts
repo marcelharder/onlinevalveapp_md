@@ -13,7 +13,8 @@ import { VendorService } from 'src/app/_services/vendor.service';
 })
 export class SuperManageVendorsComponent implements OnInit {
   
-  @Input() selectedHospital: Hospital;
+  @Input() allVendors: DropItem[];
+  @Input() inHospitalVendors: string[];
   @Output() backTo: EventEmitter<string> = new EventEmitter<string>();
   @Output() cancelTo: EventEmitter<string> = new EventEmitter<string>();
   
@@ -42,41 +43,20 @@ export class SuperManageVendorsComponent implements OnInit {
     private alertify: AlertifyService) { }
 
   ngOnInit() {
-    // getAllVendors
-    this.vendorService.getVendors().subscribe((next) => { this.allvendors = next; });
-   
-
-    this.vendorsInHospital = this.getVendorList();
     
     
   }
 
-  getVendorList(): string[]{
-    var help:string[]=[];
-    var naamStringArray: string[]=[];
-   
-    debugger;
-    if(this.selectedHospital.Vendors !== undefined){
-      
-      help = this.selectedHospital.Vendors.split(',');
-      help = help.filter(a => a!="");
-      for(var x=0;x<help.length;x++)
-      {
-        naamStringArray.push(this.allvendors.find(a => a.value === +help[x]).description);
-      }
-    }
-    
-    return naamStringArray;
-  }
+ 
 
   saveVendorsInHospital(){  // this.vendorsInHospital gives array like so 1,2,3,8
-    let descriptionarray: number[] = [];
+    /* let descriptionarray: number[] = [];
     for (var x=0; x < this.vendorsInHospital.length; x++){
-     descriptionarray.push(this.findDescriptionFromDescription(this.vendorsInHospital[x]));  
+     descriptionarray.push(this.findValueFromDescription(this.vendorsInHospital[x]));  
     }
     this.hospitalService.addVendor(descriptionarray.toString()).subscribe((next)=>{
       this.backTo.emit("1");
-    });
+    }); */
   }
 
   displayDetails() { if (this.details == 1) { return true; } }
@@ -108,11 +88,11 @@ export class SuperManageVendorsComponent implements OnInit {
     }, (error) => { this.alertify.error(error); })
   }
 
-  findDescriptionFromDescription(id: string){
+  /* findValueFromDescription(id: string){
     var selectedItem = this.allvendors.find(x => x.description == id);
     return selectedItem.value;
   
   
-  }
+  } */
 }
 

@@ -15,7 +15,7 @@
             <th>Name</th>
             <th></th>
           </tr>
-          <tr *ngFor="let p of vendorsInHospital">
+          <tr *ngFor="let p of inHospitalVendors">
             <th>{{p}}</th>
             <td><button class="btn btn-sm btn-success" (click)="showDetails(p)">details</button></td>
           </tr>
@@ -30,7 +30,7 @@
             <th>Name</th>
             <th></th>
           </tr>
-          <tr *ngFor="let p of allvendors">
+          <tr *ngFor="let p of allVendors">
             <th>{{p.description}}</th>
             <td><button class="btn btn-sm btn-success" (click)="moveToHospital(p.description)">Move to hospital</button>
             </td>

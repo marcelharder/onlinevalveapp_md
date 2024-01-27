@@ -100,7 +100,7 @@ export class AddValveComponent implements OnInit {
                 debugger;
                 this.valveInParent = next;
                 this.details = 1;
-                // get the serial number from the auth service
+                // get the serial number from the auth service is the number they put to search for the valve
                 this.auth.currentSerial.subscribe((n) => { this.valveInParent.serial_no = n; });
 
             });

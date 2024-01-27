@@ -11,6 +11,10 @@ using api.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 using api.DAL.Implementations;
+using System.Net.Http;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace api.Controllers
 {
@@ -20,12 +24,14 @@ namespace api.Controllers
     public class ValveController : ControllerBase
     {
         private IValve _valve;
+        private readonly IOptions<ComSettings> _com;
 
         private SpecialMaps _special;
-        public ValveController(IValve valve, SpecialMaps special)
+        public ValveController(IValve valve, SpecialMaps special, IOptions<ComSettings>com)
         {
             _valve = valve;
             _special = special;
+            _com = com;
         }
         #region <!-- endpoints for SOA -->
 
@@ -161,9 +167,26 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IActionResult> getValve02(string id) // a valve is added here
         {
-            //var v = await _valve.valveBasedOnTypeOfValve(id);
+            // get the ValveCode first from the productController
+            var help = "";
+            Valve_Code vt;
+            var comaddress = _com.Value.productURL;
+            var st = "ValveCode/detailsByValveId/" + id;
+            comaddress += st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    help = await response.Content.ReadAsStringAsync();
+
+                   
+                    vt =  JsonSerializer.Deserialize<Valve_Code>(help);
+                }
+    
+                           
             var v = new Class_Valve();
-            v.Vendor_code = id;
+            v.Vendor_code = vt.Vendor_code;
+            
 
             _valve.Add(v);
             if (await _valve.SaveAll())

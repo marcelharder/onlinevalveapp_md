@@ -27,7 +27,7 @@ namespace api.Controllers
         private readonly IOptions<ComSettings> _com;
 
         private SpecialMaps _special;
-        public ValveController(IValve valve, SpecialMaps special, IOptions<ComSettings>com)
+        public ValveController(IValve valve, SpecialMaps special, IOptions<ComSettings> com)
         {
             _valve = valve;
             _special = special;
@@ -132,10 +132,10 @@ namespace api.Controllers
                 if (cv.TFD == 0)
                 {
                     //get the valvecode from the description and stuff it in the newly added valve
-                   /*  var sel = _special.getDetailsByProductCode(cv.Product_code);
-                    var selSizes = sel.Valve_size.ToList();
-                    var selectedSize = selSizes.FirstOrDefault(a => a.Size == Convert.ToInt32(cv.Size));
-                    help = selectedSize.EOA; */
+                    /*  var sel = _special.getDetailsByProductCode(cv.Product_code);
+                     var selSizes = sel.Valve_size.ToList();
+                     var selectedSize = selSizes.FirstOrDefault(a => a.Size == Convert.ToInt32(cv.Size));
+                     help = selectedSize.EOA; */
                 }
                 else
                 {
@@ -171,34 +171,33 @@ namespace api.Controllers
             var help = "";
             Valve_Code vt;
             var comaddress = _com.Value.productURL;
-            var st = "ValveCode/detailsByValveId/" + id;
+            var st = "ValveCode/detailsByValveNo/" + id;
             comaddress += st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     help = await response.Content.ReadAsStringAsync();
-
-                   
-                    vt =  JsonSerializer.Deserialize<Valve_Code>(help);
+                    vt = JsonConvert.DeserializeObject<Valve_Code>(help);
                 }
-    
-                           
-            var v = new Class_Valve();
-            v.Vendor_code = vt.Vendor_code;
-            
+                var v = new Class_Valve();
+                v.Vendor_code = vt.Vendor_code;
+                v.Implant_position = vt.Implant_Position;
+                v.Image = vt.Image;
+                v.Type = vt.Type;
+                v.Description = vt.Description;
 
-            _valve.Add(v);
-            if (await _valve.SaveAll())
-            {
-                var valveToReturn = await _special.mapToValveForReturnAsync(v);
-                return CreatedAtRoute("GetValve", new { id = v.ValveId }, valveToReturn);
+                _valve.Add(v);
+                if (await _valve.SaveAll())
+                {
+                    var valveToReturn = await _special.mapToValveForReturnAsync(v);
+                    return CreatedAtRoute("GetValve", new { id = v.ValveId }, valveToReturn);
+                }
+                else
+                {
+                    return BadRequest("Can't add valve");
+                }
             }
-            else
-            {
-                return BadRequest("Can't add valve");
-            }
-
         }
         [Route("api/valveExpiry/{months}")]
         [HttpGet]

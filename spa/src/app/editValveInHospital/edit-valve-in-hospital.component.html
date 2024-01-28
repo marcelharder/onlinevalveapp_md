@@ -1,5 +1,7 @@
-<div class="card">
+<div class="row">
 
+<div class="col-sm-8">
+<div class="card">
   <div class="card-header">Edit valve details</div>
   <div class="card-body">
     <div class="row">
@@ -23,7 +25,7 @@
         <h5><span class="badge badge-info">Hospital</span></h5>
       </div>
       <div class="col-sm-3">
-        <h5><span class="badge badge-default">{{HospitalName}}</span></h5>
+        <h5><span class="badge badge-default">{{hospitalName}}</span></h5>
       </div>
       <div class="col-sm-3">
         <h5><span class="badge badge-info">Vendor</span></h5>
@@ -86,20 +88,21 @@
 
 
 
-        <div *ngIf="getPatchType()"> 
-          
+        <div *ngIf="getPatchType()">
+
           <select [(ngModel)]="valve.patchSize" name="implantedsize" class="form-control">
             <option *ngFor="let item of SizeList" [value]="item.value">{{item.name}}</option>
-  
-          </select> 
-        
-        
+
+          </select>
+
+
         </div>
         <div *ngIf="!getPatchType()">
           <div class="row" *ngIf="!displayChangeSize()">
             <div class="col-sm-6"><span><input class="form-control" [(ngModel)]="valve.size" name="1" readonly></span>
             </div>
-            <div class="col-sm-6"><button class="btn btn-warning btn-sm" (click)="changeSize()">Change</button></div>
+            <div class="col-sm-6"><button class="btn btn-warning btn-sm" (click)="changeSize()">Change</button>
+            </div>
           </div>
           <table class="table table-striped" *ngIf="displayChangeSize()">
 
@@ -120,8 +123,8 @@
         <h5><span class="badge badge-info">Implant position</span></h5>
       </div>
       <!--  <div class="col-sm-3">
-    <h5><span class="badge badge-default">{{valve.implant_position}}</span></h5>
-  </div> -->
+      <h5><span class="badge badge-default">{{valve.implant_position}}</span></h5>
+    </div> -->
       <div class="col-sm-3">
         <select [(ngModel)]="valve.implant_position" name="implantedPosition" class="form-control">
           <option *ngFor="let item of PositionList" [value]="item.value">{{item.name}}</option>
@@ -155,12 +158,24 @@
       <div class="row">
         <div class="col-sm-9">
           <div class="row">
-            <div class="col-sm-6"><button type="button" class="btn btn-warning" (click)="Cancel()">Cancel</button></div>
+            <div class="col-sm-6"><button type="button" class="btn btn-warning" (click)="Cancel()">Cancel</button>
+            </div>
             <div class="col-sm-6"><button type="button" class="btn btn-success" (click)="Save()">Save</button></div>
           </div>
         </div>
         <div class="col-sm-3"></div>
       </div>
     </div>
+
   </div>
+</div>
+</div>
+
+<div class="col-sm-4">
+  <div class="card">
+    <div class="card-header">Image</div>
+    <div class="card-body"><img src="{{valve.image}}" alt="the valve image" height="200px" width="200px" /></div>
+  </div>
+</div>
+
 </div>

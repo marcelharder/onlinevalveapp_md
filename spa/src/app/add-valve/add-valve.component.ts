@@ -84,7 +84,7 @@ export class AddValveComponent implements OnInit {
     }
 
     getPresets(p: number) {
-        
+        debugger;
         if (p !== 0) {
             // get the valveSizes that belog to this valve
             this.valveSizes = [];
@@ -92,12 +92,11 @@ export class AddValveComponent implements OnInit {
                 next.forEach((el) => { this.valveSizes.push(el.size); });
                 this.valveSizes = this.valveSizes.sort((n1, n2) => n1 - n2);
             })
-
            
             // get the selected product, this selectedProduct
 
             this.vs.getValveBasedOnValveCode(p).subscribe((next) => {
-                debugger;
+               
                 this.valveInParent = next;
                 this.details = 1;
                 // get the serial number from the auth service is the number they put to search for the valve

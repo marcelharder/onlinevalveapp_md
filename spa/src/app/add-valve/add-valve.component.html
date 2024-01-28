@@ -53,5 +53,5 @@
 </div>
 
 <div *ngIf="showDetails()">
-  <app-edit-valve-in-hospital [valve]="valveInParent" [sizes]="valveSizes" (valveBack)="handleValveBack($event)"></app-edit-valve-in-hospital>
+  <app-edit-valve-in-hospital [hospitalName]="hospitalName" [valve]="valveInParent" [sizes]="valveSizes" (valveBack)="handleValveBack($event)"></app-edit-valve-in-hospital>
 </div>

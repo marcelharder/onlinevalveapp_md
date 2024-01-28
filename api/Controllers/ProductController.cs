@@ -53,10 +53,9 @@ namespace api.Controllers
             var help = new Valve_Code();
             help.Vendor_code = currentVendor.ToString();
             help.Valve_size = null;
-            help.Vendor_description = await _special.getVendorNameFromVendorCodeAsync(currentVendor.ToString());
-            help.countries = "NL,US,KSA";
+            help.Countries = "NL,US,KSA";
             help.Type = "0";
-            help.image = "https://res.cloudinary.com/marcelcloud/image/upload/v1620571880/valves/valves02.jpg";
+            help.Image = "https://res.cloudinary.com/marcelcloud/image/upload/v1620571880/valves/valves02.jpg";
 
 
             var comaddress = _com.Value.productURL;

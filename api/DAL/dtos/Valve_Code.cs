@@ -11,6 +11,7 @@ namespace api.DAL.dtos
         public string Type { get; set; }
         public string Image { get; set; }
         public string Description { get; set; }
+        public string uk_code {get; set;}
         
 
 

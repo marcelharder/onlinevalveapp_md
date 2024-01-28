@@ -186,6 +186,7 @@ namespace api.Controllers
                 v.Image = vt.Image;
                 v.Type = vt.Type;
                 v.Description = vt.Description;
+                v.Product_code = vt.uk_code;
 
                 _valve.Add(v);
                 if (await _valve.SaveAll())

@@ -136,7 +136,7 @@ namespace api.Controllers
         {
             var help = new Valve_Code();
             var comaddress = _com.Value.productURL;
-            var st = "ValveCode/ByUkCode" + code;
+            var st = "ValveCode/detailsByProductCode" + code;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {

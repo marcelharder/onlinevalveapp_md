@@ -23,6 +23,7 @@ export class AddValveComponent implements OnInit {
     valveImage = 'https://res.cloudinary.com/marcelcloud/image/upload/v1562767670/k3i7u3fsk2119albutak.jpg';
     SelectedHospitalVendor = 0;
     SelectedProduct = 0;
+    currentHospitalNo= '0';
     done = 0;
     currentCountry = "";
     drop: DropItem;
@@ -61,6 +62,7 @@ export class AddValveComponent implements OnInit {
     ngOnInit(): void {
         var vendorvalues: string[] = [];
         this.hos.getDetails().subscribe((next) => { // get the current hospital
+            this.currentHospitalNo = next.HospitalNo;
             this.hospitalName = next.HospitalName;
             this.currentCountry = next.Country;
             vendorvalues = next.Vendors.split(',');
@@ -84,20 +86,21 @@ export class AddValveComponent implements OnInit {
     }
 
     getPresets(p: number) {
-        debugger;
+        
         if (p !== 0) {
             // get the valveSizes that belog to this valve
             this.valveSizes = [];
             this.prod.getValveSizes(p).subscribe((next) => {
-                next.forEach((el) => { this.valveSizes.push(el.size); });
+                next.forEach((el) => { this.valveSizes.push(el.Size); });
                 this.valveSizes = this.valveSizes.sort((n1, n2) => n1 - n2);
             })
            
             // get the selected product, this selectedProduct
 
             this.vs.getValveBasedOnValveCode(p).subscribe((next) => {
-               
+               debugger;
                 this.valveInParent = next;
+                this.valveInParent.hospital_code = +this.currentHospitalNo;
                 this.details = 1;
                 // get the serial number from the auth service is the number they put to search for the valve
                 this.auth.currentSerial.subscribe((n) => { this.valveInParent.serial_no = n; });
@@ -147,6 +150,8 @@ export class AddValveComponent implements OnInit {
         this.SelectedProduct = 0;
         // show the done button
         this.valveInParent = $event;
+
+        
 
         this.vs.saveValve(this.valveInParent).subscribe((next) => { }, (error) => { this.alertify.error(error); });
 

@@ -160,10 +160,10 @@ export class SelectValveComponent implements OnInit {
         this.gen.getBSA(+this.selectedHeight, +this.selectedWeight).subscribe((next)=>{
           this.bsa = next;
           this.valveSizes.forEach(element => {
-            if ((element.eoa / this.bsa) > .85) { element.ppm = 'none' } else {
-              if ((element.eoa / this.bsa) <= .85 && (element.eoa / this.bsa) >= .65) { element.ppm = "moderate" }
+            if ((element.EOA / this.bsa) > .85) { element.PPM = 'none' } else {
+              if ((element.EOA / this.bsa) <= .85 && (element.EOA / this.bsa) >= .65) { element.PPM = "moderate" }
               else {
-                if ((element.eoa / this.bsa) < .65) { element.ppm = "severe" }
+                if ((element.EOA / this.bsa) < .65) { element.PPM = "severe" }
               }
             }
           });

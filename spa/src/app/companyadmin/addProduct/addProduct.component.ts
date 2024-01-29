@@ -18,7 +18,13 @@ export class AddProductComponent implements OnInit {
   implantLocation: Array<DropItem> = [];
   ValveCodeSizes:Array<valveSize>=[];
   newsize = 0; neweoa = 0.0; showAdd = 0;
-  valvesize: valveSize = {sizeId:0, size:0, eoa: 0.0, ppm:'0'};
+  valvesize: valveSize = {
+    SizeId: 0,
+    Size: 0,
+    EOA: 0,
+    PPM: '',
+    VTValveTypeId: 0
+  };
 
 
   constructor(private drop: DropService, private prodService: ProductService, private alertify: AlertifyService) { }
@@ -46,8 +52,8 @@ export class AddProductComponent implements OnInit {
   saveSize(){
      // close the add window
      this.showAdd = 0;
-     this.valvesize.size = this.newsize;
-     this.valvesize.eoa = this.neweoa;
+     this.valvesize.Size = this.newsize;
+     this.valvesize.EOA = this.neweoa;
      this.prodService.addValveSize(this.vc.ValveTypeId, this.valvesize).subscribe((next)=>{
        this.ValveCodeSizes.push(next);
        this.newsize = 0; 
@@ -59,7 +65,7 @@ export class AddProductComponent implements OnInit {
   deleteSize(id:number){
     this.prodService.deleteValveSize(this.vc.ValveTypeId, id).subscribe((next)=>{
       this.alertify.message("size removed ...");
-      var index = this.ValveCodeSizes.findIndex(a => a.sizeId === id);
+      var index = this.ValveCodeSizes.findIndex(a => a.SizeId === id);
        this.ValveCodeSizes.splice[index];
     })
    

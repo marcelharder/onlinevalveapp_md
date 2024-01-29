@@ -74,10 +74,7 @@ export class EditValveInHospitalComponent implements OnInit {
     }
     ngOnInit(): void {
         if (this.valve.type === "Pericardial Patch") { this.valveIsPatch = true; }
-
-     
-
-       
+      
         this.loadDrops();
     }
 
@@ -93,6 +90,7 @@ export class EditValveInHospitalComponent implements OnInit {
 
     Save() {
         if (this.canIGo()) {
+           
             this.valveBack.emit(this.valve);
         } else {
             // log the error;
@@ -108,12 +106,9 @@ export class EditValveInHospitalComponent implements OnInit {
     }
     changeSize() {
         this.ch = 1;
-
-
         // find the valvetype through the modelNo, get the valve sizes
         this.prod.getProductByProduct_code(this.valve.product_code).subscribe((next) => {
-            debugger;
-            this.prod.getValveSizes(next.ValveTypeId).subscribe((next) => {
+           this.prod.getValveSizes(next.ValveTypeId).subscribe((next) => {
                 this.valveSizes = next;
             })
 

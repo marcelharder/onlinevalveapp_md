@@ -136,17 +136,18 @@ namespace api.Controllers
         {
             var help = new Valve_Code();
             var comaddress = _com.Value.productURL;
-            var st = "ValveCode/detailsByProductCode" + code;
+            var st = "ValveCode/detailsByProductCode/" + code;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     var g = await response.Content.ReadAsStringAsync();
-                    help = (Valve_Code)JsonConvert.DeserializeObject(g);
+                    //help = (Valve_Code)JsonConvert.DeserializeObject(g);
+                     return Ok(g);
                 }
             }
-            return Ok(help);
+            
             //var result = await _vc.getDetailsByProductCode(code);
             //return Ok(result);
         }

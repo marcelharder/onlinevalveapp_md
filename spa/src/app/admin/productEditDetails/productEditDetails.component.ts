@@ -13,7 +13,13 @@ export class productEditDetailsComponent implements OnInit {
   @Input() prod: TypeOfValve;
   @Output() backTo = new EventEmitter<String>();
   listOfSizes: Array<valveSize> = [];
-  valvesize: valveSize = { sizeId: 0, size: 0, eoa: 0.0, ppm: '0' };
+  valvesize: valveSize = {
+    SizeId: 0,
+    Size: 0,
+    EOA: 0,
+    PPM: '',
+    VTValveTypeId: 0
+  };
   newSizeToken = 0;
 
   constructor(private alertify: AlertifyService, private pro: ProductService) { }
@@ -25,7 +31,7 @@ export class productEditDetailsComponent implements OnInit {
       if (next === 1) {
         this.alertify.message("deleted");
         // remove it from the local array
-        let index = this.prod.Valve_size.findIndex(d => d.sizeId === SizeId); //find index in your array
+        let index = this.prod.Valve_size.findIndex(d => d.SizeId === SizeId); //find index in your array
         this.prod.Valve_size.splice(index, 1);//remove element from array
       }
     });
@@ -37,9 +43,11 @@ export class productEditDetailsComponent implements OnInit {
     this.pro.getProductById(this.prod.No).subscribe((next) => {
       this.prod = next;
       // zero everything
-      this.valvesize.sizeId = 0;
-      this.valvesize.size = 0;
-      this.valvesize.eoa = 0;
+      this.valvesize.SizeId = 0;
+      this.valvesize.Size = 0;
+      this.valvesize.EOA = 0;
+      this.valvesize.PPM = '';
+      this.valvesize.VTValveTypeId = 0;
 
       this.newSizeToken = 1;
 

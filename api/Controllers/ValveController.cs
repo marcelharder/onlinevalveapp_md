@@ -184,6 +184,7 @@ namespace api.Controllers
                 v.Vendor_code = vt.Vendor_code;
                 v.Implant_position = vt.Implant_Position;
                 v.Image = vt.Image;
+                v.Model_code = vt.Model_Code;
                 v.Type = vt.Type;
                 v.Description = vt.Description;
                 v.Product_code = vt.uk_code;

@@ -405,7 +405,7 @@ namespace api.DAL.Code
             help.userRole = u.Role;
             help.interests = u.Interests;
             help.city = u.City;
-            if(u.Country != ""){
+            if(u.Country != "" && u.Country != null){
             help.country = await getCountryNameFromISO(u.Country);
             }
 

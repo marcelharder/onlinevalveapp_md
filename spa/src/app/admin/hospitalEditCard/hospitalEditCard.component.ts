@@ -9,6 +9,7 @@ import { HospitalService} from 'src/app/_services/hospital.service';
   styleUrls: ['./hospitalEditCard.component.scss']
 })
 export class HospitalEditCardComponent implements OnInit {
+  @Input() title: string;
   @Input() new_hospital: Partial<Hospital>;
   @Output() backTo: EventEmitter<string> = new EventEmitter<string>(); 
   constructor(private hos: HospitalService, private alertify:AlertifyService) { }

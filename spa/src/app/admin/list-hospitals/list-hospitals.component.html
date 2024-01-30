@@ -42,7 +42,10 @@
       <form >
       <div class="card-header"></div>
       <div class="card-body">
-        <form>
+        <app-hospitalEditCard [new_hospital]="this.selectedHospital"  [title]="Update" (backTo)="returnFromAdding($event)"></app-hospitalEditCard>
+  
+
+       <!--  <form>
           <div class="row">
             <div class="col-sm-4">
               <h5><span class="badge badge-secondary">id</span></h5>
@@ -81,7 +84,7 @@
           
          
         </form>
-      </div>
+    -->   </div>
       <div class="card-footer">
         <div class="btn-group" role="group">
           <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
@@ -92,7 +95,10 @@
     </div>
 
     <div class="card" *ngIf="displayEdit()">
-     <app-hospitalEditCard [new_hospital]="this.selectedHospital" (backTo)="returnFromAdding($event)"></app-hospitalEditCard>
+     <app-hospitalEditCard 
+     [title]="Add"
+     [new_hospital]="this.selectedHospital" 
+     (backTo)="returnFromAdding($event)"></app-hospitalEditCard>
     </div>
   
     <div class="d-flex justify-content-center" *ngIf="displayList()">

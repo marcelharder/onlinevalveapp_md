@@ -387,7 +387,25 @@ namespace api.Controllers
             }
 
         }
+  
+        [HttpGet("api/allHospitals")]
+        public async Task<IActionResult> getAllHospitalsItemsAsync(string TelCode) // return list of class_item
+        {   
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/allHospitals";
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);
+                }
+            }
 
+        }
+
+    
         [HttpGet("api/isOVIPlace")]
         public async Task<IActionResult> getOVI()
         {

@@ -43,11 +43,10 @@ export class HospitalService {
   getListOfHospitalsPerCountry(countryCode: string)
   { return this.http.get<DropItem[]>(this.baseUrl + 'getHospitalsInCountry/' + countryCode); } // countryDescription
   
-  getNewHospital(country: string, code: string){
-   return this.http.post<Hospital>(this.baseUrl + 'createHospital/' + country + '/' + code, null);}
+  getNewHospital(country: string){
+   return this.http.post<Hospital>(this.baseUrl + 'createHospital/' + country, null, { responseType: 'text' as 'json' });}
 
-  findNextHospitalCode(){return this.http.get<string>(this.baseUrl + 'findNextHospitalCode')}
-  removeHospital(code: number){return this.http.delete<string>(this.baseUrl + 'deleteHospital/' + code,  { responseType: 'text' as 'json' })} 
+ removeHospital(code: number){return this.http.delete<string>(this.baseUrl + 'deleteHospital/' + code,  { responseType: 'text' as 'json' })} 
   
   
   getFullHospitalsWhereVendorIsActive() { return this.http.get<Hospital[]>(this.baseUrl + 'sphlist_full'); }

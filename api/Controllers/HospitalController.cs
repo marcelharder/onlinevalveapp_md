@@ -320,8 +320,8 @@ namespace api.Controllers
             }
         }
 
-        [HttpPost("/api/createHospital/{description}/{hospitalNo}")]
-        public async Task<IActionResult> createHospital(string description, string hospitalNo)
+        [HttpPost("/api/createHospital/{description}")]
+        public async Task<IActionResult> createHospital(string description)
         {
 
             // country here is 'Greece' for instance
@@ -340,11 +340,11 @@ namespace api.Controllers
             }
 
             var comaddress1 = _com.Value.hospitalURL;
-            var st1 = "Hospital/" + selectedIsoCode + "/" + hospitalNo;
+            var st1 = "Hospital/" + selectedIsoCode;
             comaddress1 = comaddress1 + st1;
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync(comaddress, null))
+                using (var response = await httpClient.PostAsync(comaddress1, null))
                 {
                     var help = await response.Content.ReadAsStringAsync();
                     return Ok(help);// returns a new Class_Hospital

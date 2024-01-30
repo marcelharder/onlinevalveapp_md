@@ -36,11 +36,11 @@ export class ListHospitalsComponent implements OnInit {
       this.listOfHospitals = data.hospitals.result;
       this.pagination = data.hospitals.pagination;
     });
-    this.gen.getListOfCountries().subscribe((next) => {this.optionCountries = next;})
+    this.gen.getListOfCountries().subscribe((next) => { this.optionCountries = next; })
 
   }
 
-  contentFound() {if (this.listOfHospitals.length > 0) { return true;} else { return false; }}
+  contentFound() { if (this.listOfHospitals.length > 0) { return true; } else { return false; } }
   displayList() { if (this.list === 1) { return true; } else { return false; } }
   displayDetails() { if (this.details === 1) { return true; } else { return false; } }
   displayEdit() { if (this.edit === 1) { return true; } else { return false; } }
@@ -50,15 +50,10 @@ export class ListHospitalsComponent implements OnInit {
   }
 
   addHospital() {
-    this.hos.findNextHospitalCode().subscribe((next) => {
-      var new_code = next;
-      this.hos.getNewHospital(this.selectedCountry, new_code).subscribe((next) => {
-        this.selectedHospital = next;
-        this.details = 0; this.list = 0; this.edit = 1;
-      })
-    });
-
-    this.alertify.message("adding ...")
+    this.hos.getNewHospital(this.selectedCountry).subscribe((next) => {
+      this.selectedHospital = next;
+      this.details = 1; this.list = 0; this.edit = 0;
+    })
   }
 
   deleteHospital() {
@@ -86,11 +81,11 @@ export class ListHospitalsComponent implements OnInit {
   }
 
   loadHospitals() {
-    this.hos.getListOfFullHospitalsPerCountry(this.selectedCountry,1,5).subscribe(
-        (next: PaginatedResult<Hospital[]>) => {
-          this.listOfHospitals = next.result;
-          this.pagination = next.pagination;
-        }, (error) => { this.alertify.error(error); });
+    this.hos.getListOfFullHospitalsPerCountry(this.selectedCountry, 1, 5).subscribe(
+      (next: PaginatedResult<Hospital[]>) => {
+        this.listOfHospitals = next.result;
+        this.pagination = next.pagination;
+      }, (error) => { this.alertify.error(error); });
   }
 
   returnFromAdding(help: string) {

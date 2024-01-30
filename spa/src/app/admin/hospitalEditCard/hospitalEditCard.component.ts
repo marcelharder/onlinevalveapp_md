@@ -15,6 +15,7 @@ export class HospitalEditCardComponent implements OnInit {
   constructor(private hos: HospitalService, private alertify:AlertifyService) { }
 
   ngOnInit() {
+    
   }
 
   cancel(){

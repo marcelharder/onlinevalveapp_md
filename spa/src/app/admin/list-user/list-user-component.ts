@@ -98,7 +98,7 @@ export class ListUserComponent implements OnInit {
 
   addUser() {
     this.userService.addUser(this.authService.decodedToken.nameid).subscribe(next => {
-      debugger;
+      
       this.selectedUser = next;
       this.model.username = 'newUser';
       this.model.password = 'password';

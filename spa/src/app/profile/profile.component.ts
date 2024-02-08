@@ -58,8 +58,7 @@ export class ProfileComponent implements OnInit {
 
       else {
         this.hospital.getDetails().subscribe((next) => {
-          debugger;
-          this.affiliation = next.HospitalName; });
+           this.affiliation = next.HospitalName; });
       }
 
 

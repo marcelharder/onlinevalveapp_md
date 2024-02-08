@@ -27,7 +27,7 @@ export class productEditDetailsComponent implements OnInit {
   ngOnInit() { }
 
   deleteSize(SizeId: number) {
-    this.pro.deleteValveSize(this.prod.No, SizeId).subscribe((next) => {
+    this.pro.deleteValveSize(SizeId).subscribe((next) => {
       if (next === 1) {
         this.alertify.message("deleted");
         // remove it from the local array
@@ -35,7 +35,6 @@ export class productEditDetailsComponent implements OnInit {
         this.prod.Valve_size.splice(index, 1);//remove element from array
       }
     });
-
   }
 
   addNewSize() {

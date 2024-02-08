@@ -22,7 +22,6 @@ export class SelectValveTypeDetailsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    debugger;
     if(this.pro.Model_code === 'PVS-67'){
       this.optionsInfo = 
       [

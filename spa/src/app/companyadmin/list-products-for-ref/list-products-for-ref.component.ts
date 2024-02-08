@@ -63,7 +63,9 @@ export class ListProductsForRefComponent implements OnInit {
 
 
   showDetails(id: number) {
-    this.prodService.getProductById(id).subscribe((next) => {  this.selectedProduct = next; });
+    
+    this.prodService.getProductById(id).subscribe((next) => { 
+       this.selectedProduct = next; });
     this.detailsPage = 1;
     this.addPage = 0;
     this.listPage = 0;

@@ -19,7 +19,7 @@
         <h5><span class="badge badge-info">Id</span></h5>
       </div>
       <div class="col-sm-9">
-        <input type="text" class="form-control" [(ngModel)]="vc.no" name="test" />
+        <input type="text" class="form-control" [(ngModel)]="vc.No" name="test" />
       </div>
     </div>
     <div class="row">
@@ -27,7 +27,7 @@
         <h5><span class="badge badge-info">Description</span></h5>
       </div>
       <div class="col-sm-9">
-        <input type="text" class="form-control" [(ngModel)]="vc.description" name="test" />
+        <input type="text" class="form-control" [(ngModel)]="vc.Description" name="test" />
       </div>
     </div>
     <div class="row">
@@ -51,7 +51,7 @@
           <h5><span class="badge badge-info">Model Code</span></h5>
       </div>
       <div class="col-sm-9">
-          <input type="text" class="form-control" [(ngModel)]="vc.model_code" name="test55" />
+          <input type="text" class="form-control" [(ngModel)]="vc.Model_code" name="test55" />
       </div>
     </div>
     <div class="row">
@@ -59,7 +59,7 @@
           <h5><span class="badge badge-info">Type</span></h5>
       </div>
       <div class="col-sm-9">
-        <input type="text" class="form-control" [(ngModel)]="vc.type" name="test5" />
+        <input type="text" class="form-control" [(ngModel)]="vc.Type" name="test5" />
       </div>
     </div>
     <div class="row">
@@ -74,15 +74,15 @@
             <th><button class="btn btn-warning btn-sm" (click)="addSize()" *ngIf="!displayAdd()">Add size</button></th>
             <th><button class="btn btn-warning btn-sm" (click)="saveSize()" *ngIf="displayAdd()">Save</button></th>
           </tr>
-          <tr *ngFor="let pro of vc.valve_size">
-            <td>{{pro.size}}</td>
-            <td>{{pro.eoa}}</td>
-            <td><button class="btn btn-warning btn-sm" (click)="deleteSize(pro.sizeId)">Delete</button></td>
+          <tr *ngFor="let pro of valveSizes">
+            <td>{{pro.Size}}</td>
+            <td>{{pro.EOA}}</td>
+            <td><button class="btn btn-warning btn-sm" (click)="deleteSize(pro.SizeId)">Delete</button></td>
             <td></td>
            </tr>
           <tr *ngIf="displayAdd()">
             <td><input [(ngModel)]="newsize" name="size" class="form-control"></td>
-            <td><input [(ngModel)]="neweoa" name="eoa" class="form-control" ></td>
+            <td><input [(ngModel)]="neweoa" name="eoa" class="form-control" type="number"></td>
             <td></td>
             <td></td>
           </tr>
@@ -108,7 +108,7 @@
           <h5><span class="badge badge-info">Implant position</span></h5>
       </div>
       <div class="col-sm-9">
-           <input type="text" class="form-control" [(ngModel)]="vc.implant_position" name="test158" />
+           <input type="text" class="form-control" [(ngModel)]="vc.Implant_position" name="test158" />
       </div>
     </div>
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO.Pipes;
 using System.Linq;
@@ -178,16 +179,13 @@ namespace api.Controllers
         [HttpPost]
         public async Task<IActionResult> addSize(int id, [FromBody] Valve_Size vs)
         {
-            Valve_Size result = new Valve_Size();
-            result.Size = vs.Size;
-            result.EOA = vs.EOA;
-            result.ValveTypeId = id;
-
+            vs.VTValveTypeId = id;
+           
             var res = "";
             var comaddress = _com.Value.productURL;
-            var st = "ValveSize/addValveSize";
+            var st = "ValveSize";
             comaddress = comaddress + st;
-            var json = JsonConvert.SerializeObject(result, Formatting.None);
+            var json = JsonConvert.SerializeObject(vs, Formatting.None);
             var payload = new StringContent(json, Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())
@@ -198,26 +196,6 @@ namespace api.Controllers
                 }
             }
             return Ok(res);
-
-
-
-
-
-            //var selectedValve = await this.getSpecificValveSize(id);
-
-            /*   var selectedValve = await _vc.getDetailsByValveTypeId(id);
-              selectedValve.Valve_size.Add(result);
-
-              _vc.Update(selectedValve);
-
-              if (await _vc.SaveAll())
-              {
-              var test = selectedValve.Valve_size.Last();
-              return CreatedAtRoute("getSize",new { id = test.SizeId }, test);
-              } */
-            //return null;
-
-
         }
 
         [Route("api/getSize/{id}", Name = "getSize")]
@@ -239,32 +217,23 @@ namespace api.Controllers
             return help;
         }
 
-        [Route("api/deleteSize/{id}/{sizeId}")]
+        [Route("api/deleteSize/{id}")]
         [HttpDelete]
-        public async Task<IActionResult> deleteSize(int id, int sizeId)
+        public async Task<IActionResult> deleteSize(int id)
         {
             var help = "";
             var comaddress = _com.Value.productURL;
-            var st = "ValveSize/deleteValveSize/" + id;
+            var st = "ValveSize/" + id;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.DeleteAsync(comaddress))
                 {
-                    help = await response.Content.ReadAsStringAsync(); ;
-
+                    help = await response.Content.ReadAsStringAsync();
                 }
             }
             return Ok(help);
-            /*   var result = await _vc.deleteSize(id, sizeId);
-              return Ok(result); */
         }
-
-
-
-
-
-
 
 
         #region <!-- used by soa -->

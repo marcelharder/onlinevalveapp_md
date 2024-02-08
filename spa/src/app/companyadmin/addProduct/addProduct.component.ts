@@ -63,7 +63,7 @@ export class AddProductComponent implements OnInit {
      
   }
   deleteSize(id:number){
-    this.prodService.deleteValveSize(this.vc.ValveTypeId, id).subscribe((next)=>{
+    this.prodService.deleteValveSize(id).subscribe((next)=>{
       this.alertify.message("size removed ...");
       var index = this.ValveCodeSizes.findIndex(a => a.SizeId === id);
        this.ValveCodeSizes.splice[index];

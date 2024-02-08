@@ -275,7 +275,7 @@ namespace api.Controllers
         {
             var help = "";
             var comaddress = _com.Value.productURL;
-            var st = "ValveCode/" + id;
+            var st = "ValveCode/detailsByValveId/" + id;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {

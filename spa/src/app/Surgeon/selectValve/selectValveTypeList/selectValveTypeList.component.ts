@@ -18,7 +18,8 @@ export class SelectValveTypeListComponent implements OnInit {
   ngOnInit() {
   }
 
-  SearchD(id: number){this.selout.emit(id);}
+  SearchD(id: number){
+    this.selout.emit(id);}
 
   
 }

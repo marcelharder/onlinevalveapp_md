@@ -9,9 +9,7 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
   styleUrls: ['./selectValveTypeDetails.component.css']
 })
 export class SelectValveTypeDetailsComponent implements OnInit, OnChanges {
-
   @Input() pro: TypeOfValve;
- 
   @Output() selout: EventEmitter<number> = new EventEmitter();
   ImagePath = '';
   optionsInfo: Array<string> = [];
@@ -24,7 +22,7 @@ export class SelectValveTypeDetailsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-   
+    debugger;
     if(this.pro.Model_code === 'PVS-67'){
       this.optionsInfo = 
       [

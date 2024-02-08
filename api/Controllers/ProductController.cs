@@ -144,10 +144,10 @@ namespace api.Controllers
                 {
                     var g = await response.Content.ReadAsStringAsync();
                     //help = (Valve_Code)JsonConvert.DeserializeObject(g);
-                     return Ok(g);
+                    return Ok(g);
                 }
             }
-            
+
             //var result = await _vc.getDetailsByProductCode(code);
             //return Ok(result);
         }
@@ -302,14 +302,14 @@ namespace api.Controllers
                 {
                     var g = await response.Content.ReadAsStringAsync();
                     return Ok(g);
-                   /*  var t = g.Split(',');
-                    foreach (string s in t)
-                    {
-                        help.Add((Valve_Code)JsonConvert.DeserializeObject(s));
-                    } */
+                    /*  var t = g.Split(',');
+                     foreach (string s in t)
+                     {
+                         help.Add((Valve_Code)JsonConvert.DeserializeObject(s));
+                     } */
                 }
             }
-            
+
             //  var result = await _vc.getAllProducts();
             //  return Ok(result);
         }
@@ -349,21 +349,22 @@ namespace api.Controllers
         {
             var help = new List<Valve_Code>();
             var comaddress = _com.Value.productURL;
-            var st = "ValveCode/getAllValveCodesForThisVendor/" + vendor + "/" + type + "/" + position;
+            var st = "Vendor/valveCodesPerVTP/" + vendor + "/" + type + "/" + position;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     var g = await response.Content.ReadAsStringAsync();
-                    var t = g.Split(',');
+                    /* var t = g.Split(',');
                     foreach (string s in t)
                     {
                         help.Add((Valve_Code)JsonConvert.DeserializeObject(s));
-                    }
+                    } */
+                    return Ok(g);
                 }
             }
-            return Ok(help);
+
 
             //var result = await _vc.getAllProductsByVTP(vendor, type, position);
             //return Ok(result);
@@ -383,15 +384,15 @@ namespace api.Controllers
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     var g = await response.Content.ReadAsStringAsync();
-                   /*  var t = g.Split(',');
-                    foreach (string s in t)
-                    {
-                        help.Add((Valve_Size)JsonConvert.DeserializeObject(s));
-                    } */
-return Ok(g);
+                    /*  var t = g.Split(',');
+                     foreach (string s in t)
+                     {
+                         help.Add((Valve_Size)JsonConvert.DeserializeObject(s));
+                     } */
+                    return Ok(g);
                 }
             }
-            
+
             //return Ok(await _vc.GetValveCodeSizes(id));
         }
 

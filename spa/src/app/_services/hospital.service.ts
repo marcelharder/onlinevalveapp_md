@@ -14,7 +14,7 @@ export class HospitalService {
 
   getVendorsInHospital() { return this.http.get<DropItem[]>(this.baseUrl + 'hospital/vendors'); }
   getListOfHospitalsWhereVendorIsActive() { return this.http.get<DropItem[]>(this.baseUrl + 'sphlist'); }
-  getHospitalFromHospitalCode(code: number) {return this.http.get<string>(this.baseUrl + 'hospitalName/' + code, { responseType: 'text' as 'json' });}
+  getHospitalFromHospitalCode(code: number) {return this.http.get<string>(this.baseUrl + 'getHospitalDetails/' + code, { responseType: 'text' as 'json' });}
   
   getListOfFullHospitalsPerCountry(countryCode: string, pageNumber: number, pageSize: number)
   {

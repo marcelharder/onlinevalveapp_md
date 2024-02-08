@@ -103,8 +103,7 @@ export class ListUserComponent implements OnInit {
       this.model.username = 'newUser';
       this.model.password = 'password';
       this.authService.update(this.model).subscribe((nex) => {
-        this.details = 1;
-      }, (error) => { this.alertify.error(error) });
+      }, (error) => { this.alertify.error(error) },()=>{this.details = 1;});
 
     })
   }

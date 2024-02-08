@@ -225,7 +225,7 @@ namespace api.Controllers
         }
 
         [HttpPut("api/saveHospitalDetails")]
-        public async Task<string> postQuestion07(HospitalForReturnDTO hos)
+        public async Task<string> postQuestion07(Class_Hospital_from_Container hos)
         {
             var help = "";
             var comaddress = _com.Value.hospitalURL;
@@ -289,7 +289,6 @@ namespace api.Controllers
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     selectedIsoCode = await response.Content.ReadAsStringAsync();
-
                 }
             }
 
@@ -302,20 +301,13 @@ namespace api.Controllers
                 using (var response = await httpClient.GetAsync(comaddress1))
                 {
                     var help = await response.Content.ReadAsStringAsync();
-                    // serialize
-                    var res = JsonConvert.DeserializeObject<List<Class_Hospital_from_Container>>(help);
-                    /* 
-                     foreach(var header in response.Headers){
-                        Console.WriteLine($"{header.Key}={header.Value.First()}");
-                    } */
-                    if (response.Headers.Contains("Pagination"))
+                   if (response.Headers.Contains("Pagination"))
                     {
                         var ph = response.Headers.GetValues("Pagination").First();
                         plFromC = JsonConvert.DeserializeObject<Class_PL_From_Container>(ph);
                     }
                     Response.AddPagination(plFromC.currentPage, plFromC.itemsPerPage, plFromC.totalItems, plFromC.totalPages);
-
-                    return Ok(res);
+                    return Ok(help);
                 }
             }
         }

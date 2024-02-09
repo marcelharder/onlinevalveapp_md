@@ -18,6 +18,7 @@ export class EditProductComponent implements OnInit {
   uploader: FileUploader;
   @Output() povOut: EventEmitter<number> = new EventEmitter();
   ImagePath = "";
+  avsize = 0;
   baseUrl = environment.apiUrl;
   showAdd = 0; newsize = 0; neweoa = 0.0;
   valveSizes:Array<valveSize> = [];
@@ -36,11 +37,7 @@ export class EditProductComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.prod.getValveSizes(this.vc.ValveTypeId).subscribe((next)=>{
-      this.valveSizes = next;
-      // sort on valve size from small to big
-      this.valveSizes.sort((a,b) => a.Size - b.Size);
-    });
+   
     this.uploader = new FileUploader({
     });
 
@@ -49,7 +46,7 @@ export class EditProductComponent implements OnInit {
     this.vc.image = photoUrl;
   }
 
-
+  sizesAvailable(){if(this.avsize === 1){return true;} else {return false;}}
 
   updateProductDetails() {
     this.prod.saveDetails(this.vc).subscribe((next) => {
@@ -111,11 +108,21 @@ export class EditProductComponent implements OnInit {
   }
   deleteProduct() {
     this.alertify.confirm('Are you sure ?', () => {
-      this.prod.deleteProduct(this.vc.No).subscribe();
+      this.prod.deleteProduct(this.vc.ValveTypeId).subscribe((next)=>{
+        this.router.navigate(['/home']); // to force the list to be renewed
+      });
 
       this.povOut.emit(1);
     });
 
+  }
+  getSizes(){
+    this.prod.getValveSizes(this.vc.ValveTypeId).subscribe((next)=>{
+      this.valveSizes = next;
+      this.avsize = 1;
+      // sort on valve size from small to big
+      this.valveSizes.sort((a,b) => a.Size - b.Size);
+    });
   }
 
 }

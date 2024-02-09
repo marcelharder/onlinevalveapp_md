@@ -14,7 +14,7 @@ import { VendorService } from 'src/app/_services/vendor.service';
   styleUrls: ['./list-products-for-ref.component.css']
 })
 export class ListProductsForRefComponent implements OnInit {
-  @Input() prod: TypeOfValve;
+  @Input() prod: TypeOfValve[];
   selectedProduct: TypeOfValve;
   newProduct: TypeOfValve;
   currentCountry = '';

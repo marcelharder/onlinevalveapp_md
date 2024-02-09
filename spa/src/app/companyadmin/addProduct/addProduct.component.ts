@@ -31,11 +31,9 @@ export class AddProductComponent implements OnInit {
 
   ngOnInit() { 
     
-    this.prodService.getValveSizes(this.vc.ValveTypeId).subscribe((next)=>{
-      this.ValveCodeSizes = next;
-    });
-    
-   this.loadDrops(); }
+   this.loadDrops();
+  
+  }
 
   updateProductDetails() {
     this.prodService.saveDetails(this.vc).subscribe((next) => {
@@ -50,15 +48,17 @@ export class AddProductComponent implements OnInit {
     this.alertify.message("opening window");
   }
   saveSize(){
-     // close the add window
-     this.showAdd = 0;
+    debugger;
+     this.showAdd = 0;// close the add window
      this.valvesize.Size = this.newsize;
      this.valvesize.EOA = this.neweoa;
      this.prodService.addValveSize(this.vc.ValveTypeId, this.valvesize).subscribe((next)=>{
-       this.ValveCodeSizes.push(next);
+       
+     this.alertify.message("uploading size");
+     }, error => {this.alertify.message(error)}, ()=>{
+      this.ValveCodeSizes.push(this.valvesize);
        this.newsize = 0; 
        this.neweoa = 0.0;
-       this.alertify.message("uploading size");
      })
      
   }

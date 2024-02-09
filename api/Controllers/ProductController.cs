@@ -49,12 +49,11 @@ namespace api.Controllers
         [HttpGet("api/addProduct")]
         public async Task<IActionResult> addProduct(int id)
         {
-            var res = new Valve_Code();
             var currentVendor = await _special.getCurrentVendorAsync();
             var help = new Valve_Code();
             help.Vendor_code = currentVendor.ToString();
             help.Valve_size = null;
-            help.Countries = "NL,US,KSA";
+            help.Countries = "NL,US,SA";
             help.Type = "0";
             help.Image = "https://res.cloudinary.com/marcelcloud/image/upload/v1620571880/valves/valves02.jpg";
 
@@ -69,11 +68,11 @@ namespace api.Controllers
             {
                 using (var response = await httpClient.PostAsync(comaddress, content))
                 {
-                    var s = await response.Content.ReadAsStringAsync();
-                    res = (Valve_Code)JsonConvert.DeserializeObject(s);
+                   var s = await response.Content.ReadAsStringAsync();
+                   return Ok(s);// this gives a new Valve_Code with ValveTypeId
                 }
             }
-            return Ok(res);// this gives a new Valve_Code with ValveTypeId
+            
         }
 
         [HttpDelete("api/deleteProduct/{id}")]
@@ -163,16 +162,17 @@ namespace api.Controllers
 
             var help = new photoResult();
             var comaddress = _com.Value.hospitalURL;
-            var st = "ValveCode/addValveTypePhoto/" + id;
+            var st = "ValveCode/addPhoto/" + id;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.PostAsync(comaddress, content))
                 {
-                    help = await response.Content.ReadFromJsonAsync<photoResult>();
+                    //help = await response.Content.ReadFromJsonAsync<photoResult>();
+                    var res = await response.Content.ReadAsStringAsync();
                 }
             }
-            return Ok(help.document_url);
+            return Ok("");
         }
 
         [Route("api/addSize/{id}")]

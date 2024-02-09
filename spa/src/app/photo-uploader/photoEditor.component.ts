@@ -36,19 +36,19 @@ export class PhotoEditorComponent implements OnInit {
 
   initializeUploader() {
     let test = '';
-    
-    if (typeof this.userId !== 'undefined' ) {
+ debugger;   
+    if ( this.userId !== 0 ) {
       test = this.baseUrl + 'users/addUserPhoto/' + this.userId
     }
     else {
-      if (typeof this.hospitalId !== 'undefined') {
+      if (this.hospitalId !== 0) {
         test = this.baseUrl + 'hospital/addHospitalPhoto/' + this.hospitalId
       }
       else {
-        if (typeof this.valvecode !== 'undefined') {
+        if (this.valvecode !== 0) {
           test = this.baseUrl + 'addProductPhoto/' + this.valvecode
         } else {
-          if (typeof this.companyCode !== 'undefined') {
+          if (this.companyCode !== 0) {
              test = this.baseUrl + 'addCompanyLogo/' + this.companyCode
           }
         }

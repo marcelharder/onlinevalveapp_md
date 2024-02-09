@@ -66,7 +66,12 @@
       <div class="col-sm-3">
           <h5><span class="badge badge-info">Sizes</span></h5>
       </div>
-      <div class="col-sm-9">
+
+      <div class="col-sm-9" *ngIf="!sizesAvailable()">
+        <button class="btn btn-warning btn-sm" (click)="getSizes()">getSizes</button>
+      </div>
+
+      <div class="col-sm-9" *ngIf="sizesAvailable()">
         <table class="table table-striped">
           <tr>
             <th>Size</th>
@@ -87,13 +92,7 @@
             <td></td>
           </tr>
         </table>
-
-
-
-
-
-
-         </div>
+      </div>
     </div>
     <div class="row">
       <div class="col-sm-3">
@@ -120,7 +119,7 @@
           <img src={{vc?.image}}>
       </div>
       <div class="card-footer">
-        <app-photo-editor [userId]="0" [valvecode]="vc.no" [hospitalId]="0" (getMemberPhotoChange)="updatePhoto($event)"></app-photo-editor>
+        <app-photo-editor [userId]="0" [valvecode]="vc.No" [hospitalId]="0" (getMemberPhotoChange)="updatePhoto($event)"></app-photo-editor>
      </div>
     </div>
     

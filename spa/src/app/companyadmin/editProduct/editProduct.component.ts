@@ -43,7 +43,8 @@ export class EditProductComponent implements OnInit {
 
   }
   updatePhoto(photoUrl: string){
-    this.vc.image = photoUrl;
+    if(photoUrl !== undefined && photoUrl !== ""){ this.vc.image = photoUrl;}
+   
   }
 
   sizesAvailable(){if(this.avsize === 1){return true;} else {return false;}}

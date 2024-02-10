@@ -69,6 +69,7 @@ export class PhotoEditorComponent implements OnInit {
     this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
     this.uploader.onSuccessItem = (item, response, status, headers) => {
       if (response) {
+        debugger;
         const res: any = JSON.parse(response);
         if (this.hospitalId !== 0) { this.getMemberPhotoChange.emit(res.ImageUrl); }
         if (this.userId !== 0) { this.getMemberPhotoChange.emit(res.photoUrl); }

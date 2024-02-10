@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using api.DAL.Code;
 using api.DAL.dtos;
+using api.DAL.Interfaces;
 using api.DAL.models;
 using api.Helpers;
 using CloudinaryDotNet;
@@ -30,13 +31,22 @@ namespace api.Controllers
         private SpecialMaps _special;
         private Cloudinary _cloudinary;
 
+        private IVendor _vendor;
+
+        
+
         private readonly IOptions<ComSettings> _com;
         private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
-        public ProductController(SpecialMaps special, IOptions<CloudinarySettings> cloudinaryConfig, IOptions<ComSettings> com)
+        public ProductController(
+            SpecialMaps special,
+            IVendor vendor,
+             IOptions<CloudinarySettings> cloudinaryConfig,
+              IOptions<ComSettings> com)
         {
             _special = special;
             _cloudinaryConfig = cloudinaryConfig;
             _com = com;
+            _vendor = vendor;
 
             Account acc = new Account(
                _cloudinaryConfig.Value.CloudName,
@@ -52,8 +62,9 @@ namespace api.Controllers
             var currentVendor = await _special.getCurrentVendorAsync();
             var help = new Valve_Code();
             help.Vendor_code = currentVendor.ToString();
+            help.Vendor_description = await getVendorDescriptionFromVendorCode(help.Vendor_code);
             help.Valve_size = null;
-            help.Countries = "NL,US,SA";
+            help.countries = "NL,US,SA";
             help.Type = "0";
             help.Image = "https://res.cloudinary.com/marcelcloud/image/upload/v1620571880/valves/valves02.jpg";
 
@@ -73,6 +84,12 @@ namespace api.Controllers
                 }
             }
             
+        }
+
+        private async Task<string> getVendorDescriptionFromVendorCode(string code)
+        {
+           var selectedVendor = await _vendor.getVendor(Convert.ToInt32(code));
+           return selectedVendor.description;
         }
 
         [HttpDelete("api/deleteProduct/{id}")]
@@ -107,9 +124,10 @@ namespace api.Controllers
                 using (var response = await httpClient.PutAsync(comaddress, content))
                 {
                     help = await response.Content.ReadAsStringAsync();
+                     return Ok(help);
                 }
             }
-            return Ok(help);
+           
         }
 
         [HttpGet("api/productByNo/{id}", Name = "getProduct")]

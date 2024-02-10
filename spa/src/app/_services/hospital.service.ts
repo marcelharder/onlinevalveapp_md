@@ -52,7 +52,7 @@ export class HospitalService {
   getFullHospitalsWhereVendorIsActive() { return this.http.get<Hospital[]>(this.baseUrl + 'sphlist_full'); }
   getFullHospitalsWhereVendorIsNotActive() { return this.http.get<Hospital[]>(this.baseUrl + 'neg_sphlist_full'); }
   
-  addVendor(vendor: string) { return this.http.get<string>(this.baseUrl + 'addVendor' + '/' + vendor, { responseType: 'text' as 'json' }); }
+  addVendor(vendor: string, selectedHospital: string) { return this.http.get<string>(this.baseUrl + 'addVendor' + '/' + vendor + '/' + selectedHospital, { responseType: 'text' as 'json' }); }
   replaceVendor(vendor: string) { return this.http.get<string>(this.baseUrl + 'replaceVendor' + '/' + vendor, { responseType: 'text' as 'json' }); }
  
   removeVendor(vendor: string) { return this.http.get<string>(this.baseUrl + 'removeVendor' + '/' + vendor, { responseType: 'text' as 'json' }); }

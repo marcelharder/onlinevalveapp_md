@@ -27,12 +27,12 @@
         <th></th>
       </tr>
       <tr *ngFor="let p of hos">
-        <th>{{p.id}}</th>
-        <th>{{p.contact}}</th>
-        <th>{{p.naam}}</th>
-        <th>{{p.telephone}}</th>
-        <th>{{p.email}}</th>
-        <td><a (click)="selectDetails(p.hospitalNo)">Details</a></td>
+        <th>{{p.HospitalNo}}</th>
+        <th>{{p.Contact}}</th>
+        <th>{{p.HospitalName}}</th>
+        <th>{{p.Telephone}}</th>
+        <th>{{p.Email}}</th>
+        <td><a (click)="selectDetails(p.HospitalNo)">Details</a></td>
       </tr>
     </table>
   </div>
@@ -63,11 +63,11 @@
           <th></th>
         </tr>
         <tr *ngFor="let p of FullHospitals">
-          <th>{{p.id}}</th>
-          <th>{{p.naam}}</th>
-          <th>{{p.telephone}}</th>
-          <th>{{p.email}}</th>
-          <td><a (click)="selectThisHospital(p.id)">Select</a></td>
+          <th>{{p.HospitalNo}}</th>
+          <th>{{p.HospitalName}}</th>
+          <th>{{p.Telephone}}</th>
+          <th>{{p.Email}}</th>
+          <td><a (click)="selectThisHospital(p.HospitalNo)">Select</a></td>
         </tr>
       </table>
     </div>

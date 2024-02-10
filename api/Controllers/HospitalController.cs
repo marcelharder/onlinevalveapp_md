@@ -38,24 +38,25 @@ namespace api.Controllers
         }
 
         [HttpGet("api/saveContactToHospital/{contact}/{contactImage}")]
-        public async Task<IActionResult> saveContacts(string contact, string contactImage) {
+        public async Task<IActionResult> saveContacts(string contact, string contactImage)
+        {
             var currentHospitalId = await _special.getCurrentUserHospitalId();
             if (currentHospitalId != 0)
             {
-            var comaddress = _com.Value.hospitalURL;
-            var st = "Hospital/saveContact/" + currentHospitalId + '/' + contact + '/' + contactImage;
-            comaddress = comaddress + st;
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync(comaddress))
+                var comaddress = _com.Value.hospitalURL;
+                var st = "Hospital/saveContact/" + currentHospitalId + '/' + contact + '/' + contactImage;
+                comaddress = comaddress + st;
+                using (var httpClient = new HttpClient())
                 {
-                    var help = await response.Content.ReadAsStringAsync();
-                    return Ok(help);
+                    using (var response = await httpClient.GetAsync(comaddress))
+                    {
+                        var help = await response.Content.ReadAsStringAsync();
+                        return Ok(help);
+                    }
                 }
             }
-            }
             return BadRequest("");
-         }
+        }
 
         [HttpGet("api/hospital/vendors")]
         public async Task<IActionResult> getVendorsInHospital()
@@ -73,11 +74,13 @@ namespace api.Controllers
             }
         }
 
-        [HttpGet("api/addVendor/{vendor}")]
-        public async Task<IActionResult> getQuestion05(string vendor)
+        [HttpGet("api/addVendor/{vendor}/{hospital}")]
+        public async Task<IActionResult> getQuestion05(string vendor,string hospital)
         {
+            var vendorId = await _special.getVendorIdFromName(vendor);
+            var selectedHospital = Convert.ToInt32(hospital);
             var comaddress = _com.Value.hospitalURL;
-            var st = "Hospital/addVendorToHospital/" + vendor + "/" + await _special.getCurrentUserHospitalId();
+            var st = "Hospital/addVendorToHospital/" + vendorId + "/" + selectedHospital;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
@@ -88,7 +91,7 @@ namespace api.Controllers
                 }
             }
         }
-         [HttpGet("api/replaceVendor/{vendor}")]
+        [HttpGet("api/replaceVendor/{vendor}")]
         public async Task<IActionResult> getQuestion05a(string vendor)
         {
             var comaddress = _com.Value.hospitalURL;
@@ -125,18 +128,16 @@ namespace api.Controllers
         [HttpGet("api/sphlist")]
         public async Task<IActionResult> getQuestion01()
         {
-            var currentcountry = "";
-            var currentVendor = 0;
+            var CountryDescription = await _special.getCurrentCountryFromLoggedInUser();
+            var selectedIsoCode = await _special.getIsoCodeFromDescription(CountryDescription);
             var currentUserId = _special.getCurrentUserId();
-
             var currentUser = await _user.GetUser(currentUserId);
+            var currentVendor = await _special.getCurrentVendorAsync();
+
             if (currentUser.Role == "companyHQ" || currentUser.Role == "companyadmin")
             {
-                currentcountry = currentUser.Country;
-                var h = await _vendor.getVendorByName(currentUser.worked_in);
-                currentVendor = h.No;
                 var comaddress = _com.Value.hospitalURL;
-                var st = "Hospital/sphlist/" + currentVendor + "/" + currentcountry;
+                var st = "Hospital/sphlist/" + currentVendor + "/" + selectedIsoCode;
                 comaddress = comaddress + st;
                 using (var httpClient = new HttpClient())
                 {
@@ -153,15 +154,16 @@ namespace api.Controllers
         [HttpGet("api/sphlist_full")]
         public async Task<IActionResult> getQuestion02()
         {
-            var currentcountry = "";
-            var currentVendor = 0;
+            var CountryDescription = await _special.getCurrentCountryFromLoggedInUser();
+            var selectedIsoCode = await _special.getIsoCodeFromDescription(CountryDescription);
             var currentUserId = _special.getCurrentUserId();
             var currentUser = await _user.GetUser(currentUserId);
+            var currentVendor = await _special.getCurrentVendorAsync();
 
             if (currentUser.Role == "companyHQ" || currentUser.Role == "companyadmin")
             {
                 var comaddress = _com.Value.hospitalURL;
-                var st = "Hospital/sphlist_full/" + currentVendor + "/" + currentcountry;
+                var st = "Hospital/sphlist_full/" + currentVendor + "/" + selectedIsoCode;
                 comaddress = comaddress + st;
                 using (var httpClient = new HttpClient())
                 {
@@ -178,15 +180,17 @@ namespace api.Controllers
         [HttpGet("api/neg_sphlist_full")]
         public async Task<IActionResult> getQuestion03()
         {
-            var currentcountry = "";
-            var currentVendor = 0;
+            var CountryDescription = await _special.getCurrentCountryFromLoggedInUser();
+            var selectedIsoCode = await _special.getIsoCodeFromDescription(CountryDescription);
             var currentUserId = _special.getCurrentUserId();
             var currentUser = await _user.GetUser(currentUserId);
+            var currentVendor = await _special.getCurrentVendorAsync();
+
 
             if (currentUser.Role == "companyHQ" || currentUser.Role == "companyadmin")
             {
                 var comaddress = _com.Value.hospitalURL;
-                var st = "Hospital/neg_sphlist_full/" + currentVendor + "/" + currentcountry;
+                var st = "Hospital/neg_sphlist_full/" + currentVendor + "/" + selectedIsoCode;
                 comaddress = comaddress + st;
                 using (var httpClient = new HttpClient())
                 {
@@ -199,7 +203,7 @@ namespace api.Controllers
             }
             else { return BadRequest("Requestor should be companyHQ or companyadmin"); }
         }
-        
+
         [HttpGet("api/getHospitalDetails")]
         public async Task<IActionResult> getQuestion017()
         {
@@ -301,7 +305,7 @@ namespace api.Controllers
                 using (var response = await httpClient.GetAsync(comaddress1))
                 {
                     var help = await response.Content.ReadAsStringAsync();
-                   if (response.Headers.Contains("Pagination"))
+                    if (response.Headers.Contains("Pagination"))
                     {
                         var ph = response.Headers.GetValues("Pagination").First();
                         plFromC = JsonConvert.DeserializeObject<Class_PL_From_Container>(ph);
@@ -379,10 +383,10 @@ namespace api.Controllers
             }
 
         }
-  
+
         [HttpGet("api/allHospitals")]
         public async Task<IActionResult> getAllHospitalsItemsAsync(string TelCode) // return list of class_item
-        {   
+        {
             var comaddress = _com.Value.hospitalURL;
             var st = "Hospital/allHospitals";
             comaddress = comaddress + st;
@@ -397,7 +401,7 @@ namespace api.Controllers
 
         }
 
-    
+
         [HttpGet("api/isOVIPlace")]
         public async Task<IActionResult> getOVI()
         {

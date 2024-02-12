@@ -115,6 +115,10 @@ namespace api.Controllers
         [HttpGet("api/usersInHospital")]
         public async Task<IActionResult> getUser15Async([FromQuery] UserParams up)
         {
+           if(up.selectedHospital == 0){
+            return BadRequest("selectedhospital = 0");
+           }
+           
             var result = await _user.GetUsersInHospital(up);
             var userList = await _special.mapToListOfUserToReturn(result);
 

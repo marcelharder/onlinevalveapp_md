@@ -41,6 +41,7 @@ export class ListHospitalsForRefComponent implements OnInit {
       this.currentVendor = next.vendorName;
       this.currentCountry = next.country;
     });
+   
   }
   showDetails() { if (this.detailsPage === 1) { return true; } }
   showSelectPage() { if (this.selectPage === 1) { return true; } }
@@ -66,7 +67,6 @@ export class ListHospitalsForRefComponent implements OnInit {
     }); */
   }
   updateHospitalDetails(s: Hospital) {
-
     this.hosService.saveDetails(s).subscribe((next) => {
       this.alertify.message(next);
       this.detailsPage = 0;

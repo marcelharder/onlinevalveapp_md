@@ -107,11 +107,11 @@ namespace api.Controllers
             }
         }
 
-        [HttpGet("api/removeVendor/{vendor}")]
-        public async Task<IActionResult> getQuestion06(string vendor)
+        [HttpGet("api/removeVendor/{vendor}/{hospitalNo}")]
+        public async Task<IActionResult> getQuestion06(string vendor, string hospitalNo)
         {
             var comaddress = _com.Value.hospitalURL;
-            var st = "Hospital/removeVendorFromHospital/" + vendor + "/" + await _special.getCurrentUserHospitalId();
+            var st = "Hospital/removeVendorFromHospital/" + vendor + "/" + hospitalNo;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {

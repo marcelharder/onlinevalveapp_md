@@ -55,7 +55,7 @@ export class HospitalService {
   addVendor(vendor: string, selectedHospital: string) { return this.http.get<string>(this.baseUrl + 'addVendor' + '/' + vendor + '/' + selectedHospital, { responseType: 'text' as 'json' }); }
   replaceVendor(vendor: string) { return this.http.get<string>(this.baseUrl + 'replaceVendor' + '/' + vendor, { responseType: 'text' as 'json' }); }
  
-  removeVendor(vendor: string) { return this.http.get<string>(this.baseUrl + 'removeVendor' + '/' + vendor, { responseType: 'text' as 'json' }); }
+  removeVendor(vendor: string, hospitalNo: string) { return this.http.get<string>(this.baseUrl + 'removeVendor' + '/' + vendor + '/' + hospitalNo, { responseType: 'text' as 'json' }); }
   getDetails() { return this.http.get<Hospital>(this.baseUrl + 'getHospitalDetails'); }
   getSpecificHospitalDetails(id: number) { return this.http.get<Hospital>(this.baseUrl + 'getSpecificHospitalDetails/' + id); }
   saveDetails(h: Partial<Hospital>) { return this.http.put<string>(this.baseUrl + 'saveHospitalDetails', h, { responseType: 'text' as 'json' }); }

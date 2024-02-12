@@ -16,7 +16,6 @@ import { User } from 'src/app/_models/User';
 export class ListHospitalsForRefComponent implements OnInit {
   @Input() hos: Hospital[];
   contactName = '';
-  hospitalContactNumber = 0;
   currentCountry = '';
   currentVendor = '';
   detailsPage = 0;
@@ -46,27 +45,25 @@ export class ListHospitalsForRefComponent implements OnInit {
   showDetails() { if (this.detailsPage === 1) { return true; } }
   showSelectPage() { if (this.selectPage === 1) { return true; } }
 
-  selectDetails(id: number) {
+  selectDetails(id: string) {
+     // get the selectedHospital from the list
+     const found = this.hos.find((Hospital) => {return Hospital.HospitalNo === id});
+     if (found) {
+      this.selectedHospital = found;
+      this.detailsPage = 1;
+      this.selectPage = 0;
+    }
 
-    this.detailsPage = 1;
+
+
+
+
+   /*  this.detailsPage = 1;
     this.selectPage = 0;
-
-
-
-    this.hosService.getDetails().subscribe((next) => {
-
+    this.hosService.getSpecificHospitalDetails(id).subscribe((next) => {
+      debugger;
       this.selectedHospital = next;
-
-      this.hospitalContactNumber = parseInt(this.selectedHospital.Contact, 10);
-      //this.auth.changeCurrentRecipient(hospitalContactNumber);
-      this.user.getUser(this.hospitalContactNumber).subscribe((reponse) => {
-        this.contactName = reponse.username;
-        this.selectedHospital.Contact_image = reponse.photoUrl;
-      });
-
-    });
-
-
+    }); */
   }
   updateHospitalDetails(s: Hospital) {
 
@@ -74,6 +71,11 @@ export class ListHospitalsForRefComponent implements OnInit {
       this.alertify.message(next);
       this.detailsPage = 0;
     });
+  }
+
+  backFromEditPage(id: number){
+    this.detailsPage = 0;
+    this.selectPage = 0;
   }
   selectThisHospital(id: string) {
     this.hosService.addVendor(this.currentVendor, id).subscribe((next) => {

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-12">
-    <h2><span class="badge badge-default">Edit details {{selectedHospital.naam}}</span></h2>
+    <h2><span class="badge badge-default">Edit details {{selectedHospital.HospitalName}}</span></h2>
   </div>
 </div>
 <div class="row">
@@ -13,7 +13,7 @@
             <h5><span class="badge badge-info">Name</span></h5>
           </div>
           <div class="col-sm-9">
-            <input type="text" class="form-control" [(ngModel)]="selectedHospital.naam" name="test" />
+            <input type="text" class="form-control" [(ngModel)]="selectedHospital.HospitalName" name="test" />
           </div>
         </div>
         <div class="row">
@@ -21,7 +21,7 @@
             <h5><span class="badge badge-info">Adres</span></h5>
           </div>
           <div class="col-sm-9">
-            <input type="text" class="form-control" [(ngModel)]="selectedHospital.adres" name="test4" />
+            <input type="text" class="form-control" [(ngModel)]="selectedHospital.Address" name="test4" />
           </div>
         </div>
         <div class="row">
@@ -41,7 +41,7 @@
             <h5><span class="badge badge-info">Telephone</span></h5>
           </div>
           <div class="col-sm-9">
-            <input type="text" class="form-control" [(ngModel)]="selectedHospital.telephone" name="test45" />
+            <input type="text" class="form-control" [(ngModel)]="selectedHospital.Telephone" name="test45" />
           </div>
         </div>
         <div class="row">
@@ -50,7 +50,7 @@
           </div>
           <div class="col-sm-9">
             <div class="row">
-              <div class="col-sm-4"><input type="text" class="form-control" [ngModel]="contactName"
+              <div class="col-sm-4"><input type="text" class="form-control" [ngModel]="selectedHospital.contactName"
                   name="test1" /></div>
               <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="selectedHospital.email"
                   name="test2" /></div>
@@ -63,7 +63,7 @@
           <div class="col-sm-3"></div>
           <div class="col-sm-9">
             <div class="d-flex justify-content-center">
-            <div class="col-sm-3"><img width="150" height="150" [src]="selectedHospital.contact_image"></div>
+            <div class="col-sm-3"><img width="150" height="150" [src]="selectedHospital.Contact_image"></div>
             <div class="col-sm-9"><app-hospital-messages [recipientId]="contactNumber"></app-hospital-messages></div>
           </div>
           </div>

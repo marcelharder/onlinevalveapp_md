@@ -41,9 +41,9 @@
     <app-editHospital 
     [selectedHospital]="selectedHospital" 
     [country]="currentCountry" 
-    [contactName]="contactName"
-    [contactNumber]="hospitalContactNumber"
-    (hospitalOut)="updateHospitalDetails($event)"></app-editHospital>
+    [contactName]="selectedHospital.contactName"
+    (hospitalOut)="updateHospitalDetails($event)"
+    (back)="backFromEditPage($event)"></app-editHospital>
 
   </div>
   <div class="card-body" *ngIf="showSelectPage()">

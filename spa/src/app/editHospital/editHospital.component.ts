@@ -17,9 +17,10 @@ export class EditHospitalComponent implements OnInit  {
 @Input() selectedHospital: Hospital;
 @Input() country: string;
 @Input() contactName: string;
-@Input() contactNumber: number;
 @Output() hospitalOut: EventEmitter<Hospital> = new EventEmitter();
+@Output() back: EventEmitter<number> = new EventEmitter();
 currentVendor = '';
+contactNumber = 0;
 
 
   constructor(private gen: GeneralService,
@@ -31,28 +32,19 @@ currentVendor = '';
     let rep: User;
     this.user.getUser(this.auth.decodedToken.nameid).subscribe((next) => {
         rep = next; 
+        this.contactNumber = rep.userId;
         this.currentVendor = rep.vendorName;
-      });
-   
-    
-
+        });
   }
-
-
-
-
-
-
-
 
   deleteVendorInHospital() {
     this.hosService.removeVendor(this.currentVendor).subscribe((next) => {
-      if (next === 'removed') {
-        this.router.navigate(['/home']);
-      }
+      this.back.emit(1);
     });
   }
 
   updateHospitalDetails() {  this.hospitalOut.emit(this.selectedHospital); }
+
+  goBack(){this.back.emit(1);}
 }
 

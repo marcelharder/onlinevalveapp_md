@@ -227,6 +227,26 @@ namespace api.Controllers
             /*  var hospital = await _special.getHospital(id);
              return Ok(hospital); */
         }
+        [HttpGet("api/getSpecificHospitalDetails/{id}")]
+        public async Task<IActionResult> getQuestion027(int id)
+        {
+                var comaddress = _com.Value.hospitalURL;
+                var st = "Hospital/getHospital/" + id;
+                comaddress = comaddress + st;
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.GetAsync(comaddress))
+                    {
+                        var help = await response.Content.ReadAsStringAsync();
+                        return Ok(help);
+                    }
+                }
+            
+           
+
+            /*  var hospital = await _special.getHospital(id);
+             return Ok(hospital); */
+        }
 
         [HttpPut("api/saveHospitalDetails")]
         public async Task<string> postQuestion07(Class_Hospital_from_Container hos)

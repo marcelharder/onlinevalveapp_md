@@ -23,61 +23,61 @@
       <div class="card-body">
         <div class="row">
           <div class="col-sm-6">
-            
+            <div class="row">
+              <div class="col-sm-3">
+                <h5><span class="badge badge-info">Name</span></h5>
+              </div>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" [(ngModel)]="selectedHospital.HospitalName" name="test" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <h5><span class="badge badge-info">Adres</span></h5>
+              </div>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" [(ngModel)]="selectedHospital.Address" name="test4" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+    
+              </div>
+              <div class="col-sm-9">
+                <div class="row">
+                  <div class="col-sm-6"><input type="text" class="form-control" [(ngModel)]="selectedHospital.postalCode"
+                      name="test5" /></div>
+                  <div class="col-sm-6">{{country}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <h5><span class="badge badge-info">Telephone</span></h5>
+              </div>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" [(ngModel)]="selectedHospital.Telephone" name="test45" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <h5><span class="badge badge-info">Contact</span></h5>
+              </div>
+              <div class="col-sm-9">
+                <div class="row">
+                  <div class="col-sm-4"><input type="text" class="form-control" [ngModel]="selectedHospital.contactName"
+                      name="test1" /></div>
+                  <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="selectedHospital.email"
+                      name="test2" /></div>
+                  <div class="col-sm-4"></div>
+                </div>
+    
+              </div>
+            </div> 
           </div>
           <div class="col-sm-6"></div>
         </div>
-        <div class="row">
-          <div class="col-sm-3">
-            <h5><span class="badge badge-info">Name</span></h5>
-          </div>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" [(ngModel)]="selectedHospital.HospitalName" name="test" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-3">
-            <h5><span class="badge badge-info">Adres</span></h5>
-          </div>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" [(ngModel)]="selectedHospital.Address" name="test4" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-3">
-
-          </div>
-          <div class="col-sm-9">
-            <div class="row">
-              <div class="col-sm-6"><input type="text" class="form-control" [(ngModel)]="selectedHospital.postalCode"
-                  name="test5" /></div>
-              <div class="col-sm-6">{{country}}</div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-3">
-            <h5><span class="badge badge-info">Telephone</span></h5>
-          </div>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" [(ngModel)]="selectedHospital.Telephone" name="test45" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-3">
-            <h5><span class="badge badge-info">Contact</span></h5>
-          </div>
-          <div class="col-sm-9">
-            <div class="row">
-              <div class="col-sm-4"><input type="text" class="form-control" [ngModel]="selectedHospital.contactName"
-                  name="test1" /></div>
-              <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="selectedHospital.email"
-                  name="test2" /></div>
-              <div class="col-sm-4"></div>
-            </div>
-
-          </div>
-        </div>
+        
         <div class="row mt-1">
           <div class="col-sm-3"></div>
           <div class="col-sm-9">

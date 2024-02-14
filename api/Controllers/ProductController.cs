@@ -130,23 +130,24 @@ namespace api.Controllers
            
         }
 
-        [HttpGet("api/productByNo/{id}", Name = "getProduct")]
+        [HttpGet("api/productByValveNo/{id}", Name = "getProduct")]
         public async Task<IActionResult> get04(int id)
         {
             var help = new Valve_Code();
             var comaddress = _com.Value.productURL;
-            var st = "ValveCode/" + id;
+            var st = "ValveCode/detailsByValveNo/" + id;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     var g = await response.Content.ReadAsStringAsync();
-                    help = (Valve_Code)JsonConvert.DeserializeObject(g);
+                  //  help = (Valve_Code)JsonConvert.DeserializeObject(g);
+                    return Ok(g);
                 }
             }
             // var result = await _vc.getDetails(id);
-            return Ok(help);
+            //return Ok(help);
         }
 
         [HttpGet("api/productByCode/{code}")]

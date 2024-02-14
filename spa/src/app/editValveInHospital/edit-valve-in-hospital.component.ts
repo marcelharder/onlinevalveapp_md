@@ -56,7 +56,6 @@ export class EditValveInHospitalComponent implements OnInit {
         countries: ''
     };
 
-    HospitalName = '';
     VendorName = '';
 
     // sendPanel = 0;
@@ -74,6 +73,11 @@ export class EditValveInHospitalComponent implements OnInit {
     }
     ngOnInit(): void {
         if (this.valve.type === "Pericardial Patch") { this.valveIsPatch = true; }
+        this.hos.getSpecificHospitalDetails(+this.hospitalName).subscribe((next)=>
+        {
+            this.hospitalName = next.SelectedHospitalName;
+        })
+        
       
         this.loadDrops();
     }

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using api.DAL.Code;
@@ -7,8 +9,11 @@ using api.DAL.dtos;
 using api.DAL.Interfaces;
 using api.DAL.models;
 using api.Helpers;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace api.Controllers
 {
@@ -19,10 +24,22 @@ namespace api.Controllers
     {
         private IUserRepository _user;
         private SpecialMaps _special;
-        public UserController(IUserRepository user, SpecialMaps special)
+
+        private Cloudinary _cloudinary;
+        private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
+        public UserController(IUserRepository user, SpecialMaps special, IOptions<CloudinarySettings> cloudinaryConfig)
         {
             _user = user;
             _special = special;
+            _cloudinaryConfig = cloudinaryConfig;
+
+            Account acc = new Account(
+               _cloudinaryConfig.Value.CloudName,
+               _cloudinaryConfig.Value.ApiKey,
+               _cloudinaryConfig.Value.ApiSecret
+           );
+            _cloudinary = new Cloudinary(acc);
+
         }
         [HttpGet("api/userById/{id}", Name = "getUser")]
         public async Task<IActionResult> getUser01Async(int id)
@@ -76,7 +93,6 @@ namespace api.Controllers
             if (await _user.SaveAll()) { return Ok("User removed"); };
             return BadRequest("can not remove User");
         }
-
 
         [HttpGet("api/adduser/{userId}")]
         public async Task<IActionResult> getUser05Async(int userId)
@@ -132,6 +148,55 @@ namespace api.Controllers
       
         [HttpGet("api/currentCountryCode/{id}")]
         public async Task<IActionResult> getCC(int id){
+            var result = await _user.GetCountryCodeFromUser(id);
+          return Ok(result);
+        }
+
+        [HttpPost("api/addUserPhoto/{id}")]
+        public async Task<IActionResult> getNewPhoto(int id, [FromQuery] PhotoForCreationDto photoDto){
+         var selectedUser = await _user.GetUser(id);
+         
+         var file = photoDto.File;
+         var uploadresult = new ImageUploadResult();
+
+         if(file.Length > 0){
+            using (var stream = file.OpenReadStream())
+                {
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(file.Name, stream),
+                        Transformation = new Transformation().Width(500).Height(500).Crop("fill").Gravity("face")
+                    };
+                    uploadresult = _cloudinary.Upload(uploadParams);
+                }
+                // get all the photos for this user 
+                var userPhotos = selectedUser.Photos.ToList();
+                foreach(Photo p in userPhotos){
+                    p.IsMain = false;
+                    _user.Update(p);
+                    await _user.SaveAll();
+                }
+
+                var image = new Photo();
+                image.Url = uploadresult.Url.ToString();
+                image.UserId = selectedUser.UserId;
+                image.user = selectedUser;
+                image.DateAdded = DateTime.Now;
+                image.Description = "Profile image";
+                image.IsMain = true;
+                selectedUser.Photos.Add(image);
+
+                _user.Update(selectedUser);
+
+                if(await _user.SaveAll()){
+
+                    return Ok(uploadresult.Url.ToString());
+                }
+                return BadRequest();
+        }
+         
+         
+         
             var result = await _user.GetCountryCodeFromUser(id);
           return Ok(result);
         }

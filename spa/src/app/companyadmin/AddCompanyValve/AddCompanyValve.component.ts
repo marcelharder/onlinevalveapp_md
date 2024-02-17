@@ -15,6 +15,7 @@ export class AddCompanyValveComponent implements OnInit {
 
   currentCompany = '';
   currentProduct = '';
+  hospitalName = "";
 
   valveToAdd: Valve;
 
@@ -29,7 +30,7 @@ export class AddCompanyValveComponent implements OnInit {
     this.route.data.subscribe(data => { this.valveToAdd = data.valve; });
     this.currentProduct = this.valveToAdd.description;
     this.currentCompany = this.valveToAdd.vendor_name;
-    this.auth.currentHospital.subscribe(result => { this.valveToAdd.hospital_code = parseInt(result, 10); });
+    this.auth.currentHospital.subscribe(result => {this.valveToAdd.hospital_code = parseInt(result, 10);});
   }
 
   saveValve(v: Valve) {

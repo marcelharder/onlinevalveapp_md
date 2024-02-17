@@ -14,7 +14,7 @@ export class HospitalService {
 
   getVendorsInHospital() { return this.http.get<DropItem[]>(this.baseUrl + 'hospital/vendors'); }
   getListOfHospitalsWhereVendorIsActive() { return this.http.get<DropItem[]>(this.baseUrl + 'sphlist'); }
-  getHospitalFromHospitalCode(code: number) {return this.http.get<string>(this.baseUrl + 'hospitalName/' + code, { responseType: 'text' as 'json' });}
+  getHospitalFromHospitalCode(code: number) {return this.http.get<string>(this.baseUrl + 'getHospitalDetails/' + code, { responseType: 'text' as 'json' });}
   
   getListOfFullHospitalsPerCountry(countryCode: string, pageNumber: number, pageSize: number)
   {
@@ -52,11 +52,12 @@ export class HospitalService {
   getFullHospitalsWhereVendorIsActive() { return this.http.get<Hospital[]>(this.baseUrl + 'sphlist_full'); }
   getFullHospitalsWhereVendorIsNotActive() { return this.http.get<Hospital[]>(this.baseUrl + 'neg_sphlist_full'); }
   
-  addVendor(vendor: string) { return this.http.get<string>(this.baseUrl + 'addVendor' + '/' + vendor, { responseType: 'text' as 'json' }); }
+  addVendor(vendor: string, selectedHospital: string) { return this.http.get<string>(this.baseUrl + 'addVendor' + '/' + vendor + '/' + selectedHospital, { responseType: 'text' as 'json' }); }
   replaceVendor(vendor: string) { return this.http.get<string>(this.baseUrl + 'replaceVendor' + '/' + vendor, { responseType: 'text' as 'json' }); }
  
-  removeVendor(vendor: string) { return this.http.get<string>(this.baseUrl + 'removeVendor' + '/' + vendor, { responseType: 'text' as 'json' }); }
+  removeVendor(vendor: string, hospitalNo: string) { return this.http.get<string>(this.baseUrl + 'removeVendor' + '/' + vendor + '/' + hospitalNo, { responseType: 'text' as 'json' }); }
   getDetails() { return this.http.get<Hospital>(this.baseUrl + 'getHospitalDetails'); }
+  getSpecificHospitalDetails(id: number) { return this.http.get<Hospital>(this.baseUrl + 'getSpecificHospitalDetails/' + id); }
   saveDetails(h: Partial<Hospital>) { return this.http.put<string>(this.baseUrl + 'saveHospitalDetails', h, { responseType: 'text' as 'json' }); }
   isOVIPlace(){return this.http.get<number>(this.baseUrl + 'isOVIPlace');}
 

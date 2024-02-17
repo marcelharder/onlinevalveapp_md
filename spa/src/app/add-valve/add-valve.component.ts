@@ -98,7 +98,7 @@ export class AddValveComponent implements OnInit {
             // get the selected product, this selectedProduct
 
             this.vs.getValveBasedOnValveCode(p).subscribe((next) => {
-               debugger;
+              
                 this.valveInParent = next;
                 this.valveInParent.hospital_code = +this.currentHospitalNo;
                 this.details = 1;

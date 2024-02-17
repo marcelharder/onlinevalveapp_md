@@ -12,6 +12,9 @@ namespace api.DAL.dtos
         public string Country {get; set;}
         public string ImageUrl {get; set;}
         public string City {get; set;}
+        public string Contact {get; set;}
+        public string Contact_image {get; set;}
+        public string Vendors {get; set;}
         public int UsesOnlineValveInventory {get; set;}
         public string OpReportDetails1 {get; set;}
         public string OpReportDetails2 {get; set;}

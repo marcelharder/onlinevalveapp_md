@@ -7,6 +7,6 @@
     </div>
   </div>
   <div class="card-body">
-   <app-edit-valve-in-hospital [valve]="valveToAdd" (valveBack)="saveValve($event)"></app-edit-valve-in-hospital>
+   <app-edit-valve-in-hospital [valve]="valveToAdd" [hospitalName]= "valveToAdd.hospital_code" (valveBack)="saveValve($event)"></app-edit-valve-in-hospital>
   </div>
 </div>

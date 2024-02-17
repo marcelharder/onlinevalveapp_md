@@ -151,30 +151,40 @@ export class SelectValveComponent implements OnInit {
 
 
   searchDetails(id: any) {
+
+
     // check if the height and weight are entered, if not
     if(this.selectedHeight === 0){
       this.alertify.error("Please enter the height and weight of your patient ...");
     } else {
-      this.prod.getValveSizes(id).subscribe((nex)=>{
-        this.valveSizes = nex;
-        this.gen.getBSA(+this.selectedHeight, +this.selectedWeight).subscribe((next)=>{
-          this.bsa = next;
-          this.valveSizes.forEach(element => {
-            if ((element.EOA / this.bsa) > .85) { element.PPM = 'none' } else {
-              if ((element.EOA / this.bsa) <= .85 && (element.EOA / this.bsa) >= .65) { element.PPM = "moderate" }
-              else {
-                if ((element.EOA / this.bsa) < .65) { element.PPM = "severe" }
+
+      if(id !== undefined){
+        this.prod.getValveSizes(id).subscribe((nex)=>{
+          this.valveSizes = nex;
+          this.gen.getBSA(+this.selectedHeight, +this.selectedWeight).subscribe((next)=>{
+            this.bsa = next;
+            this.valveSizes.forEach(element => {
+              if ((element.EOA / this.bsa) > .85) { element.PPM = 'none' } else {
+                if ((element.EOA / this.bsa) <= .85 && (element.EOA / this.bsa) >= .65) { element.PPM = "moderate" }
+                else {
+                  if ((element.EOA / this.bsa) < .65) { element.PPM = "severe" }
+                }
               }
-            }
+            });
           });
-        });
-        this.prod.getProductById(id).subscribe(
-          (next) => {
-            this.product = next;
-            this.product.Valve_size = this.valveSizes;
-          })
-      },(error) => { this.alertify.error(error) },() => { this.showProduct = 0; });
+          this.prod.getProductById(id).subscribe(
+            (next) => {
+              this.product = next;
+              this.product.Valve_size = this.valveSizes;
+            })
+        },(error) => { this.alertify.error(error) },() => { this.showProduct = 0; });
+      }
+      else{
+        this.alertify.error("no id ...");
+      }
+      
     }
+
   }
 
   backFromDetails(id: any){this.showProduct = 1; }

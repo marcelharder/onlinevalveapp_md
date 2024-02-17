@@ -17,6 +17,13 @@ import { HospitalService } from '../_services/hospital.service';
 })
 export class ProfileComponent implements OnInit {
   user: User;
+  model: any = {};
+  oldPassWord = "";
+  newPassWord = "";
+  repPassWord = "";
+  
+
+
   listCountries:Array<DropItem> = [];
   selectedCountry = "";
   photo: Photo =
@@ -57,7 +64,8 @@ export class ProfileComponent implements OnInit {
       }
 
       else {
-        this.hospital.getHospitalFromHospitalCode(this.user.hospitalCode).subscribe((next) => { this.affiliation = next; });
+        this.hospital.getDetails().subscribe((next) => {
+           this.affiliation = next.HospitalName; });
       }
 
 
@@ -74,5 +82,30 @@ export class ProfileComponent implements OnInit {
   }
 
   changeMainPhoto(photoUrl) { this.user.photoUrl = photoUrl; }
+
+  ChangePWD(){
+    if(this.newPassWord !== this.repPassWord){this.alertify.error("The passwords dont match ...")}
+    else 
+    {
+      this.model.username = this.user.username;
+      this.model.password = this.newPassWord;
+      this.authService.update(this.model).subscribe((next)=>{
+        this.alertify.success("Password changed");
+        localStorage.removeItem('token');
+
+      });
+    }
+
+
+
+
+
+
+   
+    
+    
+  
+  
+  }
 }
 

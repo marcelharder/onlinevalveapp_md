@@ -13,7 +13,7 @@
             <h5><span class="badge badge-info">Id</span></h5>
           </div>
           <div class="col-sm-9">
-            <input type="text" class="form-control" [(ngModel)]="vc.no" name="test" readonly />
+            <input type="text" class="form-control" [(ngModel)]="vc.No" name="test" readonly />
           </div>
         </div>
         <div class="row">
@@ -21,7 +21,7 @@
             <h5><span class="badge badge-info">Description</span></h5>
           </div>
           <div class="col-sm-9">
-            <input type="text" class="form-control" [(ngModel)]="vc.description" name="test" />
+            <input type="text" class="form-control" [(ngModel)]="vc.Description" name="test" />
           </div>
         </div>
         <div class="row">
@@ -46,10 +46,10 @@
           </div>
           <div class="col-sm-9">
             <div class="row">
-              <div class="col-sm-6"><select [(ngModel)]="vc.type" name="test11" class="form-control">
+              <div class="col-sm-6"><select [(ngModel)]="vc.Type" name="test11" class="form-control">
                 <option *ngFor="let an of typeOfValve" [value]="an.description">{{ an.description }}</option>
               </select></div>
-              <div class="col-sm-6"><input type="text" class="form-control" [(ngModel)]="vc.type" name="test5" /></div>
+              <div class="col-sm-6"><input type="text" class="form-control" [(ngModel)]="vc.Type" name="test5" /></div>
               <div class="col-sm-6"></div>
             </div>
           </div>
@@ -60,7 +60,7 @@
           </div>
           <div class="col-sm-9">
             <div class="row">
-              <div class="col-sm-6"><input type="text" class="form-control" [(ngModel)]="vc.model_code" name="test555" /></div>
+              <div class="col-sm-6"><input type="text" class="form-control" [(ngModel)]="vc.Model_code" name="test555" /></div>
               <div class="col-sm-6"></div>
             </div>
            </div>
@@ -80,10 +80,10 @@
                   <th><button class="btn btn-warning" (click)="saveSize()" *ngIf="!displayAdd()">Save</button></th>
                 </tr>
                 <tr *ngFor="let pro of ValveCodeSizes">
-                  <td>{{pro.sizeId}}</td>
-                  <td>{{pro.size}}</td>
-                  <td>{{pro.eoa}}</td>
-                  <td><button class="btn btn-warning" (click)="deleteSize(pro.sizeId)">Delete</button></td>
+                  <td>{{pro.SizeId}}</td>
+                  <td>{{pro.Size}}</td>
+                  <td>{{pro.EOA}}</td>
+                  <td><button class="btn btn-warning" (click)="deleteSize(pro.SizeId)">Delete</button></td>
                   <td></td>
                  </tr>
                 <tr>
@@ -115,7 +115,7 @@
           </div>
           <div class="col-sm-9">
             <div class="row">
-              <div class="col-sm-6"><select [(ngModel)]="vc.implant_position" name="test10" class="form-control">
+              <div class="col-sm-6"><select [(ngModel)]="vc.Implant_position" name="test10" class="form-control">
                   <option *ngFor="let an of implantLocation" [value]="an.description">{{ an.description }}</option>
                 </select></div>
               <div class="col-sm-6"></div>

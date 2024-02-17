@@ -18,8 +18,10 @@ export class EditProductComponent implements OnInit {
   uploader: FileUploader;
   @Output() povOut: EventEmitter<number> = new EventEmitter();
   ImagePath = "";
+  avsize = 0;
   baseUrl = environment.apiUrl;
   showAdd = 0; newsize = 0; neweoa = 0.0;
+  valveSizes:Array<valveSize> = [];
   valvesize: valveSize = {
     SizeId: 0,
     Size: 0,
@@ -35,15 +37,17 @@ export class EditProductComponent implements OnInit {
 
 
   ngOnInit(): void {
+   
     this.uploader = new FileUploader({
     });
 
   }
   updatePhoto(photoUrl: string){
-    this.vc.image = photoUrl;
+    if(photoUrl !== undefined && photoUrl !== ""){ this.vc.image = photoUrl;}
+   
   }
 
-
+  sizesAvailable(){if(this.avsize === 1){return true;} else {return false;}}
 
   updateProductDetails() {
     this.prod.saveDetails(this.vc).subscribe((next) => {
@@ -60,26 +64,40 @@ export class EditProductComponent implements OnInit {
      this.showAdd = 0;
      this.valvesize.Size = this.newsize;
      this.valvesize.EOA = this.neweoa;
-     this.prod.addValveSize(this.vc.ValveTypeId, this.valvesize).subscribe((next)=>{
-          // get the changed valveType
-      this.prod.getProductById(this.vc.ValveTypeId).subscribe((next)=>{
+     this.prod.addValveSize(this.vc.ValveTypeId, this.valvesize).subscribe((next) => {
+      this.alertify.message("Size added ...");
+      this.newsize = 0; 
+      this.neweoa = 0.0;
+     }, error => {}, () => {
+      this.valveSizes.push(this.valvesize);
+      // sort on valve size from small to big
+      this.valveSizes.sort((a,b) => a.Size - b.Size);
+     })
+     //this.prod.addValveSize(this.vc.ValveTypeId, this.valvesize).subscribe((next)=>{
+     // get the list of valveSizes
+     /*  this.prod.getValveSizes(this.vc.ValveTypeId).subscribe((next)=>{
+        this.valveSizes = next;
         this.newsize = 0; 
         this.neweoa = 0.0;
         this.alertify.message("uploading size");
-        this.vc = next;
+        
       });
-   
+    */
        
        
 
-     })
+    // })
      
   }
   deleteSize(id:number){
-    this.prod.deleteValveSize(this.vc.ValveTypeId, id).subscribe((next)=>{
+    this.prod.deleteValveSize(id).subscribe((next)=>{
       this.alertify.message("size removed ...");
-      // get the changed valveType
-      this.prod.getProductById(this.vc.ValveTypeId).subscribe((next)=>{this.vc = next});
+     
+    }, error => {
+      this.alertify.message(error);
+    }, () => {
+      this.valveSizes.filter(x => x.SizeId === id);
+      
     })
    
   }
@@ -91,10 +109,21 @@ export class EditProductComponent implements OnInit {
   }
   deleteProduct() {
     this.alertify.confirm('Are you sure ?', () => {
-      this.prod.deleteProduct(this.vc.No).subscribe();
+      this.prod.deleteProduct(this.vc.ValveTypeId).subscribe((next)=>{
+        this.router.navigate(['/home']); // to force the list to be renewed
+      });
+
       this.povOut.emit(1);
     });
 
+  }
+  getSizes(){
+    this.prod.getValveSizes(this.vc.ValveTypeId).subscribe((next)=>{
+      this.valveSizes = next;
+      this.avsize = 1;
+      // sort on valve size from small to big
+      this.valveSizes.sort((a,b) => a.Size - b.Size);
+    });
   }
 
 }

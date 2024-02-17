@@ -14,25 +14,24 @@ import { User } from 'src/app/_models/User';
   styleUrls: ['./list-hospitals-for-ref.component.css']
 })
 export class ListHospitalsForRefComponent implements OnInit {
-  @Input() hos: Hospital;
+  @Input() hos: Hospital[];
   contactName = '';
-  hospitalContactNumber =  0;
   currentCountry = '';
   currentVendor = '';
   detailsPage = 0;
   selectPage = 0;
   FullHospitals: Array<Hospital> = [];
 
-  selectedHospital: Partial<Hospital> = { };
+  selectedHospital: Partial<Hospital> = {};
 
   hospitalDescription = '';
 
   constructor(private auth: AuthService,
-              private user: UserService,
-              private router: Router,
-              private hosService: HospitalService,
-              private alertify: AlertifyService,
-              private gen: GeneralService) {
+    private user: UserService,
+    private router: Router,
+    private hosService: HospitalService,
+    private alertify: AlertifyService,
+    private gen: GeneralService) {
 
   }
   ngOnInit(): void {
@@ -41,46 +40,53 @@ export class ListHospitalsForRefComponent implements OnInit {
       rep = next;
       this.currentVendor = next.vendorName;
       this.currentCountry = next.country;
-      // tslint:disable-next-line:no-shadowed-variable
-     // this.gen.getCountryName(rep.country).subscribe((next) => { this.currentCountry = next; });
     });
+   
   }
   showDetails() { if (this.detailsPage === 1) { return true; } }
   showSelectPage() { if (this.selectPage === 1) { return true; } }
 
-  selectDetails(id: number) {
+  selectDetails(id: string) {
+     // get the selectedHospital from the list
+     const found = this.hos.find((Hospital) => {return Hospital.HospitalNo === id});
+     if (found) {
+      this.selectedHospital = found;
+      this.detailsPage = 1;
+      this.selectPage = 0;
+    }
 
-    this.detailsPage = 1;
+
+
+
+
+   /*  this.detailsPage = 1;
     this.selectPage = 0;
-
-    this.hosService.getDetails().subscribe((next) => {
-
+    this.hosService.getSpecificHospitalDetails(id).subscribe((next) => {
+      debugger;
       this.selectedHospital = next;
-       
-      this.hospitalContactNumber = parseInt(this.selectedHospital.Contact, 10);
-      //this.auth.changeCurrentRecipient(hospitalContactNumber);
-      this.user.getUser(this.hospitalContactNumber).subscribe((reponse) => {
-          this.contactName = reponse.username;
-          this.selectedHospital.Contact_image = reponse.photoUrl;
-        } );
-
-    });
-
-
+    }); */
   }
   updateHospitalDetails(s: Hospital) {
-
     this.hosService.saveDetails(s).subscribe((next) => {
-        this.alertify.message(next);
-        this.detailsPage = 0;
+      this.alertify.message(next);
+      this.detailsPage = 0;
     });
   }
-  selectThisHospital(id: number) {
-    this.hosService.addVendor(this.currentVendor).subscribe((next) => {
-      if (next === 'updated') {
-        this.router.navigate(['/home']);
-      }
-    });
+
+  backFromEditPage(id: number){
+    this.detailsPage = 0;
+    this.selectPage = 0;
+  }
+  selectThisHospital(id: string) {
+    this.hosService.addVendor(this.currentVendor, id).subscribe((next) => {
+      // tranfer from FullHospitals to hos
+      var transfer = this.FullHospitals.find(x => x.HospitalNo == id);
+      this.hos.push(transfer);
+      this.FullHospitals = this.FullHospitals.filter(x => x.HospitalNo == id);
+
+      this.detailsPage = 0;
+      this.selectPage = 0;
+    }, error => { this.alertify.message(error) });
   }
   AddHospital() {
     this.detailsPage = 0;
@@ -93,7 +99,7 @@ export class ListHospitalsForRefComponent implements OnInit {
   DisplayHospitalsInTheCurrentCountry() {
     this.detailsPage = 0;
     this.selectPage = 1;
-    this.alertify.message('Display a list of hospitals where this vendor is not active, yet');
+    this.alertify.success('Display a list of hospitals where this vendor is not active, yet');
     this.hosService.getFullHospitalsWhereVendorIsNotActive().subscribe((next) => {
       this.FullHospitals = next;
     });

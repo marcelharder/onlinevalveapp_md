@@ -75,9 +75,36 @@
             </form>
           </tab>
            <tab heading="Upload photo">
-           <app-photo-editor [photos]="user.photos" (getMemberPhotoChange)="changeMainPhoto($event)"></app-photo-editor>
+           <app-photo-editor [photos]="user.photos" [userId]="user.userId" (getMemberPhotoChange)="changeMainPhoto($event)"></app-photo-editor>
            </tab> 
-
+           <tab heading="Change password">
+            <form #pwdChangeForm="ngForm" (ngSubmit)="ChangePWD()" id="pwcForm">
+             <div class="card">
+                <div class="card-body">
+                  <div class="row mb-2">
+                    <div class="col-sm-4"><label>Old password </label></div>
+                    <div class="col-sm-4"><input type="password" class="form-control" name="oldpwd" [(ngModel)]="oldPassWord"/></div>
+                    <div class="col-sm-4"></div>  
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-sm-4"><label>New password </label></div>
+                    <div class="col-sm-4"><input type="password" class="form-control" name="newpwd" [(ngModel)]="newPassWord"/></div>
+                    <div class="col-sm-4"></div>  
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-sm-4"><label>Repeat password </label></div>
+                    <div class="col-sm-4"><input type="password" class="form-control" name="reppwd" [(ngModel)]="repPassWord"/></div>
+                    <div class="col-sm-4"></div>  
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4"><button type="submit" class="btn btn-success btn-sm float-right">Change</button></div>
+                    <div class="col-sm-4"></div>  
+                  </div>
+                </div> 
+              </div> 
+            </form>
+           </tab>
 
         </tabset>
       </div>

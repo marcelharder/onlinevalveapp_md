@@ -36,19 +36,19 @@ export class PhotoEditorComponent implements OnInit {
 
   initializeUploader() {
     let test = '';
-    
-    if (typeof this.userId !== 'undefined' ) {
-      test = this.baseUrl + 'users/addUserPhoto/' + this.userId
+  
+    if ( this.userId !== 0 ) {
+      test = this.baseUrl + 'addUserPhoto/' + this.userId
     }
     else {
-      if (typeof this.hospitalId !== 'undefined') {
+      if (this.hospitalId !== 0) {
         test = this.baseUrl + 'hospital/addHospitalPhoto/' + this.hospitalId
       }
       else {
-        if (typeof this.valvecode !== 'undefined') {
+        if (this.valvecode !== 0) {
           test = this.baseUrl + 'addProductPhoto/' + this.valvecode
         } else {
-          if (typeof this.companyCode !== 'undefined') {
+          if (this.companyCode !== 0) {
              test = this.baseUrl + 'addCompanyLogo/' + this.companyCode
           }
         }
@@ -67,13 +67,16 @@ export class PhotoEditorComponent implements OnInit {
       maxFileSize: 10 * 1024 * 1024
     });
     this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
+
     this.uploader.onSuccessItem = (item, response, status, headers) => {
       if (response) {
+        if (this.userId !== 0) { this.getMemberPhotoChange.emit(response); }
+        else {
         const res: any = JSON.parse(response);
         if (this.hospitalId !== 0) { this.getMemberPhotoChange.emit(res.ImageUrl); }
-        if (this.userId !== 0) { this.getMemberPhotoChange.emit(res.photoUrl); }
         if (this.valvecode !== 0) { this.getMemberPhotoChange.emit(res.image); }
         if (this.companyCode !== 0) { this.getMemberPhotoChange.emit(res.reps); }
+        }
      }
     };
   }

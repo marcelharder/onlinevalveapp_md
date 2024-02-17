@@ -75,7 +75,7 @@ export class CompanyadminComponent implements OnInit {
    
 
   }
-  linkToCSD() { window.location.href = 'http://77.173.53.32:8046'; }
+  linkToCSD() { window.location.href = 'http://surgical-outcomes.nl'; }
 
   showListOfValves() {// show all valves that meet the criteria
     if (this.listValves === 1) { return true; } else {return false;}

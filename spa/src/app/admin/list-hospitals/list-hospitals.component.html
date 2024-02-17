@@ -29,11 +29,11 @@
              <th></th>
           </tr>
           <tr *ngFor="let pro of listOfHospitals">
-            <td>{{pro.hospitalNo}}</td>
-            <td>{{pro.hospitalName}}</td>
-            <td>{{pro.city}}</td>
-            <td>{{pro.country}}</td>
-            <td><button class="btn btn-primary" (click)="showDetails(pro.hospitalNo)">details</button></td>
+            <td>{{pro.HospitalNo}}</td>
+            <td>{{pro.HospitalName}}</td>
+            <td>{{pro.City}}</td>
+            <td>{{pro.Country}}</td>
+            <td><button class="btn btn-primary" (click)="showDetails(pro.HospitalNo)">details</button></td>
           </tr>
         </table>
       </div>

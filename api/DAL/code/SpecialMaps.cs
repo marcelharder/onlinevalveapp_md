@@ -160,6 +160,23 @@ namespace api.DAL.Code
             }
             return result; */
         }
+         public async Task<string> getIsoCodeFromDescription(string code)
+        {
+            var comaddress = _com.Value.hospitalURL;
+                var selectedIsoCode = "0";
+                // get the isocode first
+                var st = "Country/getIsoFromDescription/" + code;
+                comaddress = comaddress + st;
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.GetAsync(comaddress))
+                    {
+                        selectedIsoCode = await response.Content.ReadAsStringAsync();
+                        return selectedIsoCode;
+
+                    }
+                }
+        }
         public async Task<List<Class_Item>> getListOfCountries()
         {
             var toreturn = new List<Class_Item>();
@@ -543,7 +560,7 @@ namespace api.DAL.Code
             if (u.Role == "companyadmin" || u.Role == "companyHQ") { h = true; }
             return h;
         }
-        private async Task<string> getCurrentCountryFromLoggedInUser()
+        public async Task<string> getCurrentCountryFromLoggedInUser()
         {
             var userId = getCurrentUserId();
             var currentUser = await _context.Users.FindAsync(userId);
@@ -619,9 +636,22 @@ namespace api.DAL.Code
             throw new NotImplementedException();
         }
 
-        internal Task<string> getModelCode(int code)
+        internal async Task<string> getModelCode(int code) 
         {
-            throw new NotImplementedException();
+            //bv No 24 => 8734 model_code
+            var comaddress = _com.Value.productURL;
+            var st = "ValveCode/detailsByValveNo/" + code;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    var help = await response.Content.ReadAsStringAsync();
+                    var test = Newtonsoft.Json.JsonConvert.DeserializeObject<Valve_Code>(help);
+                  
+                    return test.Model_code;
+                }
+            }
         }
 
         internal Task getDetailsByProductCode(string product_code)

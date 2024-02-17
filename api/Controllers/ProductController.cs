@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO.Pipes;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using api.DAL.Code;
 using api.DAL.dtos;
+using api.DAL.Interfaces;
 using api.DAL.models;
 using api.Helpers;
 using CloudinaryDotNet;
@@ -29,13 +31,22 @@ namespace api.Controllers
         private SpecialMaps _special;
         private Cloudinary _cloudinary;
 
+        private IVendor _vendor;
+
+        
+
         private readonly IOptions<ComSettings> _com;
         private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
-        public ProductController(SpecialMaps special, IOptions<CloudinarySettings> cloudinaryConfig, IOptions<ComSettings> com)
+        public ProductController(
+            SpecialMaps special,
+            IVendor vendor,
+             IOptions<CloudinarySettings> cloudinaryConfig,
+              IOptions<ComSettings> com)
         {
             _special = special;
             _cloudinaryConfig = cloudinaryConfig;
             _com = com;
+            _vendor = vendor;
 
             Account acc = new Account(
                _cloudinaryConfig.Value.CloudName,
@@ -48,12 +59,12 @@ namespace api.Controllers
         [HttpGet("api/addProduct")]
         public async Task<IActionResult> addProduct(int id)
         {
-            var res = new Valve_Code();
             var currentVendor = await _special.getCurrentVendorAsync();
             var help = new Valve_Code();
             help.Vendor_code = currentVendor.ToString();
+            help.Vendor_description = await getVendorDescriptionFromVendorCode(help.Vendor_code);
             help.Valve_size = null;
-            help.Countries = "NL,US,KSA";
+            help.countries = "NL,US,SA";
             help.Type = "0";
             help.Image = "https://res.cloudinary.com/marcelcloud/image/upload/v1620571880/valves/valves02.jpg";
 
@@ -68,11 +79,17 @@ namespace api.Controllers
             {
                 using (var response = await httpClient.PostAsync(comaddress, content))
                 {
-                    var s = await response.Content.ReadAsStringAsync();
-                    res = (Valve_Code)JsonConvert.DeserializeObject(s);
+                   var s = await response.Content.ReadAsStringAsync();
+                   return Ok(s);// this gives a new Valve_Code with ValveTypeId
                 }
             }
-            return Ok(res);// this gives a new Valve_Code with ValveTypeId
+            
+        }
+
+        private async Task<string> getVendorDescriptionFromVendorCode(string code)
+        {
+           var selectedVendor = await _vendor.getVendor(Convert.ToInt32(code));
+           return selectedVendor.description;
         }
 
         [HttpDelete("api/deleteProduct/{id}")]
@@ -107,28 +124,30 @@ namespace api.Controllers
                 using (var response = await httpClient.PutAsync(comaddress, content))
                 {
                     help = await response.Content.ReadAsStringAsync();
+                     return Ok(help);
                 }
             }
-            return Ok(help);
+           
         }
 
-        [HttpGet("api/productByNo/{id}", Name = "getProduct")]
+        [HttpGet("api/productByValveNo/{id}", Name = "getProduct")]
         public async Task<IActionResult> get04(int id)
         {
             var help = new Valve_Code();
             var comaddress = _com.Value.productURL;
-            var st = "ValveCode/" + id;
+            var st = "ValveCode/detailsByValveNo/" + id;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     var g = await response.Content.ReadAsStringAsync();
-                    help = (Valve_Code)JsonConvert.DeserializeObject(g);
+                  //  help = (Valve_Code)JsonConvert.DeserializeObject(g);
+                    return Ok(g);
                 }
             }
             // var result = await _vc.getDetails(id);
-            return Ok(help);
+            //return Ok(help);
         }
 
         [HttpGet("api/productByCode/{code}")]
@@ -144,10 +163,10 @@ namespace api.Controllers
                 {
                     var g = await response.Content.ReadAsStringAsync();
                     //help = (Valve_Code)JsonConvert.DeserializeObject(g);
-                     return Ok(g);
+                    return Ok(g);
                 }
             }
-            
+
             //var result = await _vc.getDetailsByProductCode(code);
             //return Ok(result);
         }
@@ -161,33 +180,32 @@ namespace api.Controllers
             content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data") { Name = photoDto.File.Name, FileName = photoDto.File.FileName };
 
             var help = new photoResult();
-            var comaddress = _com.Value.hospitalURL;
-            var st = "ValveCode/addValveTypePhoto/" + id;
+            var comaddress = _com.Value.productURL;
+            var st = "ValveCode/addPhoto/" + id;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.PostAsync(comaddress, content))
                 {
-                    help = await response.Content.ReadFromJsonAsync<photoResult>();
+                    //help = await response.Content.ReadFromJsonAsync<photoResult>();
+                    var res = await response.Content.ReadAsStringAsync();
+                    return Ok(res);
                 }
             }
-            return Ok(help.document_url);
+            
         }
 
         [Route("api/addSize/{id}")]
         [HttpPost]
         public async Task<IActionResult> addSize(int id, [FromBody] Valve_Size vs)
         {
-            Valve_Size result = new Valve_Size();
-            result.Size = vs.Size;
-            result.EOA = vs.EOA;
-            result.ValveTypeId = id;
-
+            vs.VTValveTypeId = id;
+           
             var res = "";
             var comaddress = _com.Value.productURL;
-            var st = "ValveSize/addValveSize";
+            var st = "ValveSize";
             comaddress = comaddress + st;
-            var json = JsonConvert.SerializeObject(result, Formatting.None);
+            var json = JsonConvert.SerializeObject(vs, Formatting.None);
             var payload = new StringContent(json, Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())
@@ -198,26 +216,6 @@ namespace api.Controllers
                 }
             }
             return Ok(res);
-
-
-
-
-
-            //var selectedValve = await this.getSpecificValveSize(id);
-
-            /*   var selectedValve = await _vc.getDetailsByValveTypeId(id);
-              selectedValve.Valve_size.Add(result);
-
-              _vc.Update(selectedValve);
-
-              if (await _vc.SaveAll())
-              {
-              var test = selectedValve.Valve_size.Last();
-              return CreatedAtRoute("getSize",new { id = test.SizeId }, test);
-              } */
-            //return null;
-
-
         }
 
         [Route("api/getSize/{id}", Name = "getSize")]
@@ -239,32 +237,23 @@ namespace api.Controllers
             return help;
         }
 
-        [Route("api/deleteSize/{id}/{sizeId}")]
+        [Route("api/deleteSize/{id}")]
         [HttpDelete]
-        public async Task<IActionResult> deleteSize(int id, int sizeId)
+        public async Task<IActionResult> deleteSize(int id)
         {
             var help = "";
             var comaddress = _com.Value.productURL;
-            var st = "ValveSize/deleteValveSize/" + id;
+            var st = "ValveSize/" + id;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.DeleteAsync(comaddress))
                 {
-                    help = await response.Content.ReadAsStringAsync(); ;
-
+                    help = await response.Content.ReadAsStringAsync();
                 }
             }
             return Ok(help);
-            /*   var result = await _vc.deleteSize(id, sizeId);
-              return Ok(result); */
         }
-
-
-
-
-
-
 
 
         #region <!-- used by soa -->
@@ -275,7 +264,7 @@ namespace api.Controllers
         {
             var help = "";
             var comaddress = _com.Value.productURL;
-            var st = "ValveCode/" + id;
+            var st = "ValveCode/detailsByValveId/" + id;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
@@ -302,14 +291,14 @@ namespace api.Controllers
                 {
                     var g = await response.Content.ReadAsStringAsync();
                     return Ok(g);
-                   /*  var t = g.Split(',');
-                    foreach (string s in t)
-                    {
-                        help.Add((Valve_Code)JsonConvert.DeserializeObject(s));
-                    } */
+                    /*  var t = g.Split(',');
+                     foreach (string s in t)
+                     {
+                         help.Add((Valve_Code)JsonConvert.DeserializeObject(s));
+                     } */
                 }
             }
-            
+
             //  var result = await _vc.getAllProducts();
             //  return Ok(result);
         }
@@ -349,21 +338,22 @@ namespace api.Controllers
         {
             var help = new List<Valve_Code>();
             var comaddress = _com.Value.productURL;
-            var st = "ValveCode/getAllValveCodesForThisVendor/" + vendor + "/" + type + "/" + position;
+            var st = "Vendor/valveCodesPerVTP/" + vendor + "/" + type + "/" + position;
             comaddress = comaddress + st;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     var g = await response.Content.ReadAsStringAsync();
-                    var t = g.Split(',');
+                    /* var t = g.Split(',');
                     foreach (string s in t)
                     {
                         help.Add((Valve_Code)JsonConvert.DeserializeObject(s));
-                    }
+                    } */
+                    return Ok(g);
                 }
             }
-            return Ok(help);
+
 
             //var result = await _vc.getAllProductsByVTP(vendor, type, position);
             //return Ok(result);
@@ -383,15 +373,15 @@ namespace api.Controllers
                 using (var response = await httpClient.GetAsync(comaddress))
                 {
                     var g = await response.Content.ReadAsStringAsync();
-                   /*  var t = g.Split(',');
-                    foreach (string s in t)
-                    {
-                        help.Add((Valve_Size)JsonConvert.DeserializeObject(s));
-                    } */
-return Ok(g);
+                    /*  var t = g.Split(',');
+                     foreach (string s in t)
+                     {
+                         help.Add((Valve_Size)JsonConvert.DeserializeObject(s));
+                     } */
+                    return Ok(g);
                 }
             }
-            
+
             //return Ok(await _vc.GetValveCodeSizes(id));
         }
 

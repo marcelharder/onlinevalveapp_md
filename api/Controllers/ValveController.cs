@@ -182,9 +182,9 @@ namespace api.Controllers
                 }
                 var v = new Class_Valve();
                 v.Vendor_code = vt.Vendor_code;
-                v.Implant_position = vt.Implant_Position;
+                v.Implant_position = vt.Implant_position;
                 v.Image = vt.Image;
-                v.Model_code = vt.Model_Code;
+                v.Model_code = vt.Model_code;
                 v.Type = vt.Type;
                 v.Description = vt.Description;
                 v.Product_code = vt.uk_code;

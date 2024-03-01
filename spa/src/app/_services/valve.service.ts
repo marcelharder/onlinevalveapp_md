@@ -13,12 +13,12 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class ValveService {
+   
 
     baseUrl = environment.apiUrl;
     constructor(private http: HttpClient, private alertify:AlertifyService, private auth: AuthService) { }
 
     getValves(soort: number, position: number) { return this.http.get<Valve[]>(this.baseUrl + 'valvesBySoort/' + soort + '/' + position); }
-    
     getSuggestedValves(userId: string,v: modelValveParams, page?: number, itemsPerPage?: number) {
         const paginatedResult: PaginatedResult<Valve[]> = new PaginatedResult<Valve[]>();
         let params = new HttpParams();
@@ -69,6 +69,7 @@ export class ValveService {
     getValveTransferDetails(userId: number, id: number) { return this.http.get<ValveTransfer>(this.baseUrl + 'valveTransferDetails/' + userId + '/' + id) }
     addValveTransferDetails(userId: number, valveId: number) { return this.http.post<ValveTransfer>(this.baseUrl + 'addValveTransfer/' + userId + '/' + valveId, {}) }
     updateValveTransferDetails(userId: number, ct: ValveTransfer) { return this.http.put<number>(this.baseUrl + 'updateValveTransfer/' + userId, ct) }
+    removeValveTransfer(userId: number, transferId: number) { return this.http.delete<number>(this.baseUrl + 'removeValveTransfer/' + userId + "/" + transferId) }
     updateValveTypePhoto(photoUrl:string){return this.http.post<string>(this.baseUrl + 'updatePhoto', photoUrl) }
 
 }

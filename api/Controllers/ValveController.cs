@@ -122,8 +122,10 @@ namespace api.Controllers
                 return Ok(result);
             }
         }
+       
         [Route("api/updatevalve")]
         [HttpPost]
+       
         public async Task<IActionResult> postValve(ValveForReturnDTO cv)
         {
             var help = 0.0;
@@ -155,7 +157,7 @@ namespace api.Controllers
             var result = await _valve.removeValve(id);
             return Ok(result);
         }
-        
+
         [Route("api/valveBySerial/{serial}/requester/{whoWantsToKnow}")]
         [HttpGet]
         public async Task<IActionResult> getValve01(string serial, string whoWantsToKnow)
@@ -164,8 +166,6 @@ namespace api.Controllers
             var result = await _valve.getValveBySerial(serial, whoWantsToKnow);
             return Ok(result);
         }
-
-
 
         [Route("api/valveBasedOnTypeOfValve/{id}")]
         [HttpGet]
@@ -207,6 +207,7 @@ namespace api.Controllers
         }
         [Route("api/valveExpiry/{months}")]
         [HttpGet]
+     
         public async Task<IActionResult> getValveExpiry(int months)
         {
             var result = await _valve.getValveExpiry(months);
@@ -224,6 +225,7 @@ namespace api.Controllers
             return Ok(result);
         }
         [Route("api/valveTransferDetails/{UserId}/{TransferId}", Name = "GetTransfer")]
+      
         [HttpGet]
         public async Task<IActionResult> getTransferDetails(int UserId, int TransferId)
         {
@@ -231,6 +233,7 @@ namespace api.Controllers
             var result = await _valve.getValveTransferDetails(TransferId);
             return Ok(_special.mapToTransfersToReturn(result));
         }
+       
         [HttpDelete("api/removeValveTransfer/{UserId}/{TransferId}")]
         public async Task<IActionResult> removeTransfer(int UserId, int TransferId)
         {
@@ -239,6 +242,7 @@ namespace api.Controllers
 
             return Ok(result);
         }
+      
         [HttpPost("api/addValveTransfer/{UserId}/{ValveId}")]
         public async Task<IActionResult> postTransfer(int UserId, int ValveId)
         {
@@ -257,6 +261,7 @@ namespace api.Controllers
             }
             return BadRequest("Could not add Transfer item");
         }
+      
         [HttpPut("api/updateValveTransfer/{UserId}")]
         public IActionResult updateTransfer(int UserId, Class_Transfer_forUpload ct)
         {
@@ -265,6 +270,8 @@ namespace api.Controllers
             var updateResult = _valve.updateValveTransferAsync(ct);
             return Ok(updateResult);
         }
+
+        
         #endregion
 
         #region <!-- valve selection for fitting-->

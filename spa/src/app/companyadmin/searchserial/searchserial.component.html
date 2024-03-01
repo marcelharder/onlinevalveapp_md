@@ -61,12 +61,12 @@
             </div>
           </div>
           <div class="mt-2">
-            <app-list_Transfers [transfers]="transfers" [selectedValve]="selectedValve" ></app-list_Transfers>
+            <app-list_Transfers [transfers]="transfers" [selectedValve]="selectedValve" (callBack)="onReturnFromListOfTransfers($event)"></app-list_Transfers>
           </div>
 
         </div>
       </div>
-      <div class="card" *ngIf="!valveIsFound()">
+      <div class="card mt-5" *ngIf="!valveIsFound()">
         <div class="card-header">
           <h2><span class="badge badge-danger">Product not found</span></h2>
         </div>

@@ -391,6 +391,14 @@ namespace api.DAL.Implementations
             if (await SaveAll()) { updateResult = 2; return updateResult; }
             return updateResult;
         }
+        public async Task<int> deleteValveTransferAsync(int valveId)
+        {
+            var deleteResult = 1;
+            var current = await getValveTransferDetails(valveId);
+            _context.Transfers.Remove(current);
+            if (await SaveAll()) { deleteResult = 2; return deleteResult; }
+            return deleteResult;
+        }
 
         public async Task<List<Class_Valve>> getValvesForSOAAsync(ValveParams v)
         {

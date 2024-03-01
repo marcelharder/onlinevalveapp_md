@@ -19,7 +19,7 @@ export class SearchserialComponent implements OnInit {
   valveFound = 0;
   country = '';
 
-  transfers:Array<ValveTransfer>=[];
+  
   selectedValve: Valve = {
     valveId: 0,
     no: 0,
@@ -68,9 +68,6 @@ export class SearchserialComponent implements OnInit {
       if (next === null) {this.valveFound = 0; } else {this.valveFound = 1; }
       this.selectedValve = next;
       
-      this.valveService.getValveTransfers(+this.auth.decodedToken.nameid, this.selectedValve.valveId)
-      .subscribe((nex)=>{ this.transfers = nex; })
-
       this.hosService.getSpecificHospitalDetails(this.selectedValve.hospital_code).subscribe((res) => {
         this.selectedHospital = res;
       });
@@ -79,6 +76,13 @@ export class SearchserialComponent implements OnInit {
 
   searchButtonPressed() {if (this.searchStarted === 1) {return true; }}
   valveIsFound() {if (this.valveFound === 1) {return true; }}
+
+  onReturnFromListOfTransfers(updatedValve: Valve){
+    this.hosService.getSpecificHospitalDetails(updatedValve.hospital_code).subscribe((res) => {
+      this.selectedHospital = res;
+    });
+
+  }
 
   
 

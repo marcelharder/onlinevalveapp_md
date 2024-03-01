@@ -1,6 +1,11 @@
 <div class="card">
   <div class="card-header">
-    <h5><span class="badge badge-default">Transfers:</span></h5>
+   <div class="row">
+    <div class="col-sm-6"> <h5><span class="badge badge-default">Transfers:</span></h5></div>
+    <div class="col-sm-6"><button class="btn btn-primary" style="float:right" (click)="addTransfer()">New</button></div>
+   </div>
+   
+    
   </div>
   <div class="card-body" style="background-color: beige;">
     <div *ngIf="!showDetails()">
@@ -77,6 +82,7 @@
 
         </div>
         <div class="card-footer">
+          <button class="btn btn-warning" (click)="removeValveTransfer(currentTransfer.id)">Remove</button>
           <button class="btn btn-primary" (click)="saveValveTransferDetails()">Save</button>
         </div>
       </div>
@@ -84,13 +90,6 @@
     </div>
   </div>
   <div class="card-footer">
-    <div class="row">
-      <div class="btn-group">
-        <button class="btn btn-primary" (click)="cancel()"><i class="fa fa-window-close" aria-hidden="true"></i>
-          Cancel</button>
-        <button class="btn btn-primary" (click)="addTransfer()"><i class="fa fa-window-open" aria-hidden="true"></i>
-          Add</button>
-      </div>
-    </div>
+    
   </div>
 </div>

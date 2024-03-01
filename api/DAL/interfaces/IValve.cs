@@ -49,6 +49,7 @@ namespace api.DAL.Interfaces
         Task<int> removeValveTransfer(int TransferId);
         void addValveTransfer(Class_Transfer ct);
         Task<int> updateValveTransferAsync(Class_Transfer_forUpload ct);
+        Task<int> deleteValveTransferAsync(int Id);
 
         #endregion
         #region // determines the selection process

@@ -3,7 +3,7 @@ export interface ValveTransfer {
     DepTime: Date;
     ArrTime: Date;
     Reason: string;
-    DepartureCode: string;
-    ArrivalCode: string;
+    departureCode: string;
+    arrivalCode: string;
     ValveId: number;
 }

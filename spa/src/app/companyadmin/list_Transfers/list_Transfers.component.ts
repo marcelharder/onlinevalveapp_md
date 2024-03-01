@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ValveTransfer } from 'src/app/_models/ValveTransfer';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -17,9 +17,10 @@ import { HospitalService } from 'src/app/_services/hospital.service';
 })
 // tslint:disable-next-line:class-name
 export class List_TransfersComponent implements OnInit {
-  @Input() transfers: ValveTransfer[];
   @Input() selectedValve: Valve;
+  @Output() callBack: EventEmitter<Valve> = new EventEmitter(); 
   details = 0;
+  transfers:Array<ValveTransfer>=[];
 
   optionsDepartureHospital: Array<DropItem> = [];
   optionsDestinationHospital: Array<DropItem> = [];
@@ -29,12 +30,13 @@ export class List_TransfersComponent implements OnInit {
     DepTime:new Date(),
     ArrTime:new Date(),
     Reason: '',
-    DepartureCode: '',
-    ArrivalCode: '',
+    departureCode: '',
+    arrivalCode: '',
     ValveId: 0
   };
 
   constructor(private alertify: AlertifyService,
+    private valveService: ValveService,
     private hos: HospitalService,
     private userservice: UserService,
     private auth: AuthService,
@@ -49,8 +51,16 @@ export class List_TransfersComponent implements OnInit {
       })
       
     });
+    this.getListOfTransfers();
+    
   }
 
+  getListOfTransfers(){
+    this.valveService.getValveTransfers(+this.auth.decodedToken.nameid, this.selectedValve.valveId)
+    .subscribe((nex)=>{ this.transfers = nex; })
+  }
+
+  
 
   loadDrops(country: string) {
     // get the hospitals in the current country
@@ -89,33 +99,72 @@ export class List_TransfersComponent implements OnInit {
 
   addTransfer() {
     this.details = 1;
-    this.alertify.message('adding record');
-    // tslint:disable-next-line:max-line-length
     this.valveservice.addValveTransferDetails(+this.auth.decodedToken.nameid, this.selectedValve.valveId).subscribe((next) => {
-      this.currentTransfer = next;
-
-    })
+      this.currentTransfer = next;}, 
+      error => this.alertify.error(error), 
+      ()=>{
+        this.getListOfTransfers();
+        this.updateLocation();
+      })
     }
 
    updateTransfer(id: number) {
      this.details = 1;
      this.valveservice.getValveTransferDetails(+this.auth.decodedToken.nameid,id).subscribe((next)=>{
-       this.currentTransfer = next;
-     })
+       this.currentTransfer = next;},error => this.alertify.error(error), 
+       ()=>{
+        this.getListOfTransfers();
+        this.updateLocation();
+      });
     }
 
    saveValveTransferDetails()
    {
     this.valveservice.updateValveTransferDetails(+this.auth.decodedToken.nameid, this.currentTransfer).subscribe((next) => {
-       this.alertify.message('updating record');
-       this.details = 0;
+       this.details = 0;},error => this.alertify.error(error), 
+       ()=>{
+        this.getListOfTransfers();
+        this.updateLocation();
+      });
+   
+    }
+  
+   removeValveTransfer(id: number)
+   {
+    this.valveService.removeValveTransfer(+this.auth.decodedToken.nameid, id).subscribe((next)=>{
+      // remove from the local array
+      this.transfers.filter(x => x.Id === id);
+      this.details = 0;},error => this.alertify.error(error), 
+      ()=>{
+        this.getListOfTransfers();
+        this.updateLocation();
       })
    }
 
 
 
 
-
+  updateLocation()
+  {
+     // get the last dropItem of the last entry in the transfer array
+     var help = this.currentTransfer.arrivalCode; // is bv Medisch Spectrum Enschede
+     var index = this.optionsDestinationHospital.find(x => x.description === help);
+     debugger;
+       
+     
+     
+     
+     this.selectedValve.hospital_code = index.value;
+     // save it back to the database
+     this.valveService.saveValve(this.selectedValve).subscribe((next)=>{
+      // get the saved valve
+      this.valveService.getValveBySerial(this.selectedValve.serial_no, '1').subscribe((next)=>{
+        this.callBack.emit(next);
+      })
+      // save the new location back to the parent
+      
+     })
+  }
   showDetails() { if (this.details === 1) { return true; } }
 
 }

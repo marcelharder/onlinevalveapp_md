@@ -23,7 +23,6 @@ import { HospitalService } from '../_services/hospital.service';
 export class EditValveInHospitalComponent implements OnInit {
 
     @Input() valve: Valve;
-    @Input() hospitalName:string;
     @Input() sizes: number[];
     @Output() valveBack = new EventEmitter<Valve>();
 
@@ -57,6 +56,7 @@ export class EditValveInHospitalComponent implements OnInit {
     };
 
     VendorName = '';
+    hospitalName = '';
 
     // sendPanel = 0;
 
@@ -73,7 +73,8 @@ export class EditValveInHospitalComponent implements OnInit {
     }
     ngOnInit(): void {
         if (this.valve.type === "Pericardial Patch") { this.valveIsPatch = true; }
-        this.hos.getSpecificHospitalDetails(+this.hospitalName).subscribe((next)=>
+       
+        this.hos.getSpecificHospitalDetails(this.valve.hospital_code).subscribe((next)=>
         {
             this.hospitalName = next.SelectedHospitalName;
         })

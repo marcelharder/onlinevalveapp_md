@@ -50,6 +50,7 @@ export class SuperuserComponent implements OnInit {
     notF = 0;
     searchString = '';
     productRequested = '';
+    hospitalName = "";
     hos: Partial<Hospital> = { };
     valves: Array<Valve> = [];
     IsValveImplanted = 0;
@@ -65,6 +66,7 @@ export class SuperuserComponent implements OnInit {
     ngOnInit(): void {
         this.hospital.getDetails().subscribe((next)=>{
             this.hos = next;
+           
         },error =>{})
 
     }
@@ -79,7 +81,9 @@ export class SuperuserComponent implements OnInit {
                         this.procd = 0;
                         this.notF = 1;
                     } else {
+                        debugger;
                         this.valveInParent = next;
+
                         this.procd = 1; // showEditPage
                         this.notF = 0;
                     }

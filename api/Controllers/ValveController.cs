@@ -155,6 +155,7 @@ namespace api.Controllers
             var result = await _valve.removeValve(id);
             return Ok(result);
         }
+        
         [Route("api/valveBySerial/{serial}/requester/{whoWantsToKnow}")]
         [HttpGet]
         public async Task<IActionResult> getValve01(string serial, string whoWantsToKnow)
@@ -163,6 +164,9 @@ namespace api.Controllers
             var result = await _valve.getValveBySerial(serial, whoWantsToKnow);
             return Ok(result);
         }
+
+
+
         [Route("api/valveBasedOnTypeOfValve/{id}")]
         [HttpGet]
         public async Task<IActionResult> getValve02(string id) // a valve is added here

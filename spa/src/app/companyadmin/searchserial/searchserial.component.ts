@@ -64,16 +64,15 @@ export class SearchserialComponent implements OnInit {
   SearchOnSerial() {
     this.searchStarted = 1;
     this.valveService.getValveBySerial(this.serial, '1').subscribe((next) => {
-
+    
       if (next === null) {this.valveFound = 0; } else {this.valveFound = 1; }
       this.selectedValve = next;
+      
       this.valveService.getValveTransfers(+this.auth.decodedToken.nameid, this.selectedValve.valveId)
       .subscribe((nex)=>{ this.transfers = nex; })
 
-      this.hosService.getDetails().subscribe((res) => {
+      this.hosService.getSpecificHospitalDetails(this.selectedValve.hospital_code).subscribe((res) => {
         this.selectedHospital = res;
-        this.gen.getCountryName(this.selectedHospital.Country).subscribe((c) => {this.country = c; });
-
       });
      }, (error) => {console.log(error); });
   }

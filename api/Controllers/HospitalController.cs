@@ -268,6 +268,24 @@ namespace api.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet("api/getCountryDescriptionFromCountryId/{code}")]
+        public async Task<IActionResult> getQuestion1239(string code){
+           var result = "";
+           var comaddress = _com.Value.hospitalURL;
+            // get the isocode first
+            var st = "Country/getCountryNameFromId/" + code;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
+                {
+                    result = await response.Content.ReadAsStringAsync();
+                    return Ok(result);
+                }
+            }  
+        }
+
+        [AllowAnonymous]
         [HttpGet("api/getHospitalsInCountry/{CountryDescription}")]
         public async Task<IActionResult> getQuestion09(string CountryDescription)
         {

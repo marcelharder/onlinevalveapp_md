@@ -43,8 +43,11 @@ export class List_TransfersComponent implements OnInit {
 
   ngOnInit() {
     this.userservice.getCurrentCountryCode(+this.auth.decodedToken.nameid).subscribe((next)=>{
-      const country = next;
-      this.loadDrops(country);
+      const country = next; // is bv "7" in geval van Nederland
+      this.hos.CountryDescriptionFromCountryCode(country).subscribe((next)=>{
+        this.loadDrops(next);
+      })
+      
     });
   }
 
@@ -54,6 +57,7 @@ export class List_TransfersComponent implements OnInit {
     const d = JSON.parse(localStorage.getItem('options_departure_Hospital'));
     if (d == null || d.length === 0) {
       this.hos.getListOfHospitalsPerCountry(country).subscribe((response) => {
+        debugger;
 
             this.optionsDepartureHospital = response;
             // tslint:disable-next-line:max-line-length

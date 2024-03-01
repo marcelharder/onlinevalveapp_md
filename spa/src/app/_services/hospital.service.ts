@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class HospitalService {
+  
   baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
@@ -63,5 +64,9 @@ export class HospitalService {
 
   saveContactToHospital(contact:string,contactImage:string){return this.http.get<number>(
     this.baseUrl + 'saveContactToHospital/' + contact + '/' + encodeURIComponent(contactImage));}
+
+  CountryDescriptionFromCountryCode(code: string) {
+    return this.http.get<string>(this.baseUrl + 'getCountryDescriptionFromCountryId/' + code,  { responseType: 'text' as 'json' });} 
+    
    
 }

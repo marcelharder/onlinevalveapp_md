@@ -78,6 +78,8 @@ export class SearchserialComponent implements OnInit {
   valveIsFound() {if (this.valveFound === 1) {return true; }}
 
   onReturnFromListOfTransfers(updatedValve: Valve){
+    // update location
+    
     this.hosService.getSpecificHospitalDetails(updatedValve.hospital_code).subscribe((res) => {
       this.selectedHospital = res;
     });

@@ -18,17 +18,17 @@ import { HospitalService } from 'src/app/_services/hospital.service';
 // tslint:disable-next-line:class-name
 export class List_TransfersComponent implements OnInit {
   @Input() selectedValve: Valve;
-  @Output() callBack: EventEmitter<Valve> = new EventEmitter(); 
+  @Output() callBack: EventEmitter<Valve> = new EventEmitter();
   details = 0;
-  transfers:Array<ValveTransfer>=[];
+  transfers: Array<ValveTransfer> = [];
 
   optionsDepartureHospital: Array<DropItem> = [];
   optionsDestinationHospital: Array<DropItem> = [];
 
   currentTransfer: ValveTransfer = {
-    Id:0,
-    DepTime:new Date(),
-    ArrTime:new Date(),
+    Id: 0,
+    DepTime: new Date(),
+    ArrTime: new Date(),
     Reason: '',
     departureCode: '',
     arrivalCode: '',
@@ -44,48 +44,60 @@ export class List_TransfersComponent implements OnInit {
     private valveservice: ValveService) { }
 
   ngOnInit() {
-    this.userservice.getCurrentCountryCode(+this.auth.decodedToken.nameid).subscribe((next)=>{
+    this.userservice.getCurrentCountryCode(+this.auth.decodedToken.nameid).subscribe((next) => {
       const country = next; // is bv "7" in geval van Nederland
-      this.hos.CountryDescriptionFromCountryCode(country).subscribe((next)=>{
+      this.hos.CountryDescriptionFromCountryCode(country).subscribe((next) => {
         this.loadDrops(next);
       })
-      
+
     });
     this.getListOfTransfers();
-    
+
   }
 
-  getListOfTransfers(){
+  getListOfTransfers() {
     this.valveService.getValveTransfers(+this.auth.decodedToken.nameid, this.selectedValve.valveId)
-    .subscribe((nex)=>{ this.transfers = nex; })
+      .subscribe((nex) => {
+
+        this.transfers = nex;
+        // get the last transfer in the list and set the correct hospital.
+        const lastItem = this.transfers.slice(-1)[0];
+        var help = lastItem.arrivalCode; // is bv Medisch Spectrum Enschede
+        var index = this.optionsDestinationHospital.find(x => x.description === help);
+        this.selectedValve.hospital_code = index.value;
+        this.valveService.saveValve(this.selectedValve).subscribe((next) => {
+          // get the saved valve
+          this.callBack.emit(this.selectedValve);
+        })
+
+      })
   }
 
-  
+
 
   loadDrops(country: string) {
     // get the hospitals in the current country
     const d = JSON.parse(localStorage.getItem('options_departure_Hospital'));
     if (d == null || d.length === 0) {
       this.hos.getListOfHospitalsPerCountry(country).subscribe((response) => {
-        debugger;
 
-            this.optionsDepartureHospital = response;
-            // tslint:disable-next-line:max-line-length
-            if (this.optionsDepartureHospital.includes({value: 100, description: 'Plant'}) === false){ this.optionsDepartureHospital.unshift({value: 100, description: 'Plant'}); };
-            // tslint:disable-next-line:max-line-length
-            if (this.optionsDepartureHospital.includes({value: 0, description: 'Store'}) === false) { this.optionsDepartureHospital.unshift({value: 0, description: 'Store'});  };
+        this.optionsDepartureHospital = response;
+        // tslint:disable-next-line:max-line-length
+        if (this.optionsDepartureHospital.includes({ value: 100, description: 'Plant' }) === false) { this.optionsDepartureHospital.unshift({ value: 100, description: 'Plant' }); };
+        // tslint:disable-next-line:max-line-length
+        if (this.optionsDepartureHospital.includes({ value: 0, description: 'Store' }) === false) { this.optionsDepartureHospital.unshift({ value: 0, description: 'Store' }); };
 
-            localStorage.setItem('options_departure_Hospital', JSON.stringify(response));
+        localStorage.setItem('options_departure_Hospital', JSON.stringify(response));
 
-            this.optionsDestinationHospital =  this.optionsDepartureHospital;
+        this.optionsDestinationHospital = this.optionsDepartureHospital;
 
-            // If needed extra options can be inserted here
+        // If needed extra options can be inserted here
 
-            localStorage.setItem('options_destination_Hospital', JSON.stringify(response));
-        });
+        localStorage.setItem('options_destination_Hospital', JSON.stringify(response));
+      });
     } else {
-        this.optionsDepartureHospital = JSON.parse(localStorage.getItem('options_departure_Hospital'));
-        this.optionsDestinationHospital = JSON.parse(localStorage.getItem('options_destination_Hospital'));
+      this.optionsDepartureHospital = JSON.parse(localStorage.getItem('options_departure_Hospital'));
+      this.optionsDestinationHospital = JSON.parse(localStorage.getItem('options_destination_Hospital'));
     }
 
   }
@@ -100,71 +112,60 @@ export class List_TransfersComponent implements OnInit {
   addTransfer() {
     this.details = 1;
     this.valveservice.addValveTransferDetails(+this.auth.decodedToken.nameid, this.selectedValve.valveId).subscribe((next) => {
-      this.currentTransfer = next;}, 
-      error => this.alertify.error(error), 
-      ()=>{
+      this.currentTransfer = next;
+      if (this.transfers.length > 0) {
+        const lastItem = this.transfers.slice(-1)[0];
+        var help = lastItem.arrivalCode; // is bv Medisch Spectrum Enschede
+        this.currentTransfer.departureCode = help;
+      }
+
+    },
+      error => this.alertify.error(error),
+      () => {
         this.getListOfTransfers();
-        this.updateLocation();
       })
-    }
+  }
 
-   updateTransfer(id: number) {
-     this.details = 1;
-     this.valveservice.getValveTransferDetails(+this.auth.decodedToken.nameid,id).subscribe((next)=>{
-       this.currentTransfer = next;},error => this.alertify.error(error), 
-       ()=>{
+  updateTransfer(id: number) {
+    this.details = 1;
+    this.valveservice.getValveTransferDetails(+this.auth.decodedToken.nameid, id).subscribe((next) => {
+      this.currentTransfer = next;
+    }, error => this.alertify.error(error),
+      () => {
         this.getListOfTransfers();
-        this.updateLocation();
-      });
-    }
 
-   saveValveTransferDetails()
-   {
+      });
+  }
+
+  saveValveTransferDetails() {
     this.valveservice.updateValveTransferDetails(+this.auth.decodedToken.nameid, this.currentTransfer).subscribe((next) => {
-       this.details = 0;},error => this.alertify.error(error), 
-       ()=>{
+      this.details = 0;
+    }, error => this.alertify.error(error),
+      () => {
         this.getListOfTransfers();
-        this.updateLocation();
+
       });
-   
-    }
-  
-   removeValveTransfer(id: number)
-   {
-    this.valveService.removeValveTransfer(+this.auth.decodedToken.nameid, id).subscribe((next)=>{
+
+  }
+
+  removeValveTransfer(id: number) {
+
+    this.valveService.removeValveTransfer(+this.auth.decodedToken.nameid, id).subscribe((next) => {
       // remove from the local array
       this.transfers.filter(x => x.Id === id);
-      this.details = 0;},error => this.alertify.error(error), 
-      ()=>{
+
+      this.details = 0;
+    }, error => this.alertify.error(error),
+      () => {
         this.getListOfTransfers();
-        this.updateLocation();
+
       })
-   }
-
-
-
-
-  updateLocation()
-  {
-     // get the last dropItem of the last entry in the transfer array
-     var help = this.currentTransfer.arrivalCode; // is bv Medisch Spectrum Enschede
-     var index = this.optionsDestinationHospital.find(x => x.description === help);
-     debugger;
-       
-     
-     
-     
-     this.selectedValve.hospital_code = index.value;
-     // save it back to the database
-     this.valveService.saveValve(this.selectedValve).subscribe((next)=>{
-      // get the saved valve
-      this.valveService.getValveBySerial(this.selectedValve.serial_no, '1').subscribe((next)=>{
-        this.callBack.emit(next);
-      })
-      // save the new location back to the parent
-      
-     })
   }
+
+
+
+
+
   showDetails() { if (this.details === 1) { return true; } }
 
 }

@@ -78,7 +78,6 @@ export class ListHospitalsForRefComponent implements OnInit {
     this.selectPage = 0;
     // the id number here id the id of the hospital that has been removed in the edit page
     // so delete this hospital from the list of hospitals
-    debugger;
     this.hos = this.hos.filter(x => x.HospitalNo != id.toString());
 
   }

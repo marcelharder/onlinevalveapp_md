@@ -52,13 +52,14 @@ export class EditHospitalComponent implements OnInit {
   changingContact(){if(this.cc === 1){return true;} else {return false;}}
 
   deleteVendorInHospital(id: string) {
-    debugger;
    this.hosService.removeVendor(this.currentVendorCode.toString(),id).subscribe((next) => {
     this.back.emit(+id);
     });
   }
 
-  updateHospitalDetails() { this.hospitalOut.emit(this.selectedHospital); }
+  updateHospitalDetails() { 
+     this.hospitalOut.emit(this.selectedHospital);
+   }
 
   goBack() { this.back.emit(1); }
 
@@ -74,7 +75,7 @@ export class EditHospitalComponent implements OnInit {
       const selectedUser = next;
       this.selectedHospital.Contact_image = selectedUser.photoUrl;
       this.selectedHospital.Contact = selectedUser.username;
-      this.selectedHospital.email = selectedUser.email;
+      this.selectedHospital.Email = selectedUser.email;
       this.cc = 0;
     });
   }

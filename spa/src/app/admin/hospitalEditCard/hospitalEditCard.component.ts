@@ -24,7 +24,7 @@ export class HospitalEditCardComponent implements OnInit {
     this.backTo.emit("Cancelled");}
 
   updateHospital(){
-    
+    debugger;
     this.hos.saveDetails(this.new_hospital).subscribe(
       (next)=>{this.backTo.emit(next)}, 
       (error)=> {this.alertify.error(error)});

@@ -7,6 +7,9 @@ namespace api.DAL.dtos
         public string SelectedHospitalName {get; set;}
         public string Description {get; set;}
         public string HospitalNo {get; set;}
+        public string PostalCode {get; set;}
+        public string Email {get; set;}
+        public string Fax {get; set;}
         public string Address {get; set;}
         public string Telephone {get; set;}
         public string Country {get; set;}

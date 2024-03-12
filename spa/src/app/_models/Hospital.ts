@@ -19,10 +19,10 @@ export interface Hospital {
         opReportDetails7: string;
         opReportDetails8: string;
         opReportDetails9: string;
-        postalCode: string;
+        PostalCode: string;
         refHospitals: string;
         standardRef: string;
-        email: string;
+        Email: string;
         Contact: string;
         Contact_image: string;
         Vendors:string;

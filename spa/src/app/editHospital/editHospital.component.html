@@ -10,7 +10,7 @@
         <div class="row">
           <div class="col-sm-6 ml"><img width="150" height="150" [src]="selectedHospital.Contact_image"></div>
           <div class="col-sm-6 ml">
-            <button class="badge badge-warning mr-2 float-right" type="button" (click)="deleteVendorInHospital()">
+            <button class="badge badge-warning mr-2 float-right" type="button" (click)="deleteVendorInHospital(selectedHospital.HospitalNo)">
               Remove this hospital
             </button>
             <button class="badge badge-default mr-2 float-right" type="button" (click)="updateHospitalDetails()">

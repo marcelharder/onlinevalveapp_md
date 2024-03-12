@@ -24,6 +24,7 @@ export class ListUserComponent implements OnInit {
   selectedUser: User;
   pagination: Pagination;
   details = 0;
+  content = 0;
   ch = 0;
   model = { username: '', password: 'password' }
   optionCountries: Array<DropItem> = [];
@@ -57,7 +58,7 @@ export class ListUserComponent implements OnInit {
   changeHospital() { if (this.ch === 1) { return true; } else { return false; } }
   showChangeHospital() { this.ch = 1 };
 
-  contentFound() { if (this.listOfUsers.length > 0) { return true; } else { return false; } }
+  contentFound() { if (this.listOfUsers.length > 0 || this.content === 1) { return true; } else { return false; } }
 
   userIsVendor() {
     if (this.selectedUser.userRole === 'companyadmin' || this.selectedUser.userRole === 'companyHQ') { return true; }
@@ -98,11 +99,13 @@ export class ListUserComponent implements OnInit {
 
   addUser() {
     this.userService.addUser(this.authService.decodedToken.nameid).subscribe(next => {
-      
+      this.content = 1;
+      this.details = 1;
       this.selectedUser = next;
       this.model.username = 'newUser';
       this.model.password = 'password';
       this.authService.update(this.model).subscribe((nex) => {
+        
       }, (error) => { this.alertify.error(error) },()=>{this.details = 1;});
 
     })

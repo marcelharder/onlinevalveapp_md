@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { User } from '../_models/User';
 import { UserService } from '../_services/user.service';
 import { AuthService } from '../_services/auth.service';
+import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -21,22 +22,25 @@ export class EditHospitalComponent implements OnInit {
   @Output() back: EventEmitter<number> = new EventEmitter();
   currentVendor = '';
   contactNumber = 0;
+  currentVendorCode = 0;
   cc = 0;
   users:Array<User> = [];
 
 
   constructor(private gen: GeneralService,
+    private alertify: AlertifyService,
     private auth: AuthService,
     private hosService: HospitalService,
     private router: Router, 
     private user: UserService) { }
 
   ngOnInit(): void {
-
+    
     let rep: User;
     this.user.getUser(this.auth.decodedToken.nameid).subscribe((next) => {
       rep = next;
       this.currentVendor = rep.vendorName;
+      this.currentVendorCode = rep.vendorCode;
     });
     this.user.getUserIdFromName(this.selectedHospital.Contact).subscribe((next) => {
       this.user.getUser(next).subscribe((res) => {
@@ -47,9 +51,10 @@ export class EditHospitalComponent implements OnInit {
 
   changingContact(){if(this.cc === 1){return true;} else {return false;}}
 
-  deleteVendorInHospital() {
-    this.hosService.removeVendor(this.currentVendor,this.selectedHospital.HospitalNo).subscribe((next) => {
-      this.back.emit(1);
+  deleteVendorInHospital(id: string) {
+    debugger;
+   this.hosService.removeVendor(this.currentVendorCode.toString(),id).subscribe((next) => {
+    this.back.emit(+id);
     });
   }
 

@@ -81,7 +81,7 @@ export class ListHospitalsComponent implements OnInit {
   }
 
   loadHospitals() {
-    this.hos.getListOfFullHospitalsPerCountry(this.selectedCountry, 1, 5).subscribe(
+    this.hos.getListOfFullHospitalsPerCountry(this.selectedCountry, this.pagination.currentPage, 5).subscribe(
       (next: PaginatedResult<Hospital[]>) => {
         this.listOfHospitals = next.result;
         this.pagination = next.pagination;

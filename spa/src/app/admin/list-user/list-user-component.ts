@@ -120,6 +120,7 @@ export class ListUserComponent implements OnInit {
   pageChanged(event: any): void {
     this.pagination.currentPage = event.page;
     this.loadUsers();
+    
   }
 
   showDetails(id: number) {

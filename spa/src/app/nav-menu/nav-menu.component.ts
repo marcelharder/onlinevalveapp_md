@@ -54,8 +54,6 @@ export class NavMenuComponent implements OnInit {
                     break;
                 case 'surgeon':
                     this.normalLogged = true;
-                    this.hosservice.getDetails().subscribe((next) => {
-                        this.auth.changeCurrentHospital(next.HospitalName);});
                     break;
                 case 'superuser':
                     this.specialLogged = true;

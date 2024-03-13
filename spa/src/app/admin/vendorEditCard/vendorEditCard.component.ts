@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Vendor } from 'src/app/_models/Vendor';
+import { DropItem } from 'src/app/_models/dropItem';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { VendorService } from 'src/app/_services/vendor.service';
 
@@ -13,6 +14,8 @@ export class VendorEditCardComponent implements OnInit {
   @Output() backTo = new EventEmitter<String>();
   photo = 0;
   photos:Array<string>=[];
+  optionsYN:Array<DropItem> = [{value:0,description:"Choose"},{value:1,description:"Yes"},{value:2,description:"No"}];
+
   des = 0;
 
   constructor(
@@ -22,6 +25,7 @@ export class VendorEditCardComponent implements OnInit {
   ngOnInit() {
     this.photos.push(this.cd.reps);
     if(this.cd.description === ""){this.des = 1;};
+    
   }
 
   requestPhotoChange(){if(this.photo === 1){return true;}}

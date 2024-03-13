@@ -52,6 +52,7 @@ export class ListUserComponent implements OnInit {
       this.pagination = data.users.pagination;
       this.loadDrops();
       this.gen.getListOfCountries().subscribe((next) => { this.optionCountries = next; });
+      this.selectedHospital = 0;
     })
   }
 
@@ -85,7 +86,11 @@ export class ListUserComponent implements OnInit {
     }
       // these item might change
       this.drop.getCompanyOptions().subscribe((next) => { this.companies = next; });
-      this.drop.getAllHospitals().subscribe((next) => {this.optionsAH = next;});
+      this.drop.getAllHospitals().subscribe((next) => {
+        this.optionsAH = next;
+        this.optionsAH.unshift({value:0, description:"All"});
+      
+      });
   }
   
 
@@ -153,11 +158,16 @@ export class ListUserComponent implements OnInit {
 
   }
   Search() {
+    if(this.selectedHospital == 0){
+      this.pagination.currentPage = 1;
+    this.loadUsers();
+    }
+    else {
     this.userService.getListOfUsersInHospital(this.authService.decodedToken.nameid, this.selectedHospital, 1, 10).subscribe((next) => {
       this.listOfUsers = next.result;
       this.pagination = next.pagination;
     });
-  }
+  }}
   hideDetails() {
    this.ch = 0;
 

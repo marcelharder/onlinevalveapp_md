@@ -4,6 +4,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from './user.service';
+import { HospitalService } from './hospital.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +27,7 @@ export class AuthService {
 
 
 
-constructor(private http: HttpClient) { }
+constructor(private http: HttpClient, private userService: UserService, private hos:HospitalService) { }
 
 changeCurrentHospital(sh: string) { this.Hospital.next(sh); }
 changeCurrentSerial(sh: string) { this.SerialNumber.next(sh); }
@@ -38,11 +40,15 @@ login(model: any) {
             if (releaseEvents) {
                 localStorage.setItem('token', r.token);
                 this.decodedToken = this.jwtHelper.decodeToken(r.token);
+                this.getHospitalDetails();
                 console.log(this.decodedToken);
             }
         })
     );
 }
+
+
+
 
 register(model: any) { return this.http.post(this.baseUrl + 'auth/register', model); }
 update(model: any) { return this.http.put(this.baseUrl + 'auth/update', model, { responseType: 'text' as 'json' }); }
@@ -50,6 +56,12 @@ update(model: any) { return this.http.put(this.baseUrl + 'auth/update', model, {
 loggedIn() {
     const token = localStorage.getItem('token');
     return !this.jwtHelper.isTokenExpired(token);
+}
+
+getHospitalDetails(){
+this.hos.getDetails().subscribe((next)=>{
+    this.changeCurrentHospital(next.HospitalName);
+})
 }
 
 }

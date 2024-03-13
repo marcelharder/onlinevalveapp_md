@@ -2,13 +2,16 @@
   <div class="card-header"></div>
   <div class="card-body">
 
-    <h4><span class="badge badge-info">{{prod.vendor_description}} - {{prod.description}}</span></h4>
+    <h4><span class="badge badge-info">{{prod.Vendor_description}} - {{prod.Description}}</span></h4>
+    <h5><span class="badge badge-default">Model Code: {{prod.Model_code}}</span></h5>
+    <h5><span class="badge badge-default">Implant Position: {{prod.Implant_position}}</span></h5>
+    <h5><span class="badge badge-default">Type: {{prod.Type}}</span></h5>
     <div class="row">
       <div class="col-sm-6"></div>
       <div class="col-sm-6"><img src="{{prod.image}}" height="100px" weight="100px"></div>
     </div>
     <div class="row mt-5 mb-2">
-      <div class="col-sm-6"><h4><span>Available Sizes</span></h4></div>
+      <div class="col-sm-6"><h4><span>Available Sizes:</span></h4></div>
       <div class="col-sm-6 ml-auto"><button class="form-control" (click)="addNewSize()">Add new size</button></div>
     </div>
     <div class="row">
@@ -20,19 +23,19 @@
             <th>Effective Orfice Area</th>
             <th></th>
           </tr>
-          <tr *ngFor="let s of prod.valve_size">
-            <td>{{s.sizeId}}</td>
-            <td>{{s.size}}</td>
-            <td>{{s.eoa}}</td>
+          <tr *ngFor="let s of listOfSizes">
+            <td>{{s.SizeId}}</td>
+            <td>{{s.Size}}</td>
+            <td>{{s.EOA}}</td>
             <td><button class="btn btn-warning" (click)="deleteSize(s.sizeId)">delete</button></td>
           </tr>
          
         </table>
         <table>
           <tr *ngIf="displayNewSize()">
-            <td><input [(ngModel)]="valvesize.sizeId" name="test2" class="form-model" readonly></td>
-            <td><input [(ngModel)]="valvesize.size" name="test2" class="form-model"></td>
-            <td><input [(ngModel)]="valvesize.eoa" name="test3" class="form-model"></td>
+            <td><input [(ngModel)]="valvesize.SizeId" name="test2" class="form-model" readonly></td>
+            <td><input [(ngModel)]="valvesize.Size" name="test2" class="form-model"></td>
+            <td><input [(ngModel)]="valvesize.EOA" name="test3" class="form-model"></td>
             <td><button class="btn btn-warning" (click)="addNewSizeNow()">Add</button></td>
           </tr>
         </table>

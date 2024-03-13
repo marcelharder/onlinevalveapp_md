@@ -24,7 +24,13 @@ export class productEditDetailsComponent implements OnInit {
 
   constructor(private alertify: AlertifyService, private pro: ProductService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+   // get the sizes for this type of valve
+   this.pro.getValveSizes(this.prod.No).subscribe((next)=>{
+    this.listOfSizes = next;
+   });
+
+   }
 
   deleteSize(SizeId: number) {
     this.pro.deleteValveSize(SizeId).subscribe((next) => {
@@ -64,7 +70,6 @@ export class productEditDetailsComponent implements OnInit {
     this.pro.addValveSize(this.prod.No, this.valvesize).subscribe((next) => {
       this.valvesize = next; // get the new valve size from the backend
       this.prod.Valve_size.push(this.valvesize);
-
       this.newSizeToken = 0;
 
     })

@@ -61,25 +61,15 @@ export class EditValveInHospitalComponent implements OnInit {
     // sendPanel = 0;
 
     constructor(
-        private gen: GeneralService,
-        private hos: HospitalService,
         private auth: AuthService,
         private alertify: AlertifyService,
         private router: Router,
         private prod: ProductService,
-        private valveService: ValveService,
         private drops: DropService) {
 
     }
     ngOnInit(): void {
-        if (this.valve.type === "Pericardial Patch") { this.valveIsPatch = true; }
-       
-        this.hos.getSpecificHospitalDetails(this.valve.hospital_code).subscribe((next)=>
-        {
-            this.hospitalName = next.SelectedHospitalName;
-        })
-        
-      
+        this.auth.currentHospital.subscribe((next)=>{this.hospitalName = next;})
         this.loadDrops();
     }
 

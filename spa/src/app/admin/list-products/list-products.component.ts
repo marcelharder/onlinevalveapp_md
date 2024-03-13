@@ -46,7 +46,8 @@ export class ListProductsComponent implements OnInit {
        var h:DropItem = {value:0, description: "All"};
        this.listOfCountries.unshift(h);
       });
-    this.route.data.subscribe((data) => { this.listOfProducts = data.products; })
+    this.route.data.subscribe((data) => { 
+     this.listOfProducts = data.products; })
   }
 
   vendorChanged(){
@@ -60,6 +61,7 @@ export class ListProductsComponent implements OnInit {
   showDetails(id: string){
     // get details of this valve type
     this.prod.getProductById(+id).subscribe((next)=>{
+      
       this.productDetails = next});
       this.details = 1;
    }

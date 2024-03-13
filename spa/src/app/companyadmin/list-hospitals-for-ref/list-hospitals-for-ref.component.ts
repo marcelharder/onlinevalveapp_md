@@ -59,12 +59,7 @@ export class ListHospitalsForRefComponent implements OnInit {
 
 
 
-   /*  this.detailsPage = 1;
-    this.selectPage = 0;
-    this.hosService.getSpecificHospitalDetails(id).subscribe((next) => {
-      debugger;
-      this.selectedHospital = next;
-    }); */
+   
   }
   updateHospitalDetails(s: Hospital) {
     this.hosService.saveDetails(s).subscribe((next) => {

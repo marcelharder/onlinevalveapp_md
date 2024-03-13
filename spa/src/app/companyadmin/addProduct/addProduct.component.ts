@@ -48,7 +48,7 @@ export class AddProductComponent implements OnInit {
     this.alertify.message("opening window");
   }
   saveSize(){
-    debugger;
+   
      this.showAdd = 0;// close the add window
      this.valvesize.Size = this.newsize;
      this.valvesize.EOA = this.neweoa;

@@ -64,10 +64,13 @@ export class SuperuserComponent implements OnInit {
         private gen: GeneralService) { }
 
     ngOnInit(): void {
-        this.hospital.getDetails().subscribe((next)=>{
+        this.auth.currentHospital.subscribe((next)=>{this.hospitalName = next;})
+
+
+       /*  this.hospital.getDetails().subscribe((next)=>{
             this.hos = next;
            
-        },error =>{})
+        },error =>{}) */
 
     }
 
@@ -81,7 +84,7 @@ export class SuperuserComponent implements OnInit {
                         this.procd = 0;
                         this.notF = 1;
                     } else {
-                        debugger;
+                        
                         this.valveInParent = next;
 
                         this.procd = 1; // showEditPage
@@ -135,11 +138,11 @@ export class SuperuserComponent implements OnInit {
         const id = $event;
         this.vs.getValve(id).subscribe((next) => {
             this.valveInParent = next;
-            // save the hospital_code to the authservice in Behavior subject
+           /*  // save the hospital_code to the authservice in Behavior subject
             this.hospital.getHospitalFromHospitalCode(this.valveInParent.hospital_code).subscribe(
                 (nex) => {
                     this.auth.changeCurrentHospital(nex);
-                }, (error) => { console.log(error); });
+                }, (error) => { console.log(error); }); */
         });
         // show the editpage
         this.procd = 1;

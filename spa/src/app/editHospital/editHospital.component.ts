@@ -65,7 +65,7 @@ export class EditHospitalComponent implements OnInit {
 
   changeContact(){
     this.cc = 1;
-    debugger;
+   
     this.user.getListOfUsersInHospital(1,+this.selectedHospital.HospitalNo,1,10).subscribe(
       (next)=>{this.users = next.result})
   }

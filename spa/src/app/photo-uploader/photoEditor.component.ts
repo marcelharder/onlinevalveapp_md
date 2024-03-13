@@ -36,7 +36,7 @@ export class PhotoEditorComponent implements OnInit {
 
   initializeUploader() {
     let test = '';
-  
+ 
     if ( this.userId !== 0 ) {
       test = this.baseUrl + 'addUserPhoto/' + this.userId
     }
@@ -73,6 +73,7 @@ export class PhotoEditorComponent implements OnInit {
         if (this.userId !== 0) { this.getMemberPhotoChange.emit(response); }
         else {
         const res: any = JSON.parse(response);
+        
         if (this.hospitalId !== 0) { this.getMemberPhotoChange.emit(res.ImageUrl); }
         if (this.valvecode !== 0) { this.getMemberPhotoChange.emit(res.image); }
         if (this.companyCode !== 0) { this.getMemberPhotoChange.emit(res.reps); }

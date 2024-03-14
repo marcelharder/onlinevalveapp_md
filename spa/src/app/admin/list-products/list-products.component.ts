@@ -69,6 +69,8 @@ export class ListProductsComponent implements OnInit {
       // get the sizes for this type of valve
       this.prod.getValveSizes(this.productDetails.No).subscribe((next) => {
         this.listOfSizes = next;
+        // sort this list on valveSize
+        this.listOfSizes.sort((a,b) => (a.Size < b.Size ? -1 : 1))
       });
 
     });

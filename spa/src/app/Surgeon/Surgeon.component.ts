@@ -17,8 +17,6 @@ import { HospitalService } from '../_services/hospital.service';
   styleUrls: ['./Surgeon.component.css']
 })
 export class SurgeonComponent implements OnInit {
-
-
   constructor(private auth: AuthService,
     private graphService: GraphService,
     private userService: UserService,
@@ -29,6 +27,7 @@ export class SurgeonComponent implements OnInit {
 
   title = 'Valve sizes in aortic position, blue - mechanical, red - bio';
   currentHospitalNo = 0;
+  hospitalName = "";
   hos: Hospital;
   Array_1: any; Array_2: any; Array_3: any;
   testData: [][];
@@ -36,6 +35,7 @@ export class SurgeonComponent implements OnInit {
   private extractTheData: GraphItem[]
 
   ngOnInit() {
+    this.auth.currentHospital.subscribe((next)=>{this.hospitalName = next;})
     this.hosservice.getDetails().subscribe((res) => { this.hos = res; })
     this.showAorticValves();
   }

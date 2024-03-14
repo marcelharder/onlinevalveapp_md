@@ -1,13 +1,11 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
-COPY Release/ App/
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
+COPY Release App/
 WORKDIR /App
 
-COPY DAL/data/countries.xml /App/DAL/data/countries.xml
-COPY DAL/data/TFD.xml /App/DAL/data/TFD.xml
-COPY DAL/data/*.json /App/DAL/data/
 
-
-
+#COPY assets/pdf/*.pdf /App/assets/pdf/
+#COPY assets/images/*.jpg /App/assets/images/
+#COPY assets/images/*.jpeg /App/assets/images/
 
 
 ENTRYPOINT [ "dotnet", "api.dll" ]

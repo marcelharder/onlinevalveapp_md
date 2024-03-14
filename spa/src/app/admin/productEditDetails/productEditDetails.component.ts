@@ -56,11 +56,13 @@ export class productEditDetailsComponent implements OnInit {
   displayNewSize() { if (this.newSizeToken === 1) { return true; } }
 
   addNewSizeNow() {// add this size to the backend first 
-    // can I add this valvesize
-    if(this.CanIAddThisValve(this.valvesize)){
+    
+    if(this.CanIAddThisValve(this.valvesize)){// can I add this valvesize
     this.pro.addValveSize(this.prod.ValveTypeId, this.valvesize).subscribe((next) => {// get the new valve size from the backend
       this.valvesize = next; 
       this.listOfSizes.push(this.valvesize);
+      // sort this list on valveSize
+      this.listOfSizes.sort((a,b) => (a.Size < b.Size ? -1 : 1))
       
     })
   } else {

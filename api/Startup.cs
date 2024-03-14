@@ -111,8 +111,6 @@ namespace api
             .AllowAnyMethod()
             .AllowCredentials()
             .WithOrigins("http://localhost:4200"));
-            app.UseAuthentication();
-            app.UseAuthorization();
 
             app.UseAuthentication();
             app.UseAuthorization();

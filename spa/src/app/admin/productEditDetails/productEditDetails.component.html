@@ -27,15 +27,14 @@
             <td>{{s.SizeId}}</td>
             <td>{{s.Size}}</td>
             <td>{{s.EOA}}</td>
-            <td><button class="btn btn-warning" (click)="deleteSize(s.sizeId)">delete</button></td>
+            <td><button class="btn btn-warning" (click)="deleteSize(s.SizeId)">delete</button></td>
           </tr>
          
         </table>
         <table>
           <tr *ngIf="displayNewSize()">
-            <td><input [(ngModel)]="valvesize.SizeId" name="test2" class="form-model" readonly></td>
-            <td><input [(ngModel)]="valvesize.Size" name="test2" class="form-model"></td>
-            <td><input [(ngModel)]="valvesize.EOA" name="test3" class="form-model"></td>
+            <td><input [(ngModel)]="valvesize.Size" name="test2" class="form-control" placeholder="size"></td>
+            <td><input [(ngModel)]="valvesize.EOA" name="test3" class="form-mcontrol" placeholder="EOA"></td>
             <td><button class="btn btn-warning" (click)="addNewSizeNow()">Add</button></td>
           </tr>
         </table>

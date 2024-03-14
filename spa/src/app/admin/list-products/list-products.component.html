@@ -29,7 +29,7 @@
     </div>
     <div class="row" *ngIf="displayDetails()">
       <div class="col-sm-12">
-        <app-productEditDetails [prod]="productDetails" (backTo)="returnFromEditDetails($event)"></app-productEditDetails>
+        <app-productEditDetails [listOfSizes]="listOfSizes" [prod]="productDetails" (backTo)="returnFromEditDetails($event)"></app-productEditDetails>
       </div>
     </div>
   </div>

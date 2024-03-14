@@ -12,7 +12,7 @@ import { ProductService } from 'src/app/_services/product.service';
 export class productEditDetailsComponent implements OnInit {
   @Input() prod: TypeOfValve;
   @Output() backTo = new EventEmitter<String>();
-  listOfSizes: Array<valveSize> = [];
+  @Input() listOfSizes: Array<valveSize>;
   valvesize: valveSize = {
     SizeId: 0,
     Size: 0,
@@ -24,60 +24,71 @@ export class productEditDetailsComponent implements OnInit {
 
   constructor(private alertify: AlertifyService, private pro: ProductService) { }
 
-  ngOnInit() {
-   // get the sizes for this type of valve
-   this.pro.getValveSizes(this.prod.No).subscribe((next)=>{
-    this.listOfSizes = next;
-   });
-
-   }
+  ngOnInit() { }
 
   deleteSize(SizeId: number) {
+    debugger;
     this.pro.deleteValveSize(SizeId).subscribe((next) => {
+      debugger;
       if (next === 1) {
         this.alertify.message("deleted");
         // remove it from the local array
-        let index = this.prod.Valve_size.findIndex(d => d.SizeId === SizeId); //find index in your array
-        this.prod.Valve_size.splice(index, 1);//remove element from array
+        let index = this.listOfSizes.findIndex(d => d.SizeId === SizeId); //find index in your array
+        this.listOfSizes.splice(index, 1);//remove element from array
       }
     });
   }
 
-  addNewSize() {
-    // get the latest prod details
-    this.pro.getProductById(this.prod.No).subscribe((next) => {
+  addNewSize() {// get the latest prod details
+
+    this.pro.getProductById(this.prod.ValveTypeId).subscribe((next) => {// zero everything
       this.prod = next;
-      // zero everything
       this.valvesize.SizeId = 0;
-      this.valvesize.Size = 0;
-      this.valvesize.EOA = 0;
+      this.valvesize.Size = null;
+      this.valvesize.EOA = null;
       this.valvesize.PPM = '';
       this.valvesize.VTValveTypeId = 0;
 
       this.newSizeToken = 1;
-
     });
-
-
-
-
   }
 
   displayNewSize() { if (this.newSizeToken === 1) { return true; } }
 
-  addNewSizeNow() {
-    // add this size to the backend first  
-    this.pro.addValveSize(this.prod.No, this.valvesize).subscribe((next) => {
-      this.valvesize = next; // get the new valve size from the backend
-      this.prod.Valve_size.push(this.valvesize);
-      this.newSizeToken = 0;
-
+  addNewSizeNow() {// add this size to the backend first 
+    // can I add this valvesize
+    if(this.CanIAddThisValve(this.valvesize)){
+    this.pro.addValveSize(this.prod.ValveTypeId, this.valvesize).subscribe((next) => {// get the new valve size from the backend
+      this.valvesize = next; 
+      this.listOfSizes.push(this.valvesize);
+      
     })
+  } else {
+    this.alertify.error("Can't add this valve size, duplicates ??");
+    this.newSizeToken = 0;
+  }
   }
 
-  backToList() {
-    // go back to list
+  backToList() { // go back to list
     this.backTo.emit("1");
+  }
+
+  CanIAddThisValve(test: valveSize):boolean{
+    var help = false;
+    var sizeduplicate = 1;
+    var eoaduplicate = 1;
+
+    // find out if this valvesize is already in the listOfValves
+    let index = this.listOfSizes.findIndex(d => d.Size === +test.Size); //find index in your array
+    if(index === -1){sizeduplicate = 0;}
+    
+    // find out if this eoa is already in the listOfValves
+    let indexeoa = this.listOfSizes.findIndex(d => d.EOA === +test.EOA); //find index in your array
+    if(indexeoa === -1){eoaduplicate = 0;}
+   
+    if(sizeduplicate === 0 && eoaduplicate === 0){help = true;}
+
+    return help;
   }
 
 

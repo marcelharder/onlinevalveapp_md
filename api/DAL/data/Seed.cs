@@ -28,7 +28,7 @@ namespace api.DAL.data
             await context.SaveChangesAsync();
 
         }
-        public static async Task SeedHospitals(dataContext context)
+     /*    public static async Task SeedHospitals(dataContext context)
         {
             if(await context.Hospitals.AnyAsync()) return;
 
@@ -39,7 +39,7 @@ namespace api.DAL.data
                context.Hospitals.Add(item);
             }
             await context.SaveChangesAsync();
-        }
+        } */
         public static async Task SeedValvesInHospital(dataContext context)
         {
             if(await context.Valves.AnyAsync()) return;

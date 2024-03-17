@@ -18,6 +18,7 @@ export class ListProductsForRefComponent implements OnInit {
   selectedProduct: TypeOfValve;
   newProduct: TypeOfValve;
   currentCountry = '';
+  currentVendor = '';
   detailsPage = 0;
   addPage = 0;
   listPage = 0;
@@ -35,6 +36,7 @@ export class ListProductsForRefComponent implements OnInit {
     this.user.getUser(this.auth.decodedToken.nameid).subscribe((next) => {
       rep = next;
       this.currentCountry = next.country;
+      this.currentVendor = next.worked_in;
 
       // tslint:disable-next-line:no-shadowed-variable
       //this.gen.getCountryName(rep.country).subscribe((next) => {  this.currentCountry = next; });

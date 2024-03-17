@@ -98,9 +98,16 @@ export class ListHospitalsForRefComponent implements OnInit {
   DisplayHospitalsInTheCurrentCountry() {
     this.detailsPage = 0;
     this.selectPage = 1;
-    this.alertify.success('Display a list of hospitals where this vendor is not active, yet');
+   
     this.hosService.getFullHospitalsWhereVendorIsNotActive().subscribe((next) => {
-      this.FullHospitals = next;
+      if(next.length === 0){
+        this.alertify.warning('No more hospitals in this country to add');
+        this.selectPage = 0;
+      }
+      else {
+        this.alertify.success('Display a list of hospitals where this vendor is not active, yet');
+        this.FullHospitals = next;}
+      
     });
 
 

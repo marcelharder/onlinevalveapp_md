@@ -7,7 +7,7 @@ export interface Hospital {
         HospitalNo: string;
         Address: string;
         Country: string;
-        imageUrl: string;
+        ImageUrl: string;
         city: string;
         usesOnlineValveInventory: number;
         opReportDetails1: string;
@@ -19,6 +19,7 @@ export interface Hospital {
         opReportDetails7: string;
         opReportDetails8: string;
         opReportDetails9: string;
+        
         PostalCode: string;
         refHospitals: string;
         standardRef: string;

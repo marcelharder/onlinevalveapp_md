@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Hospital } from 'src/app/_models/Hospital';
+import { DropItem } from 'src/app/_models/dropItem';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { HospitalService} from 'src/app/_services/hospital.service';
 
@@ -12,6 +13,8 @@ export class HospitalEditCardComponent implements OnInit {
   @Input() title: string;
   @Input() new_hospital: Partial<Hospital>;
   @Output() backTo: EventEmitter<string> = new EventEmitter<string>(); 
+  
+  YN:Array<DropItem>=[{value:0, description:"Choose"},{value:1, description:"Yes"},{value:2, description:"No"}];
   constructor(private hos: HospitalService, private alertify:AlertifyService) { }
 
   ngOnInit() {
@@ -29,5 +32,7 @@ export class HospitalEditCardComponent implements OnInit {
       (next)=>{this.backTo.emit(next)}, 
       (error)=> {this.alertify.error(error)});
   }
+
+ 
 
 }

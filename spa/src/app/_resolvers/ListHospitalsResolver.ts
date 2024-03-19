@@ -9,7 +9,7 @@ import { HospitalService } from "../_services/hospital.service";
 
 @Injectable()
 export class ListHospitalsResolver implements Resolve<Hospital[]> {
-    pageSize = 8;
+    pageSize = 10;
     pageNumber = 1;
     constructor(private hospitalService: HospitalService,
         private router: Router,

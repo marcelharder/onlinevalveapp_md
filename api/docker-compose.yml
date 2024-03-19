@@ -39,7 +39,7 @@ services:
       - db
   
   valveinventory:
-    image: inventory_md:v27
+    image: inventory_md:v28
     ports:
       - 8045:80
     networks: 

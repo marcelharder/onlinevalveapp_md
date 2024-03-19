@@ -46,6 +46,7 @@ export class ListHospitalsComponent implements OnInit {
   displayEdit() { if (this.edit === 1) { return true; } else { return false; } }
 
   search() {// this.selectedCountry is bv Greece
+    this.pagination.currentPage = 1;
     this.loadHospitals();
   }
 
@@ -81,7 +82,7 @@ export class ListHospitalsComponent implements OnInit {
   }
 
   loadHospitals() {
-    this.hos.getListOfFullHospitalsPerCountry(this.selectedCountry, this.pagination.currentPage, 5).subscribe(
+    this.hos.getListOfFullHospitalsPerCountry(this.selectedCountry, this.pagination.currentPage, 10).subscribe(
       (next: PaginatedResult<Hospital[]>) => {
         this.listOfHospitals = next.result;
         this.pagination = next.pagination;

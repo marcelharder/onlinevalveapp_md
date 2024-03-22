@@ -65,9 +65,9 @@
               <textarea name="interests" rows="6" class="form-control" [(ngModel)]="user.interests"></textarea>
               <h4>Location details:</h4>
               <div class="form-inline">
-                <label for="city"> City: </label>
+                <label for="city" id="city"> City: </label>
                 <input type="text" class="form-control" name="city" [(ngModel)]="user.city">
-                <label for="country"> Country: </label>
+                <label for="country" id="country"> Country: </label>
                 <select [(ngModel)]="user.country"  name="country"  class="form-control">
                   <option *ngFor="let an of listCountries" [value]="an.description">{{ an.description }}</option>
                 </select>

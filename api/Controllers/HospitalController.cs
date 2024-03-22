@@ -75,7 +75,7 @@ namespace api.Controllers
         }
 
         [HttpGet("api/addVendor/{vendor}/{hospital}")]
-        public async Task<IActionResult> getQuestion05(string vendor,string hospital)
+        public async Task<IActionResult> getQuestion05(string vendor, string hospital)
         {
             var vendorId = await _special.getVendorIdFromName(vendor);
             var selectedHospital = Convert.ToInt32(hospital);
@@ -222,7 +222,12 @@ namespace api.Controllers
                     }
                 }
             }
-            return BadRequest("Hallo");
+            else
+            {
+
+                return BadRequest("Cant find selected Hospital ID");
+            }
+
 
             /*  var hospital = await _special.getHospital(id);
              return Ok(hospital); */
@@ -230,19 +235,19 @@ namespace api.Controllers
         [HttpGet("api/getSpecificHospitalDetails/{id}")]
         public async Task<IActionResult> getQuestion027(int id)
         {
-                var comaddress = _com.Value.hospitalURL;
-                var st = "Hospital/getHospital/" + id;
-                comaddress = comaddress + st;
-                using (var httpClient = new HttpClient())
+            var comaddress = _com.Value.hospitalURL;
+            var st = "Hospital/getHospital/" + id;
+            comaddress = comaddress + st;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(comaddress))
                 {
-                    using (var response = await httpClient.GetAsync(comaddress))
-                    {
-                        var help = await response.Content.ReadAsStringAsync();
-                        return Ok(help);
-                    }
+                    var help = await response.Content.ReadAsStringAsync();
+                    return Ok(help);
                 }
-            
-           
+            }
+
+
 
             /*  var hospital = await _special.getHospital(id);
              return Ok(hospital); */
@@ -269,9 +274,10 @@ namespace api.Controllers
 
         [AllowAnonymous]
         [HttpGet("api/getCountryDescriptionFromCountryId/{code}")]
-        public async Task<IActionResult> getQuestion1239(string code){
-           var result = "";
-           var comaddress = _com.Value.hospitalURL;
+        public async Task<IActionResult> getQuestion1239(string code)
+        {
+            var result = "";
+            var comaddress = _com.Value.hospitalURL;
             // get the isocode first
             var st = "Country/getCountryNameFromId/" + code;
             comaddress = comaddress + st;
@@ -282,7 +288,7 @@ namespace api.Controllers
                     result = await response.Content.ReadAsStringAsync();
                     return Ok(result);
                 }
-            }  
+            }
         }
 
         [AllowAnonymous]
